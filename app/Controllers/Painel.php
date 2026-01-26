@@ -49,6 +49,9 @@ class Painel extends BaseController
                 'unidade' => (string) ($servico->unidade ?? ''),
             ];
         }, $servicoModel->where('ativo', 1)->orderBy('Nome', 'ASC')->findAll());
+        /*
+        // PRODUTOS_DESATIVADOS
+        // Regra de negócio: não carregar produtos para consumo/cobrança.
         $produtoModel = new ProdutoModel();
         $data['produtosAtivos'] = array_map(static function ($produto) {
             $valorBruto = (string) $produto->valor;
@@ -62,6 +65,7 @@ class Painel extends BaseController
                 'valor' => (float) $valorNumerico,
             ];
         }, $produtoModel->orderBy('nome', 'ASC')->findAll());
+        */
         $configuracao = ConfiguracaoModel::getConfiguracao();
         $usarCalculoUsoEspaco = false;
         $servicoUsoEspacoId = 1;

@@ -640,8 +640,11 @@ class Reserva extends BaseController {
 
         $cobrancaServicoModel = new CobrancaServicoModel();
         $itens = $cobrancaServicoModel->where('Cobranca_id', $cobrancaId)->findAll();
+        /*
+        // PRODUTOS_DESATIVADOS
         $cobrancaProdutoModel = new CobrancaProdutoModel();
         $itensProduto = $cobrancaProdutoModel->where('Cobranca_id', $cobrancaId)->findAll();
+        */
 
         $servicosMap = [];
         $produtosMap = [];
@@ -677,6 +680,8 @@ class Reserva extends BaseController {
             $servicosMap[$servicoId]['total'] += $subtotal;
         }
 
+        /*
+        // PRODUTOS_DESATIVADOS
         foreach ($itensProduto as $item) {
             $produtoId = (int) $item->Produto_id;
 
@@ -702,6 +707,7 @@ class Reserva extends BaseController {
             $produtosMap[$produtoId]['quantidade'] += $quantidade;
             $produtosMap[$produtoId]['total'] += $subtotal;
         }
+        */
 
         $servicos = array_values(array_map(static function (array $item): array {
             $quantidade = (int) ($item['quantidade'] ?? 0);
@@ -718,6 +724,8 @@ class Reserva extends BaseController {
             ];
         }, $servicosMap));
 
+        /*
+        // PRODUTOS_DESATIVADOS
         $produtos = array_values(array_map(static function (array $item): array {
             $quantidade = (int) ($item['quantidade'] ?? 0);
             $total = (float) ($item['total'] ?? 0.0);
@@ -731,6 +739,8 @@ class Reserva extends BaseController {
                 'total'        => $total,
             ];
         }, $produtosMap));
+        */
+        $produtos = [];
 
         return $this->response->setJSON([
             'erro'     => false,
@@ -752,10 +762,14 @@ class Reserva extends BaseController {
         if (!is_array($servicosPayload)) {
             $servicosPayload = [];
         }
+        /*
+        // PRODUTOS_DESATIVADOS
         $produtosPayload = $payload['produtos'] ?? [];
         if (!is_array($produtosPayload)) {
             $produtosPayload = [];
         }
+        */
+        $produtosPayload = [];
 
         if ($reservaId <= 0) {
             return $this->response->setStatusCode(400)->setJSON([
@@ -797,6 +811,8 @@ class Reserva extends BaseController {
             }
         }
 
+        /*
+        // PRODUTOS_DESATIVADOS
         $produtosNormalizados = [];
         foreach ($produtosPayload as $item) {
             if (!is_array($item)) {
@@ -811,13 +827,18 @@ class Reserva extends BaseController {
                 $produtosNormalizados[$id] = $quantidade;
             }
         }
+        */
+        $produtosNormalizados = [];
 
         $reservaCobrancaModel = new ReservaCobrancaModel();
         $cobrancaModel = new CobrancaModel();
         $cobrancaServicoModel = new CobrancaServicoModel();
         $servicoModel = new ServicoModel();
+        // PRODUTOS_DESATIVADOS: manter apenas para limpeza de dados antigos.
         $cobrancaProdutoModel = new CobrancaProdutoModel();
+        /*
         $produtoModel = new ProdutoModel();
+        */
 
         $reservaModel->db->transStart();
 
@@ -874,6 +895,8 @@ class Reserva extends BaseController {
                 }
                 $mapExistentes[$servicoId][] = $existente;
             }
+            /*
+            // PRODUTOS_DESATIVADOS
             $existentesProduto = $cobrancaProdutoModel->where('Cobranca_id', $cobrancaId)->findAll();
             $mapExistentesProduto = [];
             foreach ($existentesProduto as $existente) {
@@ -883,6 +906,7 @@ class Reserva extends BaseController {
                 }
                 $mapExistentesProduto[$produtoId][] = $existente;
             }
+            */
 
             $totalCobranca = 0.0;
 
@@ -945,6 +969,8 @@ class Reserva extends BaseController {
                 }
             }
 
+            /*
+            // PRODUTOS_DESATIVADOS
             foreach ($produtosNormalizados as $produtoId => $quantidade) {
                 if ($quantidade <= 0) {
                     if (isset($mapExistentesProduto[$produtoId])) {
@@ -1003,6 +1029,7 @@ class Reserva extends BaseController {
                     $cobrancaProdutoModel->delete($registro->id);
                 }
             }
+            */
 
             $cobrancaModel->skipValidation(true);
             if (!$cobrancaModel->update($cobrancaId, ['valor' => number_format($totalCobranca, 2, '.', '')])) {

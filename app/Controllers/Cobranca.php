@@ -40,6 +40,8 @@ class Cobranca extends BaseController {
                         return $this->returnWithError($mCobrancaServico->errors());
                     }
                 }
+                /*
+                // PRODUTOS_DESATIVADOS
                 $mCobrancaProduto = new CobrancaProdutoModel();
                 $CobrancaProduto = $this->request->getPost('CobrancaProduto') ?? [];
                 foreach ($CobrancaProduto as $pp){
@@ -49,6 +51,7 @@ class Cobranca extends BaseController {
                         return $this->returnWithError($mCobrancaProduto->errors());
                     }
                 }
+                */
                 $m->db->transComplete();
                 return $this->returnSucess('Cadastrado com sucesso!');
             } else {
@@ -100,6 +103,8 @@ class Cobranca extends BaseController {
                         return $this->returnWithError($mCobrancaServico->errors());
                     }
                 }
+                /*
+                // PRODUTOS_DESATIVADOS
                 $mCobrancaProduto = new CobrancaProdutoModel();
                 $idsDeleteProduto = array_map(fn($v):int => $v->id, $e->getListCobrancaProduto());
                 if(count($idsDeleteProduto)>0){
@@ -113,6 +118,7 @@ class Cobranca extends BaseController {
                         return $this->returnWithError($mCobrancaProduto->errors());
                     }
                 }
+                */
                 $m->db->transComplete();
                 return $this->returnSucess('Cadastrado com sucesso!');
             } else { 

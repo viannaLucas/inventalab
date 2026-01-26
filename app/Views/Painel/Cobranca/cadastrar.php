@@ -113,6 +113,7 @@
                         <span class="h5">Sem itens selecionados</span>
                     </div>
                 </fieldset>
+                <?php if (false) : // PRODUTOS_DESATIVADOS ?>
                 <fieldset class="border rounded-10 m-0 mb-3 p-2 w-100">
                     <div class="border-bottom mx-n1 mb-3">
                         <h4 class="px-2">Lista de Cobrança Produto</h4>
@@ -168,6 +169,7 @@
                         <span class="h5">Sem itens selecionados</span>
                     </div>
                 </fieldset>
+                <?php endif; ?>
                 <div class="form-group mb-0 mt-3 text-center col-12">
                     <button type="submit" class="btn btn-primary submitButton">Cadastrar</button>
                 </div>
@@ -194,6 +196,7 @@
         </td>
     </tr>
 </template>
+<?php if (false) : // PRODUTOS_DESATIVADOS ?>
 <template id="templateRowCobrancaProduto">
     <tr id='CobrancaProduto_{_index_}'>
         <td>
@@ -212,6 +215,7 @@
         </td>
     </tr>
 </template>
+<?php endif; ?>
 <!-- content closed -->
 <?= $this->endSection('content'); ?>
 
@@ -279,6 +283,8 @@
                 normalizer: function (value) { if (value.includes(',')) { return value.replaceAll('.', '').replace(',', '.'); } return value; },
                 min: 0.01,
             },
+            /*
+            // PRODUTOS_DESATIVADOS
             cobrancaproduto_Produto_id: {
                 required: true,
             },
@@ -292,6 +298,7 @@
                 normalizer: function (value) { if (value.includes(',')) { return value.replaceAll('.', '').replace(',', '.'); } return value; },
                 min: 0.01,
             },
+            */
         }
     });
 
@@ -301,11 +308,8 @@
         'cobrancaservico_valorUnitario',
     ];
 
-    var inputsCobrancaProduto = [
-        'cobrancaproduto_Produto_id',
-        'cobrancaproduto_quantidade',
-        'cobrancaproduto_valorUnitario',
-    ];
+    // PRODUTOS_DESATIVADOS
+    var inputsCobrancaProduto = [];
     
     $('#btnAddCobrancaServico').on('click', function (e) {
         addCobrancaServico();
@@ -357,6 +361,8 @@
         indexRowCobrancaServico++;
     }
 
+    /*
+    // PRODUTOS_DESATIVADOS
     var indexRowCobrancaProduto = 0;
     $('#btnAddCobrancaProduto').on('click', function (e) {
         addCobrancaProduto();
@@ -387,5 +393,6 @@
         $('#cobrancaproduto_valorUnitario').val('');
         indexRowCobrancaProduto++;
     }
+    */
 </script>    
 <?= $this->endSection('scripts'); ?>

@@ -289,6 +289,7 @@
                     <div class="d-flex justify-content-end mt-2">
                         <strong>Total Serviços: <span class="js-saida-total-servicos">R$ 0,00</span></strong>
                     </div>
+                    <?php if (false) : // PRODUTOS_DESATIVADOS ?>
                     <div class="form-group mt-3">
                         <label for="modalReservaSaida-produto">Buscar Produto</label>
                         <select class="form-control select2 js-saida-produto" name="produto_id" id="modalReservaSaida-produto" data-placeholder="Selecione um produto">
@@ -321,6 +322,7 @@
                     <div class="d-flex justify-content-end mt-2">
                         <strong>Total Produtos: <span class="js-saida-total-produtos">R$ 0,00</span></strong>
                     </div>
+                    <?php endif; ?>
 
                     <div class="form-group mt-3 mb-2">
                         <label for="modalReservaSaida-observacoes">Observações</label>
@@ -386,6 +388,7 @@
                             </tbody>
                         </table>
                     </div>
+                    <?php if (false) : // PRODUTOS_DESATIVADOS ?>
                     <div class="form-group mt-3">
                         <label for="modalReservaConsumo-produto">Buscar Produto</label>
                         <select class="form-control select2 js-consumo-produto" name="produto_id" id="modalReservaConsumo-produto" data-placeholder="Selecione um produto">
@@ -415,6 +418,7 @@
                             </tbody>
                         </table>
                     </div>
+                    <?php endif; ?>
                     <div class="d-flex justify-content-end mt-2">
                         <strong>Total: <span class="js-consumo-total">R$ 0,00</span></strong>
                     </div>
@@ -442,10 +446,14 @@
         if (!Array.isArray(servicosAtivos)) {
             servicosAtivos = [];
         }
+        // PRODUTOS_DESATIVADOS
+        var produtosAtivos = [];
+        /*
         var produtosAtivos = <?= json_encode($produtosAtivos ?? [], JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
         if (!Array.isArray(produtosAtivos)) {
             produtosAtivos = [];
         }
+        */
         var usarCalculoUsoEspaco = <?= json_encode(!empty($usarCalculoUsoEspaco)); ?>;
         var SERVICO_USO_ESPACO_ID = Number(<?= json_encode($servicoUsoEspacoId ?? 1); ?>) || 1;
         var servicoPorId = {};
@@ -454,21 +462,24 @@
                 servicoPorId[Number(servico.id)] = servico;
             }
         });
+        // PRODUTOS_DESATIVADOS
         var produtoPorId = {};
+        /*
         produtosAtivos.forEach(function(produto) {
             if (produto && typeof produto.id !== 'undefined') {
                 produtoPorId[Number(produto.id)] = produto;
             }
         });
+        */
 
         function obterServicoPorId(id) {
             var chave = Number(id);
             return servicoPorId.hasOwnProperty(chave) ? servicoPorId[chave] : null;
         }
 
+        // PRODUTOS_DESATIVADOS
         function obterProdutoPorId(id) {
-            var chave = Number(id);
-            return produtoPorId.hasOwnProperty(chave) ? produtoPorId[chave] : null;
+            return null;
         }
 
         var modalId = 'modalReservaHorario';
