@@ -1230,7 +1230,7 @@
   // CLOSED_DATES.add('2025-12-25');
   // SPECIAL_CLOSED_INTERVALS_BY_DATE['2025-09-22'] = [{ start: '16:00', end: '18:00' }];
   // SPECIAL_OPENINGS_BY_DATE['2025-09-20'] = [{ start: '09:00', end: '13:00' }];
-
+  SPECIAL_CLOSED_INTERVALS_BY_DATE['2026-02-03'] = [{ start: '00:00', end: '12:00' }]
   <?php
     $buildSpecialIntervals = static function (array $items): array {
         $grouped = [];
@@ -1273,6 +1273,26 @@
     }
   ?>
 
+  const BASE_SPECIAL_CLOSED_INTERVALS_BY_DATE = JSON.parse(JSON.stringify(SPECIAL_CLOSED_INTERVALS_BY_DATE));
+
+  function applyExclusiveReservationsToClosedIntervals() {
+    const base = JSON.parse(JSON.stringify(BASE_SPECIAL_CLOSED_INTERVALS_BY_DATE));
+    if (Array.isArray(reservations)) {
+      reservations.forEach((r) => {
+        if (!r || !r.exclusive || !r.date || !r.start || !r.duration) return;
+        const startMin = toMinutes(String(r.start));
+        if (startMin == null) return;
+        const endMin = startMin + Number(r.duration);
+        if (!Number.isFinite(endMin) || endMin <= startMin) return;
+        const interval = { start: minutesToHHMM(startMin), end: minutesToHHMM(endMin) };
+        if (!base[r.date]) base[r.date] = [];
+        base[r.date].push(interval);
+      });
+    }
+    Object.keys(SPECIAL_CLOSED_INTERVALS_BY_DATE).forEach((k) => { delete SPECIAL_CLOSED_INTERVALS_BY_DATE[k]; });
+    Object.keys(base).forEach((k) => { SPECIAL_CLOSED_INTERVALS_BY_DATE[k] = base[k]; });
+  }
+
   setInterval(() => {
     console.log('interval...');
     fetch("<?= base_url(); ?>Reserva/listaReservaJson", {
@@ -1287,6 +1307,7 @@
     })
     .then(data => {
         reservations = data;
+        applyExclusiveReservationsToClosedIntervals();
         renderActivitiesUI();
         toggleEscolaSection();
         toggleActivityBlocks();
@@ -1298,6 +1319,7 @@
     });
   }, 10000);
 
+  applyExclusiveReservationsToClosedIntervals();
   renderActivitiesUI();
   toggleEscolaSection();
   toggleActivityBlocks();

@@ -1385,6 +1385,26 @@
     }
     ?>
 
+    const BASE_SPECIAL_CLOSED_INTERVALS_BY_DATE = JSON.parse(JSON.stringify(SPECIAL_CLOSED_INTERVALS_BY_DATE));
+
+    function applyExclusiveReservationsToClosedIntervals() {
+      const base = JSON.parse(JSON.stringify(BASE_SPECIAL_CLOSED_INTERVALS_BY_DATE));
+      if (Array.isArray(reservations)) {
+        reservations.forEach((r) => {
+          if (!r || !r.exclusive || !r.date || !r.start || !r.duration) return;
+          const startMin = toMinutes(String(r.start));
+          if (startMin == null) return;
+          const endMin = startMin + Number(r.duration);
+          if (!Number.isFinite(endMin) || endMin <= startMin) return;
+          const interval = { start: minutesToHHMM(startMin), end: minutesToHHMM(endMin) };
+          if (!base[r.date]) base[r.date] = [];
+          base[r.date].push(interval);
+        });
+      }
+      Object.keys(SPECIAL_CLOSED_INTERVALS_BY_DATE).forEach((k) => { delete SPECIAL_CLOSED_INTERVALS_BY_DATE[k]; });
+      Object.keys(base).forEach((k) => { SPECIAL_CLOSED_INTERVALS_BY_DATE[k] = base[k]; });
+    }
+
     setInterval(() => {
       console.log('interval...');
       fetch("<?= base_url(); ?>PainelParticipante/listaReservaJson", {
@@ -1399,6 +1419,7 @@
         })
         .then(data => {
           reservations = data;
+          applyExclusiveReservationsToClosedIntervals();
           renderActivitiesUI();
           toggleEscolaSection();
           toggleActivityBlocks();
@@ -1411,6 +1432,7 @@
         });
     }, 10000);
 
+    applyExclusiveReservationsToClosedIntervals();
     renderActivitiesUI();
     toggleEscolaSection();
     toggleActivityBlocks();

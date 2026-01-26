@@ -95,7 +95,8 @@ class Reserva extends BaseController {
             $i->start = $r->horaInicio;
             $i->duration = $r->getDuracaoEmMinutos();
             $i->people = $r->numeroConvidados+1;
-            $i->name = $r->getListReservaParticipante()[0]?->getParticipante()?->nome;
+            $i->exclusive = $r->tipo == ReservaEntity::TIPO_EXCLUSIVA;
+            $i->name = count($r->getListReservaParticipante())>0 ? $r->getListReservaParticipante()[0]?->getParticipante()?->nome : '';
             $vOficinaTematica = $r->getListOficinaTematicaReserva();
             $ac = new stdClass();
             if(!empty($vOficinaTematica)){
@@ -122,7 +123,6 @@ class Reserva extends BaseController {
     }
 
     public function doCadastrar() {
-        //sample data: {"date":"2025-09-30","interval":[{"start":"10:30","duration":90},{"start":"14:00","duration":120}],"people":1,"name":"Lucas Participante","participantId":"3","note":"","activity":{"type":"oficina","id":"2"},"isClass":false,"nameSchool":"","yearClass":""}
         $data = $this->request->getJSON();
         $validador = new ValidacaoCadastroReserva();
         $resultadoValidacao = $validador->validarDadosInputCadastrar($data);
