@@ -209,6 +209,9 @@
                     <?PHP if (\App\Models\UsuarioModel::getSessao()->verificarPermissao('HorarioFuncionamento', 'cadastrar')) { ?>
                         <li><a class="slide-item" href="<?PHP echo base_url('HorarioFuncionamento/cadastrar'); ?>">Horário de Funcionamento</a></li>
                     <?PHP } ?>
+                    <?PHP if (\App\Models\UsuarioModel::getSessao()->verificarPermissao('TemplateTermo', 'alterar')) { ?>
+                        <li><a class="slide-item" href="<?PHP echo base_url('TemplateTermo/alterar'); ?>">Termo Autorização</a></li>
+                    <?PHP } ?>
                 </ul>
             </li>
             <li class="slide d-none">

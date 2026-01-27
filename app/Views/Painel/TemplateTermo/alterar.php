@@ -21,10 +21,6 @@
             <form id='formAlterar' action="<?PHP echo base_url('TemplateTermo/doAlterar'); ?>" class="needs-validation" method="post" enctype="multipart/form-data" >
                 <input type="hidden" name="id" value="<?= $templatetermo->id ?>" />
                 <div class="form-row">
-                    <div class="form-group col-12 col-md-6">
-                        <label class="main-content-label tx-11 tx-medium tx-gray-600">Nome</label> 
-                        <input class="form-control" name="nome" id="nome" type="text" maxlength="100" value="<?= $templatetermo->nome ?>">
-                    </div>                    
                     <div class="col-12">
                         <textarea name="texto" id="texto" class="form-control summernote"><?= $templatetermo->texto ?></textarea>
                     </div>
