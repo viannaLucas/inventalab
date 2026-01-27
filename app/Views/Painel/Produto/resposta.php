@@ -24,7 +24,8 @@
                         <tr>
                             <th scope="col">ID</th>
                             <th scope="col">Nome</th>
-                            <th scope="col">Valor</th>
+                            <!-- Valor desabilitado temporariamente -->
+                            <!-- <th scope="col">Valor</th> -->
                             <th scope="col">Estoque Mínimo</th>
                             <th scope="col">Estoque Atual</th>
                             <th scope="col">Ações</th>
@@ -35,7 +36,7 @@
                         <tr>
                             <td><?= $i->id ?></td>
                             <td><?= $i->nome ?></td>
-                            <td><?= $i->valor ?></td>
+                            <!-- <td><?= $i->valor ?></td> -->
                             <td><?= $i->estoqueMinimo ?></td>
                             <td><?= $i->estoqueAtual ?></td>
                             <td>

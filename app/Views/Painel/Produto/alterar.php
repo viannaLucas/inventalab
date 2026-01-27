@@ -36,10 +36,13 @@
                                data-default-file="<?PHP echo $produto->foto != '' ? base_url($produto->foto) : ''; ?>"
                                data-allowed-file-extensions="webp png jpeg jpg" data-max-file-size="10M" >
                     </div>                    
+                    <!-- Valor desabilitado temporariamente -->
+                    <!--
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Valor</label> 
                         <input class="form-control maskReal" name="valor" id="valor" type="text" value="<?= $produto->valor ?>">
-                    </div>                    
+                    </div>
+                    -->
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Estoque Mínimo</label> 
                         <input class="form-control maskInteiro" name="estoqueMinimo" id="estoqueMinimo" type="text" value="<?= $produto->estoqueMinimo ?>">
@@ -48,6 +51,8 @@
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Estoque Atual</label> 
                         <input class="form-control maskInteiro" name="estoqueAtual" id="estoqueAtual" type="text" value="<?= $produto->estoqueAtual ?>">
                     </div>                                        
+                    <!-- Dados Fiscais desabilitados temporariamente -->
+                    <!--
                     <div class="form-group col-12">
                         <h6 class="mb-2 mt-3">Dados Fiscais</h6>
                     </div>
@@ -125,6 +130,7 @@
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Grupo de Produto</label> 
                         <input class="form-control" name="GrupodeProduto" id="GrupodeProduto" type="text" maxlength="30" value="<?= $dadosApi->GrupodeProduto ?>">
                     </div>
+                    -->
                 <div class="form-group mb-0 mt-3 text-center col-12">
                     <button type="submit" class="btn btn-primary submitButton">Alterar</button>
                 </div>
@@ -172,12 +178,12 @@
             foto: {
                 arquivo: 'webp|jpg|jpeg|png',
             },
-            valor: {
-                required: true,
-                real: true,
-                normalizer: function (value) { if (value.includes(',')) { return value.replaceAll('.', '').replace(',', '.'); } return value; },
-                min: 0.01,
-            },
+            // valor: {
+            //     required: true,
+            //     real: true,
+            //     normalizer: function (value) { if (value.includes(',')) { return value.replaceAll('.', '').replace(',', '.'); } return value; },
+            //     min: 0.01,
+            // },
             estoqueMinimo: {
                 required: true,
                 inteiro: true,
@@ -186,36 +192,36 @@
                 required: true,
                 inteiro: true,
             },
-            UnidadedeControle: {
-                required: true,
-            },
-            ProdutoInspecionado: {
-                required: true,
-            },
-            ProdutoFabricado: {
-                required: true,
-            },
-            ProdutoLiberado: {
-                required: true,
-            },
-            ProdutoemInventario: {
-                required: true,
-            },
-            TipodeProduto: {
-                required: true,
-            },
-            IndicacaodeLoteSerie: {
-                required: true,
-            },
-            CodigodeSituacaoTributariaCST: {
-                required: true,
-            },
-            ClassificacaoFiscal: {
-                required: true,
-            },
-            GrupodeProduto: {
-                required: true,
-            },
+            // UnidadedeControle: {
+            //     required: true,
+            // },
+            // ProdutoInspecionado: {
+            //     required: true,
+            // },
+            // ProdutoFabricado: {
+            //     required: true,
+            // },
+            // ProdutoLiberado: {
+            //     required: true,
+            // },
+            // ProdutoemInventario: {
+            //     required: true,
+            // },
+            // TipodeProduto: {
+            //     required: true,
+            // },
+            // IndicacaodeLoteSerie: {
+            //     required: true,
+            // },
+            // CodigodeSituacaoTributariaCST: {
+            //     required: true,
+            // },
+            // ClassificacaoFiscal: {
+            //     required: true,
+            // },
+            // GrupodeProduto: {
+            //     required: true,
+            // },
         }
     });
 

@@ -3,13 +3,14 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use App\Models\ProdutoModel;
-use App\Models\DadosApiModel;
-use App\Models\ProdutoDadosApiModel;
-use App\Libraries\ApiSesc;
-use App\Entities\ProdutoEntity;
 use App\Entities\DadosApiEntity;
-use App\Entities\ProdutoDadosApiEntity;
+use App\Models\ProdutoModel;
+// use App\Models\DadosApiModel;
+// use App\Models\ProdutoDadosApiModel;
+// use App\Libraries\ApiSesc;
+use App\Entities\ProdutoEntity;
+// use App\Entities\DadosApiEntity;
+// use App\Entities\ProdutoDadosApiEntity;
 
 class Produto extends BaseController {
 
@@ -23,39 +24,40 @@ class Produto extends BaseController {
 
     public function doCadastrar() {
         $m = new ProdutoModel();
-        $mDadosApi = new DadosApiModel();
-        $mProdutoDadosApi = new ProdutoDadosApiModel();
+        // $mDadosApi = new DadosApiModel();
+        // $mProdutoDadosApi = new ProdutoDadosApiModel();
         $ef = $this->validateWithRequest($m->getValidationRulesFiles());
         if ($ef !== true) {
             return $this->returnWithError($ef);
         }
         $e = new ProdutoEntity($this->request->getPost());
         $e->foto = $this->getRandomName('foto');
-        $dadosApiData = $this->getDadosApiData();
-        $dadosApiData['codigo'] = '';
-        $eDadosApi = new DadosApiEntity($dadosApiData);
+        // $dadosApiData = $this->getDadosApiData();
+        // $dadosApiData['codigo'] = '';
+        // $eDadosApi = new DadosApiEntity($dadosApiData);
         $m->db->transStart();
         try {
             if ($m->insert($e, false)) { 
                 $produtoId = $m->getInsertID();
-                if (!$mDadosApi->insert($eDadosApi, false)) {
-                    $m->db->transRollback();
-                    return $this->returnWithError($mDadosApi->errors());
-                }
-                $eProdutoDadosApi = new ProdutoDadosApiEntity([
-                    'Produto_id' => $produtoId,
-                    'DadosApi_id' => $mDadosApi->getInsertID(),
-                ]);
-                if (!$mProdutoDadosApi->insert($eProdutoDadosApi, false)) {
-                    $m->db->transRollback();
-                    return $this->returnWithError($mProdutoDadosApi->errors());
-                }
-                $e->id = $produtoId;
-                $apiResult = $this->atualizarCadastrarApi($e);
-                if ($apiResult !== true) {
-                    $m->db->transRollback();
-                    return $this->returnWithError($apiResult);
-                }
+                // Comentado enquanto Dados Fiscais não forem usados.
+                // if (!$mDadosApi->insert($eDadosApi, false)) {
+                //     $m->db->transRollback();
+                //     return $this->returnWithError($mDadosApi->errors());
+                // }
+                // $eProdutoDadosApi = new ProdutoDadosApiEntity([
+                //     'Produto_id' => $produtoId,
+                //     'DadosApi_id' => $mDadosApi->getInsertID(),
+                // ]);
+                // if (!$mProdutoDadosApi->insert($eProdutoDadosApi, false)) {
+                //     $m->db->transRollback();
+                //     return $this->returnWithError($mProdutoDadosApi->errors());
+                // }
+                // $e->id = $produtoId;
+                // $apiResult = $this->atualizarCadastrarApi($e);
+                // if ($apiResult !== true) {
+                //     $m->db->transRollback();
+                //     return $this->returnWithError($apiResult);
+                // }
                 $m->uploadImage($this->request->getFile('foto'), $e->foto);
                 $m->db->transComplete();
                 return $this->returnSucess('Cadastrado com sucesso!');
@@ -69,31 +71,32 @@ class Produto extends BaseController {
 
     public function alterar() {
         $m = new ProdutoModel();
-        $mProdutoDadosApi = new ProdutoDadosApiModel();
-        $mDadosApi = new DadosApiModel();
+        // $mProdutoDadosApi = new ProdutoDadosApiModel();
+        // $mDadosApi = new DadosApiModel();
         $e = $m->find($this->request->getUri()->getSegment(3));
         if ($e === null) {
             return $this->returnWithError('Registro não encontrado.');
         } 
-        $dadosApi = null;
-        $produtoDadosApi = $mProdutoDadosApi->where('Produto_id', $e->id)->first();
-        if ($produtoDadosApi !== null) {
-            $dadosApi = $mDadosApi->find($produtoDadosApi->DadosApi_id);
-        }
-        if ($dadosApi === null) {
-            $dadosApi = new DadosApiEntity();
-        }
+        // $dadosApi = null;
+        // $produtoDadosApi = $mProdutoDadosApi->where('Produto_id', $e->id)->first();
+        // if ($produtoDadosApi !== null) {
+        //     $dadosApi = $mDadosApi->find($produtoDadosApi->DadosApi_id);
+        // }
+        // if ($dadosApi === null) {
+        //     $dadosApi = new DadosApiEntity();
+        // }
         $data = [
             'produto' => $e,
-            'dadosApi' => $dadosApi,
+            // 'dadosApi' => $dadosApi,
+            'dadosApi' => (new DadosApiEntity()),
         ];
         return view('Painel/Produto/alterar', $data);
     }
 
     public function doAlterar() {
         $m = new ProdutoModel();
-        $mDadosApi = new DadosApiModel();
-        $mProdutoDadosApi = new ProdutoDadosApiModel();
+        // $mDadosApi = new DadosApiModel();
+        // $mProdutoDadosApi = new ProdutoDadosApiModel();
         $ef = $this->validateWithRequest($m->getValidationRulesFiles());
         if ($ef !== true) {
             return $this->returnWithError($ef);
@@ -103,36 +106,37 @@ class Produto extends BaseController {
             return $this->returnWithError('Registro não encontrado.');
         }
         $en = new ProdutoEntity($this->request->getPost());
-        $dadosApiData = $this->getDadosApiData();
-        $produtoDadosApi = $mProdutoDadosApi->where('Produto_id', $e->id)->first();
+        // $dadosApiData = $this->getDadosApiData();
+        // $produtoDadosApi = $mProdutoDadosApi->where('Produto_id', $e->id)->first();
         try{ 
             $ru['foto'] = $m->uploadImage($this->request->getFile('foto'), null, ProdutoEntity::folder);
             $en->foto = $ru['foto'] !== false ? $ru['foto'] : $e->foto;
             $m->db->transStart();
             if ($m->update($en->id, $en)) { 
-                if ($produtoDadosApi !== null) {
-                    if (!$mDadosApi->update($produtoDadosApi->DadosApi_id, $dadosApiData)) {
-                        $m->db->transRollback();
-                        if($ru['foto'] !== false) $m->deleteFile($ru['foto']);
-                        return $this->returnWithError($mDadosApi->errors());
-                    }
-                } else {
-                    $dadosApiData['codigo'] = '';
-                    if (!$mDadosApi->insert($dadosApiData, false)) {
-                        $m->db->transRollback();
-                        if($ru['foto'] !== false) $m->deleteFile($ru['foto']);
-                        return $this->returnWithError($mDadosApi->errors());
-                    }
-                    $eProdutoDadosApi = new ProdutoDadosApiEntity([
-                        'Produto_id' => $e->id,
-                        'DadosApi_id' => $mDadosApi->getInsertID(),
-                    ]);
-                    if (!$mProdutoDadosApi->insert($eProdutoDadosApi, false)) {
-                        $m->db->transRollback();
-                        if($ru['foto'] !== false) $m->deleteFile($ru['foto']);
-                        return $this->returnWithError($mProdutoDadosApi->errors());
-                    }
-                }
+                // Comentado enquanto Dados Fiscais não forem usados.
+                // if ($produtoDadosApi !== null) {
+                //     if (!$mDadosApi->update($produtoDadosApi->DadosApi_id, $dadosApiData)) {
+                //         $m->db->transRollback();
+                //         if($ru['foto'] !== false) $m->deleteFile($ru['foto']);
+                //         return $this->returnWithError($mDadosApi->errors());
+                //     }
+                // } else {
+                //     $dadosApiData['codigo'] = '';
+                //     if (!$mDadosApi->insert($dadosApiData, false)) {
+                //         $m->db->transRollback();
+                //         if($ru['foto'] !== false) $m->deleteFile($ru['foto']);
+                //         return $this->returnWithError($mDadosApi->errors());
+                //     }
+                //     $eProdutoDadosApi = new ProdutoDadosApiEntity([
+                //         'Produto_id' => $e->id,
+                //         'DadosApi_id' => $mDadosApi->getInsertID(),
+                //     ]);
+                //     if (!$mProdutoDadosApi->insert($eProdutoDadosApi, false)) {
+                //         $m->db->transRollback();
+                //         if($ru['foto'] !== false) $m->deleteFile($ru['foto']);
+                //         return $this->returnWithError($mProdutoDadosApi->errors());
+                //     }
+                // }
                 if($ru['foto'] !== false) $m->deleteFile($e->foto);
                 $m->db->transComplete();
                 return $this->returnSucess('Cadastrado com sucesso!');
@@ -154,7 +158,14 @@ class Produto extends BaseController {
     
     public function doPesquisar(){
         $m = new ProdutoModel();
-        $m->buildFindList($this->request->getGet());
+        $filters = $this->request->getGet();
+        $m->buildFindList($filters);
+        $abaixoEstoqueMinimo = $filters['abaixoEstoqueMinimo'] ?? '';
+        if ($abaixoEstoqueMinimo === 'S') {
+            $m->where('estoqueAtual < estoqueMinimo');
+        } elseif ($abaixoEstoqueMinimo === 'N') {
+            $m->where('estoqueAtual >= estoqueMinimo');
+        }
         $data = [
             'vProduto' => $m->paginate(self::itensPaginacao),
             'pager' => $m->pager,
@@ -195,6 +206,7 @@ class Produto extends BaseController {
         return view('Painel/Produto/respostaModal', $data);
     }
 
+    /*
     private function atualizarCadastrarApi(ProdutoEntity $produto) {
         $dadosApi = $produto->getDadosApi(true);
         if ($dadosApi === null || $dadosApi->id === '') {
@@ -309,4 +321,5 @@ class Produto extends BaseController {
         }
         return $data;
     }
+    */
 }

@@ -14,7 +14,7 @@ class ProdutoModel extends BaseModel{
     
         'nome' => ['label'=> 'Nome', 'rules'=>'required'],
         'foto' => ['label'=> 'Foto', 'rules'=>'permit_empty'],
-        'valor' => ['label'=> 'Valor', 'rules'=>'required|greater_than[0]|decimal'],
+        // 'valor' => ['label'=> 'Valor', 'rules'=>'required|greater_than[0]|decimal'],
         'estoqueMinimo' => ['label'=> 'Estoque Mínimo', 'rules'=>'required|greater_than[0]|integer'],
         'estoqueAtual' => ['label'=> 'Estoque Atual', 'rules'=>'required|greater_than[0]|integer'],
     ];

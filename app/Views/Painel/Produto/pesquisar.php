@@ -24,6 +24,8 @@
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Nome</label> 
                         <input class="form-control" name="nome" id="nome" type="text" maxlength="200">
                     </div>                                        
+                    <!-- Valor desabilitado temporariamente -->
+                    <!--
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Valor</label> 
                         <div class="input-group">
@@ -32,7 +34,8 @@
                             <div class="input-group-prepend"><span class="input-group-text">Até</span></div>
                             <input type="text" aria-label="Valor Final" class="form-control maskReal" name="valorEnd" id="valorEnd">
                         </div>
-                    </div>                    
+                    </div>
+                    -->
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Estoque Mínimo</label> 
                         <div class="input-group">
@@ -51,6 +54,14 @@
                             <input type="text" aria-label="Estoque Atual Final" class="form-control maskInteiro" name="estoqueAtualEnd" id="estoqueAtualEnd">
                         </div>
                     </div>                                        
+                    <div class="form-group col-12 col-md-6">
+                        <label class="main-content-label tx-11 tx-medium tx-gray-600">Abaixo do Estoque Mínimo</label>
+                        <select class="form-control" name="abaixoEstoqueMinimo" id="abaixoEstoqueMinimo">
+                            <option value="" selected></option>
+                            <option value="S">Sim</option>
+                            <option value="N">Não</option>
+                        </select>
+                    </div>
                     <div class="form-group mb-0 mt-3 text-center col-12">
                         <button type="submit" class="btn btn-primary submitButton">Pesquisar</button>
                     </div>
