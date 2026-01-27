@@ -93,6 +93,27 @@
 
             <li class="slide d-none">
                 <a class="side-menu__item" data-toggle="slide" href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="side-menu__icon bi bi-list-check" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5M3.854 2.146a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L2 3.293l1.146-1.147a.5.5 0 0 1 .708 0m0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L2 7.293l1.146-1.147a.5.5 0 0 1 .708 0m0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0"/>
+                    </svg>
+                    <span class="side-menu__label">Pesquisa Satisfação</span>
+                    <i class="angle fe fe-chevron-down"></i>
+                </a>
+                <ul class="slide-menu">
+                    <!-- <?PHP if (\App\Models\UsuarioModel::getSessao()->verificarPermissao('PesquisaSatisfacao', 'cadastrar')) { ?>
+                        <li><a class="slide-item" href="<?PHP echo base_url('PesquisaSatisfacao/cadastrar'); ?>">Cadastrar</a></li>
+                    <?PHP } ?> -->
+                    <?PHP if (\App\Models\UsuarioModel::getSessao()->verificarPermissao('PesquisaSatisfacao', 'pesquisar')) { ?>
+                        <li><a class="slide-item" href="<?PHP echo base_url('PesquisaSatisfacao/pesquisar'); ?>">Pesquisar</a></li>
+                    <?PHP } ?>
+                    <?PHP if (\App\Models\UsuarioModel::getSessao()->verificarPermissao('PesquisaSatisfacao', 'listar')) { ?>
+                        <li><a class="slide-item" href="<?PHP echo base_url('PesquisaSatisfacao/listar'); ?>">Listar</a></li>
+                    <?PHP } ?>
+                </ul>
+            </li>
+
+            <li class="slide d-none">
+                <a class="side-menu__item" data-toggle="slide" href="#">
                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="side-menu__icon bi bi-box-seam" viewBox="0 0 16 16">
                         <path d="M8.21.6a.5.5 0 0 0-.42 0L1.29 3.39a.5.5 0 0 0-.29.46v8.3a.5.5 0 0 0 .29.46l6.5 2.79a.5.5 0 0 0 .42 0l6.5-2.79a.5.5 0 0 0 .29-.46v-8.3a.5.5 0 0 0-.29-.46l-6.5-2.79zM2 4.27 7.5 6.63v7.2L2 11.47V4.27zm6.5 9.56v-7.2L14 4.27v7.2l-5.5 2.36zM13.56 3.8 8 6.12 2.44 3.8 8 1.48l5.56 2.32z" />
                     </svg>

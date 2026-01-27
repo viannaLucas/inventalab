@@ -22,16 +22,7 @@
                 <div class="form-row">
                     
                     <div class="form-group col-12 col-md-6">
-                        <label class="main-content-label tx-11 tx-medium tx-gray-600">Participante</label> 
-                        <div class="input-group">
-                            <div class="input-group-prepend"><span class="input-group-text">De</span></div>
-                            <input type="text" aria-label="Participante Inicial" class="form-control maskInteiro" name="Participante_idStart" id="Participante_idStart">
-                            <div class="input-group-prepend"><span class="input-group-text">Até</span></div>
-                            <input type="text" aria-label="Participante Final" class="form-control maskInteiro" name="Participante_idEnd" id="Participante_idEnd">
-                        </div>
-                    </div>                    
-                    <div class="form-group col-12 col-md-6">
-                        <label class="main-content-label tx-11 tx-medium tx-gray-600">Resposta 1</label> 
+                        <label class="main-content-label tx-11 tx-medium tx-gray-600">Uso Espaço</label> 
                         <div class="input-group">
                             <div class="input-group-prepend"><span class="input-group-text">De</span></div>
                             <input type="text" aria-label="Resposta 1 Inicial" class="form-control maskInteiro" name="resposta1Start" id="resposta1Start">
@@ -40,7 +31,7 @@
                         </div>
                     </div>                    
                     <div class="form-group col-12 col-md-6">
-                        <label class="main-content-label tx-11 tx-medium tx-gray-600">Resposta 2</label> 
+                        <label class="main-content-label tx-11 tx-medium tx-gray-600">Atendimento</label> 
                         <div class="input-group">
                             <div class="input-group-prepend"><span class="input-group-text">De</span></div>
                             <input type="text" aria-label="Resposta 2 Inicial" class="form-control maskInteiro" name="resposta2Start" id="resposta2Start">
@@ -49,7 +40,7 @@
                         </div>
                     </div>                    
                     <div class="form-group col-12 col-md-6">
-                        <label class="main-content-label tx-11 tx-medium tx-gray-600">Resposta 3</label> 
+                        <label class="main-content-label tx-11 tx-medium tx-gray-600">Equipamentos</label> 
                         <div class="input-group">
                             <div class="input-group-prepend"><span class="input-group-text">De</span></div>
                             <input type="text" aria-label="Resposta 3 Inicial" class="form-control maskInteiro" name="resposta3Start" id="resposta3Start">

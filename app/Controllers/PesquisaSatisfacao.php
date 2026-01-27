@@ -14,34 +14,70 @@ use DateTime;
 class PesquisaSatisfacao extends BaseController {
 
     public function index() {
-        return $this->cadastrar();
+        return $this->listar();
     }
 
-    public function cadastrar() {
-        return view('Painel/PesquisaSatisfacao/cadastrar');
-    }
+    // public function cadastrar() {
+    //     return view('Painel/PesquisaSatisfacao/cadastrar');
+    // }
 
-    public function doCadastrar() {
-        $m = new PesquisaSatisfacaoModel();
-        $ef = $this->validateWithRequest($m->getValidationRulesFiles());
-        if ($ef !== true) {
-            return $this->returnWithError($ef);
-        }
-        $e = new PesquisaSatisfacaoEntity($this->request->getPost());
-        $m->db->transStart();
-        try {
-            if ($m->insert($e, false)) { 
-                $m->db->transComplete();
-                return $this->returnSucess('Cadastrado com sucesso!');
-            } else {
-                return $this->returnWithError($m->errors());
-            }
-        } catch (\Exception $ex) {
-            return $this->returnWithError($ex->getMessage());
-        }
-    }
+    // public function doCadastrar() {
+    //     $m = new PesquisaSatisfacaoModel();
+    //     $ef = $this->validateWithRequest($m->getValidationRulesFiles());
+    //     if ($ef !== true) {
+    //         return $this->returnWithError($ef);
+    //     }
+    //     $e = new PesquisaSatisfacaoEntity($this->request->getPost());
+    //     $m->db->transStart();
+    //     try {
+    //         if ($m->insert($e, false)) { 
+    //             $m->db->transComplete();
+    //             return $this->returnSucess('Cadastrado com sucesso!');
+    //         } else {
+    //             return $this->returnWithError($m->errors());
+    //         }
+    //     } catch (\Exception $ex) {
+    //         return $this->returnWithError($ex->getMessage());
+    //     }
+    // }
 
-    public function alterar() {
+    // public function alterar() {
+    //     $m = new PesquisaSatisfacaoModel();
+    //     $e = $m->find($this->request->getUri()->getSegment(3));
+    //     if ($e === null) {
+    //         return $this->returnWithError('Registro não encontrado.');
+    //     } 
+    //     $data = [
+    //         'pesquisasatisfacao' => $e,
+    //     ];
+    //     return view('Painel/PesquisaSatisfacao/alterar', $data);
+    // }
+
+    // public function doAlterar() {
+    //     $m = new PesquisaSatisfacaoModel();
+    //     $ef = $this->validateWithRequest($m->getValidationRulesFiles());
+    //     if ($ef !== true) {
+    //         return $this->returnWithError($ef);
+    //     }
+    //     $e = $m->find($this->request->getPost('id'));
+    //     if ($e === null) {
+    //         return $this->returnWithError('Registro não encontrado.');
+    //     }
+    //     $en = new PesquisaSatisfacaoEntity($this->request->getPost());
+    //     try{ 
+    //         $m->db->transStart();
+    //         if ($m->update($en->id, $en)) { 
+    //             $m->db->transComplete();
+    //             return $this->returnSucess('Cadastrado com sucesso!');
+    //         } else { 
+    //             return $this->returnWithError($m->errors());
+    //         }
+    //     }catch (\Exception $ex){ 
+    //         return $this->returnWithError($ex->getMessage());
+    //     }
+    // }
+    
+    public function visualizar() {
         $m = new PesquisaSatisfacaoModel();
         $e = $m->find($this->request->getUri()->getSegment(3));
         if ($e === null) {
@@ -50,40 +86,18 @@ class PesquisaSatisfacao extends BaseController {
         $data = [
             'pesquisasatisfacao' => $e,
         ];
-        return view('Painel/PesquisaSatisfacao/alterar', $data);
+        return view('Painel/PesquisaSatisfacao/visualizar', $data);
     }
 
-    public function doAlterar() {
-        $m = new PesquisaSatisfacaoModel();
-        $ef = $this->validateWithRequest($m->getValidationRulesFiles());
-        if ($ef !== true) {
-            return $this->returnWithError($ef);
-        }
-        $e = $m->find($this->request->getPost('id'));
-        if ($e === null) {
-            return $this->returnWithError('Registro não encontrado.');
-        }
-        $en = new PesquisaSatisfacaoEntity($this->request->getPost());
-        try{ 
-            $m->db->transStart();
-            if ($m->update($en->id, $en)) { 
-                $m->db->transComplete();
-                return $this->returnSucess('Cadastrado com sucesso!');
-            } else { 
-                return $this->returnWithError($m->errors());
-            }
-        }catch (\Exception $ex){ 
-            return $this->returnWithError($ex->getMessage());
-        }
-    }
-    
     public function pesquisar(){
         return view('Painel/PesquisaSatisfacao/pesquisar');
     }
     
     public function doPesquisar(){
         $m = new PesquisaSatisfacaoModel();
-        $m->buildFindList($this->request->getGet());
+        $filtros = $this->request->getGet();
+        unset($filtros['Participante_idStart'], $filtros['Participante_idEnd']);
+        $m->buildFindList($filtros)->orderBy('dataResposta DESC');
         $data = [
             'vPesquisaSatisfacao' => $m->paginate(self::itensPaginacao),
             'pager' => $m->pager,
@@ -93,6 +107,7 @@ class PesquisaSatisfacao extends BaseController {
     
     public function listar() {
         $m = new PesquisaSatisfacaoModel();
+        $m->orderBy('dataResposta DESC');
         $data = [
             'vPesquisaSatisfacao' => $m->paginate(self::itensPaginacao),
             'pager' => $m->pager,
@@ -100,19 +115,19 @@ class PesquisaSatisfacao extends BaseController {
         return view('Painel/PesquisaSatisfacao/listar', $data);
     }
 
-    public function excluir() {
-        $m = new PesquisaSatisfacaoModel();
-        $e = $m->find($this->request->getUri()->getSegment(3));
-        if ($e === null) {
-            return $this->returnWithError('Registro não encontrado.');
-        }
-        $m->db->transStart();
-        if ($m->delete($e->id)) { 
-            $m->db->transComplete();
-            return $this->returnSucess('Excluído com sucesso!');
-        }
-        return $this->returnWithError('Erro ao excluir registro.');
-    }
+    // public function excluir() {
+    //     $m = new PesquisaSatisfacaoModel();
+    //     $e = $m->find($this->request->getUri()->getSegment(3));
+    //     if ($e === null) {
+    //         return $this->returnWithError('Registro não encontrado.');
+    //     }
+    //     $m->db->transStart();
+    //     if ($m->delete($e->id)) { 
+    //         $m->db->transComplete();
+    //         return $this->returnSucess('Excluído com sucesso!');
+    //     }
+    //     return $this->returnWithError('Erro ao excluir registro.');
+    // }
     
     public function pesquisaModal() {
         $m = new PesquisaSatisfacaoModel();
