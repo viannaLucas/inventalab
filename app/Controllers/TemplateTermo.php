@@ -60,6 +60,7 @@ class TemplateTermo extends BaseController {
             return $this->returnWithError('Registro não encontrado.');
         }
         $e->texto = $this->request->getPost('texto');
+        $e->requererTermo = $this->request->getPost('requererTermo');
         try{ 
             $m->db->transStart();
             if ($m->update($e->id, $e)) { 

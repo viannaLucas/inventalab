@@ -8,7 +8,7 @@ use App\Entities\Cast\CastDateBR;
 class TemplateTermoModel extends BaseModel{
     
     protected $table = 'TemplateTermo';
-    protected $allowedFields = ['nome', 'texto'];
+    protected $allowedFields = ['nome', 'requererTermo', 'texto'];
     protected array $sanitizeHtmlFields = ['texto'];
     protected $beforeInsert = ['sanitizeHtmlFields'];
     protected $beforeUpdate = ['sanitizeHtmlFields'];
@@ -16,6 +16,7 @@ class TemplateTermoModel extends BaseModel{
     	'id'    => 'permit_empty|max_length[19]|is_natural_no_zero',
     
         'nome' => ['label'=> 'Nome', 'rules'=>'required'],
+        'requererTermo' => ['label'=> 'Requerer Termo', 'rules'=>'required|in_list[0,1]'],
         'texto' => ['label'=> 'Texto', 'rules'=>'required'],
     ];
     protected $validationRulesFiles = [
