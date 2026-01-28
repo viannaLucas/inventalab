@@ -411,6 +411,11 @@ class Reserva extends BaseController {
         if ($e === null) {
             return $this->returnWithError('Registro não encontrado.');
         } 
+        $participantes = $e->getListReservaParticipante();
+        $participante = isset($participantes[0]) ? $participantes[0]->getParticipante() : null;
+        if ($participante && (int) $participante->suspenso === ParticipanteEntity::SUSPENSO_SIM) {
+            return $this->returnWithError('Participante suspenso.');
+        }
         $hora = trim((string) $this->request->getPost('hora'));
         if ($hora === '' || !preg_match('/^(?:[01]\d|2[0-3]):[0-5]\d$/', $hora)) {
             return $this->returnWithError('Hora inválida. Utilize o formato HH:MM.');

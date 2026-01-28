@@ -25,6 +25,7 @@ class Painel extends BaseController
             $participante = isset($participantes[0]) ? $participantes[0]->getParticipante() : null;
             $reserva->idadeParticipante = $participante ? $participante->getIdade() : 0;
             $reserva->temTermoResponsabilidade = ($participante && $participante->termoResponsabilidade != '') ? 1 : 0;
+            $reserva->participanteSuspenso = ($participante && (int) $participante->suspenso === \App\Entities\ParticipanteEntity::SUSPENSO_SIM) ? 1 : 0;
         }
         $data['vReservasSemSaida'] = (new ReservaModel())
             ->where('dataReserva < CURRENT_DATE')
