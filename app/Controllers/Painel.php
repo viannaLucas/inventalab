@@ -305,6 +305,27 @@ class Painel extends BaseController
         exit();
     }
 
+    public function publicResource() {
+        $pastarPermitidas = [
+            'evento_arquivos',
+        ];
+        $uri = $this->request->getUri();
+        $filepath = WRITEPATH . $uri->getSegment(1) . '/' . $uri->getSegment(2);
+        
+        if(!in_array($uri->getSegment(1), $pastarPermitidas)
+                || !is_file($filepath)){
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+            return;
+        }
+
+        $mime = mime_content_type($filepath);
+        header('Content-Length: ' . filesize($filepath));
+        header("Content-Type: $mime");
+        header('Content-Disposition: inline; filename="' . $uri->getSegment(2) . '";');
+        readfile($filepath);
+        exit();
+    }
+
     private function criarTokenRecuperacao(UsuarioEntity $usuario): string
     {
         $payload = [

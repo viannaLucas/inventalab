@@ -22,7 +22,7 @@ $routes->get("/produto_arquivos/(.*)", "Painel::resource");
 $routes->get("/materialoficina_arquivos/(.*)", "Painel::resource");
 $routes->get("/recursotrabalho_arquivos/(.*)", "Painel::resource");
 $routes->get("/participante_arquivos/(.*)", "Painel::resource");
-$routes->get("/evento_arquivos/(.*)", "Painel::resource");
+$routes->get("/evento_arquivos/(.*)", "Painel::publicResource");
 
 $routes->get("/usuario_arquivos/(.*)", "Painel::resource");
 

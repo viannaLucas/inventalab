@@ -1050,6 +1050,12 @@ class UsuarioEntity extends EntityBase {
                     'descricao' => 'Acessar Arquivos de upload',
                     'tipoAcesso' => 'global'
                 ],
+                'publicResource' => [
+                    'metodos' => ['Painel::publicResource'],
+                    'label' => 'Acesso a Imagens/Arquivos salvos no sistema',
+                    'descricao' => 'Acessar Arquivos de upload',
+                    'tipoAcesso' => 'publico'
+                ],
                 'testeemail' => [
                     'metodos' => ['Painel::testeEmail'],
                     'label' => 'Teste E-mail',
