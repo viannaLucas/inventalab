@@ -32,6 +32,7 @@ use App\Models\OficinaTematicaModel;
 use App\Models\ProdutoModel;
 use App\Models\RecursoTrabalhoModel;
 use App\Models\ReservaCobrancaModel;
+use App\Models\ParticipanteModel;
 use App\Models\ServicoModel;
 use CodeIgniter\HTTP\ResponseInterface;
 use DateInterval;
@@ -128,6 +129,14 @@ class Reserva extends BaseController {
         $resultadoValidacao = $validador->validarDadosInputCadastrar($data);
         if ($resultadoValidacao !== true) {
             return $this->response->setJSON($resultadoValidacao);
+        }
+
+        $participanteId = (int) ($data->participantId ?? 0);
+        if ($participanteId > 0) {
+            $participante = (new ParticipanteModel())->find($participanteId);
+            if ($participante instanceof ParticipanteEntity && (int) $participante->suspenso === ParticipanteEntity::SUSPENSO_SIM) {
+                return $this->prepareErrorJson('Participante suspenso.');
+            }
         }
         
         $reservaModel = new ReservaModel();
@@ -291,6 +300,18 @@ class Reserva extends BaseController {
         $e = $m->find($post['id'] ?? $this->request->getPost('id'));
         if ($e === null) {
             return $this->returnWithError('Registro não encontrado.');
+        }
+
+        $horaEntradaNova = trim((string) ($post['horaEntrada'] ?? ''));
+        $horaEntradaAntiga = trim((string) $e->horaEntrada);
+        $entradaAntesDefinida = $horaEntradaAntiga !== '' && $horaEntradaAntiga !== '0000-00-00 00:00:00';
+        $entradaAgoraDefinida = $horaEntradaNova !== '' && $horaEntradaNova !== '0000-00-00 00:00:00';
+        if (!$entradaAntesDefinida && $entradaAgoraDefinida) {
+            $participantes = $e->getListReservaParticipante();
+            $participante = isset($participantes[0]) ? $participantes[0]->getParticipante() : null;
+            if ($participante && (int) $participante->suspenso === ParticipanteEntity::SUSPENSO_SIM) {
+                return $this->returnWithError('Participante suspenso.');
+            }
         }
         $en = new ReservaEntity($post);
         try{ 

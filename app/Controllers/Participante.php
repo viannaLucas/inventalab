@@ -28,17 +28,6 @@ class Participante extends BaseController {
         $post = $this->request->getPost();
         unset($post['codigoApiSesc']);
         
-        // Verificação: se o termo de responsabilidade não foi definido e a idade for menor que 18 anos
-        // deve ser forçado o valor sim para o campo suspenso
-        if (empty($post['termoResponsabilidade']) && isset($post['dataNascimento'])) {
-            $dataNascimento = new \DateTime($post['dataNascimento']);
-            $hoje = new \DateTime();
-            $idade = $hoje->diff($dataNascimento)->y;
-            
-            if ($idade < 18) {
-                $post['suspenso'] = ParticipanteEntity::SUSPENSO_SIM;
-            }
-        }
         $faturarResponsavel = (string) $this->request->getPost('faturarResponsavel') === '1';
         $nomeResponsavel = trim((string) ($post['nomeResponsavel'] ?? ''));
         if ($faturarResponsavel) {
@@ -107,17 +96,6 @@ class Participante extends BaseController {
         if(isset($post['email'])){ //não pode alterar email
             $post['email'] = $e->email;
         }
-        // Verificação: se o termo de responsabilidade não foi definido e a idade for menor que 18 anos
-        // deve ser forçado o valor sim para o campo suspenso
-        if ((empty($post['termoResponsabilidade']) && $e->termoResponsabilidade == '') && isset($post['dataNascimento'])) {
-            $dataNascimento = new \DateTime($post['dataNascimento']);
-            $hoje = new \DateTime();
-            $idade = $hoje->diff($dataNascimento)->y;
-            
-            if ($idade < 18) {
-                $post['suspenso'] = ParticipanteEntity::SUSPENSO_SIM;
-            }
-        }
         $faturarResponsavel = (string) $this->request->getPost('faturarResponsavel') === '1';
         $nomeResponsavel = trim((string) ($post['nomeResponsavel'] ?? ''));
         if ($faturarResponsavel) {
@@ -160,6 +138,31 @@ class Participante extends BaseController {
             }
             return $this->returnWithError($ex->getMessage());
         }
+    }
+
+    public function getDadosParticipante()
+    {
+        $id = (int) ($this->request->getGet('id') ?? $this->request->getPost('id'));
+        if ($id <= 0) {
+            return $this->response->setJSON(['erro' => true, 'msg' => 'Participante inválido.']);
+        }
+
+        $m = new ParticipanteModel();
+        $p = $m->find($id);
+        if ($p === null) {
+            return $this->response->setJSON(['erro' => true, 'msg' => 'Participante não encontrado.']);
+        }
+
+        $dados = [
+            'id' => (int) $p->id,
+            'nome' => (string) $p->nome,
+            'dataNascimento' => (string) $p->dataNascimento,
+            'idade' => (int) $p->getIdade(),
+            'suspenso' => (int) $p->suspenso,
+            'temTermo' => $p->termoResponsabilidade != '' ? 1 : 0,
+        ];
+
+        return $this->response->setJSON(['erro' => false, 'dados' => $dados]);
     }
 
     private function gerarSenha(int $tamanho = 12): string

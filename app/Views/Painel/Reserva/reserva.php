@@ -668,6 +668,51 @@
   const participanteIdInput = document.getElementById('Participante_id');
   const oficinaIdInput = document.getElementById('OficinaTematica_id');
   const oficinaTextInput = document.getElementById('OficinaTematica_id_Text');
+  const participanteDadosUrl = "<?= base_url('Participante/getDadosParticipante'); ?>";
+
+  let participanteDados = null;
+  let participanteDadosCarregando = false;
+
+  function carregarDadosParticipante(id){
+    if (!id){
+      participanteDados = null;
+      return;
+    }
+    participanteDadosCarregando = true;
+    fetch(participanteDadosUrl + '?id=' + encodeURIComponent(id), {
+      headers: {
+        'Accept': 'application/json'
+      }
+    })
+      .then(resp => {
+        if (!resp.ok) throw new Error('Erro HTTP ' + resp.status);
+        return resp.json();
+      })
+      .then(data => {
+        if (data && data.erro === false && data.dados){
+          participanteDados = data.dados;
+        } else {
+          participanteDados = null;
+        }
+      })
+      .catch(() => {
+        participanteDados = null;
+      })
+      .finally(() => {
+        participanteDadosCarregando = false;
+      });
+  }
+
+  if (participanteIdInput){
+    participanteIdInput.addEventListener('change', () => {
+      const id = (participanteIdInput.value || '').trim();
+      carregarDadosParticipante(id);
+    });
+    const idInicial = (participanteIdInput.value || '').trim();
+    if (idInicial !== ''){
+      carregarDadosParticipante(idInicial);
+    }
+  }
 
   let selectedDate = todayStr();
   const today = selectedDate;
@@ -1022,87 +1067,103 @@
     if (validatorInstance && !validatorInstance.form()) {
       return;
     }
-    const participantName = participanteNameInput ? participanteNameInput.value.trim() : '';
-    const participantId = participanteIdInput ? participanteIdInput.value.trim() : '';
-    const note = document.getElementById('note').value.trim();
-    const p = Number(peopleInput.value || 0);
 
-    const act = getActivityPayload();
-    if (!act.ok) return toastMsg(act.reason);
-
-    const selections = collectSelections();
-    if (!selections.length) return toastMsg('Selecione entrada e saída em ao menos uma janela.');
-
-    // Validação final por range (capacidade)
-    for (const sel of selections){
-      const ok = canBookRange(selectedDate, sel.group, selectedRanges[sel.gi].startIdx, selectedRanges[sel.gi].endIdx, p);
-      if (!ok.ok) return toastMsg(ok.reason);
+    if (participanteDadosCarregando) {
+      return toastMsg('Carregando dados do participante.');
     }
 
-    // Verificação de exclusividade + capacidade de recursos (somente para recursos exclusivos)
-    const reqResIds = getActivityResourceIds(act.value);
-    const requestedExclusiveIds = reqResIds.filter(id => EXCLUSIVE_RESOURCE_IDS.has(id));
-
-    // Verifica conflitos tanto com reservas existentes como entre os próprios intervalos selecionados
-    const pending = []; // acumula reservas que serão criadas nesta operação
-    for (const sel of selections){
-      const sMin = toMinutes(sel.start), eMin = toMinutes(sel.end);
-      const conflict = findExclusiveCapacityConflict(selectedDate, sMin, eMin, requestedExclusiveIds, reservations.concat(pending));
-      if (conflict){
-        return toastMsg(`Recurso exclusivo "${conflict.resourceName}" sem unidades disponíveis entre ${conflict.inUseStart} e ${conflict.inUseEnd} (${conflict.used}/${conflict.capacity} em uso).`);
-      }
-      pending.push({ date: selectedDate, start: sel.start, duration: sel.duration, activity: act.value });
-    }
-
-    // enviando ao servidor
-    let newReservations = {
-        date: selectedDate,
-        interval: [],
-        people: p,
-        name: participantName || '',
-        participantId: participantId || '',
-        note: note || '',
-        activity: act.value, // { type:'oficina', id } ou { type:'livre', description, resourceIds }
-        isClass: $('#turmaEscola').val() == '0' ? true : false,
-        nameSchool: $('#nomeEscola').val() || '',
-        yearClass: $('#anoTurma').val() || '',
-    };
-
-    for (const sel of selections){
-      newReservations.interval.push({
-        start: sel.start,
-        duration: sel.duration,
+    if (participanteDados && Number(participanteDados.suspenso) === 1) {
+      swal({
+        title: 'Participante suspenso',
+        text: 'Não é permitido dar entrada para uma reserva cujo participante está suspenso.',
+        type: 'error',
+        confirmButtonText: 'OK'
       });
+      return;
     }
-    
-    fetch("<?= base_url(); ?>Reserva/doCadastrar", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(newReservations)
-    })
-    .then(response => {
-        if (!response.ok) throw new Error("Erro HTTP " + response.status);
-        return response.json(); // ou response.text(), depende do que seu controller retorna
-    })
-    .then(data => {
-        console.log("Resposta do servidor:", data);
-        // exemplo: tratar a resposta
-        if (data.erro) {
-            alert("Erro: " + data.msg);
-        } else {
-            alert("Reservas salvas com sucesso!");
+
+    const executarReserva = () => {
+      const participantName = participanteNameInput ? participanteNameInput.value.trim() : '';
+      const participantId = participanteIdInput ? participanteIdInput.value.trim() : '';
+      const note = document.getElementById('note').value.trim();
+      const p = Number(peopleInput.value || 0);
+
+      const act = getActivityPayload();
+      if (!act.ok) return toastMsg(act.reason);
+
+      const selections = collectSelections();
+      if (!selections.length) return toastMsg('Selecione entrada e saída em ao menos uma janela.');
+
+      // Validação final por range (capacidade)
+      for (const sel of selections){
+        const ok = canBookRange(selectedDate, sel.group, selectedRanges[sel.gi].startIdx, selectedRanges[sel.gi].endIdx, p);
+        if (!ok.ok) return toastMsg(ok.reason);
+      }
+
+      // Verificação de exclusividade + capacidade de recursos (somente para recursos exclusivos)
+      const reqResIds = getActivityResourceIds(act.value);
+      const requestedExclusiveIds = reqResIds.filter(id => EXCLUSIVE_RESOURCE_IDS.has(id));
+
+      // Verifica conflitos tanto com reservas existentes como entre os próprios intervalos selecionados
+      const pending = []; // acumula reservas que serão criadas nesta operação
+      for (const sel of selections){
+        const sMin = toMinutes(sel.start), eMin = toMinutes(sel.end);
+        const conflict = findExclusiveCapacityConflict(selectedDate, sMin, eMin, requestedExclusiveIds, reservations.concat(pending));
+        if (conflict){
+          return toastMsg(`Recurso exclusivo "${conflict.resourceName}" sem unidades disponíveis entre ${conflict.inUseStart} e ${conflict.inUseEnd} (${conflict.used}/${conflict.capacity} em uso).`);
         }
-    })
-    .catch(error => {
-        console.error("Erro na requisição:", error);
-    });
+        pending.push({ date: selectedDate, start: sel.start, duration: sel.duration, activity: act.value });
+      }
+
+      // enviando ao servidor
+      let newReservations = {
+          date: selectedDate,
+          interval: [],
+          people: p,
+          name: participantName || '',
+          participantId: participantId || '',
+          note: note || '',
+          activity: act.value, // { type:'oficina', id } ou { type:'livre', description, resourceIds }
+          isClass: $('#turmaEscola').val() == '0' ? true : false,
+          nameSchool: $('#nomeEscola').val() || '',
+          yearClass: $('#anoTurma').val() || '',
+      };
+
+      for (const sel of selections){
+        newReservations.interval.push({
+          start: sel.start,
+          duration: sel.duration,
+        });
+      }
+      
+      fetch("<?= base_url(); ?>Reserva/doCadastrar", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json"
+          },
+          body: JSON.stringify(newReservations)
+      })
+      .then(response => {
+          if (!response.ok) throw new Error("Erro HTTP " + response.status);
+          return response.json(); // ou response.text(), depende do que seu controller retorna
+      })
+      .then(data => {
+          console.log("Resposta do servidor:", data);
+          // exemplo: tratar a resposta
+          if (data.erro) {
+              alert("Erro: " + data.msg);
+          } else {
+              alert("Reservas salvas com sucesso!");
+          }
+      })
+      .catch(error => {
+          console.error("Erro na requisição:", error);
+      });
 
 
-    // Criar múltiplas reservas (uma por janela selecionada)
-    for (const sel of selections){
-      reservations.push({
+      // Criar múltiplas reservas (uma por janela selecionada)
+      for (const sel of selections){
+        reservations.push({
         date: selectedDate,
         start: sel.start,
         duration: sel.duration,
@@ -1114,12 +1175,31 @@
       });
     }
 
-    toastMsg(`Reserva${selections.length>1?'s':''} confirmada${selections.length>1?'s':''}: ${selections.map(s=>s.start+'–'+s.end).join(' • ')}`);
+      toastMsg(`Reserva${selections.length>1?'s':''} confirmada${selections.length>1?'s':''}: ${selections.map(s=>s.start+'–'+s.end).join(' • ')}`);
 
-    // Após reserva, limpar seleções mas manter valores do formulário
-    selectedRanges = {};
-    renderGroups({ keepSelections: false });
-    updateDayTable();
+      // Após reserva, limpar seleções mas manter valores do formulário
+      selectedRanges = {};
+      renderGroups({ keepSelections: false });
+      updateDayTable();
+    };
+
+    if (participanteDados && Number(participanteDados.idade) < 18 && Number(participanteDados.temTermo) !== 1) {
+      swal({
+        title: 'Termo não apresentado',
+        text: 'O participante é menor de 18 anos e não possui termo de responsabilidade. Deseja continuar com a reserva?',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sim, continuar',
+        cancelButtonText: 'Não'
+      }, function(isConfirm) {
+        if (isConfirm) {
+          executarReserva();
+        }
+      });
+      return;
+    }
+
+    executarReserva();
   });
 
 

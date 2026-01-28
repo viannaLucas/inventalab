@@ -236,58 +236,6 @@
     }
     $('#faturarResponsavel').on('change', toggleNomeResponsavel);
     toggleNomeResponsavel();
-    // Custom validation method for suspenso field
-    $.validator.addMethod("suspensoConditional", function(value, element) {
-        var dataNascimento = $('#dataNascimento').val();
-        if (!dataNascimento) return true; // If no date, assume not minor
-        
-        // Parse the date (assuming format DD/MM/YYYY from maskData)
-        var parts = dataNascimento.split('/');
-        if (parts.length !== 3) return true; // Invalid format
-        
-        var day = parseInt(parts[0], 10);
-        var month = parseInt(parts[1], 10) - 1; // Months are 0-based in JS
-        var year = parseInt(parts[2], 10);
-        
-        var birthDate = new Date(year, month, day);
-        if (isNaN(birthDate.getTime())) return true; // Invalid date
-        
-        var today = new Date();
-        var age = today.getFullYear() - birthDate.getFullYear();
-        var m = today.getMonth() - birthDate.getMonth();
-        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-            age--;
-        }
-        
-        // If age >= 18, no restriction
-        if (age >= 18) {
-            return true;
-        }
-        
-        // If minor, check if termoResponsabilidade is filled
-        var termoValue = $('#termoResponsabilidade').val();
-        if (termoValue) {
-            // Term is provided, so suspenso can be anything
-            return true;
-        }
-        
-        // Also check if there was already a term uploaded (displayed in the label)
-        if ($('#btnDownloadTermo').text() != '') {
-            // Term was already uploaded, so suspenso can be anything
-            return true;
-        }
-        
-        // If minor and no term, then suspenso must be "sim" - check both value and text
-        var selectedValue = $('#suspenso').val();
-        var selectedText = $('#suspenso option:selected').text().trim().toLowerCase();
-        
-        // Check if either value or text contains "sim" (case-insensitive)
-        if (typeof selectedValue === 'string') {
-            selectedValue = selectedValue.toLowerCase();
-        }
-        return selectedValue === "sim" || selectedText === "sim";
-    }, "Para menores de 18 anos sem termo de responsabilidade, o campo suspenso deve ser 'Sim'.");
-
     var validator = $("#formAlterar").validate({
         errorPlacement: function (error, element) {
             error.addClass('invalid-feedback');
@@ -366,7 +314,6 @@
             },
             suspenso: {
                 required: true,
-                suspensoConditional: true,
             },
             observacoesGerais: {
                 required: false,
@@ -437,21 +384,10 @@
     insertRowHabilidades(<?= json_encode($o) ?>);
 <?PHP } ?>
 
-    // Update validation when dataNascimento, termoResponsabilidade, or suspenso changes
-    $('#dataNascimento, #termoResponsabilidade, #suspenso').on('change', function() {
-        // Re-validate the suspenso field to update conditional requirements
-        $('#suspenso').valid();
-    });
-    
     // Update file label when a new file is selected
     $('#termoResponsabilidade').on('change', function() {
         var fileName = $(this).val().split('\\').pop();
         $(this).siblings('.custom-file-label').addClass("selected").html(fileName);
-    });
-    
-    // Initial check on page load
-    $(document).ready(function() {
-        $('#dataNascimento').trigger('change');
     });
 </script>    
 <?= $this->endSection('scripts'); ?>

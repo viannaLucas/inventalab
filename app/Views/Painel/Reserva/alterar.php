@@ -413,6 +413,46 @@ $mostrarBotaoCobranca = $horaEntradaDefinida && $horaSaidaDefinida && $semCobran
 
     $('.maskHora').mask(MASK_HORA);
 
+    const participanteDadosUrl = "<?= base_url('Participante/getDadosParticipante'); ?>";
+    const participanteIdInicial = <?= json_encode($listaReservaParticipante[0]->Participante_id ?? null); ?>;
+    const horaEntradaJaDefinida = <?= $horaEntradaDefinida ? 'true' : 'false'; ?>;
+    let participanteDados = null;
+    let participanteDadosCarregando = false;
+
+    function carregarDadosParticipante(id){
+        if (!id){
+            participanteDados = null;
+            return;
+        }
+        participanteDadosCarregando = true;
+        fetch(participanteDadosUrl + '?id=' + encodeURIComponent(id), {
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+            .then(resp => {
+                if (!resp.ok) throw new Error('Erro HTTP ' + resp.status);
+                return resp.json();
+            })
+            .then(data => {
+                if (data && data.erro === false && data.dados){
+                    participanteDados = data.dados;
+                } else {
+                    participanteDados = null;
+                }
+            })
+            .catch(() => {
+                participanteDados = null;
+            })
+            .finally(() => {
+                participanteDadosCarregando = false;
+            });
+    }
+
+    if (participanteIdInicial){
+        carregarDadosParticipante(participanteIdInicial);
+    }
+
     function toggleCamposTurmaEscola() {
         const mostrar = $('#turmaEscola').val() === TURMA_ESCOLA_SIM;
         $('.turma-escola-field').toggleClass('d-none', !mostrar);
@@ -433,7 +473,49 @@ $mostrarBotaoCobranca = $horaEntradaDefinida && $horaSaidaDefinida && $semCobran
     var validator = $("#formAlterar").validate({
         submitHandler: function (form) {
             disableValidationFieldsFK();
-            form.submit();
+
+            if (participanteDadosCarregando) {
+                swal({
+                    title: 'Aguarde',
+                    text: 'Carregando dados do participante.',
+                    type: 'warning',
+                    confirmButtonText: 'OK'
+                });
+                return;
+            }
+
+            const horaEntradaVal = ($('#horaEntrada').val() || '').trim();
+            const adicionandoEntrada = !horaEntradaJaDefinida && horaEntradaVal !== '';
+
+            if (adicionandoEntrada && participanteDados && Number(participanteDados.suspenso) === 1) {
+                swal({
+                    title: 'Participante suspenso',
+                    text: 'Não é permitido dar entrada para uma reserva cujo participante está suspenso.',
+                    type: 'error',
+                    confirmButtonText: 'OK'
+                });
+                return;
+            }
+
+            const enviarFormulario = () => form.submit();
+
+            if (adicionandoEntrada && participanteDados && Number(participanteDados.idade) < 18 && Number(participanteDados.temTermo) !== 1) {
+                swal({
+                    title: 'Termo não apresentado',
+                    text: 'O participante é menor de 18 anos e não possui termo de responsabilidade. Deseja continuar?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sim, continuar',
+                    cancelButtonText: 'Não'
+                }, function(isConfirm) {
+                    if (isConfirm) {
+                        enviarFormulario();
+                    }
+                });
+                return;
+            }
+
+            enviarFormulario();
         },
         errorPlacement: function (error, element) {
             error.addClass('invalid-feedback');
