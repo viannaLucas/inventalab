@@ -85,16 +85,16 @@ class Participante extends BaseController {
             return $this->returnWithError($ef);
         }
         $e = $m->find($this->request->getPost('id'));
-        if ($e === null) {
+        if (! $e instanceof ParticipanteEntity) {
             return $this->returnWithError('Registro não encontrado.');
         }
         $post = $this->request->getPost();
         unset($post['codigoApiSesc']);
         if(isset($post['senha'])){ //não pode alterar a senha
-            $post['senha'] = $e->senha;
+            unset($post['senha']);
         }
         if(isset($post['email'])){ //não pode alterar email
-            $post['email'] = $e->email;
+            unset($post['email']);
         }
         $faturarResponsavel = (string) $this->request->getPost('faturarResponsavel') === '1';
         $nomeResponsavel = trim((string) ($post['nomeResponsavel'] ?? ''));
@@ -106,7 +106,9 @@ class Participante extends BaseController {
         } else {
             $post['nomeResponsavel'] = '';
         }
-        $en = new ParticipanteEntity($post);
+        /** @var ParticipanteEntity $e */
+        $en = $e;
+        $en->fill($post);
         try{ 
             $ru['termoResponsabilidade'] = $m->uploadFile($this->request->getFile('termoResponsabilidade'), null, ParticipanteEntity::folder);
             $en->termoResponsabilidade = $ru['termoResponsabilidade'] !== false ? $ru['termoResponsabilidade'] : $e->termoResponsabilidade;
