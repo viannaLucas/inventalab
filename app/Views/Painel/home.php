@@ -52,7 +52,7 @@
                                                 </td>
                                                 <td class="text-right">
                                                         <?php if ($horaEntrada == '') { ?>
-                                                            <div data-reserva='<?= $i->id; ?>' class="btn btn-sm btn-success btn-entrada">
+                                                            <div data-reserva='<?= $i->id; ?>' data-idade="<?= (int) ($i->idadeParticipante ?? 0); ?>" data-termo="<?= (int) ($i->temTermoResponsabilidade ?? 0); ?>" class="btn btn-sm btn-success btn-entrada">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
                                                                     <title>Definir Entrada</title>
                                                                     <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z" />
@@ -1710,18 +1710,44 @@
             });
         });
 
+        var requererTermo = <?= (int) ($requererTermo ?? 0) ?>;
+
         $(document).on('click', '.btn-entrada', function() {
-            var id = $(this).data('reserva');
+            var $btn = $(this);
+            var id = $btn.data('reserva');
             if (!id) {
                 return;
             }
 
-            prepareModal({
-                action: '<?= base_url('Reserva/definirEntrada'); ?>' + '/' + id,
-                title: 'Definir Entrada',
-                submitText: 'Salvar Entrada',
-                submitClass: 'btn-success'
-            });
+            var idade = parseInt($btn.data('idade'), 10) || 0;
+            var temTermo = parseInt($btn.data('termo'), 10) || 0;
+
+            var abrirModalEntrada = function() {
+                prepareModal({
+                    action: '<?= base_url('Reserva/definirEntrada'); ?>' + '/' + id,
+                    title: 'Definir Entrada',
+                    submitText: 'Salvar Entrada',
+                    submitClass: 'btn-success'
+                });
+            };
+
+            if (requererTermo === 1 && idade > 0 && idade < 18 && temTermo !== 1) {
+                swal({
+                    title: 'Termo não apresentado',
+                    text: 'O participante é menor de 18 anos e o termo de responsabilidade não foi apresentado. Deseja continuar?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sim, continuar',
+                    cancelButtonText: 'Não'
+                }, function(isConfirm) {
+                    if (isConfirm) {
+                        abrirModalEntrada();
+                    }
+                });
+                return;
+            }
+
+            abrirModalEntrada();
         });
 
         $modal.on('shown.bs.modal', function() {

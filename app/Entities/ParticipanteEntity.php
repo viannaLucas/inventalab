@@ -140,6 +140,25 @@ class ParticipanteEntity extends EntityBase {
         $this->attributes['permissoes'] = $encrypter->encrypt(json_encode($permissao, true));
         return $this;
     }
+
+    public function getIdade(): int
+    {
+        $dataNascimento = trim((string) ($this->dataNascimento ?? ''));
+        if ($dataNascimento === '') {
+            return 0;
+        }
+
+        $data = \DateTime::createFromFormat('d/m/Y', $dataNascimento);
+        if ($data === false) {
+            $data = \DateTime::createFromFormat('Y-m-d', $dataNascimento);
+        }
+        if ($data === false) {
+            return 0;
+        }
+
+        $hoje = new \DateTime();
+        return max(0, (int) $hoje->diff($data)->y);
+    }
     
     /**
      * Retorna as permissões do usuário

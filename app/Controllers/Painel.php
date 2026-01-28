@@ -10,6 +10,7 @@ use App\Models\ConfiguracaoModel;
 use App\Models\ReservaModel;
 use App\Models\ServicoModel;
 use App\Models\ProdutoModel;
+use App\Models\TemplateTermoModel;
 
 class Painel extends BaseController
 {
@@ -19,6 +20,12 @@ class Painel extends BaseController
         $reservaM = new ReservaModel();
         $data['vReserva'] = $reservaM->where('dataReserva = DATE(NOW())')
                 ->where('status', ReservaEntity::STATUS_ATIVO)->orderBy('horaInicio')->findAll();
+        foreach ($data['vReserva'] as $reserva) {
+            $participantes = $reserva->getListReservaParticipante();
+            $participante = isset($participantes[0]) ? $participantes[0]->getParticipante() : null;
+            $reserva->idadeParticipante = $participante ? $participante->getIdade() : 0;
+            $reserva->temTermoResponsabilidade = ($participante && $participante->termoResponsabilidade != '') ? 1 : 0;
+        }
         $data['vReservasSemSaida'] = (new ReservaModel())
             ->where('dataReserva < CURRENT_DATE')
             ->where('status', ReservaEntity::STATUS_ATIVO)
@@ -75,6 +82,8 @@ class Painel extends BaseController
         }
         $data['usarCalculoUsoEspaco'] = $usarCalculoUsoEspaco;
         $data['servicoUsoEspacoId'] = $servicoUsoEspacoId;
+        $templateTermo = (new TemplateTermoModel())->find(1);
+        $data['requererTermo'] = $templateTermo ? (int) $templateTermo->requererTermo : 0;
         return view('Painel/home', $data);
     }
     
