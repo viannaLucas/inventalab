@@ -36,30 +36,12 @@
             <form id='formAlterar' action="<?PHP echo base_url('Evento/doAlterar'); ?>" class="needs-validation" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="id" value="<?= $evento->id ?>" />
                 <div class="row">
-                    <div class="form-group col-12 col-md-6">
-                        <label class="main-content-label tx-11 tx-medium tx-gray-600">Serviço</label>
-                        <div class="input-group">
-                            <input class="form-control" name="Servico_id_Text" id="Servico_id_Text" type="text" disabled="true" onclick="$('#addonSearchServico_id').click()" value="<?= $evento->getServico()->Nome ?>"/>
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" type="button" id="addonSearchServico_id"
-                                    data-toggle="modal" data-target="#modalFK" data-title='Localizar Serviço'
-                                    data-url-search='<?PHP echo base_url('Servico/pesquisaModal?searchTerm='); ?>' data-input-result='Servico_id' data-input-text='Servico_id_Text'>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                                    </svg>
-                                </button>
-                            </div>
-                            <input class="d-none" name="Servico_id" id="Servico_id" type="text" value="<?= $evento->Servico_id ?>" />
-                        </div>
-                    </div>
                     <div class="form-group col-12 col-md-12">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Nome</label>
                         <input class="form-control" name="nome" id="nome" type="text" maxlength="150" value="<?= $evento->nome ?>">
                     </div>
                     <div class="form-group col-12 ">
-                        <label>Imagem</label>
-                        <label>
-                            Imagem                            <?PHP if($evento->imagem != '') { ?>
+                        <label>Imagem <?PHP if($evento->imagem != '') { ?>
                             <a class="btn btn-sm btn-primary ml-3" href="<?PHP echo base_url($evento->imagem); ?>" target="_blank">Fazer Download</a>
                             <?PHP } ?>
                         </label>
@@ -111,10 +93,29 @@
                         <input class="form-control maskData" name="dataInicio" id="dataInicio" type="text" value="<?= $evento->dataInicio ?>">
                         <small class="form-text text-muted">Data do primeiro dia do evento.</small>
                     </div>
+                    <div class="form-group col-12 col-md-12">
+                        Financeiro
+                    </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Valor</label>
                         <input class="form-control maskReal" name="valor" id="valor" type="text" value="<?= $evento->valor ?>">
                         <small class="form-text text-muted">Valor de inscrição para cada participate, deixe com valor 0,00 para sem cobrança.</small>
+                    </div>
+                    <div class="form-group col-12 col-md-6">
+                        <label class="main-content-label tx-11 tx-medium tx-gray-600">Serviço</label>
+                        <div class="input-group">
+                            <input class="form-control" name="Servico_id_Text" id="Servico_id_Text" type="text" disabled="true" onclick="$('#addonSearchServico_id').click()" value="<?= $evento->getServico()->Nome ?>"/>
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" id="addonSearchServico_id"
+                                    data-toggle="modal" data-target="#modalFK" data-title='Localizar Serviço'
+                                    data-url-search='<?PHP echo base_url('Servico/pesquisaModal?searchTerm='); ?>' data-input-result='Servico_id' data-input-text='Servico_id_Text'>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <input class="d-none" name="Servico_id" id="Servico_id" type="text" value="<?= $evento->Servico_id ?>" />
+                        </div>
                     </div>
                     <div class="col-12">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Informações do evento</label>
