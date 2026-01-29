@@ -211,6 +211,11 @@
                         <div class="border-bottom mx-n1 mb-3">
                             <h4 class="px-2">Lista de Participante Evento</h4>
                             <p class="px-3 text-muted">Em eventos com vagas limitadas, adicione Participantes para controlar vagas e presença. Pode ser feito após cadastrar o evento com o decorrer das inscrições.</p>
+                            <p class="px-3 text-muted">
+                                Legenda:
+                                <span class="badge badge-warning">Sem pagamento / Em aberto</span>
+                                <span class="badge badge-success">Pago</span>
+                            </p>
                         </div>
                         <div class="form-row px-2">
                             <div class="form-group col-auto">
@@ -307,7 +312,7 @@
             <input type="text" class="form-control ignoreValidate" readonly="true" value="{_Participante_id_Text_}" />
         </td>
         <td>
-            <a class="btn btn-success btnExcluirParticipanteEvento" href="<?= base_url('Evento/cobranca/') ?>{_id_}">
+            <a class="btn btnAddCobrancaParticipanteEvento {_class_btn_cobranca_} {_class_btn_cobranca_color_}" href="<?= base_url('Evento/cobranca/') ?>{_id_}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-coin" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8m5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0"/>
                     <path d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.563h-.668zm1.36-1.354c-.369-.085-.569-.26-.569-.522 0-.294.216-.514.572-.578v1.1zm.432.746c.449.104.655.272.655.569 0 .339-.257.571-.709.614v-1.195z"/>
@@ -747,6 +752,13 @@
         html = html.replaceAll('{_Participante_id_}', dados.Participante_id);
         html = html.replaceAll('{_Participante_id_Text_}', dados.Participante_id_Text);
         html = html.replaceAll('{_id_}', dados.id);
+        const classeBtnCobranca = dados.id ? '' : 'd-none';
+        html = html.replaceAll('{_class_btn_cobranca_}', classeBtnCobranca);
+        const situacaoCobranca = Number.isFinite(Number(dados.cobranca_situacao))
+            ? Number(dados.cobranca_situacao)
+            : 0;
+        const classeBtnCobrancaCor = situacaoCobranca === 1 ? 'btn-success' : 'btn-warning';
+        html = html.replaceAll('{_class_btn_cobranca_color_}', classeBtnCobrancaCor);
         $('#listTableParticipanteEvento tbody').append(html);
 
         indexRowParticipanteEvento++;
@@ -779,8 +791,22 @@
     ?>
         insertRowReservaEspaco(<?= json_encode($dados) ?>);
     <?PHP } ?>
-    <?PHP foreach ($evento->getListParticipanteEvento() as $i => $o) {
+    <?PHP
+    $cobrancaParticipanteEventoModel = new \App\Models\CobrancaParticipanteEventoModel();
+    foreach ($evento->getListParticipanteEvento() as $i => $o) {
         $o->Participante_id_Text = $o->getParticipante()->nome;
+        $o->cobranca_situacao = null;
+        if (!empty($o->id)) {
+            $linkCobranca = $cobrancaParticipanteEventoModel
+                ->where('ParticipanteEvento_id', $o->id)
+                ->first();
+            if ($linkCobranca) {
+                $cobranca = $linkCobranca->getCobranca();
+                if ($cobranca) {
+                    $o->cobranca_situacao = $cobranca->situacao;
+                }
+            }
+        }
     ?>
         insertRowParticipanteEvento(<?= json_encode($o) ?>);
     <?PHP } ?>

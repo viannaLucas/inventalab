@@ -21,6 +21,7 @@ use App\Models\CobrancaModel;
 use App\Models\CobrancaParticipanteEventoModel;
 use App\Models\CobrancaServicoModel;
 use App\Entities\Cast\CastCurrencyBR;
+use App\Entities\CobrancaParticipanteEventoEntity;
 use App\Entities\ReservaEntity;
 use App\Models\CobrancaProdutoModel;
 
@@ -315,6 +316,20 @@ class Evento extends BaseController {
                             ->findAll();
                         foreach($cpes as $cpe){
                             $cobrancaParticipacaoEventoM->delete($cpe->id);
+                            $cobranca = $cpe->getCobranca();
+                            if (! (new CobrancaParticipanteEventoModel())->delete($cpe->id)) {
+                                return $this->returnWithError('Erro ao excluir registro de "Cobrança Participante Evento".');
+                            }
+                            foreach($cobranca->getListCobrancaServico() as $cs){
+                                if (! (new CobrancaServicoModel())->delete($cs->id)) {
+                                    return $this->returnWithError('Erro ao excluir registro de "Cobrança Serviço".');
+                                }
+                            }
+                            foreach($cobranca->getListCobrancaProduto() as $cp){
+                                if (! (new CobrancaProdutoModel())->delete($cp->id)) {
+                                    return $this->returnWithError('Erro ao excluir registro de "Cobrança Produto".');
+                                }
+                            }
                             if(!$cobrancaModel->delete($cpe->Cobranca_id)){
                                 dd($cobrancaModel->errors());
                             }
@@ -482,17 +497,72 @@ class Evento extends BaseController {
 
     public function excluir() {
         $m = new EventoModel();
+        /** @var EventoEntity $e */
         $e = $m->find($this->request->getUri()->getSegment(3));
         if ($e === null) {
             return $this->returnWithError('Registro não encontrado.');
         }
-        $m->db->transStart();
+        $db = db_connect();
+        $db->transStart();
+        /** @var ControlePresencaEntity $cp */
+        foreach($e->getListControlePresenca() as $cp){
+            /** @var PresencaEventoEntity $pe */
+            foreach($cp->getListPresencaEvento() as $pe){
+                if (! (new PresencaEventoModel())->delete($pe->id)) {
+                    $db->transRollback();
+                    return $this->returnWithError('Erro ao excluir registro de "Presença Evento".');
+                }
+            }
+            if (! (new ControlePresencaModel())->delete($cp->id)) {
+                $db->transRollback();
+                return $this->returnWithError('Erro ao excluir registro de "Controle Presença".');
+            }
+        }
+        /** @var ParticipanteEventoEntity $pae */
+        foreach($e->getListParticipanteEvento() as $pae){
+            $lCobrancaPartEvento = (new CobrancaParticipanteEventoModel())->where('ParticipanteEvento_id', $pae->id)->findAll();
+            /** @var CobrancaParticipanteEventoEntity $cpe */
+            foreach($lCobrancaPartEvento as $cpe){
+                $cobranca = $cpe->getCobranca();
+                if (! (new CobrancaParticipanteEventoModel())->delete($cpe->id)) {
+                    return $this->returnWithError('Erro ao excluir registro de "Cobrança Participante Evento".');
+                }
+                foreach($cobranca->getListCobrancaServico() as $cs){
+                     if (! (new CobrancaServicoModel())->delete($cs->id)) {
+                        return $this->returnWithError('Erro ao excluir registro de "Cobrança Serviço".');
+                    }
+                }
+                foreach($cobranca->getListCobrancaProduto() as $cp){
+                     if (! (new CobrancaProdutoModel())->delete($cp->id)) {
+                        return $this->returnWithError('Erro ao excluir registro de "Cobrança Produto".');
+                    }
+                }
+                if (! (new CobrancaModel())->delete($cobranca->id)) {
+                    return $this->returnWithError('Erro ao excluir registro de "Cobrança".');
+                }
+            }
+            if (! (new ParticipanteEventoModel())->delete($pae->id)) {
+                return $this->returnWithError('Erro ao excluir registro de "Participante Evento".');
+            }
+        }
+        /** @var EventoReservaEntity $er */
+        foreach($e->getListEventoReserva() as $er){
+            $reserva = $er->getReserva();
+            if (! (new EventoReservaModel())->delete($er->id)) {
+                return $this->returnWithError('Erro ao excluir registro de "Evento Reserva".');
+            }
+
+            if (! (new ReservaModel())->delete($reserva->id)) {
+                return $this->returnWithError('Erro ao excluir registro de "Reserva".');
+            }
+        }
+
         if ($m->delete($e->id)) { 
             $m->deleteFile($e->imagem);
-            $m->db->transComplete();
+            $db->transComplete();
             return $this->returnSucess('Excluído com sucesso!');
         }
-        return $this->returnWithError('Erro ao excluir registro.'. implode(' ', $m->errors()));
+        return $this->returnWithError('Erro ao excluir registro.'. implode(' ', $db->error()));
     }
 
     private function normalizarHora(string $hora, bool $isFim = false): ?string
