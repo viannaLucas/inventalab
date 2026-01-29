@@ -63,6 +63,24 @@ writable/uploads/*
 writable/debugbar/*
 !writable/debugbar/index.html
 
+writable/evento_arquivos/*
+!writable/evento_arquivos/index.html
+
+writable/participante_arquivos/*
+!writable/participante_arquivos/index.html
+
+writable/produto_arquivos/*
+!writable/produto_arquivos/index.html
+
+writable/materialoficina_arquivos/*
+!writable/materialoficina_arquivos/index.html
+
+writable/materialoficina_arquivos/*
+!writable/materialoficina_arquivos/index.html
+
+writable/recursotrabalho_arquivos/*
+!writable/recursotrabalho_arquivos/index.html
+
 php_errors.log
 
 #-------------------------
