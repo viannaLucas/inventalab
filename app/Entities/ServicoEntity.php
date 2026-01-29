@@ -8,6 +8,9 @@ class ServicoEntity extends EntityBase {
     
     const folder = 'servico_arquivos';
     private $fk_dadosapi = null;
+
+    const ATIVO_SIM = 1;
+    const ATIVO_NAO = 0;
     
     protected $attributes = [
         'id' => '',
@@ -23,12 +26,12 @@ class ServicoEntity extends EntityBase {
     ];
     
     public $op_ativo = [
-        0 => 'Não',
-        1 => 'Sim',];   
+        self::ATIVO_NAO => 'Não',
+        self::ATIVO_SIM => 'Sim',];   
     
     public $color_ativo = [
-        0 => 'unset',
-        1 => 'unset',];
+        self::ATIVO_NAO => 'unset',
+        self::ATIVO_SIM => 'unset',];
     
     public function getDadosApi(bool $forceUpadate=false){
         if($this->fk_dadosapi == null || $forceUpadate){
