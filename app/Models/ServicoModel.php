@@ -4,6 +4,7 @@ namespace App\Models;
 use App\Models\BaseModel;
 use App\Entities\Cast\CastCurrencyBR;
 use App\Entities\Cast\CastDateBR;
+use App\Entities\ServicoEntity;
 
 class ServicoModel extends BaseModel{
     
@@ -41,9 +42,12 @@ class ServicoModel extends BaseModel{
     }
     
     public function buildFindModal(string $searchTerm){ 
-        $this->orLike('Nome', $searchTerm);
+        $this->groupStart();
+        $this->like('Nome', $searchTerm);
         $this->orLike('descricao', $searchTerm);
-        $this->orLike('unidade', $searchTerm);        
+        $this->orLike('unidade', $searchTerm);
+        $this->groupEnd();
+        $this->where('ativo', ServicoEntity::ATIVO_SIM); 
         return $this;
     }
     

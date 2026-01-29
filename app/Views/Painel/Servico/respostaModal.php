@@ -4,23 +4,23 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                  <th scope="col">ID</th>
+                  <!-- <th scope="col">ID</th> -->
                   <th scope="col">Nome</th>
                   <th scope="col">Descrição</th>
                   <th scope="col">Valor</th>
                   <th scope="col">Unidade</th>
-                  <th scope="col">Ativo</th>
+                  <!-- <th scope="col">Ativo</th> -->
                 </tr>
             </thead>
             <tbody>
             <?PHP foreach ($vServico as $i) { ?>
                 <tr data-id='<?= $i->id ?>' data-text='<?= $i->Nome ?>' data-valor='<?= $i->valor ?>'>
-                    <td><?= $i->id ?></td>
+                    <!-- <td><?= $i->id ?></td> -->
                     <td><?= $i->Nome ?></td>
                     <td><?= $i->descricao ?></td>
                     <td><?= $i->valor ?></td>
                     <td><?= $i->unidade ?></td>
-                    <td><span style="color: <?= $i->_cl('ativo', $i->ativo) ?>;"><?= $i->_op('ativo', $i->ativo) ?></span></td>
+                    <!-- <td><span style="color: <?= $i->_cl('ativo', $i->ativo) ?>;"><?= $i->_op('ativo', $i->ativo) ?></span></td> -->
                 </tr>
             <?PHP } ?>
             </tbody>

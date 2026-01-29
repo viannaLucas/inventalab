@@ -175,7 +175,7 @@ class Servico extends BaseController {
     
     public function pesquisaModal() {
         $m = new ServicoModel();
-        $m->buildFindModal($this->request->getGet('searchTerm'))->where('ativo', ServicoEntity::ATIVO_SIM);
+        $m->buildFindModal($this->request->getGet('searchTerm'));
         $data = [
             'vServico' => $m->findAll(100)
         ];
