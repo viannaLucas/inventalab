@@ -5,13 +5,14 @@ use App\Models\BaseModel;
 use App\Entities\Cast\CastCurrencyBR;
 use App\Entities\Cast\CastDateBR;
 use App\Entities\ParticipanteEntity;
+use App\Libraries\SescAPI;
 
 class ParticipanteModel extends BaseModel{
     
     private const SESSION_NAME = 'sessao_participante_maker';
 
     protected $table = 'Participante';
-    protected $allowedFields = ['nome', 'telefone', 'email', 'cpf', 'logradouro', 'numero', 'bairro', 'cidade', 'uf', 'cep', 'nomeResponsavel', 'dataNascimento', 'termoResponsabilidade', 'suspenso', 'observacoesGerais', 'senha', 'codigoApiSesc'];
+    protected $allowedFields = ['nome', 'telefone', 'email', 'cpf', 'logradouro', 'numero', 'bairro', 'cidade', 'codigoCidade', 'uf', 'cep', 'nomeResponsavel', 'dataNascimento', 'termoResponsabilidade', 'suspenso', 'observacoesGerais', 'senha', 'codigoApiSesc'];
     protected $validationRules = [
     	'id'    => 'permit_empty|max_length[19]|is_natural_no_zero',
     
@@ -23,6 +24,7 @@ class ParticipanteModel extends BaseModel{
         'numero' => ['label'=> 'Número', 'rules'=>'permit_empty|integer|max_length[20]'],
         'bairro' => ['label'=> 'Bairro', 'rules'=>'required|max_length[100]'],
         'cidade' => ['label'=> 'Cidade', 'rules'=>'required|max_length[100]'],
+        'codigoCidade' => ['label'=> 'Código Cidade', 'rules'=>'permit_empty|regex_match[/^\\d+$/]'],
         'uf' => ['label'=> 'UF', 'rules'=>'required|in_list[AC,AL,AP,AM,BA,CE,DF,ES,GO,MA,MT,MS,MG,PA,PB,PR,PE,PI,RJ,RN,RS,RO,RR,SC,SP,SE,TO]'],
         'cep' => ['label'=> 'CEP', 'rules'=>'required|cep|max_length[10]'],
         'nomeResponsavel' => ['label'=> 'Nome do Responsável', 'rules'=>'permit_empty|max_length[100]'],
@@ -170,4 +172,51 @@ class ParticipanteModel extends BaseModel{
         return $return;
     }
     
+    public function cadastroSescApi(ParticipanteEntity $participante) : string
+    {
+        $sescApi = new SescAPI([
+            'baseUrl'=> env('sescApi_baseUrl'),
+            'username'=> env('sescApi_username'),
+            'password'=> env('sescApi_password'),
+            'environment'=> env('sescApi_environment'),
+            'timeout_seconds'=> env('sescApi_timeoutSeconds'),
+        ]);
+        $consultaSesc = $sescApi->consultaCliente($participante->cpf);
+        
+        if(isset($consultaSesc['decoded_response']['Data']['InterfaceDoCliente'][0]['Codigo'])){
+            return $consultaSesc['decoded_response']['Data']['InterfaceDoCliente'][0]['Codigo'];
+        } else {
+            $codigo = preg_replace('/\\D+/', '', date('mdHis')) ?? date('mdHis');
+            $codigo = substr($codigo, 0, 15);
+            $dados = [
+                "SequenciadoRegistro" => 1,
+                "Codigo" => $codigo,
+                "TipodePessoa" => "F",
+                "NomeFantansia" => $participante->nomeResponsavel != '' ? $participante->nomeResponsavel : $participante->nome,
+                "Nome" => $participante->nomeResponsavel != '' ? $participante->nomeResponsavel : $participante->nome,
+                "CPFouCNPJ" => $participante->cpf,
+                "TipodoLocaldoIndicadordeInscricaoEstadual" => env('sescApi_TipodoLocaldoIndicadordeInscricaoEstadual'),
+                "Inscricao" => "",
+                "Email" => $participante->email,
+                "Telefone" => $participante->telefone,
+                "Endereco" => $participante->logradouro,
+                "NumerodoEndereco" => $participante->numero,
+                "Bairro" => $participante->bairro,
+                "Cidade" => $participante->cidade,
+                "Uf" => $participante->uf,
+                "Cep" => $participante->cep,
+                "CodigodoPais" => "BRA",
+                "CodigodaCidade" => $participante->codigoCidade,
+                "Pais" => "Brasil",
+                "Ativo" => "A"
+            ];
+            $respCadastroSesc = $sescApi->cadastroCliente($dados);
+
+            if($respCadastroSesc['decoded_response']['Success'] == true
+                    && $respCadastroSesc['decoded_response']['Data'] != null){
+                return $respCadastroSesc['decoded_response']['Data'];
+            }
+            return '';
+        }
+    }
 }

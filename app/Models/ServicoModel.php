@@ -37,6 +37,13 @@ class ServicoModel extends BaseModel{
         } 
         if(isset($data['valorStart'])) $this->where('valor >=', CastCurrencyBR::set($data['valorStart']));
         if(isset($data['valorEnd'])) $this->where('valor <=', CastCurrencyBR::set($data['valorEnd']));
+        if (isset($data['codigo'])) {
+            $this->select('Servico.*')
+                ->distinct()
+                ->join('ServicoDadosApi', 'ServicoDadosApi.Servico_id = Servico.id')
+                ->join('DadosApi', 'DadosApi.id = ServicoDadosApi.DadosApi_id')
+                ->where('DadosApi.codigo', $data['codigo']);
+        }
         
         return $this;
     }

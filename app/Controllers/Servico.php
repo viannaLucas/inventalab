@@ -6,10 +6,12 @@ use App\Controllers\BaseController;
 use App\Models\ServicoModel;
 use App\Models\DadosApiModel;
 use App\Models\ServicoDadosApiModel;
-use App\Libraries\ApiSesc;
+use App\Models\ServicoProdutoModel;
 use App\Entities\ServicoEntity;
 use App\Entities\DadosApiEntity;
 use App\Entities\ServicoDadosApiEntity;
+use App\Entities\ServicoProdutoEntity;
+use App\Libraries\SescAPI;
 
 class Servico extends BaseController {
 
@@ -25,13 +27,21 @@ class Servico extends BaseController {
         $m = new ServicoModel();
         $mDadosApi = new DadosApiModel();
         $mServicoDadosApi = new ServicoDadosApiModel();
+        $mServicoProduto = new ServicoProdutoModel();
         $ef = $this->validateWithRequest($m->getValidationRulesFiles());
         if ($ef !== true) {
             return $this->returnWithError($ef);
         }
+        $codigo = trim((string) $this->request->getPost('codigo'));
+        if ($codigo === '') {
+            return $this->returnWithError('O campo código é obrigatório.');
+        }
+        if ($mServicoDadosApi->existsCodigo($codigo)) {
+            return $this->returnWithError('Já existe um serviço cadastrado com este código.');
+        }
         $e = new ServicoEntity($this->request->getPost());
+        $ServicoProduto = $this->request->getPost('ServicoProduto') ?? [];
         $dadosApiData = $this->getDadosApiData();
-        $dadosApiData['codigo'] = '';
         $eDadosApi = new DadosApiEntity($dadosApiData);
         $m->db->transStart();
         try {
@@ -49,11 +59,13 @@ class Servico extends BaseController {
                     $m->db->transRollback();
                     return $this->returnWithError($mServicoDadosApi->errors());
                 }
-                $e->id = $servicoId;
-                $apiResult = $this->atualizarCadastrarApi($e);
-                if ($apiResult !== true) {
-                    $m->db->transRollback();
-                    return $this->returnWithError($apiResult);
+                foreach ($ServicoProduto as $pp){
+                    $pp['Servico_id'] = $servicoId;
+                    $eServicoProduto = new ServicoProdutoEntity($pp);
+                    if(!$mServicoProduto->insert($eServicoProduto, false)){
+                        $m->db->transRollback();
+                        return $this->returnWithError($mServicoProduto->errors());
+                    }
                 }
                 $m->db->transComplete();
                 return $this->returnSucess('Cadastrado com sucesso!');
@@ -92,6 +104,7 @@ class Servico extends BaseController {
         $m = new ServicoModel();
         $mDadosApi = new DadosApiModel();
         $mServicoDadosApi = new ServicoDadosApiModel();
+        $mServicoProduto = new ServicoProdutoModel();
         $ef = $this->validateWithRequest($m->getValidationRulesFiles());
         if ($ef !== true) {
             return $this->returnWithError($ef);
@@ -100,7 +113,15 @@ class Servico extends BaseController {
         if ($e === null) {
             return $this->returnWithError('Registro não encontrado.');
         }
+        $codigo = trim((string) $this->request->getPost('codigo'));
+        if ($codigo === '') {
+            return $this->returnWithError('O campo código é obrigatório.');
+        }
+        if ($mServicoDadosApi->existsCodigo($codigo, (int) $e->id)) {
+            return $this->returnWithError('Já existe um serviço cadastrado com este código.');
+        }
         $en = new ServicoEntity($this->request->getPost());
+        $ServicoProduto = $this->request->getPost('ServicoProduto') ?? [];
         $dadosApiData = $this->getDadosApiData();
         $servicoDadosApi = $mServicoDadosApi->where('Servico_id', $e->id)->first();
         try{ 
@@ -112,7 +133,6 @@ class Servico extends BaseController {
                         return $this->returnWithError($mDadosApi->errors());
                     }
                 } else {
-                    $dadosApiData['codigo'] = '';
                     if (!$mDadosApi->insert($dadosApiData, false)) {
                         $m->db->transRollback();
                         return $this->returnWithError($mDadosApi->errors());
@@ -124,6 +144,18 @@ class Servico extends BaseController {
                     if (!$mServicoDadosApi->insert($eServicoDadosApi, false)) {
                         $m->db->transRollback();
                         return $this->returnWithError($mServicoDadosApi->errors());
+                    }
+                }
+                $idsDelete = array_map(fn($v):int => $v->id, $e->getListServicoProduto());
+                if(count($idsDelete)>0){
+                    $mServicoProduto->delete($idsDelete);
+                }
+                foreach ($ServicoProduto as $pp){
+                    $pp['Servico_id'] = $e->id;
+                    $eServicoProduto = new ServicoProdutoEntity($pp);
+                    if(!$mServicoProduto->insert($eServicoProduto, false)){
+                        $m->db->transRollback();
+                        return $this->returnWithError($mServicoProduto->errors());
                     }
                 }
                 $m->db->transComplete();
@@ -182,103 +214,9 @@ class Servico extends BaseController {
         return view('Painel/Servico/respostaModal', $data);
     }
 
-    private function atualizarCadastrarApi(ServicoEntity $servico) {
-        $dadosApi = $servico->getDadosApi(true);
-        if ($dadosApi === null || $dadosApi->id === '') {
-            return 'Dados da API nao encontrados.';
-        }
-
-        $descricao = trim((string) $servico->Nome);
-        $estoqueMinimo = $servico->estoqueMinimo ?? '';
-        $estoqueMinimo = $estoqueMinimo === '' ? '0' : (string) $estoqueMinimo;
-
-        $payloadData = [
-            'InterfacedoProduto' => [
-                [
-                    'SequenciadoRegistro' => 1,
-                    'CodigodoProduto' => '',
-                    'PrimeiraDescricaodoProduto' => $descricao,
-                    'SegundaDescricaodoProduto' => $descricao,
-                    'UnidadedeControle' => (string) $dadosApi->UnidadedeControle,
-                    'ProdutoInspecionado' => (string) $dadosApi->ProdutoInspecionado,
-                    'ProdutoFabricado' => (string) $dadosApi->ProdutoFabricado,
-                    'ProdutoLiberado' => (string) $dadosApi->ProdutoLiberado,
-                    'EstoqueMinimo' => $estoqueMinimo,
-                    'EstoqueMaximo' => '99999',
-                    'ProdutoemInventario' => (string) $dadosApi->ProdutoemInventario,
-                    'IndicacaodeProdutoouServico' => 'S',
-                    'TipodeProduto' => (string) $dadosApi->TipodeProduto,
-                    'IndicacaodeLoteSerie' => (string) $dadosApi->IndicacaodeLoteSerie,
-                    'CodigodeSituacaoTributariaCST' => (string) $dadosApi->CodigodeSituacaoTributariaCST,
-                    'ClassificacaoFiscal' => (string) $dadosApi->ClassificacaoFiscal,
-                    'GrupodeProduto' => (string) $dadosApi->GrupodeProduto,
-                ],
-            ],
-        ];
-
-        $api = new ApiSesc();
-        $result = $api->cadastrarProdutoServicoNota($payloadData);
-        log_message('info', 'Retorno API cadastro serviço: {retorno}', [
-            'retorno' => json_encode($result),
-        ]);
-
-        $curlError = $result['curl_error'] ?? '';
-        if ($curlError !== '') {
-            return $curlError;
-        }
-
-        $decoded = $result['decoded_response'] ?? null;
-        $success = is_array($decoded) && ($decoded['Success'] ?? null) === true;
-        if (!$success) {
-            $mensagens = [];
-            if (is_array($decoded)) {
-                $msgs = $decoded['Messages'] ?? null;
-                if (is_array($msgs)) {
-                    foreach ($msgs as $msg) {
-                        if (is_array($msg)) {
-                            $mensagem = trim((string) ($msg['Message'] ?? ''));
-                        } elseif (is_string($msg)) {
-                            $mensagem = trim($msg);
-                        } else {
-                            $mensagem = '';
-                        }
-                        if ($mensagem !== '') {
-                            $mensagens[] = $mensagem;
-                        }
-                    }
-                }
-            }
-            if ($mensagens === []) {
-                return 'Erro ao enviar dados para API.';
-            }
-            return implode('; ', $mensagens);
-        }
-
-        $data = $decoded['Data'] ?? null;
-        $codigo = is_scalar($data) ? trim((string) $data) : '';
-        if ($codigo === '') {
-            return 'Resposta da API sem codigo.';
-        }
-
-        $mDadosApi = new DadosApiModel();
-        $dadosApiAtual = $mDadosApi->find($dadosApi->id);
-        if ($dadosApiAtual === null) {
-            return 'Dados da API nao encontrados para atualizar codigo.';
-        }
-        $dadosApiAtual->codigo = $codigo;
-        if (!$mDadosApi->update($dadosApi->id, $dadosApiAtual)) {
-            $errors = $mDadosApi->errors();
-            if (is_array($errors)) {
-                $errors = implode('; ', $errors);
-            }
-            return $errors !== '' ? $errors : 'Erro ao atualizar codigo da API.';
-        }
-
-        return true;
-    }
-
     private function getDadosApiData(): array {
         $fields = [
+            'codigo',
             'UnidadedeControle',
             'ProdutoInspecionado',
             'ProdutoFabricado',
@@ -295,5 +233,60 @@ class Servico extends BaseController {
             $data[$field] = $this->request->getPost($field);
         }
         return $data;
+    }
+
+    public function obterDadosServicoApiSesc(string $codigo)
+    {
+        $sescApi = new SescAPI([
+            'baseUrl'=> env('sescApi_baseUrl'),
+            'username'=> env('sescApi_username'),
+            'password'=> env('sescApi_password'),
+            'environment'=> env('sescApi_environment'),
+            'timeout_seconds'=> env('sescApi_timeoutSeconds'),
+        ]);
+
+        $resultado = $sescApi->consultaServico($codigo);
+        $decoded = $resultado['decoded_response'] ?? null;
+        $raw = $resultado['raw_response'] ?? null;
+
+        if (is_array($decoded)) {
+            return $this->response->setJSON($decoded);
+        }
+
+        if (is_string($raw)) {
+            return $this->response
+                ->setContentType('application/json')
+                ->setBody($raw);
+        }
+
+        return $this->response
+            ->setStatusCode(502)
+            ->setJSON(['erro' => true, 'msg' => 'Resposta inválida da API.']);
+    }
+
+    public function validarCodigoUnico()
+    {
+        $codigo = trim((string) $this->request->getGet('codigo'));
+        $servicoIdRaw = $this->request->getGet('servicoId');
+        $servicoId = is_numeric($servicoIdRaw) ? (int) $servicoIdRaw : null;
+
+        if ($codigo === '') {
+            return $this->response->setJSON([
+                'valido' => false,
+                'msg' => 'O campo código é obrigatório.',
+            ]);
+        }
+
+        $mServicoDadosApi = new ServicoDadosApiModel();
+        $jaExiste = $mServicoDadosApi->existsCodigo($codigo, $servicoId);
+
+        if ($jaExiste) {
+            return $this->response->setJSON([
+                'valido' => false,
+                'msg' => 'Código já cadastrado para outro serviço.',
+            ]);
+        }
+
+        return $this->response->setJSON(['valido' => true]);
     }
 }

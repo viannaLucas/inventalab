@@ -4,31 +4,21 @@ namespace App\Entities;
 
 use \App\Entities\EntityBase;
 
-class CobrancaProdutoEntity extends EntityBase {
+class ServicoProdutoEntity extends EntityBase {
     
-    const folder = 'cobrancaproduto_arquivos';
-    private $fk_cobranca = null;
+    const folder = 'servicoproduto_arquivos';
     private $fk_produto = null;
+    private $fk_servico = null;
     
     protected $attributes = [
         'id' => '',
-        'Cobranca_id' => '',
         'Produto_id' => '',
+        'Servico_id' => '',
         'quantidade' => '',
-        'valorUnitario' =>  'currencyBR',
     ];
     
     protected $casts = [
     ];   
-    
-    
-    public function getCobranca(bool $forceUpadate=false){
-        $m = new \App\Models\CobrancaModel();
-        if($this->fk_cobranca == null || $forceUpadate){
-            $this->fk_cobranca = $m->find($this->Cobranca_id);
-        }
-        return $this->fk_cobranca;
-    }
     
     public function getProduto(bool $forceUpadate=false){
         $m = new \App\Models\ProdutoModel();
@@ -36,5 +26,13 @@ class CobrancaProdutoEntity extends EntityBase {
             $this->fk_produto = $m->find($this->Produto_id);
         }
         return $this->fk_produto;
+    }
+    
+    public function getServico(bool $forceUpadate=false){
+        $m = new \App\Models\ServicoModel();
+        if($this->fk_servico == null || $forceUpadate){
+            $this->fk_servico = $m->find($this->Servico_id);
+        }
+        return $this->fk_servico;
     }
 }

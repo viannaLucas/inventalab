@@ -33,5 +33,24 @@ class ServicoDadosApiModel extends BaseModel{
     public function buildFindModal(string $searchTerm){         
         return $this;
     }
+
+    public function existsCodigo(string $codigo, ?int $ignoreServicoId = null): bool
+    {
+        $codigo = trim($codigo);
+        if ($codigo === '') {
+            return false;
+        }
+
+        $builder = $this->builder();
+        $builder->select('ServicoDadosApi.Servico_id')
+            ->join('DadosApi', 'DadosApi.id = ServicoDadosApi.DadosApi_id')
+            ->where('DadosApi.codigo', $codigo);
+
+        if ($ignoreServicoId !== null) {
+            $builder->where('ServicoDadosApi.Servico_id !=', $ignoreServicoId);
+        }
+
+        return $builder->get(1)->getRow() !== null;
+    }
     
 }

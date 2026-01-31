@@ -43,5 +43,166 @@ class ProdutoModel extends BaseModel{
         $this->orLike('nome', $searchTerm);        
         return $this;
     }
+
+    public function calcularConsumoProdutosPorServicos(array $servicosQuantidade): array
+    {
+        $servicosQuantidade = $this->normalizarServicosQuantidade($servicosQuantidade);
+        if (empty($servicosQuantidade)) {
+            return [];
+        }
+
+        $mServicoProduto = new \App\Models\ServicoProdutoModel();
+        $relacoes = $mServicoProduto->findByServicoIds(array_keys($servicosQuantidade));
+        $consumo = [];
+
+        foreach ($relacoes as $relacao) {
+            $servicoId = (int) ($relacao->Servico_id ?? 0);
+            $produtoId = (int) ($relacao->Produto_id ?? 0);
+            $quantidadeProduto = (int) ($relacao->quantidade ?? 0);
+            $quantidadeServico = (int) ($servicosQuantidade[$servicoId] ?? 0);
+
+            if ($servicoId <= 0 || $produtoId <= 0 || $quantidadeProduto <= 0 || $quantidadeServico <= 0) {
+                continue;
+            }
+
+            if (!isset($consumo[$produtoId])) {
+                $consumo[$produtoId] = 0;
+            }
+            $consumo[$produtoId] += $quantidadeServico * $quantidadeProduto;
+        }
+
+        return $consumo;
+    }
+
+    public function calcularDeltaEstoquePorServicos(array $servicosNovos, array $servicosAntigos = []): array
+    {
+        $consumoNovo = $this->calcularConsumoProdutosPorServicos($servicosNovos);
+        $consumoAntigo = $this->calcularConsumoProdutosPorServicos($servicosAntigos);
+        $delta = $consumoNovo;
+
+        foreach ($consumoAntigo as $produtoId => $quantidade) {
+            $produtoId = (int) $produtoId;
+            if (!isset($delta[$produtoId])) {
+                $delta[$produtoId] = 0;
+            }
+            $delta[$produtoId] -= (int) $quantidade;
+            if ($delta[$produtoId] === 0) {
+                unset($delta[$produtoId]);
+            }
+        }
+
+        return $delta;
+    }
+
+    public function ajustarEstoquePorDelta(array $deltaProdutos): void
+    {
+        $deltaProdutos = $this->normalizarDeltaProdutos($deltaProdutos);
+        if (empty($deltaProdutos)) {
+            return;
+        }
+
+        $produtoIds = array_keys($deltaProdutos);
+        $this->builder()->resetQuery();
+        $produtos = $this->whereIn('id', $produtoIds)->findAll();
+        $this->builder()->resetQuery();
+
+        $mapProdutos = [];
+        foreach ($produtos as $produto) {
+            $mapProdutos[(int) $produto->id] = $produto;
+        }
+
+        $erros = [];
+        foreach ($deltaProdutos as $produtoId => $delta) {
+            $produtoId = (int) $produtoId;
+            $delta = (int) $delta;
+            $produto = $mapProdutos[$produtoId] ?? null;
+
+            if ($produto === null) {
+                $erros[] = 'Produto não encontrado (ID ' . $produtoId . ').';
+                continue;
+            }
+
+            if ($delta > 0) {
+                $estoqueAtual = (int) ($produto->estoqueAtual ?? 0);
+                if ($estoqueAtual < $delta) {
+                    $nomeProduto = (string) ($produto->nome ?? ('ID ' . $produtoId));
+                    $erros[] = 'Estoque insuficiente para o produto ' . $nomeProduto
+                        . '. Disponível: ' . $estoqueAtual . ', necessário: ' . $delta . '.';
+                }
+            }
+        }
+
+        if (!empty($erros)) {
+            throw new \RuntimeException(implode(' ', $erros));
+        }
+
+        foreach ($deltaProdutos as $produtoId => $delta) {
+            $produtoId = (int) $produtoId;
+            $delta = (int) $delta;
+            if ($delta === 0) {
+                continue;
+            }
+
+            $builder = $this->builder();
+            $builder->resetQuery();
+
+            if ($delta > 0) {
+                $builder->set('estoqueAtual', 'estoqueAtual - ' . $delta, false)
+                    ->where('id', $produtoId)
+                    ->where('estoqueAtual >=', $delta);
+            } else {
+                $incremento = abs($delta);
+                $builder->set('estoqueAtual', 'estoqueAtual + ' . $incremento, false)
+                    ->where('id', $produtoId);
+            }
+
+            $ok = $builder->update();
+            if (!$ok || $this->db->affectedRows() === 0) {
+                $nomeProduto = isset($mapProdutos[$produtoId])
+                    ? (string) ($mapProdutos[$produtoId]->nome ?? ('ID ' . $produtoId))
+                    : ('ID ' . $produtoId);
+                throw new \RuntimeException('Falha ao atualizar estoque do produto ' . $nomeProduto . '.');
+            }
+        }
+
+        $this->builder()->resetQuery();
+    }
+
+    private function normalizarServicosQuantidade(array $servicosQuantidade): array
+    {
+        $resultado = [];
+        foreach ($servicosQuantidade as $servicoId => $quantidade) {
+            $servicoId = (int) $servicoId;
+            $quantidade = (int) $quantidade;
+            if ($servicoId <= 0 || $quantidade <= 0) {
+                continue;
+            }
+            if (!isset($resultado[$servicoId])) {
+                $resultado[$servicoId] = 0;
+            }
+            $resultado[$servicoId] += $quantidade;
+        }
+        return $resultado;
+    }
+
+    private function normalizarDeltaProdutos(array $deltaProdutos): array
+    {
+        $resultado = [];
+        foreach ($deltaProdutos as $produtoId => $delta) {
+            $produtoId = (int) $produtoId;
+            $delta = (int) $delta;
+            if ($produtoId <= 0 || $delta === 0) {
+                continue;
+            }
+            if (!isset($resultado[$produtoId])) {
+                $resultado[$produtoId] = 0;
+            }
+            $resultado[$produtoId] += $delta;
+            if ($resultado[$produtoId] === 0) {
+                unset($resultado[$produtoId]);
+            }
+        }
+        return $resultado;
+    }
     
 }

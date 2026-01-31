@@ -47,7 +47,11 @@
                             <option value="0">Não</option>
                             <option value="1">Sim</option>
                         </select>
-                    </div>                                        
+                    </div>                               
+                    <div class="form-group col-12 col-md-6">
+                        <label class="main-content-label tx-11 tx-medium tx-gray-600">Código</label> 
+                        <input class="form-control" name="codigo" id="codigo" type="text" maxlength="20">
+                    </div>         
                     <div class="form-group mb-0 mt-3 text-center col-12">
                         <button type="submit" class="btn btn-primary submitButton">Pesquisar</button>
                     </div>

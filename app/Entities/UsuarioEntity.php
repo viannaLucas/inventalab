@@ -54,39 +54,39 @@ class UsuarioEntity extends EntityBase {
             //     ],
                 
             // ],
-            'AtividadeLivre' => [
-                'alterar' => [
-                    'metodos' => ['AtividadeLivre::alterar', 'AtividadeLivre::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal'],
-                    'label' => 'Alterar',
-                    'descricao' => 'Permite alterar AtividadeLivre',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'pesquisar' => [
-                    'metodos' => ['AtividadeLivre::pesquisar', 'AtividadeLivre::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal'],
-                    'label' => 'Pesquisar',
-                    'descricao' => 'Permite Pesquisar AtividadeLivre',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'cadastrar' => [
-                    'metodos' => ['AtividadeLivre::cadastrar', 'AtividadeLivre::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal'],
-                    'label' => 'Cadastrar',
-                    'descricao' => 'Permite Cadastrar AtividadeLivre',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'listar' => [
-                    'metodos' => ['AtividadeLivre::listar'],
-                    'label' => 'Listar',
-                    'descricao' => 'Permite Listar AtividadeLivre',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'excluir' => [
-                    'metodos' => ['AtividadeLivre::excluir'],
-                    'label' => 'Excluir',
-                    'descricao' => 'Permite Excluir AtividadeLivre',
-                    'tipoAcesso' => 'usuario'
-                ],
+            // 'AtividadeLivre' => [
+            //     'alterar' => [
+            //         'metodos' => ['AtividadeLivre::alterar', 'AtividadeLivre::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal'],
+            //         'label' => 'Alterar',
+            //         'descricao' => 'Permite alterar AtividadeLivre',
+            //         'tipoAcesso' => 'usuario'
+            //     ],
+            //     'pesquisar' => [
+            //         'metodos' => ['AtividadeLivre::pesquisar', 'AtividadeLivre::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal'],
+            //         'label' => 'Pesquisar',
+            //         'descricao' => 'Permite Pesquisar AtividadeLivre',
+            //         'tipoAcesso' => 'usuario'
+            //     ],
+            //     'cadastrar' => [
+            //         'metodos' => ['AtividadeLivre::cadastrar', 'AtividadeLivre::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal'],
+            //         'label' => 'Cadastrar',
+            //         'descricao' => 'Permite Cadastrar AtividadeLivre',
+            //         'tipoAcesso' => 'usuario'
+            //     ],
+            //     'listar' => [
+            //         'metodos' => ['AtividadeLivre::listar'],
+            //         'label' => 'Listar',
+            //         'descricao' => 'Permite Listar AtividadeLivre',
+            //         'tipoAcesso' => 'usuario'
+            //     ],
+            //     'excluir' => [
+            //         'metodos' => ['AtividadeLivre::excluir'],
+            //         'label' => 'Excluir',
+            //         'descricao' => 'Permite Excluir AtividadeLivre',
+            //         'tipoAcesso' => 'usuario'
+            //     ],
                 
-            ],
+            // ],
             // 'AtividadeLivreRecurso' => [
             //     'alterar' => [
             //         'metodos' => ['AtividadeLivreRecurso::alterar', 'AtividadeLivreRecurso::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal'],
@@ -122,19 +122,21 @@ class UsuarioEntity extends EntityBase {
             // ],
             'Cobranca' => [
                 'alterar' => [
-                    'metodos' => ['Cobranca::alterar', 'Cobranca::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal'],
+                    'metodos' => ['Cobranca::alterar', 'Cobranca::doAlterar',  'Servico::pesquisaModal', 'Participante::pesquisaModal'],
                     'label' => 'Alterar',
                     'descricao' => 'Permite alterar Cobrança',
                     'tipoAcesso' => 'usuario'
                 ],
                 'pesquisar' => [
-                    'metodos' => ['Cobranca::pesquisar', 'Cobranca::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal'],
+                    'metodos' => ['Cobranca::pesquisar', 'Cobranca::doPesquisar', 'Servico::pesquisaModal', 'Participante::pesquisaModal'],
                     'label' => 'Pesquisar',
                     'descricao' => 'Permite Pesquisar Cobrança',
                     'tipoAcesso' => 'usuario'
                 ],
                 'cadastrar' => [
-                    'metodos' => ['Cobranca::cadastrar', 'Cobranca::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal'],
+                    'metodos' => [
+                        'Cobranca::cadastrar', 'Cobranca::doCadastrar', 
+                        'Evento::cobranca', 'Servico::pesquisaModal', 'Participante::pesquisaModal'],
                     'label' => 'Cadastrar',
                     'descricao' => 'Permite Cadastrar Cobrança',
                     'tipoAcesso' => 'usuario'
@@ -186,495 +188,489 @@ class UsuarioEntity extends EntityBase {
             //     ],
                 
             // ],
-            'Configuracao' => [
-                'alterar' => [
-                    'metodos' => ['Configuracao::alterar', 'Configuracao::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal'],
-                    'label' => 'Alterar',
-                    'descricao' => 'Permite alterar Configuracao',
-                    'tipoAcesso' => 'usuario'
-                ],
-                // 'pesquisar' => [
-                //     'metodos' => ['Configuracao::pesquisar', 'Configuracao::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal'],
-                //     'label' => 'Pesquisar',
-                //     'descricao' => 'Permite Pesquisar Configuracao',
-                //     'tipoAcesso' => 'usuario'
-                // ],
-                // 'cadastrar' => [
-                //     'metodos' => ['Configuracao::cadastrar', 'Configuracao::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal'],
-                //     'label' => 'Cadastrar',
-                //     'descricao' => 'Permite Cadastrar Configuracao',
-                //     'tipoAcesso' => 'usuario'
-                // ],
-                // 'listar' => [
-                //     'metodos' => ['Configuracao::listar'],
-                //     'label' => 'Listar',
-                //     'descricao' => 'Permite Listar Configuracao',
-                //     'tipoAcesso' => 'usuario'
-                // ],
-                // 'excluir' => [
-                //     'metodos' => ['Configuracao::excluir'],
-                //     'label' => 'Excluir',
-                //     'descricao' => 'Permite Excluir Configuracao',
-                //     'tipoAcesso' => 'usuario'
-                // ],
-                
-            ],
-            'ControlePresenca' => [
-                'alterar' => [
-                    'metodos' => ['ControlePresenca::alterar', 'ControlePresenca::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal'],
-                    'label' => 'Alterar',
-                    'descricao' => 'Permite alterar ControlePresenca',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'pesquisar' => [
-                    'metodos' => ['ControlePresenca::pesquisar', 'ControlePresenca::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal'],
-                    'label' => 'Pesquisar',
-                    'descricao' => 'Permite Pesquisar ControlePresenca',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'cadastrar' => [
-                    'metodos' => ['ControlePresenca::cadastrar', 'ControlePresenca::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal'],
-                    'label' => 'Cadastrar',
-                    'descricao' => 'Permite Cadastrar ControlePresenca',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'listar' => [
-                    'metodos' => ['ControlePresenca::listar'],
-                    'label' => 'Listar',
-                    'descricao' => 'Permite Listar ControlePresenca',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'excluir' => [
-                    'metodos' => ['ControlePresenca::excluir'],
-                    'label' => 'Excluir',
-                    'descricao' => 'Permite Excluir ControlePresenca',
-                    'tipoAcesso' => 'usuario'
-                ],
-                
-            ],
-            // 'DatasExtraordinarias' => [
+            // 'Configuracao' => [
             //     'alterar' => [
-            //         'metodos' => ['DatasExtraordinarias::alterar', 'DatasExtraordinarias::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal'],
+            //         'metodos' => ['Configuracao::alterar', 'Configuracao::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal'],
             //         'label' => 'Alterar',
-            //         'descricao' => 'Permite alterar DatasExtraordinarias',
+            //         'descricao' => 'Permite alterar Configuracao',
+            //         'tipoAcesso' => 'usuario'
+            //     ],
+            //     // 'pesquisar' => [
+            //     //     'metodos' => ['Configuracao::pesquisar', 'Configuracao::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal'],
+            //     //     'label' => 'Pesquisar',
+            //     //     'descricao' => 'Permite Pesquisar Configuracao',
+            //     //     'tipoAcesso' => 'usuario'
+            //     // ],
+            //     // 'cadastrar' => [
+            //     //     'metodos' => ['Configuracao::cadastrar', 'Configuracao::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal'],
+            //     //     'label' => 'Cadastrar',
+            //     //     'descricao' => 'Permite Cadastrar Configuracao',
+            //     //     'tipoAcesso' => 'usuario'
+            //     // ],
+            //     // 'listar' => [
+            //     //     'metodos' => ['Configuracao::listar'],
+            //     //     'label' => 'Listar',
+            //     //     'descricao' => 'Permite Listar Configuracao',
+            //     //     'tipoAcesso' => 'usuario'
+            //     // ],
+            //     // 'excluir' => [
+            //     //     'metodos' => ['Configuracao::excluir'],
+            //     //     'label' => 'Excluir',
+            //     //     'descricao' => 'Permite Excluir Configuracao',
+            //     //     'tipoAcesso' => 'usuario'
+            //     // ],
+                
+            // ],
+            // 'ControlePresenca' => [
+            //     'alterar' => [
+            //         'metodos' => ['ControlePresenca::alterar', 'ControlePresenca::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal'],
+            //         'label' => 'Alterar',
+            //         'descricao' => 'Permite alterar ControlePresenca',
             //         'tipoAcesso' => 'usuario'
             //     ],
             //     'pesquisar' => [
-            //         'metodos' => ['DatasExtraordinarias::pesquisar', 'DatasExtraordinarias::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal'],
+            //         'metodos' => ['ControlePresenca::pesquisar', 'ControlePresenca::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal'],
             //         'label' => 'Pesquisar',
-            //         'descricao' => 'Permite Pesquisar DatasExtraordinarias',
+            //         'descricao' => 'Permite Pesquisar ControlePresenca',
             //         'tipoAcesso' => 'usuario'
             //     ],
             //     'cadastrar' => [
-            //         'metodos' => ['DatasExtraordinarias::cadastrar', 'DatasExtraordinarias::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal'],
+            //         'metodos' => ['ControlePresenca::cadastrar', 'ControlePresenca::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal'],
             //         'label' => 'Cadastrar',
-            //         'descricao' => 'Permite Cadastrar DatasExtraordinarias',
+            //         'descricao' => 'Permite Cadastrar ControlePresenca',
             //         'tipoAcesso' => 'usuario'
             //     ],
             //     'listar' => [
-            //         'metodos' => ['DatasExtraordinarias::listar'],
+            //         'metodos' => ['ControlePresenca::listar'],
             //         'label' => 'Listar',
-            //         'descricao' => 'Permite Listar DatasExtraordinarias',
+            //         'descricao' => 'Permite Listar ControlePresenca',
             //         'tipoAcesso' => 'usuario'
             //     ],
             //     'excluir' => [
-            //         'metodos' => ['DatasExtraordinarias::excluir'],
+            //         'metodos' => ['ControlePresenca::excluir'],
             //         'label' => 'Excluir',
-            //         'descricao' => 'Permite Excluir DatasExtraordinarias',
+            //         'descricao' => 'Permite Excluir ControlePresenca',
             //         'tipoAcesso' => 'usuario'
             //     ],
                 
             // ],
-            'Evento' => [
-                'alterar' => [
-                    'metodos' => ['Evento::alterar', 'Evento::doAlterar','Evento::verificarDatasReserva', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal'],
-                    'label' => 'Alterar',
-                    'descricao' => 'Permite alterar Evento',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'cobranca' => [
-                    'metodos' => ['Evento::cobranca'],
-                    'label' => 'Cobrança',
-                    'descricao' => 'Permite gerar cobrança do evento',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'pesquisar' => [
-                    'metodos' => ['Evento::pesquisar', 'Evento::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal'],
-                    'label' => 'Pesquisar',
-                    'descricao' => 'Permite Pesquisar Evento',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'cadastrar' => [
-                    'metodos' => ['Evento::cadastrar', 'Evento::doCadastrar', 'Evento::verificarDatasReserva', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal'],
-                    'label' => 'Cadastrar',
-                    'descricao' => 'Permite Cadastrar Evento',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'listar' => [
-                    'metodos' => ['Evento::listar'],
-                    'label' => 'Listar',
-                    'descricao' => 'Permite Listar Evento',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'excluir' => [
-                    'metodos' => ['Evento::excluir'],
-                    'label' => 'Excluir',
-                    'descricao' => 'Permite Excluir Evento',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'controlePresenca' => [
-                    'metodos' => ['Evento::controlePresenca', 'Evento::definirPresenca', 'Evento::getPresentesEmControle', 'Evento::imprimirListaPresenca', 'Evento::imprimirEntregaMaterial', 'Evento::exportarListaParticipante'],
-                    'label' => 'Controle Presença',
-                    'descricao' => 'Permite definir presença dos participantes em um Controle de Presença de um Evento',
-                    'tipoAcesso' => 'usuario'
-                ],
+            // // 'DatasExtraordinarias' => [
+            // //     'alterar' => [
+            // //         'metodos' => ['DatasExtraordinarias::alterar', 'DatasExtraordinarias::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal'],
+            // //         'label' => 'Alterar',
+            // //         'descricao' => 'Permite alterar DatasExtraordinarias',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'pesquisar' => [
+            // //         'metodos' => ['DatasExtraordinarias::pesquisar', 'DatasExtraordinarias::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal'],
+            // //         'label' => 'Pesquisar',
+            // //         'descricao' => 'Permite Pesquisar DatasExtraordinarias',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'cadastrar' => [
+            // //         'metodos' => ['DatasExtraordinarias::cadastrar', 'DatasExtraordinarias::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal'],
+            // //         'label' => 'Cadastrar',
+            // //         'descricao' => 'Permite Cadastrar DatasExtraordinarias',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'listar' => [
+            // //         'metodos' => ['DatasExtraordinarias::listar'],
+            // //         'label' => 'Listar',
+            // //         'descricao' => 'Permite Listar DatasExtraordinarias',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'excluir' => [
+            // //         'metodos' => ['DatasExtraordinarias::excluir'],
+            // //         'label' => 'Excluir',
+            // //         'descricao' => 'Permite Excluir DatasExtraordinarias',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
                 
-            ],
-            // 'EventoReserva' => [
+            // // ],
+            // 'Evento' => [
             //     'alterar' => [
-            //         'metodos' => ['EventoReserva::alterar', 'EventoReserva::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal'],
+            //         'metodos' => ['Evento::alterar', 'Evento::doAlterar','Evento::verificarDatasReserva', 'Participante::pesquisaModal', 'Servico::pesquisaModal'],
             //         'label' => 'Alterar',
-            //         'descricao' => 'Permite alterar EventoReserva',
+            //         'descricao' => 'Permite alterar Evento',
             //         'tipoAcesso' => 'usuario'
             //     ],
             //     'pesquisar' => [
-            //         'metodos' => ['EventoReserva::pesquisar', 'EventoReserva::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal'],
+            //         'metodos' => ['Evento::pesquisar', 'Evento::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal'],
             //         'label' => 'Pesquisar',
-            //         'descricao' => 'Permite Pesquisar EventoReserva',
+            //         'descricao' => 'Permite Pesquisar Evento',
             //         'tipoAcesso' => 'usuario'
             //     ],
             //     'cadastrar' => [
-            //         'metodos' => ['EventoReserva::cadastrar', 'EventoReserva::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal'],
+            //         'metodos' => ['Evento::cadastrar', 'Evento::doCadastrar', 'Evento::verificarDatasReserva', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal'],
             //         'label' => 'Cadastrar',
-            //         'descricao' => 'Permite Cadastrar EventoReserva',
+            //         'descricao' => 'Permite Cadastrar Evento',
             //         'tipoAcesso' => 'usuario'
             //     ],
             //     'listar' => [
-            //         'metodos' => ['EventoReserva::listar'],
+            //         'metodos' => ['Evento::listar'],
             //         'label' => 'Listar',
-            //         'descricao' => 'Permite Listar EventoReserva',
+            //         'descricao' => 'Permite Listar Evento',
             //         'tipoAcesso' => 'usuario'
             //     ],
             //     'excluir' => [
-            //         'metodos' => ['EventoReserva::excluir'],
+            //         'metodos' => ['Evento::excluir'],
             //         'label' => 'Excluir',
-            //         'descricao' => 'Permite Excluir EventoReserva',
+            //         'descricao' => 'Permite Excluir Evento',
+            //         'tipoAcesso' => 'usuario'
+            //     ],
+            //     'controlePresenca' => [
+            //         'metodos' => ['Evento::controlePresenca', 'Evento::definirPresenca', 'Evento::getPresentesEmControle', 'Evento::imprimirListaPresenca', 'Evento::imprimirEntregaMaterial', 'Evento::exportarListaParticipante'],
+            //         'label' => 'Controle Presença',
+            //         'descricao' => 'Permite definir presença dos participantes em um Controle de Presença de um Evento',
             //         'tipoAcesso' => 'usuario'
             //     ],
                 
             // ],
-            // 'Garantia' => [
+            // // 'EventoReserva' => [
+            // //     'alterar' => [
+            // //         'metodos' => ['EventoReserva::alterar', 'EventoReserva::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal'],
+            // //         'label' => 'Alterar',
+            // //         'descricao' => 'Permite alterar EventoReserva',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'pesquisar' => [
+            // //         'metodos' => ['EventoReserva::pesquisar', 'EventoReserva::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal'],
+            // //         'label' => 'Pesquisar',
+            // //         'descricao' => 'Permite Pesquisar EventoReserva',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'cadastrar' => [
+            // //         'metodos' => ['EventoReserva::cadastrar', 'EventoReserva::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal'],
+            // //         'label' => 'Cadastrar',
+            // //         'descricao' => 'Permite Cadastrar EventoReserva',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'listar' => [
+            // //         'metodos' => ['EventoReserva::listar'],
+            // //         'label' => 'Listar',
+            // //         'descricao' => 'Permite Listar EventoReserva',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'excluir' => [
+            // //         'metodos' => ['EventoReserva::excluir'],
+            // //         'label' => 'Excluir',
+            // //         'descricao' => 'Permite Excluir EventoReserva',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+                
+            // // ],
+            // // 'Garantia' => [
+            // //     'alterar' => [
+            // //         'metodos' => ['Garantia::alterar', 'Garantia::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal'],
+            // //         'label' => 'Alterar',
+            // //         'descricao' => 'Permite alterar Garantia',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'pesquisar' => [
+            // //         'metodos' => ['Garantia::pesquisar', 'Garantia::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal'],
+            // //         'label' => 'Pesquisar',
+            // //         'descricao' => 'Permite Pesquisar Garantia',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'cadastrar' => [
+            // //         'metodos' => ['Garantia::cadastrar', 'Garantia::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal'],
+            // //         'label' => 'Cadastrar',
+            // //         'descricao' => 'Permite Cadastrar Garantia',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'listar' => [
+            // //         'metodos' => ['Garantia::listar'],
+            // //         'label' => 'Listar',
+            // //         'descricao' => 'Permite Listar Garantia',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'excluir' => [
+            // //         'metodos' => ['Garantia::excluir'],
+            // //         'label' => 'Excluir',
+            // //         'descricao' => 'Permite Excluir Garantia',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+                
+            // // ],
+            // // 'Habilidades' => [
+            // //     'alterar' => [
+            // //         'metodos' => ['Habilidades::alterar', 'Habilidades::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal'],
+            // //         'label' => 'Alterar',
+            // //         'descricao' => 'Permite alterar Habilidades',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'pesquisar' => [
+            // //         'metodos' => ['Habilidades::pesquisar', 'Habilidades::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal'],
+            // //         'label' => 'Pesquisar',
+            // //         'descricao' => 'Permite Pesquisar Habilidades',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'cadastrar' => [
+            // //         'metodos' => ['Habilidades::cadastrar', 'Habilidades::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal'],
+            // //         'label' => 'Cadastrar',
+            // //         'descricao' => 'Permite Cadastrar Habilidades',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'listar' => [
+            // //         'metodos' => ['Habilidades::listar'],
+            // //         'label' => 'Listar',
+            // //         'descricao' => 'Permite Listar Habilidades',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'excluir' => [
+            // //         'metodos' => ['Habilidades::excluir'],
+            // //         'label' => 'Excluir',
+            // //         'descricao' => 'Permite Excluir Habilidades',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+                
+            // // ],
+            // 'HorarioFuncionamento' => [
             //     'alterar' => [
-            //         'metodos' => ['Garantia::alterar', 'Garantia::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal'],
+            //         'metodos' => ['HorarioFuncionamento::alterar', 'HorarioFuncionamento::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal'],
             //         'label' => 'Alterar',
-            //         'descricao' => 'Permite alterar Garantia',
+            //         'descricao' => 'Permite alterar HorarioFuncionamento',
             //         'tipoAcesso' => 'usuario'
             //     ],
             //     'pesquisar' => [
-            //         'metodos' => ['Garantia::pesquisar', 'Garantia::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal'],
+            //         'metodos' => ['HorarioFuncionamento::pesquisar', 'HorarioFuncionamento::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal'],
             //         'label' => 'Pesquisar',
-            //         'descricao' => 'Permite Pesquisar Garantia',
+            //         'descricao' => 'Permite Pesquisar HorarioFuncionamento',
             //         'tipoAcesso' => 'usuario'
             //     ],
             //     'cadastrar' => [
-            //         'metodos' => ['Garantia::cadastrar', 'Garantia::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal'],
+            //         'metodos' => ['HorarioFuncionamento::cadastrar', 'HorarioFuncionamento::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal'],
             //         'label' => 'Cadastrar',
-            //         'descricao' => 'Permite Cadastrar Garantia',
+            //         'descricao' => 'Permite Cadastrar HorarioFuncionamento',
             //         'tipoAcesso' => 'usuario'
             //     ],
             //     'listar' => [
-            //         'metodos' => ['Garantia::listar'],
+            //         'metodos' => ['HorarioFuncionamento::listar'],
             //         'label' => 'Listar',
-            //         'descricao' => 'Permite Listar Garantia',
+            //         'descricao' => 'Permite Listar HorarioFuncionamento',
             //         'tipoAcesso' => 'usuario'
             //     ],
             //     'excluir' => [
-            //         'metodos' => ['Garantia::excluir'],
+            //         'metodos' => ['HorarioFuncionamento::excluir'],
             //         'label' => 'Excluir',
-            //         'descricao' => 'Permite Excluir Garantia',
+            //         'descricao' => 'Permite Excluir HorarioFuncionamento',
             //         'tipoAcesso' => 'usuario'
             //     ],
                 
             // ],
-            // 'Habilidades' => [
+            // // 'ItemMovimentacaoEstoque' => [
+            // //     'alterar' => [
+            // //         'metodos' => ['ItemMovimentacaoEstoque::alterar', 'ItemMovimentacaoEstoque::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal'],
+            // //         'label' => 'Alterar',
+            // //         'descricao' => 'Permite alterar ItemMovimentacaoEstoque',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'pesquisar' => [
+            // //         'metodos' => ['ItemMovimentacaoEstoque::pesquisar', 'ItemMovimentacaoEstoque::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal'],
+            // //         'label' => 'Pesquisar',
+            // //         'descricao' => 'Permite Pesquisar ItemMovimentacaoEstoque',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'cadastrar' => [
+            // //         'metodos' => ['ItemMovimentacaoEstoque::cadastrar', 'ItemMovimentacaoEstoque::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal'],
+            // //         'label' => 'Cadastrar',
+            // //         'descricao' => 'Permite Cadastrar ItemMovimentacaoEstoque',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'listar' => [
+            // //         'metodos' => ['ItemMovimentacaoEstoque::listar'],
+            // //         'label' => 'Listar',
+            // //         'descricao' => 'Permite Listar ItemMovimentacaoEstoque',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'excluir' => [
+            // //         'metodos' => ['ItemMovimentacaoEstoque::excluir'],
+            // //         'label' => 'Excluir',
+            // //         'descricao' => 'Permite Excluir ItemMovimentacaoEstoque',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+                
+            // // ],
+            // 'Produto' => [
             //     'alterar' => [
-            //         'metodos' => ['Habilidades::alterar', 'Habilidades::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal'],
+            //         'metodos' => ['Produto::alterar', 'Produto::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal'],
             //         'label' => 'Alterar',
-            //         'descricao' => 'Permite alterar Habilidades',
+            //         'descricao' => 'Permite alterar Produto',
             //         'tipoAcesso' => 'usuario'
             //     ],
             //     'pesquisar' => [
-            //         'metodos' => ['Habilidades::pesquisar', 'Habilidades::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal'],
+            //         'metodos' => ['Produto::pesquisar', 'Produto::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal'],
             //         'label' => 'Pesquisar',
-            //         'descricao' => 'Permite Pesquisar Habilidades',
+            //         'descricao' => 'Permite Pesquisar Produto',
             //         'tipoAcesso' => 'usuario'
             //     ],
             //     'cadastrar' => [
-            //         'metodos' => ['Habilidades::cadastrar', 'Habilidades::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal'],
+            //         'metodos' => ['Produto::cadastrar', 'Produto::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal'],
             //         'label' => 'Cadastrar',
-            //         'descricao' => 'Permite Cadastrar Habilidades',
+            //         'descricao' => 'Permite Cadastrar Produto',
             //         'tipoAcesso' => 'usuario'
             //     ],
             //     'listar' => [
-            //         'metodos' => ['Habilidades::listar'],
+            //         'metodos' => ['Produto::listar'],
             //         'label' => 'Listar',
-            //         'descricao' => 'Permite Listar Habilidades',
+            //         'descricao' => 'Permite Listar Produto',
             //         'tipoAcesso' => 'usuario'
             //     ],
             //     'excluir' => [
-            //         'metodos' => ['Habilidades::excluir'],
+            //         'metodos' => ['Produto::excluir'],
             //         'label' => 'Excluir',
-            //         'descricao' => 'Permite Excluir Habilidades',
+            //         'descricao' => 'Permite Excluir Produto',
             //         'tipoAcesso' => 'usuario'
             //     ],
                 
             // ],
-            'HorarioFuncionamento' => [
-                'alterar' => [
-                    'metodos' => ['HorarioFuncionamento::alterar', 'HorarioFuncionamento::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal'],
-                    'label' => 'Alterar',
-                    'descricao' => 'Permite alterar HorarioFuncionamento',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'pesquisar' => [
-                    'metodos' => ['HorarioFuncionamento::pesquisar', 'HorarioFuncionamento::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal'],
-                    'label' => 'Pesquisar',
-                    'descricao' => 'Permite Pesquisar HorarioFuncionamento',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'cadastrar' => [
-                    'metodos' => ['HorarioFuncionamento::cadastrar', 'HorarioFuncionamento::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal'],
-                    'label' => 'Cadastrar',
-                    'descricao' => 'Permite Cadastrar HorarioFuncionamento',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'listar' => [
-                    'metodos' => ['HorarioFuncionamento::listar'],
-                    'label' => 'Listar',
-                    'descricao' => 'Permite Listar HorarioFuncionamento',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'excluir' => [
-                    'metodos' => ['HorarioFuncionamento::excluir'],
-                    'label' => 'Excluir',
-                    'descricao' => 'Permite Excluir HorarioFuncionamento',
-                    'tipoAcesso' => 'usuario'
-                ],
+            // // 'MaterialOficina' => [
+            // //     'alterar' => [
+            // //         'metodos' => ['MaterialOficina::alterar', 'MaterialOficina::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal'],
+            // //         'label' => 'Alterar',
+            // //         'descricao' => 'Permite alterar MaterialOficina',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'pesquisar' => [
+            // //         'metodos' => ['MaterialOficina::pesquisar', 'MaterialOficina::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal'],
+            // //         'label' => 'Pesquisar',
+            // //         'descricao' => 'Permite Pesquisar MaterialOficina',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'cadastrar' => [
+            // //         'metodos' => ['MaterialOficina::cadastrar', 'MaterialOficina::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal'],
+            // //         'label' => 'Cadastrar',
+            // //         'descricao' => 'Permite Cadastrar MaterialOficina',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'listar' => [
+            // //         'metodos' => ['MaterialOficina::listar'],
+            // //         'label' => 'Listar',
+            // //         'descricao' => 'Permite Listar MaterialOficina',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'excluir' => [
+            // //         'metodos' => ['MaterialOficina::excluir'],
+            // //         'label' => 'Excluir',
+            // //         'descricao' => 'Permite Excluir MaterialOficina',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
                 
-            ],
-            // 'ItemMovimentacaoEstoque' => [
+            // // ],
+            // // 'MovimentacaoEstoque' => [
+            // //     'alterar' => [
+            // //         'metodos' => ['MovimentacaoEstoque::alterar', 'MovimentacaoEstoque::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal'],
+            // //         'label' => 'Alterar',
+            // //         'descricao' => 'Permite alterar MovimentacaoEstoque',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'pesquisar' => [
+            // //         'metodos' => ['MovimentacaoEstoque::pesquisar', 'MovimentacaoEstoque::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal'],
+            // //         'label' => 'Pesquisar',
+            // //         'descricao' => 'Permite Pesquisar MovimentacaoEstoque',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'cadastrar' => [
+            // //         'metodos' => ['MovimentacaoEstoque::cadastrar', 'MovimentacaoEstoque::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal'],
+            // //         'label' => 'Cadastrar',
+            // //         'descricao' => 'Permite Cadastrar MovimentacaoEstoque',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'listar' => [
+            // //         'metodos' => ['MovimentacaoEstoque::listar'],
+            // //         'label' => 'Listar',
+            // //         'descricao' => 'Permite Listar MovimentacaoEstoque',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'excluir' => [
+            // //         'metodos' => ['MovimentacaoEstoque::excluir'],
+            // //         'label' => 'Excluir',
+            // //         'descricao' => 'Permite Excluir MovimentacaoEstoque',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+                
+            // // ],
+            // 'OficinaTematica' => [
             //     'alterar' => [
-            //         'metodos' => ['ItemMovimentacaoEstoque::alterar', 'ItemMovimentacaoEstoque::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal'],
+            //         'metodos' => ['OficinaTematica::alterar', 'OficinaTematica::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal'],
             //         'label' => 'Alterar',
-            //         'descricao' => 'Permite alterar ItemMovimentacaoEstoque',
+            //         'descricao' => 'Permite alterar OficinaTematica',
             //         'tipoAcesso' => 'usuario'
             //     ],
             //     'pesquisar' => [
-            //         'metodos' => ['ItemMovimentacaoEstoque::pesquisar', 'ItemMovimentacaoEstoque::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal'],
+            //         'metodos' => ['OficinaTematica::pesquisar', 'OficinaTematica::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal'],
             //         'label' => 'Pesquisar',
-            //         'descricao' => 'Permite Pesquisar ItemMovimentacaoEstoque',
+            //         'descricao' => 'Permite Pesquisar OficinaTematica',
             //         'tipoAcesso' => 'usuario'
             //     ],
             //     'cadastrar' => [
-            //         'metodos' => ['ItemMovimentacaoEstoque::cadastrar', 'ItemMovimentacaoEstoque::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal'],
+            //         'metodos' => ['OficinaTematica::cadastrar', 'OficinaTematica::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal'],
             //         'label' => 'Cadastrar',
-            //         'descricao' => 'Permite Cadastrar ItemMovimentacaoEstoque',
+            //         'descricao' => 'Permite Cadastrar OficinaTematica',
             //         'tipoAcesso' => 'usuario'
             //     ],
             //     'listar' => [
-            //         'metodos' => ['ItemMovimentacaoEstoque::listar'],
+            //         'metodos' => ['OficinaTematica::listar'],
             //         'label' => 'Listar',
-            //         'descricao' => 'Permite Listar ItemMovimentacaoEstoque',
+            //         'descricao' => 'Permite Listar OficinaTematica',
             //         'tipoAcesso' => 'usuario'
             //     ],
             //     'excluir' => [
-            //         'metodos' => ['ItemMovimentacaoEstoque::excluir'],
+            //         'metodos' => ['OficinaTematica::excluir'],
             //         'label' => 'Excluir',
-            //         'descricao' => 'Permite Excluir ItemMovimentacaoEstoque',
+            //         'descricao' => 'Permite Excluir OficinaTematica',
             //         'tipoAcesso' => 'usuario'
             //     ],
                 
             // ],
-            'Produto' => [
-                'alterar' => [
-                    'metodos' => ['Produto::alterar', 'Produto::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal'],
-                    'label' => 'Alterar',
-                    'descricao' => 'Permite alterar Produto',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'pesquisar' => [
-                    'metodos' => ['Produto::pesquisar', 'Produto::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal'],
-                    'label' => 'Pesquisar',
-                    'descricao' => 'Permite Pesquisar Produto',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'cadastrar' => [
-                    'metodos' => ['Produto::cadastrar', 'Produto::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal'],
-                    'label' => 'Cadastrar',
-                    'descricao' => 'Permite Cadastrar Produto',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'listar' => [
-                    'metodos' => ['Produto::listar'],
-                    'label' => 'Listar',
-                    'descricao' => 'Permite Listar Produto',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'excluir' => [
-                    'metodos' => ['Produto::excluir'],
-                    'label' => 'Excluir',
-                    'descricao' => 'Permite Excluir Produto',
-                    'tipoAcesso' => 'usuario'
-                ],
+            // // 'OficinaTematicaReserva' => [
+            // //     'alterar' => [
+            // //         'metodos' => ['OficinaTematicaReserva::alterar', 'OficinaTematicaReserva::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal'],
+            // //         'label' => 'Alterar',
+            // //         'descricao' => 'Permite alterar OficinaTematicaReserva',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'pesquisar' => [
+            // //         'metodos' => ['OficinaTematicaReserva::pesquisar', 'OficinaTematicaReserva::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal'],
+            // //         'label' => 'Pesquisar',
+            // //         'descricao' => 'Permite Pesquisar OficinaTematicaReserva',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'cadastrar' => [
+            // //         'metodos' => ['OficinaTematicaReserva::cadastrar', 'OficinaTematicaReserva::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal'],
+            // //         'label' => 'Cadastrar',
+            // //         'descricao' => 'Permite Cadastrar OficinaTematicaReserva',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'listar' => [
+            // //         'metodos' => ['OficinaTematicaReserva::listar'],
+            // //         'label' => 'Listar',
+            // //         'descricao' => 'Permite Listar OficinaTematicaReserva',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'excluir' => [
+            // //         'metodos' => ['OficinaTematicaReserva::excluir'],
+            // //         'label' => 'Excluir',
+            // //         'descricao' => 'Permite Excluir OficinaTematicaReserva',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
                 
-            ],
-            // 'MaterialOficina' => [
-            //     'alterar' => [
-            //         'metodos' => ['MaterialOficina::alterar', 'MaterialOficina::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal'],
-            //         'label' => 'Alterar',
-            //         'descricao' => 'Permite alterar MaterialOficina',
-            //         'tipoAcesso' => 'usuario'
-            //     ],
-            //     'pesquisar' => [
-            //         'metodos' => ['MaterialOficina::pesquisar', 'MaterialOficina::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal'],
-            //         'label' => 'Pesquisar',
-            //         'descricao' => 'Permite Pesquisar MaterialOficina',
-            //         'tipoAcesso' => 'usuario'
-            //     ],
-            //     'cadastrar' => [
-            //         'metodos' => ['MaterialOficina::cadastrar', 'MaterialOficina::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal'],
-            //         'label' => 'Cadastrar',
-            //         'descricao' => 'Permite Cadastrar MaterialOficina',
-            //         'tipoAcesso' => 'usuario'
-            //     ],
-            //     'listar' => [
-            //         'metodos' => ['MaterialOficina::listar'],
-            //         'label' => 'Listar',
-            //         'descricao' => 'Permite Listar MaterialOficina',
-            //         'tipoAcesso' => 'usuario'
-            //     ],
-            //     'excluir' => [
-            //         'metodos' => ['MaterialOficina::excluir'],
-            //         'label' => 'Excluir',
-            //         'descricao' => 'Permite Excluir MaterialOficina',
-            //         'tipoAcesso' => 'usuario'
-            //     ],
-                
-            // ],
-            // 'MovimentacaoEstoque' => [
-            //     'alterar' => [
-            //         'metodos' => ['MovimentacaoEstoque::alterar', 'MovimentacaoEstoque::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal'],
-            //         'label' => 'Alterar',
-            //         'descricao' => 'Permite alterar MovimentacaoEstoque',
-            //         'tipoAcesso' => 'usuario'
-            //     ],
-            //     'pesquisar' => [
-            //         'metodos' => ['MovimentacaoEstoque::pesquisar', 'MovimentacaoEstoque::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal'],
-            //         'label' => 'Pesquisar',
-            //         'descricao' => 'Permite Pesquisar MovimentacaoEstoque',
-            //         'tipoAcesso' => 'usuario'
-            //     ],
-            //     'cadastrar' => [
-            //         'metodos' => ['MovimentacaoEstoque::cadastrar', 'MovimentacaoEstoque::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal'],
-            //         'label' => 'Cadastrar',
-            //         'descricao' => 'Permite Cadastrar MovimentacaoEstoque',
-            //         'tipoAcesso' => 'usuario'
-            //     ],
-            //     'listar' => [
-            //         'metodos' => ['MovimentacaoEstoque::listar'],
-            //         'label' => 'Listar',
-            //         'descricao' => 'Permite Listar MovimentacaoEstoque',
-            //         'tipoAcesso' => 'usuario'
-            //     ],
-            //     'excluir' => [
-            //         'metodos' => ['MovimentacaoEstoque::excluir'],
-            //         'label' => 'Excluir',
-            //         'descricao' => 'Permite Excluir MovimentacaoEstoque',
-            //         'tipoAcesso' => 'usuario'
-            //     ],
-                
-            // ],
-            'OficinaTematica' => [
-                'alterar' => [
-                    'metodos' => ['OficinaTematica::alterar', 'OficinaTematica::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal'],
-                    'label' => 'Alterar',
-                    'descricao' => 'Permite alterar OficinaTematica',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'pesquisar' => [
-                    'metodos' => ['OficinaTematica::pesquisar', 'OficinaTematica::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal'],
-                    'label' => 'Pesquisar',
-                    'descricao' => 'Permite Pesquisar OficinaTematica',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'cadastrar' => [
-                    'metodos' => ['OficinaTematica::cadastrar', 'OficinaTematica::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal'],
-                    'label' => 'Cadastrar',
-                    'descricao' => 'Permite Cadastrar OficinaTematica',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'listar' => [
-                    'metodos' => ['OficinaTematica::listar'],
-                    'label' => 'Listar',
-                    'descricao' => 'Permite Listar OficinaTematica',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'excluir' => [
-                    'metodos' => ['OficinaTematica::excluir'],
-                    'label' => 'Excluir',
-                    'descricao' => 'Permite Excluir OficinaTematica',
-                    'tipoAcesso' => 'usuario'
-                ],
-                
-            ],
-            // 'OficinaTematicaReserva' => [
-            //     'alterar' => [
-            //         'metodos' => ['OficinaTematicaReserva::alterar', 'OficinaTematicaReserva::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal'],
-            //         'label' => 'Alterar',
-            //         'descricao' => 'Permite alterar OficinaTematicaReserva',
-            //         'tipoAcesso' => 'usuario'
-            //     ],
-            //     'pesquisar' => [
-            //         'metodos' => ['OficinaTematicaReserva::pesquisar', 'OficinaTematicaReserva::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal'],
-            //         'label' => 'Pesquisar',
-            //         'descricao' => 'Permite Pesquisar OficinaTematicaReserva',
-            //         'tipoAcesso' => 'usuario'
-            //     ],
-            //     'cadastrar' => [
-            //         'metodos' => ['OficinaTematicaReserva::cadastrar', 'OficinaTematicaReserva::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal'],
-            //         'label' => 'Cadastrar',
-            //         'descricao' => 'Permite Cadastrar OficinaTematicaReserva',
-            //         'tipoAcesso' => 'usuario'
-            //     ],
-            //     'listar' => [
-            //         'metodos' => ['OficinaTematicaReserva::listar'],
-            //         'label' => 'Listar',
-            //         'descricao' => 'Permite Listar OficinaTematicaReserva',
-            //         'tipoAcesso' => 'usuario'
-            //     ],
-            //     'excluir' => [
-            //         'metodos' => ['OficinaTematicaReserva::excluir'],
-            //         'label' => 'Excluir',
-            //         'descricao' => 'Permite Excluir OficinaTematicaReserva',
-            //         'tipoAcesso' => 'usuario'
-            //     ],
-                
-            // ],
+            // // ],
             'Participante' => [
                 'alterar' => [
-                    'metodos' => ['Participante::alterar', 'Participante::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal'],
+                    'metodos' => ['Participante::alterar', 'Participante::doAlterar', 'RecursoTrabalho::pesquisaModal'],
                     'label' => 'Alterar',
                     'descricao' => 'Permite alterar Participante',
                     'tipoAcesso' => 'usuario'
                 ],
                 'pesquisar' => [
-                    'metodos' => ['Participante::pesquisar', 'Participante::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal'],
+                    'metodos' => ['Participante::pesquisar', 'Participante::doPesquisar', 'RecursoTrabalho::pesquisaModal'],
                     'label' => 'Pesquisar',
                     'descricao' => 'Permite Pesquisar Participante',
                     'tipoAcesso' => 'usuario'
                 ],
                 'cadastrar' => [
-                    'metodos' => ['Participante::cadastrar', 'Participante::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal'],
+                    'metodos' => ['Participante::cadastrar', 'Participante::doCadastrar', 'RecursoTrabalho::pesquisaModal'],
                     'label' => 'Cadastrar',
                     'descricao' => 'Permite Cadastrar Participante',
                     'tipoAcesso' => 'usuario'
@@ -693,275 +689,275 @@ class UsuarioEntity extends EntityBase {
                 ],
                 
             ],
-            // 'ParticipanteEvento' => [
-            //     'alterar' => [
-            //         'metodos' => ['ParticipanteEvento::alterar', 'ParticipanteEvento::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal'],
-            //         'label' => 'Alterar',
-            //         'descricao' => 'Permite alterar ParticipanteEvento',
+            // // 'ParticipanteEvento' => [
+            // //     'alterar' => [
+            // //         'metodos' => ['ParticipanteEvento::alterar', 'ParticipanteEvento::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal'],
+            // //         'label' => 'Alterar',
+            // //         'descricao' => 'Permite alterar ParticipanteEvento',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'pesquisar' => [
+            // //         'metodos' => ['ParticipanteEvento::pesquisar', 'ParticipanteEvento::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal'],
+            // //         'label' => 'Pesquisar',
+            // //         'descricao' => 'Permite Pesquisar ParticipanteEvento',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'cadastrar' => [
+            // //         'metodos' => ['ParticipanteEvento::cadastrar', 'ParticipanteEvento::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal'],
+            // //         'label' => 'Cadastrar',
+            // //         'descricao' => 'Permite Cadastrar ParticipanteEvento',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'listar' => [
+            // //         'metodos' => ['ParticipanteEvento::listar'],
+            // //         'label' => 'Listar',
+            // //         'descricao' => 'Permite Listar ParticipanteEvento',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'excluir' => [
+            // //         'metodos' => ['ParticipanteEvento::excluir'],
+            // //         'label' => 'Excluir',
+            // //         'descricao' => 'Permite Excluir ParticipanteEvento',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+                
+            // // ],
+            // 'PesquisaSatisfacao' => [
+            //     // 'alterar' => [
+            //     //     'metodos' => ['PesquisaSatisfacao::alterar', 'PesquisaSatisfacao::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal'],
+            //     //     'label' => 'Alterar',
+            //     //     'descricao' => 'Permite alterar PesquisaSatisfacao',
+            //     //     'tipoAcesso' => 'usuario'
+            //     // ],
+            //     'visualizar' => [
+            //         'metodos' => ['PesquisaSatisfacao::visualizar'],
+            //         'label' => 'Visualizar Resposta',
+            //         'descricao' => 'Permite visualizar resposta da  Pesquisa Satisfação',
             //         'tipoAcesso' => 'usuario'
             //     ],
             //     'pesquisar' => [
-            //         'metodos' => ['ParticipanteEvento::pesquisar', 'ParticipanteEvento::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal'],
+            //         'metodos' => ['PesquisaSatisfacao::pesquisar', 'PesquisaSatisfacao::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal'],
             //         'label' => 'Pesquisar',
-            //         'descricao' => 'Permite Pesquisar ParticipanteEvento',
+            //         'descricao' => 'Permite Pesquisar PesquisaSatisfacao',
+            //         'tipoAcesso' => 'usuario'
+            //     ],
+            //     // 'cadastrar' => [
+            //     //     'metodos' => ['PesquisaSatisfacao::cadastrar', 'PesquisaSatisfacao::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal'],
+            //     //     'label' => 'Cadastrar',
+            //     //     'descricao' => 'Permite Cadastrar PesquisaSatisfacao',
+            //     //     'tipoAcesso' => 'usuario'
+            //     // ],
+            //     'listar' => [
+            //         'metodos' => ['PesquisaSatisfacao::listar'],
+            //         'label' => 'Listar',
+            //         'descricao' => 'Permite Listar PesquisaSatisfacao',
+            //         'tipoAcesso' => 'usuario'
+            //     ],
+            //     // 'excluir' => [
+            //     //     'metodos' => ['PesquisaSatisfacao::excluir'],
+            //     //     'label' => 'Excluir',
+            //     //     'descricao' => 'Permite Excluir PesquisaSatisfacao',
+            //     //     'tipoAcesso' => 'usuario'
+            //     // ],
+            //     'cronEnvio' => [
+            //         'metodos' => ['PesquisaSatisfacao::cronEnvio', 'PesquisaSatisfacao::respostaPesquisa'],
+            //         'label' => 'Cron',
+            //         'descricao' => 'Cron',
+            //         'tipoAcesso' => 'publico'
+            //     ],
+            //     'responderPesquisa' => [
+            //         'metodos' => ['PesquisaSatisfacao::responderPesquisa', 'PesquisaSatisfacao::doResponderPesquisa'],
+            //         'label' => 'Responder Pesquisa de Satisfação',
+            //         'descricao' => 'Respnder Pesquisa de Satisfação',
+            //         'tipoAcesso' => 'publico'
+            //     ],
+                
+            // ],
+            // // 'PresencaEvento' => [
+            // //     'alterar' => [
+            // //         'metodos' => ['PresencaEvento::alterar', 'PresencaEvento::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal'],
+            // //         'label' => 'Alterar',
+            // //         'descricao' => 'Permite alterar PresencaEvento',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'pesquisar' => [
+            // //         'metodos' => ['PresencaEvento::pesquisar', 'PresencaEvento::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal'],
+            // //         'label' => 'Pesquisar',
+            // //         'descricao' => 'Permite Pesquisar PresencaEvento',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'cadastrar' => [
+            // //         'metodos' => ['PresencaEvento::cadastrar', 'PresencaEvento::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal'],
+            // //         'label' => 'Cadastrar',
+            // //         'descricao' => 'Permite Cadastrar PresencaEvento',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'listar' => [
+            // //         'metodos' => ['PresencaEvento::listar'],
+            // //         'label' => 'Listar',
+            // //         'descricao' => 'Permite Listar PresencaEvento',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'excluir' => [
+            // //         'metodos' => ['PresencaEvento::excluir'],
+            // //         'label' => 'Excluir',
+            // //         'descricao' => 'Permite Excluir PresencaEvento',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+                
+            // // ],
+            // 'RecursoOficina' => [
+            //     'alterar' => [
+            //         'metodos' => ['RecursoOficina::alterar', 'RecursoOficina::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal'],
+            //         'label' => 'Alterar',
+            //         'descricao' => 'Permite alterar RecursoOficina',
+            //         'tipoAcesso' => 'usuario'
+            //     ],
+            //     'pesquisar' => [
+            //         'metodos' => ['RecursoOficina::pesquisar', 'RecursoOficina::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal'],
+            //         'label' => 'Pesquisar',
+            //         'descricao' => 'Permite Pesquisar RecursoOficina',
             //         'tipoAcesso' => 'usuario'
             //     ],
             //     'cadastrar' => [
-            //         'metodos' => ['ParticipanteEvento::cadastrar', 'ParticipanteEvento::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal'],
+            //         'metodos' => ['RecursoOficina::cadastrar', 'RecursoOficina::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal'],
             //         'label' => 'Cadastrar',
-            //         'descricao' => 'Permite Cadastrar ParticipanteEvento',
+            //         'descricao' => 'Permite Cadastrar RecursoOficina',
             //         'tipoAcesso' => 'usuario'
             //     ],
             //     'listar' => [
-            //         'metodos' => ['ParticipanteEvento::listar'],
+            //         'metodos' => ['RecursoOficina::listar'],
             //         'label' => 'Listar',
-            //         'descricao' => 'Permite Listar ParticipanteEvento',
+            //         'descricao' => 'Permite Listar RecursoOficina',
             //         'tipoAcesso' => 'usuario'
             //     ],
             //     'excluir' => [
-            //         'metodos' => ['ParticipanteEvento::excluir'],
+            //         'metodos' => ['RecursoOficina::excluir'],
             //         'label' => 'Excluir',
-            //         'descricao' => 'Permite Excluir ParticipanteEvento',
+            //         'descricao' => 'Permite Excluir RecursoOficina',
             //         'tipoAcesso' => 'usuario'
             //     ],
                 
             // ],
-            'PesquisaSatisfacao' => [
-                // 'alterar' => [
-                //     'metodos' => ['PesquisaSatisfacao::alterar', 'PesquisaSatisfacao::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal'],
-                //     'label' => 'Alterar',
-                //     'descricao' => 'Permite alterar PesquisaSatisfacao',
-                //     'tipoAcesso' => 'usuario'
-                // ],
-                'visualizar' => [
-                    'metodos' => ['PesquisaSatisfacao::visualizar'],
-                    'label' => 'Visualizar Resposta',
-                    'descricao' => 'Permite visualizar resposta da  Pesquisa Satisfação',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'pesquisar' => [
-                    'metodos' => ['PesquisaSatisfacao::pesquisar', 'PesquisaSatisfacao::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal'],
-                    'label' => 'Pesquisar',
-                    'descricao' => 'Permite Pesquisar PesquisaSatisfacao',
-                    'tipoAcesso' => 'usuario'
-                ],
-                // 'cadastrar' => [
-                //     'metodos' => ['PesquisaSatisfacao::cadastrar', 'PesquisaSatisfacao::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal'],
-                //     'label' => 'Cadastrar',
-                //     'descricao' => 'Permite Cadastrar PesquisaSatisfacao',
-                //     'tipoAcesso' => 'usuario'
-                // ],
-                'listar' => [
-                    'metodos' => ['PesquisaSatisfacao::listar'],
-                    'label' => 'Listar',
-                    'descricao' => 'Permite Listar PesquisaSatisfacao',
-                    'tipoAcesso' => 'usuario'
-                ],
-                // 'excluir' => [
-                //     'metodos' => ['PesquisaSatisfacao::excluir'],
-                //     'label' => 'Excluir',
-                //     'descricao' => 'Permite Excluir PesquisaSatisfacao',
-                //     'tipoAcesso' => 'usuario'
-                // ],
-                'cronEnvio' => [
-                    'metodos' => ['PesquisaSatisfacao::cronEnvio', 'PesquisaSatisfacao::respostaPesquisa'],
-                    'label' => 'Cron',
-                    'descricao' => 'Cron',
-                    'tipoAcesso' => 'publico'
-                ],
-                'responderPesquisa' => [
-                    'metodos' => ['PesquisaSatisfacao::responderPesquisa', 'PesquisaSatisfacao::doResponderPesquisa'],
-                    'label' => 'Responder Pesquisa de Satisfação',
-                    'descricao' => 'Respnder Pesquisa de Satisfação',
-                    'tipoAcesso' => 'publico'
-                ],
-                
-            ],
-            // 'PresencaEvento' => [
+            // 'RecursoTrabalho' => [
             //     'alterar' => [
-            //         'metodos' => ['PresencaEvento::alterar', 'PresencaEvento::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal'],
+            //         'metodos' => ['RecursoTrabalho::alterar', 'RecursoTrabalho::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal'],
             //         'label' => 'Alterar',
-            //         'descricao' => 'Permite alterar PresencaEvento',
+            //         'descricao' => 'Permite alterar RecursoTrabalho',
             //         'tipoAcesso' => 'usuario'
             //     ],
             //     'pesquisar' => [
-            //         'metodos' => ['PresencaEvento::pesquisar', 'PresencaEvento::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal'],
+            //         'metodos' => ['RecursoTrabalho::pesquisar', 'RecursoTrabalho::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal'],
             //         'label' => 'Pesquisar',
-            //         'descricao' => 'Permite Pesquisar PresencaEvento',
+            //         'descricao' => 'Permite Pesquisar RecursoTrabalho',
             //         'tipoAcesso' => 'usuario'
             //     ],
             //     'cadastrar' => [
-            //         'metodos' => ['PresencaEvento::cadastrar', 'PresencaEvento::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal'],
+            //         'metodos' => ['RecursoTrabalho::cadastrar', 'RecursoTrabalho::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal'],
             //         'label' => 'Cadastrar',
-            //         'descricao' => 'Permite Cadastrar PresencaEvento',
+            //         'descricao' => 'Permite Cadastrar RecursoTrabalho',
             //         'tipoAcesso' => 'usuario'
             //     ],
             //     'listar' => [
-            //         'metodos' => ['PresencaEvento::listar'],
+            //         'metodos' => ['RecursoTrabalho::listar'],
             //         'label' => 'Listar',
-            //         'descricao' => 'Permite Listar PresencaEvento',
+            //         'descricao' => 'Permite Listar RecursoTrabalho',
             //         'tipoAcesso' => 'usuario'
             //     ],
             //     'excluir' => [
-            //         'metodos' => ['PresencaEvento::excluir'],
+            //         'metodos' => ['RecursoTrabalho::excluir'],
             //         'label' => 'Excluir',
-            //         'descricao' => 'Permite Excluir PresencaEvento',
+            //         'descricao' => 'Permite Excluir RecursoTrabalho',
             //         'tipoAcesso' => 'usuario'
             //     ],
                 
             // ],
-            'RecursoOficina' => [
-                'alterar' => [
-                    'metodos' => ['RecursoOficina::alterar', 'RecursoOficina::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal'],
-                    'label' => 'Alterar',
-                    'descricao' => 'Permite alterar RecursoOficina',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'pesquisar' => [
-                    'metodos' => ['RecursoOficina::pesquisar', 'RecursoOficina::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal'],
-                    'label' => 'Pesquisar',
-                    'descricao' => 'Permite Pesquisar RecursoOficina',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'cadastrar' => [
-                    'metodos' => ['RecursoOficina::cadastrar', 'RecursoOficina::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal'],
-                    'label' => 'Cadastrar',
-                    'descricao' => 'Permite Cadastrar RecursoOficina',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'listar' => [
-                    'metodos' => ['RecursoOficina::listar'],
-                    'label' => 'Listar',
-                    'descricao' => 'Permite Listar RecursoOficina',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'excluir' => [
-                    'metodos' => ['RecursoOficina::excluir'],
-                    'label' => 'Excluir',
-                    'descricao' => 'Permite Excluir RecursoOficina',
-                    'tipoAcesso' => 'usuario'
-                ],
-                
-            ],
-            'RecursoTrabalho' => [
-                'alterar' => [
-                    'metodos' => ['RecursoTrabalho::alterar', 'RecursoTrabalho::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal'],
-                    'label' => 'Alterar',
-                    'descricao' => 'Permite alterar RecursoTrabalho',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'pesquisar' => [
-                    'metodos' => ['RecursoTrabalho::pesquisar', 'RecursoTrabalho::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal'],
-                    'label' => 'Pesquisar',
-                    'descricao' => 'Permite Pesquisar RecursoTrabalho',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'cadastrar' => [
-                    'metodos' => ['RecursoTrabalho::cadastrar', 'RecursoTrabalho::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal'],
-                    'label' => 'Cadastrar',
-                    'descricao' => 'Permite Cadastrar RecursoTrabalho',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'listar' => [
-                    'metodos' => ['RecursoTrabalho::listar'],
-                    'label' => 'Listar',
-                    'descricao' => 'Permite Listar RecursoTrabalho',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'excluir' => [
-                    'metodos' => ['RecursoTrabalho::excluir'],
-                    'label' => 'Excluir',
-                    'descricao' => 'Permite Excluir RecursoTrabalho',
-                    'tipoAcesso' => 'usuario'
-                ],
-                
-            ],
-            'Reserva' => [
-                'alterar' => [
-                    'metodos' => ['Reserva::alterar', 'Reserva::doAlterar', 'Reserva::definirEntrada', 'Reserva::definirSaida','OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'Participante::getDadosParticipante', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal'],
-                    'label' => 'Alterar',
-                    'descricao' => 'Permite alterar Reserva',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'pesquisar' => [
-                    'metodos' => ['Reserva::pesquisar', 'Reserva::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal'],
-                    'label' => 'Pesquisar',
-                    'descricao' => 'Permite Pesquisar Reserva',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'cadastrar' => [
-                    'metodos' => ['Reserva::cadastrar', 'Reserva::doCadastrar', 'Reserva::listaReservaJson', 'OficinaTematica::descricao', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'Participante::getDadosParticipante', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal'],
-                    'label' => 'Cadastrar',
-                    'descricao' => 'Permite Cadastrar Reserva',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'listar' => [
-                    'metodos' => ['Reserva::listar'],
-                    'label' => 'Listar',
-                    'descricao' => 'Permite Listar Reserva',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'excluir' => [
-                    'metodos' => ['Reserva::excluir'],
-                    'label' => 'Excluir',
-                    'descricao' => 'Permite Excluir Reserva',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'controleUso' => [
-                    'metodos' => ['Reserva::litarServicosReserva', 'Reserva::definirServicosReserva'],
-                    'label' => 'Controle de Acesso e Uso',
-                    'descricao' => 'Permite definir entrada/saída e serviços usados',
-                    'tipoAcesso' => 'usuario'
-                ],
-            ],
-            // 'ReservaParticipante' => [
+            // 'Reserva' => [
             //     'alterar' => [
-            //         'metodos' => ['ReservaParticipante::alterar', 'ReservaParticipante::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Reserva::pesquisaModal'],
+            //         'metodos' => ['Reserva::alterar', 'Reserva::doAlterar', 'Reserva::definirEntrada', 'Reserva::definirSaida','OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'Participante::getDadosParticipante', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal'],
             //         'label' => 'Alterar',
-            //         'descricao' => 'Permite alterar ReservaParticipante',
+            //         'descricao' => 'Permite alterar Reserva',
             //         'tipoAcesso' => 'usuario'
             //     ],
             //     'pesquisar' => [
-            //         'metodos' => ['ReservaParticipante::pesquisar', 'ReservaParticipante::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Reserva::pesquisaModal'],
+            //         'metodos' => ['Reserva::pesquisar', 'Reserva::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal'],
             //         'label' => 'Pesquisar',
-            //         'descricao' => 'Permite Pesquisar ReservaParticipante',
+            //         'descricao' => 'Permite Pesquisar Reserva',
             //         'tipoAcesso' => 'usuario'
             //     ],
             //     'cadastrar' => [
-            //         'metodos' => ['ReservaParticipante::cadastrar', 'ReservaParticipante::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Reserva::pesquisaModal'],
+            //         'metodos' => ['Reserva::cadastrar', 'Reserva::doCadastrar', 'Reserva::listaReservaJson', 'OficinaTematica::descricao', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'Participante::getDadosParticipante', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal'],
             //         'label' => 'Cadastrar',
-            //         'descricao' => 'Permite Cadastrar ReservaParticipante',
+            //         'descricao' => 'Permite Cadastrar Reserva',
             //         'tipoAcesso' => 'usuario'
             //     ],
             //     'listar' => [
-            //         'metodos' => ['ReservaParticipante::listar'],
+            //         'metodos' => ['Reserva::listar'],
             //         'label' => 'Listar',
-            //         'descricao' => 'Permite Listar ReservaParticipante',
+            //         'descricao' => 'Permite Listar Reserva',
             //         'tipoAcesso' => 'usuario'
             //     ],
             //     'excluir' => [
-            //         'metodos' => ['ReservaParticipante::excluir'],
+            //         'metodos' => ['Reserva::excluir'],
             //         'label' => 'Excluir',
-            //         'descricao' => 'Permite Excluir ReservaParticipante',
+            //         'descricao' => 'Permite Excluir Reserva',
             //         'tipoAcesso' => 'usuario'
             //     ],
-                
+            //     'controleUso' => [
+            //         'metodos' => ['Reserva::litarServicosReserva', 'Reserva::definirServicosReserva'],
+            //         'label' => 'Controle de Acesso e Uso',
+            //         'descricao' => 'Permite definir entrada/saída e serviços usados',
+            //         'tipoAcesso' => 'usuario'
+            //     ],
             // ],
+            // // 'ReservaParticipante' => [
+            // //     'alterar' => [
+            // //         'metodos' => ['ReservaParticipante::alterar', 'ReservaParticipante::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Reserva::pesquisaModal'],
+            // //         'label' => 'Alterar',
+            // //         'descricao' => 'Permite alterar ReservaParticipante',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'pesquisar' => [
+            // //         'metodos' => ['ReservaParticipante::pesquisar', 'ReservaParticipante::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Reserva::pesquisaModal'],
+            // //         'label' => 'Pesquisar',
+            // //         'descricao' => 'Permite Pesquisar ReservaParticipante',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'cadastrar' => [
+            // //         'metodos' => ['ReservaParticipante::cadastrar', 'ReservaParticipante::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Reserva::pesquisaModal'],
+            // //         'label' => 'Cadastrar',
+            // //         'descricao' => 'Permite Cadastrar ReservaParticipante',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'listar' => [
+            // //         'metodos' => ['ReservaParticipante::listar'],
+            // //         'label' => 'Listar',
+            // //         'descricao' => 'Permite Listar ReservaParticipante',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+            // //     'excluir' => [
+            // //         'metodos' => ['ReservaParticipante::excluir'],
+            // //         'label' => 'Excluir',
+            // //         'descricao' => 'Permite Excluir ReservaParticipante',
+            // //         'tipoAcesso' => 'usuario'
+            // //     ],
+                
+            // // ],
             'Servico' => [
                 'alterar' => [
-                    'metodos' => ['Servico::alterar', 'Servico::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'Cobranca::pesquisaModal', 'Servico::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'Cobranca::pesquisaModal', 'Participante::pesquisaModal', 'Reserva::pesquisaModal'],
+                    'metodos' => ['Servico::alterar', 'Servico::doAlterar', 'Servico::obterDadosServicoApiSesc', 'Servico::validarCodigoUnico', 'Produto::pesquisaModal'],
                     'label' => 'Alterar',
                     'descricao' => 'Permite alterar Servico',
                     'tipoAcesso' => 'usuario'
                 ],
                 'pesquisar' => [
-                    'metodos' => ['Servico::pesquisar', 'Servico::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'Cobranca::pesquisaModal', 'Servico::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'Cobranca::pesquisaModal', 'Participante::pesquisaModal', 'Reserva::pesquisaModal'],
+                    'metodos' => ['Servico::pesquisar', 'Servico::doPesquisar'],
                     'label' => 'Pesquisar',
                     'descricao' => 'Permite Pesquisar Servico',
                     'tipoAcesso' => 'usuario'
                 ],
                 'cadastrar' => [
-                    'metodos' => ['Servico::cadastrar', 'Servico::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'Cobranca::pesquisaModal', 'Servico::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'Cobranca::pesquisaModal', 'Participante::pesquisaModal', 'Reserva::pesquisaModal'],
+                    'metodos' => ['Servico::cadastrar', 'Servico::doCadastrar', 'Servico::obterDadosServicoApiSesc', 'Servico::validarCodigoUnico', 'Produto::pesquisaModal'],
                     'label' => 'Cadastrar',
                     'descricao' => 'Permite Cadastrar Servico',
                     'tipoAcesso' => 'usuario'
@@ -972,47 +968,47 @@ class UsuarioEntity extends EntityBase {
                     'descricao' => 'Permite Listar Servico',
                     'tipoAcesso' => 'usuario'
                 ],
-                'excluir' => [
-                    'metodos' => ['Servico::excluir'],
-                    'label' => 'Excluir',
-                    'descricao' => 'Permite Excluir Servico',
-                    'tipoAcesso' => 'usuario'
-                ],
-                
-            ],
-            'TemplateTermo' => [
-                'alterar' => [
-                    'metodos' => ['TemplateTermo::alterar', 'TemplateTermo::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Reserva::pesquisaModal'],
-                    'label' => 'Alterar',
-                    'descricao' => 'Permite alterar Template do Termo',
-                    'tipoAcesso' => 'usuario'
-                ],
-                // 'pesquisar' => [
-                //     'metodos' => ['TemplateTermo::pesquisar', 'TemplateTermo::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Reserva::pesquisaModal'],
-                //     'label' => 'Pesquisar',
-                //     'descricao' => 'Permite Pesquisar TemplateTermo',
-                //     'tipoAcesso' => 'usuario'
-                // ],
-                // 'cadastrar' => [
-                //     'metodos' => ['TemplateTermo::cadastrar', 'TemplateTermo::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Reserva::pesquisaModal'],
-                //     'label' => 'Cadastrar',
-                //     'descricao' => 'Permite Cadastrar TemplateTermo',
-                //     'tipoAcesso' => 'usuario'
-                // ],
-                // 'listar' => [
-                //     'metodos' => ['TemplateTermo::listar'],
-                //     'label' => 'Listar',
-                //     'descricao' => 'Permite Listar TemplateTermo',
-                //     'tipoAcesso' => 'usuario'
-                // ],
                 // 'excluir' => [
-                //     'metodos' => ['TemplateTermo::excluir'],
+                //     'metodos' => ['Servico::excluir'],
                 //     'label' => 'Excluir',
-                //     'descricao' => 'Permite Excluir TemplateTermo',
+                //     'descricao' => 'Permite Excluir Servico',
                 //     'tipoAcesso' => 'usuario'
                 // ],
                 
             ],
+            // 'TemplateTermo' => [
+            //     'alterar' => [
+            //         'metodos' => ['TemplateTermo::alterar', 'TemplateTermo::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Reserva::pesquisaModal'],
+            //         'label' => 'Alterar',
+            //         'descricao' => 'Permite alterar Template do Termo',
+            //         'tipoAcesso' => 'usuario'
+            //     ],
+            //     // 'pesquisar' => [
+            //     //     'metodos' => ['TemplateTermo::pesquisar', 'TemplateTermo::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Reserva::pesquisaModal'],
+            //     //     'label' => 'Pesquisar',
+            //     //     'descricao' => 'Permite Pesquisar TemplateTermo',
+            //     //     'tipoAcesso' => 'usuario'
+            //     // ],
+            //     // 'cadastrar' => [
+            //     //     'metodos' => ['TemplateTermo::cadastrar', 'TemplateTermo::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Reserva::pesquisaModal'],
+            //     //     'label' => 'Cadastrar',
+            //     //     'descricao' => 'Permite Cadastrar TemplateTermo',
+            //     //     'tipoAcesso' => 'usuario'
+            //     // ],
+            //     // 'listar' => [
+            //     //     'metodos' => ['TemplateTermo::listar'],
+            //     //     'label' => 'Listar',
+            //     //     'descricao' => 'Permite Listar TemplateTermo',
+            //     //     'tipoAcesso' => 'usuario'
+            //     // ],
+            //     // 'excluir' => [
+            //     //     'metodos' => ['TemplateTermo::excluir'],
+            //     //     'label' => 'Excluir',
+            //     //     'descricao' => 'Permite Excluir TemplateTermo',
+            //     //     'tipoAcesso' => 'usuario'
+            //     // ],
+                
+            // ],
             'Painel' => [
                 'login' => [
                     'metodos' => ['Painel::login', 'Painel::doLogin'],
@@ -1056,12 +1052,12 @@ class UsuarioEntity extends EntityBase {
                     'descricao' => 'Acessar Arquivos de upload',
                     'tipoAcesso' => 'publico'
                 ],
-                'testeemail' => [
-                    'metodos' => ['Painel::testeEmail'],
-                    'label' => 'Teste E-mail',
-                    'descricao' => 'Executar envio de e-mail para teste de configuração',
-                    'tipoAcesso' => 'admin'
-                ],
+                // 'testeemail' => [
+                //     'metodos' => ['Painel::testeEmail'],
+                //     'label' => 'Teste E-mail',
+                //     'descricao' => 'Executar envio de e-mail para teste de configuração',
+                //     'tipoAcesso' => 'admin'
+                // ],
             ],
             'Usuario' => [
                 'cadastrar' => [
@@ -1095,20 +1091,20 @@ class UsuarioEntity extends EntityBase {
                     'tipoAcesso' => 'admin'
                 ],
             ],
-            'Relatorio' => [
-                'pesquisaSatisfacao' => [
-                    'metodos' => ['PesquisaSatisfacao::relatorio'],
-                    'label' => 'Emitir relatório Pesquisa Satisfação',
-                    'descricao' => 'Emite relatório das Pesquisas de Satisfação',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'reservas' => [
-                    'metodos' => ['Reserva::relatorio'],
-                    'label' => 'Emitir relatório Reservas',
-                    'descricao' => 'Emite relatório das Reservas',
-                    'tipoAcesso' => 'usuario'
-                ],
-            ]
+            // 'Relatorio' => [
+            //     'pesquisaSatisfacao' => [
+            //         'metodos' => ['PesquisaSatisfacao::relatorio'],
+            //         'label' => 'Emitir relatório Pesquisa Satisfação',
+            //         'descricao' => 'Emite relatório das Pesquisas de Satisfação',
+            //         'tipoAcesso' => 'usuario'
+            //     ],
+            //     'reservas' => [
+            //         'metodos' => ['Reserva::relatorio'],
+            //         'label' => 'Emitir relatório Reservas',
+            //         'descricao' => 'Emite relatório das Reservas',
+            //         'tipoAcesso' => 'usuario'
+            //     ],
+            // ]
         ];
     
     protected $attributes = [

@@ -175,6 +175,7 @@
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">Cidade</label> 
                             <input class="form-control" name="cidade" id="cidade" type="text" maxlength="100" value="<?= old('cidade') ?>">
                         </div>
+                        <input type="hidden" name="codigoCidade" id="codigoCidade" value="<?= old('codigoCidade') ?>">
                         <div class="form-group col-12 col-md-6">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">Estado</label> 
                             <select class="form-control" name="uf" id="uf">
@@ -329,6 +330,7 @@
         var cep = $(this).val().replace(/\D/g, '');
         if (cep.length < 8) {
             ultimoCepConsultado = '';
+            $('#codigoCidade').val('');
             return;
         }
         if (cep.length !== 8 || cep === ultimoCepConsultado) {
@@ -349,12 +351,14 @@
             })
             .then(function (data) {
                 if (data.erro) {
+                    $('#codigoCidade').val('');
                     return;
                 }
                 $('#logradouro').val(data.logradouro || '');
                 $('#bairro').val(data.bairro || '');
                 $('#cidade').val(data.cidade || '');
                 $('#uf').val(data.uf || '');
+                $('#codigoCidade').val(data.codigoCidade || '');
             })
             .catch(function () {});
     });

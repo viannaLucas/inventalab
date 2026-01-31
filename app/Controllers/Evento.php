@@ -422,10 +422,15 @@ class Evento extends BaseController {
         $cobrancaModel->db->transStart();
 
         try {
+            $totalCobranca = (float) $valorEventoDb;
+            /*
+            // PRODUTOS_DESATIVADOS
+            $totalCobranca += 0;
+            */
             $cobrancaData = [
                 'Participante_id' => $participanteEvento->Participante_id,
                 'data' => date('Y-m-d'),
-                'valor' => $valorEventoDb,
+                'valor' => number_format($totalCobranca, 2, '.', ''),
                 'observacoes' => 'cobrança referente ao evento ' . $evento->nome,
                 'situacao' => 0,
             ];

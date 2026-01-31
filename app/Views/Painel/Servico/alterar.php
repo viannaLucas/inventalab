@@ -45,18 +45,69 @@
                             <?PHP } ?>
                         </select>
                     </div>                                        
+                <fieldset class="border rounded-10 m-0 mb-3 p-2 w-100">
+                    <div class="border-bottom mx-n1 mb-3">
+                        <h4 class="px-2">Lista de Produto do Serviço</h4>
+                    </div>
+                    <div class="form-row px-2">
+                        <div class="form-group col-auto">
+                            <label class="main-content-label tx-11 tx-medium tx-gray-600">Produto</label> 
+                            <div class="input-group mb-3">
+                                <input class="form-control" name="servicoproduto_Produto_id_Text" id="servicoproduto_Produto_id_Text" type="text" disabled="true" onclick="$('#addonSearchservicoproduto_Produto_id').click()" value=""/>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" type="button" id="addonSearchservicoproduto_Produto_id" 
+                                            data-toggle="modal" data-target="#modalFK" data-title='Localizar Produto'
+                                            data-url-search='<?PHP echo base_url('Produto/pesquisaModal?searchTerm='); ?>' data-input-result='servicoproduto_Produto_id' data-input-text='servicoproduto_Produto_id_Text' >
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <input class="d-none" name="servicoproduto_Produto_id" id="servicoproduto_Produto_id" type="text" value="" />
+                            </div>
+                        </div>                        
+                        <div class="form-group col-auto">
+                            <label class="main-content-label tx-11 tx-medium tx-gray-600">Quantidade</label> 
+                            <input class="form-control maskInteiro" name="servicoproduto_quantidade" id="servicoproduto_quantidade" type="text" value="">
+                        </div>                        
+                        <div class="form-group col-auto">
+                            <label class="main-content-label tx-11 tx-medium tx-gray-600">&nbsp;</label> 
+                            <button type="button" class="form-inline btn btn-primary" style="padding: 12px 20px;" id="btnAddServicoProduto">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <table class="table table-striped" id="listTableServicoProduto">
+                        <thead>
+                            <tr>
+                                <th scope="col">Produto</th>
+                                <th scope="col">Quantidade</th>
+                                <th scope="col">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody >
+                        </tbody>
+                    </table>
+                    <div class="w-100 text-center msgEmptyListServicoProduto mb-3">
+                        <span class="h5">Sem itens selecionados</span>
+                    </div>
+                </fieldset>
                     <div class="form-group col-12">
                         <h6 class="mb-2 mt-3">Dados Fiscais</h6>
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Código</label> 
-                        <input class="form-control" type="text" value="<?= $dadosApi->codigo ?>" readonly>
+                        <input class="form-control" name="codigo" id="codigo" type="text" value="<?= $dadosApi->codigo ?>">
+                        <small id="codigo-descricao" class="form-text text-muted d-none"></small>
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Unidade de Controle</label> 
-                        <input class="form-control" name="UnidadedeControle" id="UnidadedeControle" type="text" maxlength="10" value="<?= $dadosApi->UnidadedeControle ?>">
+                        <input class="form-control" name="UnidadedeControle" id="UnidadedeControle" type="text" maxlength="10" value="<?= $dadosApi->UnidadedeControle ?>" readonly>
                     </div>
-                    <div class="form-group col-12 col-md-6">
+                    <div class="form-group col-12 col-md-6 d-none">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Produto Inspecionado</label> 
                         <select class="form-control" name="ProdutoInspecionado" id="ProdutoInspecionado">
                             <option value="" <?= $dadosApi->ProdutoInspecionado=='' ? 'selected' : ''; ?>></option>
@@ -64,7 +115,7 @@
                             <option value="N" <?= $dadosApi->ProdutoInspecionado === 'N' ? 'selected' : ''; ?>>Não</option>
                         </select>
                     </div>
-                    <div class="form-group col-12 col-md-6">
+                    <div class="form-group col-12 col-md-6 d-none">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Produto Fabricado</label> 
                         <select class="form-control" name="ProdutoFabricado" id="ProdutoFabricado">
                             <option value="" <?= $dadosApi->ProdutoFabricado=='' ? 'selected' : ''; ?>></option>
@@ -74,13 +125,14 @@
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Produto Liberado</label> 
-                        <select class="form-control" name="ProdutoLiberado" id="ProdutoLiberado">
+                        <select class="form-control" name="ProdutoLiberado" id="ProdutoLiberado" disabled>
                             <option value="" <?= $dadosApi->ProdutoLiberado=='' ? 'selected' : ''; ?>></option>
                             <option value="S" <?= $dadosApi->ProdutoLiberado === 'S' ? 'selected' : ''; ?>>Sim</option>
                             <option value="N" <?= $dadosApi->ProdutoLiberado === 'N' ? 'selected' : ''; ?>>Não</option>
                         </select>
+                        <input type="hidden" name="ProdutoLiberado" id="ProdutoLiberadoHidden" value="<?= $dadosApi->ProdutoLiberado ?>">
                     </div>
-                    <div class="form-group col-12 col-md-6">
+                    <div class="form-group col-12 col-md-6 d-none">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Produto em Inventário</label> 
                         <select class="form-control" name="ProdutoemInventario" id="ProdutoemInventario">
                             <option value="" <?= $dadosApi->ProdutoemInventario=='' ? 'selected' : ''; ?>></option>
@@ -88,7 +140,7 @@
                             <option value="N" <?= $dadosApi->ProdutoemInventario === 'N' ? 'selected' : ''; ?>>Não</option>
                         </select>
                     </div>
-                    <div class="form-group col-12 col-md-6">
+                    <div class="form-group col-12 col-md-6 d-none">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Tipo de Produto</label> 
                         <select class="form-control" name="TipodeProduto" id="TipodeProduto">
                             <option value="" <?= $dadosApi->TipodeProduto=='' ? 'selected' : ''; ?>></option>
@@ -96,7 +148,7 @@
                             <option value="S" <?= $dadosApi->TipodeProduto === 'S' ? 'selected' : ''; ?>>Servico</option>
                         </select>
                     </div>
-                    <div class="form-group col-12 col-md-6">
+                    <div class="form-group col-12 col-md-6 d-none">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Indicação de Lote Série</label> 
                         <select class="form-control" name="IndicacaodeLoteSerie" id="IndicacaodeLoteSerie">
                             <option value="" <?= $dadosApi->IndicacaodeLoteSerie=='' ? 'selected' : ''; ?>></option>
@@ -107,20 +159,21 @@
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Código de Situação Tributária CST</label> 
-                        <select class="form-control" name="CodigodeSituacaoTributariaCST" id="CodigodeSituacaoTributariaCST">
+                        <select class="form-control" name="CodigodeSituacaoTributariaCST" id="CodigodeSituacaoTributariaCST" disabled>
                             <option value="" <?= $dadosApi->CodigodeSituacaoTributariaCST=='' ? 'selected' : ''; ?>></option>
                             <option value="0" <?= $dadosApi->CodigodeSituacaoTributariaCST === '0' ? 'selected' : ''; ?>>0</option>
                             <option value="1" <?= $dadosApi->CodigodeSituacaoTributariaCST === '1' ? 'selected' : ''; ?>>1</option>
                             <option value="2" <?= $dadosApi->CodigodeSituacaoTributariaCST === '2' ? 'selected' : ''; ?>>2</option>
                         </select>
+                        <input type="hidden" name="CodigodeSituacaoTributariaCST" id="CodigodeSituacaoTributariaCSTHidden" value="<?= $dadosApi->CodigodeSituacaoTributariaCST ?>">
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Classificação Fiscal</label> 
-                        <input class="form-control" name="ClassificacaoFiscal" id="ClassificacaoFiscal" type="text" maxlength="10" value="<?= $dadosApi->ClassificacaoFiscal ?>">
+                        <input class="form-control" name="ClassificacaoFiscal" id="ClassificacaoFiscal" type="text" maxlength="10" value="<?= $dadosApi->ClassificacaoFiscal ?>" readonly>
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Grupo de Produto</label> 
-                        <input class="form-control" name="GrupodeProduto" id="GrupodeProduto" type="text" maxlength="30" value="<?= $dadosApi->GrupodeProduto ?>">
+                        <input class="form-control" name="GrupodeProduto" id="GrupodeProduto" type="text" maxlength="30" value="<?= $dadosApi->GrupodeProduto ?>" readonly>
                     </div>
                 <div class="form-group mb-0 mt-3 text-center col-12">
                     <button type="submit" class="btn btn-primary submitButton">Alterar</button>
@@ -130,6 +183,24 @@
     </div>
 </div>
 
+<template id="templateRowServicoProduto">
+    <tr id='ServicoProduto_{_index_}'>
+        <td>
+            <input type="hidden" class="form-control ignoreValidate fkProduto_idServicoProduto" name="ServicoProduto[{_index_}][Produto_id]" readonly="true" value="{_Produto_id_}" />
+            <input type="text" class="form-control ignoreValidate" readonly="true" value="{_Produto_id_Text_}" />
+        </td>
+        <td><input type="text" class="form-control ignoreValidate" name="ServicoProduto[{_index_}][quantidade]" readonly="true" value="{_quantidade_}" /></td>
+        <td>
+            <div class="btn btn-danger btnExcluirServicoProduto" onclick="$('#ServicoProduto_{_index_}').remove();">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                </svg>
+            </div>
+        </td>
+    </tr>
+</template>
+
 <!-- content closed -->
 <?= $this->endSection('content'); ?>
 
@@ -138,6 +209,152 @@
 
 <?= $this->section('scripts'); ?>
 <script>
+    const baseUrlServicoApi = "<?= base_url('Servico/obterDadosServicoApiSesc/'); ?>";
+    const baseUrlCodigoUnico = "<?= base_url('Servico/validarCodigoUnico'); ?>";
+    const codigoInput = $('#codigo');
+    const submitButton = $('.submitButton');
+    let codigoApiCache = { valor: null, valido: null };
+    let codigoApiEmAndamento = null;
+    let codigoUnicoCache = { valor: null, valido: null, servicoId: null };
+    let codigoUnicoEmAndamento = null;
+    const servicoId = <?= (int) $servico->id ?>;
+
+    function setCodigoApiErro(mensagem) {
+        let errorEl = $('#codigo-api-error');
+        if (!errorEl.length) {
+            errorEl = $('<div/>', { id: 'codigo-api-error', class: 'invalid-feedback d-block' });
+            codigoInput.parent().append(errorEl);
+        }
+        errorEl.text(mensagem);
+        codigoInput.removeClass('is-valid').addClass('is-invalid');
+    }
+
+    function limparCodigoApiErro() {
+        $('#codigo-api-error').remove();
+        codigoInput.removeClass('is-invalid').addClass('is-valid');
+    }
+
+    function preencherDadosServico(dados) {
+        if (!dados) {
+            return;
+        }
+        const descricao = dados.Descricao ?? '';
+        if (descricao) {
+            $('#codigo-descricao').text(descricao).removeClass('d-none');
+        } else {
+            $('#codigo-descricao').text('').addClass('d-none');
+        }
+        $('#CodigodeSituacaoTributariaCST').val(dados.CodigodaSituacaoTributaria ?? '').trigger('change');
+        $('#CodigodeSituacaoTributariaCSTHidden').val(dados.CodigodaSituacaoTributaria ?? '');
+        $('#UnidadedeControle').val(dados.UnidadeDeMedidaDeControle ?? '');
+        $('#ProdutoInspecionado').val('N').trigger('change');
+        $('#ProdutoFabricado').val('N').trigger('change');
+        $('#ProdutoLiberado').val(dados.LiberadoParaMovimentacao ?? '').trigger('change');
+        $('#ProdutoLiberadoHidden').val(dados.LiberadoParaMovimentacao ?? '');
+        $('#ProdutoemInventario').val('N').trigger('change');
+        $('#TipodeProduto').val('S').trigger('change');
+        $('#IndicacaodeLoteSerie').val('N').trigger('change');
+        $('#ClassificacaoFiscal').val(dados.ClassificacaoFiscal ?? '');
+        $('#GrupodeProduto').val(dados.GrupoProduto ?? '');
+    }
+
+    function validarCodigoServicoApi(forceFetch = false) {
+        const codigo = (codigoInput.val() || '').trim();
+        if (!codigo) {
+            setCodigoApiErro('O campo código é obrigatório.');
+            $('#codigo-descricao').text('').addClass('d-none');
+            return Promise.resolve(false);
+        }
+
+        if (!forceFetch && codigoApiCache.valor === codigo && codigoApiCache.valido !== null) {
+            if (!codigoApiCache.valido) {
+                return Promise.resolve(false);
+            }
+            return validarCodigoUnico(forceFetch);
+        }
+
+        if (codigoApiEmAndamento) {
+            return codigoApiEmAndamento;
+        }
+
+        codigoApiEmAndamento = fetch(`${baseUrlServicoApi}${encodeURIComponent(codigo)}`, {
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                const valido = !!(data && data.Success === true && Array.isArray(data.Data) && data.Data.length > 0);
+                codigoApiCache = { valor: codigo, valido: valido };
+                if (!valido) {
+                    setCodigoApiErro('Código não encontrado na API do MXM.');
+                    $('#codigo-descricao').text('').addClass('d-none');
+                    return false;
+                }
+                limparCodigoApiErro();
+                preencherDadosServico(data.Data[0]);
+                return validarCodigoUnico(forceFetch);
+            })
+            .catch(() => {
+                setCodigoApiErro('Não foi possível validar o código na API do MXM.');
+                $('#codigo-descricao').text('').addClass('d-none');
+                codigoApiCache = { valor: codigo, valido: false };
+                return false;
+            })
+            .finally(() => {
+                codigoApiEmAndamento = null;
+            });
+
+        return codigoApiEmAndamento;
+    }
+
+    function validarCodigoUnico(forceFetch = false) {
+        const codigo = (codigoInput.val() || '').trim();
+        if (!codigo) {
+            setCodigoApiErro('O campo código é obrigatório.');
+            return Promise.resolve(false);
+        }
+
+        if (!forceFetch
+            && codigoUnicoCache.valor === codigo
+            && codigoUnicoCache.servicoId === servicoId
+            && codigoUnicoCache.valido !== null) {
+            return Promise.resolve(codigoUnicoCache.valido);
+        }
+
+        if (codigoUnicoEmAndamento) {
+            return codigoUnicoEmAndamento;
+        }
+
+        const params = new URLSearchParams({ codigo });
+        if (servicoId !== null) {
+            params.append('servicoId', servicoId);
+        }
+
+        codigoUnicoEmAndamento = fetch(`${baseUrlCodigoUnico}?${params.toString()}`, {
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                const valido = !!(data && data.valido === true);
+                codigoUnicoCache = { valor: codigo, valido: valido, servicoId: servicoId };
+                if (!valido) {
+                    setCodigoApiErro(data?.msg || 'Código já cadastrado para outro serviço.');
+                    return false;
+                }
+                limparCodigoApiErro();
+                return true;
+            })
+            .catch(() => {
+                setCodigoApiErro('Não foi possível validar o código no sistema.');
+                codigoUnicoCache = { valor: codigo, valido: false, servicoId: servicoId };
+                return false;
+            })
+            .finally(() => {
+                codigoUnicoEmAndamento = null;
+            });
+
+        return codigoUnicoEmAndamento;
+    }
+
     $('.submitButton').on('click', function(e){
         //$(this).attr('disabled', true);
     });
@@ -159,6 +376,7 @@
         },
         invalidHandler: function(event, validator){
             $('.submitButton').attr('disabled', false);
+            enableValidationFieldsFK();
         },
         errorElement: "div",
         ignore: '.ignoreValidate',
@@ -211,8 +429,106 @@
             GrupodeProduto: {
                 required: true,
             },
+            codigo: {
+                required: true,
+            },
+            servicoproduto_Produto_id: {
+                required: true,
+            },
+            servicoproduto_quantidade: {
+                required: true,
+                inteiro: true,
+            },
         }
     });
+
+    if (codigoInput.val().trim()) {
+        validarCodigoServicoApi(true);
+    }
+
+    codigoInput.on('blur', function () {
+        if ($(this).val().trim()) {
+            validarCodigoServicoApi();
+        }
+    });
+
+    $("#formAlterar").on('submit', function (e) {
+        e.preventDefault();
+        submitButton.attr('disabled', true);
+        disableValidationFieldsFK();
+        validarCodigoServicoApi(true).then((valido) => {
+            if (valido && validator.form()) {
+                $(this).off('submit');
+                this.submit();
+            } else {
+                enableValidationFieldsFK();
+                submitButton.attr('disabled', false);
+            }
+        });
+    });
+
+    var inputsServicoProduto = [
+        'servicoproduto_Produto_id',
+        'servicoproduto_quantidade',
+    ];
+
+    $('#btnAddServicoProduto').on('click', function (e) {
+        addServicoProduto();
+    });
+
+    function disableValidationFieldsFK() {
+        for (var i in inputsServicoProduto) {
+            $('#' + inputsServicoProduto[i]).addClass('ignoreValidate');
+        }
+    }
+
+    function enableValidationFieldsFK() {
+        for (var i in inputsServicoProduto) {
+            $('#' + inputsServicoProduto[i]).removeClass('ignoreValidate');
+        }
+    }
+
+    var indexRowServicoProduto = 0;
+    function addServicoProduto() {
+        $('.msgEmptyListServicoProduto').addClass('d-none');
+        let error = false;
+        for (var i in inputsServicoProduto) {
+            if (!$('#' + inputsServicoProduto[i]).valid()) {
+                error = true;
+            }
+        }
+        if (error) {
+            return;
+        }
+        let dados = {};
+        dados.Produto_id = $('#servicoproduto_Produto_id').val();
+        dados.Produto_id_Text = $('#servicoproduto_Produto_id_Text').val();
+        dados.quantidade = $('#servicoproduto_quantidade').val();
+
+        insertRowServicoProduto(dados);
+
+        $('#servicoproduto_Produto_id').val('');
+        $('#servicoproduto_Produto_id_Text').val('');
+        $('#servicoproduto_quantidade').val('');
+    }
+
+    function insertRowServicoProduto(dados) {
+        let html = $('#templateRowServicoProduto').html();
+        html = html.replaceAll('{_index_}', indexRowServicoProduto);
+        html = html.replaceAll('{_Produto_id_}', dados.Produto_id);
+        html = html.replaceAll('{_Produto_id_Text_}', dados.Produto_id_Text);
+        html = html.replaceAll('{_quantidade_}', dados.quantidade);
+        $('#listTableServicoProduto tbody').append(html);
+
+        indexRowServicoProduto++;
+        $(".msgEmptyListServicoProduto").hide();
+    }
+
+    <?PHP foreach ($servico->getListServicoProduto() as $i => $o) {
+        $o->Produto_id_Text = $o->getProduto()->nome;
+    ?>
+        insertRowServicoProduto(<?= json_encode($o) ?>);
+    <?PHP } ?>
 
 </script>    
 <?= $this->endSection('scripts'); ?>

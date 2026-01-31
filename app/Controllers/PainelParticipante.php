@@ -135,6 +135,7 @@ class PainelParticipante extends BaseControllerParticipante
             'logradouro' => $dados['logradouro'] ?? '',
             'bairro' => $dados['bairro'] ?? '',
             'cidade' => $dados['localidade'] ?? '',
+            'codigoCidade' => $dados['ibge'] ?? '',
             'uf' => $dados['uf'] ?? '',
         ]);
     }

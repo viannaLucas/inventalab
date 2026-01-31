@@ -41,10 +41,6 @@
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Data</label> 
                         <input class="form-control maskData" name="data" id="data" type="text" value="<?= old('data') ?>">
                     </div>                    
-                    <div class="form-group col-12 col-md-6">
-                        <label class="main-content-label tx-11 tx-medium tx-gray-600">Valor</label> 
-                        <input class="form-control maskReal" name="valor" id="valor" type="text" value="<?= old('valor', '0,00') ?>">
-                    </div>                    
                     <div class="form-group col-12 ">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Observações</label> 
                         <textarea name="observacoes" id="observacoes" class="form-control" placeholder="" rows="3"><?= old('observacoes') ?></textarea>
@@ -257,12 +253,6 @@
             data: {
                 required: true,
                 dataBR: true,
-            },
-            valor: {
-                required: true,
-                real: true,
-                normalizer: function (value) { if (value.includes(',')) { return value.replaceAll('.', '').replace(',', '.'); } return value; },
-                min: 0.01,
             },
             observacoes: {
                 required: true,

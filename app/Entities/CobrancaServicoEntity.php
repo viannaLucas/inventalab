@@ -15,7 +15,7 @@ class CobrancaServicoEntity extends EntityBase {
         'Cobranca_id' => '',
         'Servico_id' => '',
         'quantidade' => '',
-        'valorUnitario' => '',
+        'valorUnitario' =>  'currencyBR',
     ];
     
     protected $casts = [

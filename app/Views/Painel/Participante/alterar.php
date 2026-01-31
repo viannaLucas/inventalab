@@ -177,6 +177,7 @@
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">Cidade</label> 
                             <input class="form-control" name="cidade" id="cidade" type="text" maxlength="100" value="<?= $participante->cidade ?>">
                         </div>
+                        <input type="hidden" name="codigoCidade" id="codigoCidade" value="<?= esc($participante->codigoCidade ?? '', 'attr'); ?>">
                         <div class="form-group col-12 col-md-6">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">Estado</label> 
                             <select class="form-control" name="uf" id="uf">
@@ -322,6 +323,46 @@
                 required: false,
             },
         }
+    });
+
+    var consultaCepBaseUrl = "<?= base_url('PainelParticipante/consultaCep'); ?>";
+    var ultimoCepConsultado = '';
+
+    $('#cep').on('input', function () {
+        var cep = $(this).val().replace(/\D/g, '');
+        if (cep.length < 8) {
+            ultimoCepConsultado = '';
+            return;
+        }
+        if (cep.length !== 8 || cep === ultimoCepConsultado) {
+            return;
+        }
+        ultimoCepConsultado = cep;
+
+        fetch(consultaCepBaseUrl + '/' + cep, {
+            headers: {
+                'Accept': 'application/json',
+            },
+        })
+            .then(function (response) {
+                if (!response.ok) {
+                    throw new Error('Erro HTTP ' + response.status);
+                }
+                return response.json();
+            })
+            .then(function (data) {
+                if (data.erro) {
+                    return;
+                }
+                $('#logradouro').val(data.logradouro || '');
+                $('#bairro').val(data.bairro || '');
+                $('#cidade').val(data.cidade || '');
+                $('#uf').val(data.uf || '');
+                if (data.codigoCidade) {
+                    $('#codigoCidade').val(data.codigoCidade);
+                }
+            })
+            .catch(function () {});
     });
 
     var inputsHabilidades = [

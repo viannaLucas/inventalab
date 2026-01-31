@@ -41,4 +41,10 @@ class ServicoEntity extends EntityBase {
         }
         return $this->fk_dadosapi;
     }
+
+    public function getListServicoProduto(){
+        $m = new \App\Models\ServicoProdutoModel();
+        return $m->where('Servico_id', $this->id)
+                ->findAll();
+    }
 }

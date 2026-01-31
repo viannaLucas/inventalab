@@ -100,6 +100,7 @@ class ParticipanteEntity extends EntityBase {
         'numero' => '',
         'bairro' => '',
         'cidade' => '',
+        'codigoCidade' => '',
         'uf' => '',
         'cep' => '',
         'nomeResponsavel' => '',

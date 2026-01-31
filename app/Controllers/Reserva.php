@@ -550,6 +550,21 @@ class Reserva extends BaseController {
                 $totalCobranca += $quantidade * $valorUnitario;
             }
         }
+        /*
+        // PRODUTOS_DESATIVADOS
+        if ($cobrancaId > 0) {
+            $cobrancaProdutoModel = new CobrancaProdutoModel();
+            $produtoModel = new ProdutoModel();
+            $itensProduto = $cobrancaProdutoModel->where('Cobranca_id', $cobrancaId)->findAll();
+            foreach ($itensProduto as $item) {
+                $produtoEntity = $produtoModel->find((int) $item->Produto_id);
+                $valorProdutoAtual = $produtoEntity ? $this->parseNumeroParaFloat((string) $produtoEntity->valor) : null;
+                $valorUnitario = $this->valorUnitarioParaBRL($this->parseNumeroParaFloat((string) $item->valorUnitario), $valorProdutoAtual);
+                $quantidade = (int) $item->quantidade;
+                $totalCobranca += $quantidade * $valorUnitario;
+            }
+        }
+        */
 
         $m->db->transStart();
         $e->horaSaida = $saida->format('Y-m-d H:i:s');
@@ -862,18 +877,58 @@ class Reserva extends BaseController {
         $servicoModel = new ServicoModel();
         // PRODUTOS_DESATIVADOS: manter apenas para limpeza de dados antigos.
         $cobrancaProdutoModel = new CobrancaProdutoModel();
-        /*
         $produtoModel = new ProdutoModel();
-        */
 
         $reservaModel->db->transStart();
 
         try {
             $link = $reservaCobrancaModel->where('Reserva_id', $reservaId)->first();
             $cobrancaId = $link ? (int) $link->Cobranca_id : 0;
+            $totalCobrancaPrevio = 0.0;
+            foreach ($servicosNormalizados as $servicoId => $quantidade) {
+                if ($quantidade <= 0) {
+                    continue;
+                }
+                $servico = $servicoModel->find($servicoId);
+                if (!($servico instanceof \App\Entities\ServicoEntity)) {
+                    throw new \RuntimeException('Serviço inválido: ' . $servicoId);
+                }
+                $valorServico = $this->parseNumeroParaFloat((string) $servico->valor);
+                $totalCobrancaPrevio += $quantidade * $valorServico;
+            }
+            /*
+            // PRODUTOS_DESATIVADOS
+            foreach ($produtosNormalizados as $produtoId => $quantidade) {
+                if ($quantidade <= 0) {
+                    continue;
+                }
+                $produto = $produtoModel->find($produtoId);
+                if (!($produto instanceof \App\Entities\ProdutoEntity)) {
+                    throw new \RuntimeException('Produto inválido: ' . $produtoId);
+                }
+                $valorProduto = $this->parseNumeroParaFloat((string) $produto->valor);
+                $totalCobrancaPrevio += $quantidade * $valorProduto;
+            }
+            */
 
             if (empty($servicosNormalizados) && empty($produtosNormalizados)) {
                 if ($cobrancaId > 0) {
+                    $existentes = $cobrancaServicoModel->where('Cobranca_id', $cobrancaId)->findAll();
+                    $servicosExistentes = [];
+                    foreach ($existentes as $existente) {
+                        $servicoId = (int) ($existente->Servico_id ?? 0);
+                        $quantidade = (int) ($existente->quantidade ?? 0);
+                        if ($servicoId <= 0 || $quantidade <= 0) {
+                            continue;
+                        }
+                        if (!isset($servicosExistentes[$servicoId])) {
+                            $servicosExistentes[$servicoId] = 0;
+                        }
+                        $servicosExistentes[$servicoId] += $quantidade;
+                    }
+                    $deltaProdutos = $produtoModel->calcularDeltaEstoquePorServicos([], $servicosExistentes);
+                    $produtoModel->ajustarEstoquePorDelta($deltaProdutos);
+
                     $cobrancaServicoModel->where('Cobranca_id', $cobrancaId)->delete();
                     $cobrancaProdutoModel->where('Cobranca_id', $cobrancaId)->delete();
                     $reservaCobrancaModel->where('Reserva_id', $reservaId)->delete();
@@ -891,7 +946,7 @@ class Reserva extends BaseController {
                 $cobrancaData = [
                     'Participante_id' => $participanteId,
                     'data'            => date('Y-m-d'),
-                    'valor'           => 0.01,
+                    'valor'           => number_format($totalCobrancaPrevio, 2, '.', ''),
                     'observacoes'     => 'Cobrança gerada automaticamente para reserva #' . $reservaId,
                     'situacao'        => 0,
                 ];
@@ -914,12 +969,20 @@ class Reserva extends BaseController {
 
             $existentes = $cobrancaServicoModel->where('Cobranca_id', $cobrancaId)->findAll();
             $mapExistentes = [];
+            $servicosExistentes = [];
             foreach ($existentes as $existente) {
                 $servicoId = (int) $existente->Servico_id;
                 if (!isset($mapExistentes[$servicoId])) {
                     $mapExistentes[$servicoId] = [];
                 }
                 $mapExistentes[$servicoId][] = $existente;
+                $quantidade = (int) ($existente->quantidade ?? 0);
+                if ($servicoId > 0 && $quantidade > 0) {
+                    if (!isset($servicosExistentes[$servicoId])) {
+                        $servicosExistentes[$servicoId] = 0;
+                    }
+                    $servicosExistentes[$servicoId] += $quantidade;
+                }
             }
             /*
             // PRODUTOS_DESATIVADOS
@@ -933,6 +996,9 @@ class Reserva extends BaseController {
                 $mapExistentesProduto[$produtoId][] = $existente;
             }
             */
+
+            $deltaProdutos = $produtoModel->calcularDeltaEstoquePorServicos($servicosNormalizados, $servicosExistentes);
+            $produtoModel->ajustarEstoquePorDelta($deltaProdutos);
 
             $totalCobranca = 0.0;
 

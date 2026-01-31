@@ -157,6 +157,7 @@
                                     <label for="cidade">Cidade</label>
                                 </div>
                             </div>
+                            <input type="hidden" name="codigoCidade" id="codigoCidade" value="<?= esc(old('codigoCidade') ?? '', 'attr'); ?>">
                             <div class="col-md-6">
                                 <div class="form-label-group">
                                     <select name="uf" id="uf" class="form-control" required>
@@ -306,6 +307,7 @@
                 var cep = $(this).val().replace(/\D/g, '');
                 if (cep.length < 8) {
                     ultimoCepConsultado = '';
+                    $('#codigoCidade').val('');
                     return;
                 }
                 if (cep.length !== 8 || cep === ultimoCepConsultado) {
@@ -326,12 +328,14 @@
                     })
                     .then(function (data) {
                         if (data.erro) {
+                            $('#codigoCidade').val('');
                             return;
                         }
                         $('#logradouro').val(data.logradouro || '');
                         $('#bairro').val(data.bairro || '');
                         $('#cidade').val(data.cidade || '');
                         $('#uf').val(data.uf || '');
+                        $('#codigoCidade').val(data.codigoCidade || '');
                     })
                     .catch(function () {});
             });

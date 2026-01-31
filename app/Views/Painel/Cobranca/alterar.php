@@ -44,7 +44,7 @@
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Valor</label>
-                        <input class="form-control maskReal" name="valor" id="valor" type="text" value="<?= $cobranca->valor ?>">
+                        <input class="form-control maskReal" name="valor" id="valor" type="text" value="<?= $cobranca->valor ?>" readonly="true">
                     </div>
 
                     <div class="form-group col-12 col-md-6">
@@ -63,6 +63,7 @@
                         <div class="border-bottom mx-n1 mb-3">
                             <h4 class="px-2">Lista de Cobrança Serviço</h4>
                         </div>
+                        <?php if ((int) $cobranca->situacao !== 1) : ?>
                         <div class="form-row px-2">
                             <div class="form-group col-auto">
                                 <label class="main-content-label tx-11 tx-medium tx-gray-600">Serviço</label>
@@ -98,13 +99,16 @@
                                 </button>
                             </div>
                         </div>
+                        <?php endif; ?>
                         <table class="table table-striped" id="listTableCobrancaServico">
                             <thead>
                                 <tr>
                                     <th scope="col">Serviço</th>
                                     <th scope="col">Quantidade</th>
                                     <th scope="col">Valor Unitário</th>
+                                    <?php if ((int) $cobranca->situacao !== 1) : ?>
                                     <th scope="col">Ações</th>
+                                    <?php endif; ?>
                                 </tr>
                             </thead>
                             <tbody>
@@ -119,6 +123,7 @@
                         <div class="border-bottom mx-n1 mb-3">
                             <h4 class="px-2">Lista de Cobrança Produto</h4>
                         </div>
+                        <?php if ((int) $cobranca->situacao !== 1) : ?>
                         <div class="form-row px-2">
                             <div class="form-group col-auto">
                                 <label class="main-content-label tx-11 tx-medium tx-gray-600">Produto</label>
@@ -154,6 +159,7 @@
                                 </button>
                             </div>
                         </div>
+                        <?php endif; ?>
                         <table class="table table-striped" id="listTableCobrancaProduto">
                             <thead>
                                 <tr>
@@ -172,7 +178,11 @@
                     </fieldset>
                     <?php endif; ?>
                     <div class="form-group mb-0 mt-3 text-center col-12">
+                        <?php if ((int) $cobranca->situacao !== 1) { ?>
                         <button type="submit" class="btn btn-primary submitButton">Alterar</button>
+                        <?php }else{ ?>
+                        <button type="button" onclick="history.back()" class="btn btn-primary submitButton">Voltar</button>
+                        <?php } ;?>
                     </div>
             </form>
         </div>
@@ -187,6 +197,7 @@
         </td>
         <td><input type="text" class="form-control ignoreValidate" name="CobrancaServico[{_index_}][quantidade]" readonly="true" value="{_quantidade_}" /></td>
         <td><input type="text" class="form-control ignoreValidate" name="CobrancaServico[{_index_}][valorUnitario]" readonly="true" value="{_valorUnitario_}" /></td>
+        <?php if ((int) $cobranca->situacao !== 1) : ?>
         <td>
             <div class="btn btn-danger btnExcluirCobrancaServico" onclick="$('#CobrancaServico_{_index_}').remove();">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
@@ -195,6 +206,7 @@
                 </svg>
             </div>
         </td>
+        <?php endif; ?>
     </tr>
 </template>
 <?php if (false) : // PRODUTOS_DESATIVADOS ?>
@@ -229,7 +241,30 @@
         //$(this).attr('disabled', true);
         disableValidationFieldsFK();
     });
+    var situacaoOriginal = <?= (int) $cobranca->situacao ?>;
     var validator = $("#formAlterar").validate({
+        submitHandler: function(form) {
+            disableValidationFieldsFK();
+
+            var situacaoAtual = parseInt($('#situacao').val() || '0', 10);
+            if (situacaoOriginal === 0 && situacaoAtual === 1) {
+                swal({
+                    title: 'Confirma pagamento?',
+                    text: 'Após definir como paga não será permitido realizar alterações. Deseja prosseguir?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sim, continuar',
+                    cancelButtonText: 'Não'
+                }, function(isConfirm) {
+                    if (isConfirm) {
+                        form.submit();
+                    }
+                });
+                return;
+            }
+
+            form.submit();
+        },
         errorPlacement: function(error, element) {
             error.addClass('invalid-feedback');
             error.appendTo(element.parent());

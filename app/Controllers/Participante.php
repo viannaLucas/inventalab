@@ -7,7 +7,7 @@ use App\Models\ParticipanteModel;
 use App\Entities\ParticipanteEntity;
 use App\Models\HabilidadesModel;
 use App\Entities\HabilidadesEntity;
-
+use App\Libraries\SescAPI;
 
 class Participante extends BaseController {
 
@@ -54,6 +54,12 @@ class Participante extends BaseController {
                     if(!$mHabilidades->insert($eHabilidades, false)){
                         return $this->returnWithError($mHabilidades->errors());
                     }
+                }
+
+                $codigoClienteSesc = $m->cadastroSescApi($e);
+                if($codigoClienteSesc != ''){
+                    $e->codigoApiSesc = $codigoClienteSesc;
+                    $m->update($m->getInsertID(), $e);
                 }
                 $m->db->transComplete();
                 $this->enviarEmailBoasVindas($e);
@@ -271,7 +277,7 @@ class Participante extends BaseController {
         if (!$emailService->send()) {
             $detalhes = $emailService->printDebugger(['headers', 'subject', 'body']);
             log_message('error', 'Falha ao enviar e-mail de boas-vindas para o participante ' . ($participante->email ?? $participante->login ?? 'desconhecido') . ': ' . $detalhes);
-            throw new \RuntimeException('Não foi possível enviar o e-mail de boas-vindas.');
+            //throw new \RuntimeException('Não foi possível enviar o e-mail de boas-vindas.');
         }
     }
 }
