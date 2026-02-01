@@ -399,7 +399,7 @@
     const EXCLUSIVE_RESOURCE_IDS = new Set(RESOURCES.filter(r => r.exclusive).map(r => r.id));
 
     // Oficinas temáticas pré-definidas (5 exemplos maker)
-    const ACTIVITIES = <?= json_encode($lAtividades, JSON_PRETTY_PRINT ?>;
+    const ACTIVITIES = <?= json_encode($lAtividades, JSON_PRETTY_PRINT); ?>;
 
     // Reservas simuladas (em produção: carregar/salvar via API)
     let reservations = [ /* { date, start:'HH:MM', duration: min, people, name, participantId, note, activity: {...} } */ ];
