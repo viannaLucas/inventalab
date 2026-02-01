@@ -75,32 +75,7 @@ class HorarioFuncionamento extends BaseController {
         }catch (\Exception $ex){ 
             return $this->returnWithError($ex->getMessage());
         }
-    }
-    
-    public function pesquisar(){
-        return view('Painel/HorarioFuncionamento/pesquisar');
-    }
-    
-    public function doPesquisar(){
-        $m = new HorarioFuncionamentoModel();
-        $m->buildFindList($this->request->getGet());
-        $data = [
-            'vHorarioFuncionamento' => $m->paginate(self::itensPaginacao),
-            'pager' => $m->pager,
-        ];
-        return view('Painel/HorarioFuncionamento/resposta',  $data);
-    }
-    
-    public function listar() {
-        $m = new HorarioFuncionamentoModel();
-        $data = [
-            'vHorarioFuncionamento' => $m->paginate(self::itensPaginacao),
-            'pager' => $m->pager,
-        ];
-        return view('Painel/HorarioFuncionamento/listar', $data);
-    }
-
-    public function excluir() {
+    }    public function excluir() {
         $m = new HorarioFuncionamentoModel();
         $e = $m->find($this->request->getUri()->getSegment(3));
         if ($e === null) {

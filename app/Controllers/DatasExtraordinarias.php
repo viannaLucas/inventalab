@@ -78,32 +78,7 @@ class DatasExtraordinarias extends BaseController {
         }catch (\Exception $ex){ 
             return $this->returnWithError($ex->getMessage());
         }
-    }
-    
-    public function pesquisar(){
-        return view('Painel/DatasExtraordinarias/pesquisar');
-    }
-    
-    public function doPesquisar(){
-        $m = new DatasExtraordinariasModel();
-        $m->buildFindList($this->request->getGet());
-        $data = [
-            'vDatasExtraordinarias' => $m->paginate(self::itensPaginacao),
-            'pager' => $m->pager,
-        ];
-        return view('Painel/DatasExtraordinarias/resposta',  $data);
-    }
-    
-    public function listar() {
-        $m = new DatasExtraordinariasModel();
-        $data = [
-            'vDatasExtraordinarias' => $m->paginate(self::itensPaginacao),
-            'pager' => $m->pager,
-        ];
-        return view('Painel/DatasExtraordinarias/listar', $data);
-    }
-
-    public function excluir() {
+    }    public function excluir() {
         $m = new DatasExtraordinariasModel();
         $e = $m->find($this->request->getUri()->getSegment(3));
         if ($e === null) {

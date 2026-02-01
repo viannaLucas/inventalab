@@ -72,32 +72,7 @@ class Garantia extends BaseController {
         }catch (\Exception $ex){ 
             return $this->returnWithError($ex->getMessage());
         }
-    }
-    
-    public function pesquisar(){
-        return view('Painel/Garantia/pesquisar');
-    }
-    
-    public function doPesquisar(){
-        $m = new GarantiaModel();
-        $m->buildFindList($this->request->getGet());
-        $data = [
-            'vGarantia' => $m->paginate(self::itensPaginacao),
-            'pager' => $m->pager,
-        ];
-        return view('Painel/Garantia/resposta',  $data);
-    }
-    
-    public function listar() {
-        $m = new GarantiaModel();
-        $data = [
-            'vGarantia' => $m->paginate(self::itensPaginacao),
-            'pager' => $m->pager,
-        ];
-        return view('Painel/Garantia/listar', $data);
-    }
-
-    public function excluir() {
+    }    public function excluir() {
         $m = new GarantiaModel();
         $e = $m->find($this->request->getUri()->getSegment(3));
         if ($e === null) {

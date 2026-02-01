@@ -410,23 +410,7 @@ class Reserva extends BaseController {
             'pager' => $m->pager,
         ];
         return view('Painel/Reserva/listar', $data);
-    }
-
-    public function excluir() {
-        $m = new ReservaModel();
-        $e = $m->find($this->request->getUri()->getSegment(3));
-        if ($e === null) {
-            return $this->returnWithError('Registro não encontrado.');
-        }
-        $m->db->transStart();
-        if ($m->delete($e->id)) { 
-            $m->db->transComplete();
-            return $this->returnSucess('Excluído com sucesso!');
-        }
-        return $this->returnWithError('Erro ao excluir registro. '.implode(' ', $m->errors()));
-    }
-    
-    public function pesquisaModal() {
+    }    public function pesquisaModal() {
         $m = new ReservaModel();
         $m->buildFindModal($this->request->getGet('searchTerm'));
         $data = [

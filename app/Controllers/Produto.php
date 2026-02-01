@@ -198,24 +198,7 @@ class Produto extends BaseController {
             'pager' => $m->pager,
         ];
         return view('Painel/Produto/listar', $data);
-    }
-
-    public function excluir() {
-        $m = new ProdutoModel();
-        $e = $m->find($this->request->getUri()->getSegment(3));
-        if ($e === null) {
-            return $this->returnWithError('Registro não encontrado.');
-        }
-        $m->db->transStart();
-        if ($m->delete($e->id)) { 
-            $m->deleteFile($e->foto);
-            $m->db->transComplete();
-            return $this->returnSucess('Excluído com sucesso!');
-        }
-        return $this->returnWithError('Erro ao excluir registro.');
-    }
-    
-    public function pesquisaModal() {
+    }    public function pesquisaModal() {
         $m = new ProdutoModel();
         $m->buildFindModal($this->request->getGet('searchTerm'))
                 ->where('ativo', ProdutoEntity::ATIVO_SIM);
