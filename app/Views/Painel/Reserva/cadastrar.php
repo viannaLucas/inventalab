@@ -23,19 +23,19 @@
                     <p class="col-12">Selecione a data e hora que irá permanecer no InventaLab</p>
                     <!-- <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Data Cadastro</label> 
-                        <input class="form-control maskData" name="dataCadastro" id="dataCadastro" type="text" value="<?= old('dataCadastro') ?>">
+                        <input class="form-control maskData" name="dataCadastro" id="dataCadastro" type="text" value="<?= esc(old('dataCadastro'), 'attr') ?>">
                     </div>                     -->
                     <div class="form-group col-12 col-md-4">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Data Reserva</label>
-                        <input class="form-control maskData" name="dataReserva" id="dataReserva" type="text" value="<?= old('dataReserva') ?>">
+                        <input class="form-control maskData" name="dataReserva" id="dataReserva" type="text" value="<?= esc(old('dataReserva'), 'attr') ?>">
                     </div>
                     <div class="form-group col-12 col-md-4">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Hora Início</label>
-                        <input class="form-control" name="horaInicio" id="horaInicio" type="time" maxlength="10" value="<?= old('horaInicio') ?>">
+                        <input class="form-control" name="horaInicio" id="horaInicio" type="time" maxlength="10" value="<?= esc(old('horaInicio'), 'attr') ?>">
                     </div>
                     <div class="form-group col-12 col-md-4">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Hora Fim</label>
-                        <input class="form-control" name="horaFim" id="horaFim" type="time" maxlength="10" value="<?= old('horaFim') ?>">
+                        <input class="form-control" name="horaFim" id="horaFim" type="time" maxlength="10" value="<?= esc(old('horaFim'), 'attr') ?>">
                     </div>
                 </div>
                 <div class="form-row">
@@ -45,7 +45,7 @@
                         <select class="form-control" name="tipo" id="tipo" required="">
                             <option value="" <?= old('tipo') == '' ? 'selected' : ''; ?>></option>
                             <?PHP foreach (App\Entities\ReservaEntity::_op('tipo') as $k => $op) { ?>
-                                <option value="<?= $k; ?>" <?= old('tipo') === $k ? 'selected' : ''; ?>><?= $op; ?></option>
+                                <option value="<?= esc($k, 'attr') ?>" <?= old('tipo') === $k ? 'selected' : ''; ?>><?= esc($op) ?></option>
                             <?PHP } ?>
                         </select>
                     </div>
@@ -61,14 +61,14 @@
                     </div>
                     <div class="form-group col-12 col-md-4">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Número Convidados</label>
-                        <input class="form-control maskInteiro" name="numeroConvidados" id="numeroConvidados" type="text" value="<?= old('numeroConvidados') ?>">
+                        <input class="form-control maskInteiro" name="numeroConvidados" id="numeroConvidados" type="text" value="<?= esc(old('numeroConvidados'), 'attr') ?>">
                     </div>
                     <!-- <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600" for="status">Status</label> 
                         <select class="form-control" name="status" id="status" required="" >
                             <option value="" <?= old('status') == '' ? 'selected' : ''; ?>></option>
                             <?PHP foreach (App\Entities\ReservaEntity::_op('status') as $k => $op) { ?>
-                            <option value="<?= $k; ?>" <?= old('status') === $k ? 'selected' : ''; ?>><?= $op; ?></option>
+                            <option value="<?= esc($k, 'attr') ?>" <?= old('status') === $k ? 'selected' : ''; ?>><?= esc($op) ?></option>
                             <?PHP } ?>
                         </select>
                     </div> -->
@@ -78,34 +78,34 @@
                         <select class="form-control" name="turmaEscola" id="turmaEscola" required="">
                             <option value="" <?= old('turmaEscola') == '' ? 'selected' : ''; ?>></option>
                             <?PHP foreach (App\Entities\ReservaEntity::_op('turmaEscola') as $k => $op) { ?>
-                                <option value="<?= $k; ?>" <?= old('turmaEscola') === $k ? 'selected' : ''; ?>><?= $op; ?></option>
+                                <option value="<?= esc($k, 'attr') ?>" <?= old('turmaEscola') === $k ? 'selected' : ''; ?>><?= esc($op) ?></option>
                             <?PHP } ?>
                         </select>
                     </div>
                     <div class="form-group col-12 col-md-4">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Nome Escola</label>
-                        <input class="form-control" name="nomeEscola" id="nomeEscola" type="text" maxlength="250" value="<?= old('nomeEscola') ?>">
+                        <input class="form-control" name="nomeEscola" id="nomeEscola" type="text" maxlength="250" value="<?= esc(old('nomeEscola'), 'attr') ?>">
                     </div>
                     <div class="form-group col-12 col-md-4">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600" for="anoTurma">Ano Turma</label>
                         <select class="form-control" name="anoTurma" id="anoTurma" required="">
                             <option value="" <?= old('anoTurma') == '' ? 'selected' : ''; ?>></option>
                             <?PHP foreach (App\Entities\ReservaEntity::_op('anoTurma') as $k => $op) { ?>
-                                <option value="<?= $k; ?>" <?= old('anoTurma') === $k ? 'selected' : ''; ?>><?= $op; ?></option>
+                                <option value="<?= esc($k, 'attr') ?>" <?= old('anoTurma') === $k ? 'selected' : ''; ?>><?= esc($op) ?></option>
                             <?PHP } ?>
                         </select>
                     </div>
                     <!-- <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Ano Turma</label> 
-                        <input class="form-control" name="anoTurma" id="anoTurma" type="text" maxlength="10" value="<?= old('anoTurma') ?>">
+                        <input class="form-control" name="anoTurma" id="anoTurma" type="text" maxlength="10" value="<?= esc(old('anoTurma'), 'attr') ?>">
                     </div> -->
                     <!-- <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Hora Entrada</label> 
-                        <input class="form-control" name="horaEntrada" id="horaEntrada" type="text" maxlength="" value="<?= old('horaEntrada') ?>">
+                        <input class="form-control" name="horaEntrada" id="horaEntrada" type="text" maxlength="" value="<?= esc(old('horaEntrada'), 'attr') ?>">
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Hora Saída</label> 
-                        <input class="form-control" name="horaSaida" id="horaSaida" type="text" maxlength="" value="<?= old('horaSaida') ?>">
+                        <input class="form-control" name="horaSaida" id="horaSaida" type="text" maxlength="" value="<?= esc(old('horaSaida'), 'attr') ?>">
                     </div> -->
                     <fieldset class="border rounded-10 m-0 mb-3 p-2 w-100">
                         <div class="border-bottom mx-n1 mb-3">
@@ -114,7 +114,7 @@
                         <div class="form-row px-2">
                             <div class="form-group col-12 ">
                                 <label class="main-content-label tx-11 tx-medium tx-gray-600">Descrição</label>
-                                <textarea name="atividadelivre_descricao" id="atividadelivre_descricao" class="form-control" placeholder="" rows="3"><?= old('atividadelivre_descricao') ?></textarea>
+                                <textarea name="atividadelivre_descricao" id="atividadelivre_descricao" class="form-control" placeholder="" rows="3"><?= esc(old('atividadelivre_descricao')) ?></textarea>
                             </div>
                             <div class="form-group col-auto">
                                 <label class="main-content-label tx-11 tx-medium tx-gray-600">&nbsp;</label>
@@ -148,7 +148,7 @@
                             <div class="form-group col-auto">
                                 <label class="main-content-label tx-11 tx-medium tx-gray-600">Evento</label>
                                 <div class="input-group mb-3">
-                                    <input class="form-control" name="eventoreserva_Evento_id_Text" id="eventoreserva_Evento_id_Text" type="text" disabled="true" onclick="$('#addonSearcheventoreserva_Evento_id').click()" value="<?= old('eventoreserva_Evento_id_Text'); ?>" />
+                                    <input class="form-control" name="eventoreserva_Evento_id_Text" id="eventoreserva_Evento_id_Text" type="text" disabled="true" onclick="$('#addonSearcheventoreserva_Evento_id').click()" value="<?= esc(old('eventoreserva_Evento_id_Text'), 'attr') ?>" />
                                     <div class="input-group-append">
                                         <button class="btn btn-outline-secondary" type="button" id="addonSearcheventoreserva_Evento_id"
                                             data-toggle="modal" data-target="#modalFK" data-title='Localizar >Evento'
@@ -158,7 +158,7 @@
                                             </svg>
                                         </button>
                                     </div>
-                                    <input class="d-none" name="eventoreserva_Evento_id" id="eventoreserva_Evento_id" type="text" value="<?= old('eventoreserva_Evento_id'); ?>" />
+                                    <input class="d-none" name="eventoreserva_Evento_id" id="eventoreserva_Evento_id" type="text" value="<?= esc(old('eventoreserva_Evento_id'), 'attr') ?>" />
                                 </div>
                             </div>
                             <div class="form-group col-auto">
@@ -193,7 +193,7 @@
                             <div class="form-group col-auto">
                                 <label class="main-content-label tx-11 tx-medium tx-gray-600">Oficina Temática</label>
                                 <div class="input-group mb-3">
-                                    <input class="form-control" name="oficinatematicareserva_OficinaTematica_id_Text" id="oficinatematicareserva_OficinaTematica_id_Text" type="text" disabled="true" onclick="$('#addonSearchoficinatematicareserva_OficinaTematica_id').click()" value="<?= old('oficinatematicareserva_OficinaTematica_id_Text'); ?>" />
+                                    <input class="form-control" name="oficinatematicareserva_OficinaTematica_id_Text" id="oficinatematicareserva_OficinaTematica_id_Text" type="text" disabled="true" onclick="$('#addonSearchoficinatematicareserva_OficinaTematica_id').click()" value="<?= esc(old('oficinatematicareserva_OficinaTematica_id_Text'), 'attr') ?>" />
                                     <div class="input-group-append">
                                         <button class="btn btn-outline-secondary" type="button" id="addonSearchoficinatematicareserva_OficinaTematica_id"
                                             data-toggle="modal" data-target="#modalFK" data-title='Localizar >Oficina Temática'
@@ -203,12 +203,12 @@
                                             </svg>
                                         </button>
                                     </div>
-                                    <input class="d-none" name="oficinatematicareserva_OficinaTematica_id" id="oficinatematicareserva_OficinaTematica_id" type="text" value="<?= old('oficinatematicareserva_OficinaTematica_id'); ?>" />
+                                    <input class="d-none" name="oficinatematicareserva_OficinaTematica_id" id="oficinatematicareserva_OficinaTematica_id" type="text" value="<?= esc(old('oficinatematicareserva_OficinaTematica_id'), 'attr') ?>" />
                                 </div>
                             </div>
                             <div class="form-group col-12 ">
                                 <label class="main-content-label tx-11 tx-medium tx-gray-600">Observação</label>
-                                <textarea name="oficinatematicareserva_observacao" id="oficinatematicareserva_observacao" class="form-control" placeholder="" rows="3"><?= old('oficinatematicareserva_observacao') ?></textarea>
+                                <textarea name="oficinatematicareserva_observacao" id="oficinatematicareserva_observacao" class="form-control" placeholder="" rows="3"><?= esc(old('oficinatematicareserva_observacao')) ?></textarea>
                             </div>
                             <div class="form-group col-auto">
                                 <label class="main-content-label tx-11 tx-medium tx-gray-600">&nbsp;</label>
@@ -243,7 +243,7 @@
                             <div class="form-group col-auto">
                                 <label class="main-content-label tx-11 tx-medium tx-gray-600">Participante</label>
                                 <div class="input-group mb-3">
-                                    <input class="form-control" name="reservaparticipante_Participante_id_Text" id="reservaparticipante_Participante_id_Text" type="text" disabled="true" onclick="$('#addonSearchreservaparticipante_Participante_id').click()" value="<?= old('reservaparticipante_Participante_id_Text'); ?>" />
+                                    <input class="form-control" name="reservaparticipante_Participante_id_Text" id="reservaparticipante_Participante_id_Text" type="text" disabled="true" onclick="$('#addonSearchreservaparticipante_Participante_id').click()" value="<?= esc(old('reservaparticipante_Participante_id_Text'), 'attr') ?>" />
                                     <div class="input-group-append">
                                         <button class="btn btn-outline-secondary" type="button" id="addonSearchreservaparticipante_Participante_id"
                                             data-toggle="modal" data-target="#modalFK" data-title='Localizar >Participante'
@@ -253,7 +253,7 @@
                                             </svg>
                                         </button>
                                     </div>
-                                    <input class="d-none" name="reservaparticipante_Participante_id" id="reservaparticipante_Participante_id" type="text" value="<?= old('reservaparticipante_Participante_id'); ?>" />
+                                    <input class="d-none" name="reservaparticipante_Participante_id" id="reservaparticipante_Participante_id" type="text" value="<?= esc(old('reservaparticipante_Participante_id'), 'attr') ?>" />
                                 </div>
                             </div>
                             <div class="form-group col-auto">
@@ -351,12 +351,8 @@
     </tr>
 </template>
 <!-- content closed -->
-<?= $this->endSection('content'); ?>
-
-<?= $this->section('styles'); ?>
-<?= $this->endSection('styles'); ?>
-
-<?= $this->section('scripts'); ?>
+<?= $this->endSection('content'); ?><?= $this->section('styles'); ?>
+<?= esc($this->endSection('styles'); ) ?><?= $this->section('scripts'); ?>
 <script>
     $('.submitButton').on('click', function(e) {
         //$(this).attr('disabled', true);

@@ -214,9 +214,7 @@
     </div>
 
 <!-- row closed -->
-<?= $this->endSection('content'); ?>
-
-<?= $this->section('styles'); ?>
+<?= $this->endSection('content'); ?><?= $this->section('styles'); ?>
 <style>
     body {
       background: #f8fafc;
@@ -257,7 +255,7 @@
 <script>
   window.reservasData = <?= json_encode($reservasData ?? [], JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
   window.relatorioFiltros = <?= json_encode($relatorioFiltros ?? [], JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
-  window.relatorioEndpoint = "<?= base_url('Reserva/relatorioDados') ?>";
+  window.relatorioEndpoint = "<?= base_url('Reserva/relatorioDados' ?>";
 </script>
 
   <script>

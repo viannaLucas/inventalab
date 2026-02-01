@@ -11,10 +11,10 @@
             </thead>
             <tbody>
             <?PHP foreach ($vConfiguracao as $i) { ?>
-                <tr data-id='<?= $i->id ?>' data-text='<?= $i->id ?>'>
-                    <td><?= $i->id ?></td>
-                    <td><?= $i->lotacaoEspaco ?></td>
-                    <td><?= $i->intervaloEntrePesquisa ?></td>
+                <tr data-id='<?= esc($i->id, 'attr') ?>' data-text='<?= esc($i->id, 'attr') ?>'>
+                    <td><?= esc($i->id) ?></td>
+                    <td><?= esc($i->lotacaoEspaco) ?></td>
+                    <td><?= esc($i->intervaloEntrePesquisa) ?></td>
                 </tr>
             <?PHP } ?>
             </tbody>

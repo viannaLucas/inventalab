@@ -10,9 +10,9 @@
             </thead>
             <tbody>
             <?PHP foreach ($vTemplateTermo as $i) { ?>
-                <tr data-id='<?= $i->id ?>' data-text='<?= $i->nome ?>'>
-                    <td><?= $i->id ?></td>
-                    <td><?= $i->nome ?></td>
+                <tr data-id='<?= esc($i->id, 'attr') ?>' data-text='<?= esc($i->nome, 'attr') ?>'>
+                    <td><?= esc($i->id) ?></td>
+                    <td><?= esc($i->nome) ?></td>
                 </tr>
             <?PHP } ?>
             </tbody>

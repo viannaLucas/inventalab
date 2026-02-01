@@ -14,13 +14,13 @@
             </thead>
             <tbody>
             <?PHP foreach ($vGarantia as $i) { ?>
-                <tr data-id='<?= $i->id ?>' data-text='<?= $i->descricao ?>'>
-                    <td><?= $i->id ?></td>
+                <tr data-id='<?= esc($i->id, 'attr') ?>' data-text='<?= esc($i->descricao, 'attr') ?>'>
+                    <td><?= esc($i->id) ?></td>
                     <td><?= $i->getRecursoTrabalho()?->nome ?></td>
-                    <td><?= $i->descricao ?></td>
-                    <td><span style="color: <?= $i->_cl('tipo', $i->tipo) ?>;"><?= $i->_op('tipo', $i->tipo) ?></span></td>
-                    <td><?= $i->dataInicio ?></td>
-                    <td><?= $i->dataFim ?></td>
+                    <td><?= esc($i->descricao) ?></td>
+                    <td><span style="color: <?= $i->_cl('tipo', $i->tipo) ?>;"><?= esc($i->_op('tipo', $i->tipo)) ?></span></td>
+                    <td><?= esc($i->dataInicio) ?></td>
+                    <td><?= esc($i->dataFim) ?></td>
                 </tr>
             <?PHP } ?>
             </tbody>

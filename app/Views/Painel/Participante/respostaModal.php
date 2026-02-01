@@ -12,11 +12,11 @@
             </thead>
             <tbody>
             <?PHP foreach ($vParticipante as $i) { ?>
-                <tr data-id='<?= $i->id ?>' data-text='<?= $i->nome ?>'>
-                    <td><?= $i->id ?></td>
-                    <td><?= $i->nome ?></td>
-                    <td><?= $i->dataNascimento ?></td>
-                    <td><span style="color: <?= $i->_cl('suspenso', $i->suspenso) ?>;"><?= $i->_op('suspenso', $i->suspenso) ?></span></td>
+                <tr data-id='<?= esc($i->id, 'attr') ?>' data-text='<?= esc($i->nome, 'attr') ?>'>
+                    <td><?= esc($i->id) ?></td>
+                    <td><?= esc($i->nome) ?></td>
+                    <td><?= esc($i->dataNascimento) ?></td>
+                    <td><span style="color: <?= $i->_cl('suspenso', $i->suspenso) ?>;"><?= esc($i->_op('suspenso', $i->suspenso)) ?></span></td>
                 </tr>
             <?PHP } ?>
             </tbody>

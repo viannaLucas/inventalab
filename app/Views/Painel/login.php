@@ -7,7 +7,7 @@
         <title>Seja Bem-Vindo - Login</title>
 
         <link href="<?= base_url() ?>assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
-        <link href="<?= base_url('assets/css/auth.css'); ?>" rel="stylesheet"/>
+        <link href="<?= esc(base_url('assets/css/auth.css'), 'attr') ?>" rel="stylesheet"/>
 
         <link rel="apple-touch-icon" href="<?PHP echo base_url('assets/img/brand/favicon.png'); ?>" sizes="180x180">
         <link rel="icon" href="<?PHP echo base_url('assets/img/brand/favicon.png'); ?>" sizes="32x32" type="image/png">
@@ -21,7 +21,7 @@
             <section class="auth-card">
                 <div class="auth-brand">
                     <span class="auth-eyebrow auth-stagger delay-1">InventaLab</span>
-                    <img class="auth-logo auth-stagger delay-2" src="<?= base_url('assets/img/brand/logoLogin.png'); ?>" alt="InventaLab">
+                    <img class="auth-logo auth-stagger delay-2" src="<?= esc(base_url('assets/img/brand/logoLogin.png'), 'attr') ?>" alt="InventaLab">
                     <h1 class="auth-title auth-stagger delay-3">Acesso do painel</h1>
                     <p class="auth-subtitle auth-stagger delay-4">Entre com suas credenciais para gerenciar o sistema.</p>
                 </div>
@@ -54,7 +54,7 @@
                             <button class="btn btn-primary btn-lg" type="submit">Entrar</button>
                         </div>
                         <div class="auth-links">
-                            <a href="<?= base_url('Painel/recuperarSenha'); ?>">Recuperar senha</a>
+                            <a href="<?= esc(base_url('Painel/recuperarSenha'), 'attr') ?>">Recuperar senha</a>
                         </div>
                     </form>
                 </div>

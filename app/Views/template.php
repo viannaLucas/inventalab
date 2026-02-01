@@ -50,9 +50,7 @@
         <!--- Internal Sweet-Alert css-->
         <link href="<?php echo base_url('assets/plugins/sweet-alert/sweetalert.css'); ?>" rel="stylesheet">
 
-        <?= $this->renderSection('styles'); ?>
-
-    </head>
+        <?= $this->renderSection('styles'); ?></head>
 
     <body class="main-body app sidebar-mini light-theme">
 
@@ -66,25 +64,20 @@
         <div class="page">
 
             <?= $this->include('menu'); ?>
-
             <!-- main-content -->
             <div class="main-content app-content">
 
                 <?= $this->include('menuTopo'); ?>
-
                 <!-- container -->
                 <div class="container-fluid">
 
-                    <?= $this->renderSection('content'); ?>
-
-                </div>
+                    <?= $this->renderSection('content'); ?></div>
                 <!-- Container closed -->
 
             </div>
             <!-- main-content closed -->
 
             <?= $this->renderSection('modal'); ?>
-
             <!-- Footer opened -->
             <!--            <div class="main-footer ht-40">
                             <div class="container-fluid pd-t-0-f ht-100p">

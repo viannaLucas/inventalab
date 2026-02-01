@@ -19,23 +19,23 @@
         </div>
         <div class="card-body pt-0">
             <form id='formAlterar' action="<?PHP echo base_url('HorarioFuncionamento/doAlterar'); ?>" class="needs-validation" method="post" enctype="multipart/form-data" >
-                <input type="hidden" name="id" value="<?= $horariofuncionamento->id ?>" />
+                <input type="hidden" name="id" value="<?= esc($horariofuncionamento->id, 'attr') ?>" />
                 <div class="form-row">
                     <div class="form-group col-12 col-md-4">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600" for="diaSemana">Dia da Semana</label> 
                         <select class="form-control" name="diaSemana" id="diaSemana" required="" >
                             <?PHP foreach (App\Entities\HorarioFuncionamentoEntity::_op('diaSemana') as $k => $op){ ?>
-                            <option value="<?= $k; ?>" <?= ((int)$horariofuncionamento->diaSemana) === $k ? 'selected' : ''; ?>><?= $op; ?></option>
+                            <option value="<?= esc($k, 'attr') ?>" <?= ((int)$horariofuncionamento->diaSemana) === $k ? 'selected' : ''; ?>><?= esc($op) ?></option>
                             <?PHP } ?>
                         </select>
                     </div>
                     <div class="form-group col-12 col-md-4">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Hora Início</label> 
-                        <input class="form-control" name="horaInicio" id="horaInicio" type="text" maxlength="10" value="<?= $horariofuncionamento->horaInicio ?>">
+                        <input class="form-control" name="horaInicio" id="horaInicio" type="text" maxlength="10" value="<?= esc($horariofuncionamento->horaInicio, 'attr') ?>">
                     </div>
                     <div class="form-group col-12 col-md-4">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Hora Final</label> 
-                        <input class="form-control" name="horaFinal" id="horaFinal" type="text" maxlength="10" value="<?= $horariofuncionamento->horaFinal ?>">
+                        <input class="form-control" name="horaFinal" id="horaFinal" type="text" maxlength="10" value="<?= esc($horariofuncionamento->horaFinal, 'attr') ?>">
                     </div>
                     <div class="form-group mb-0 mt-3 text-center col-12">
                         <button type="submit" class="btn btn-primary submitButton">Alterar</button>
@@ -47,12 +47,8 @@
 </div>
 
 <!-- content closed -->
-<?= $this->endSection('content'); ?>
-
-<?= $this->section('styles'); ?>
-<?= $this->endSection('styles'); ?>
-
-<?= $this->section('scripts'); ?>
+<?= $this->endSection('content'); ?><?= $this->section('styles'); ?>
+<?= esc($this->endSection('styles'); ) ?><?= $this->section('scripts'); ?>
 <script>
     $('.submitButton').on('click', function(e){
         //$(this).attr('disabled', true);

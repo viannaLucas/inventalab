@@ -15,14 +15,14 @@
             </thead>
             <tbody>
             <?PHP foreach ($vEvento as $i) { ?>
-                <tr data-id='<?= $i->id ?>' data-text='<?= $i->nome ?>'>
-                    <td><?= $i->id ?></td>
-                    <td><?= $i->nome ?></td>
-                    <td><span style="color: <?= $i->_cl('vagasLimitadas', $i->vagasLimitadas) ?>;"><?= $i->_op('vagasLimitadas', $i->vagasLimitadas) ?></span></td>
-                    <td><span style="color: <?= $i->_cl('inscricoesAbertas', $i->inscricoesAbertas) ?>;"><?= $i->_op('inscricoesAbertas', $i->inscricoesAbertas) ?></span></td>
-                    <td><span style="color: <?= $i->_cl('divulgar', $i->divulgar) ?>;"><?= $i->_op('divulgar', $i->divulgar) ?></span></td>
-                    <td><?= $i->dataInicio ?></td>
-                    <td><?= $i->valor ?></td>
+                <tr data-id='<?= esc($i->id, 'attr') ?>' data-text='<?= esc($i->nome, 'attr') ?>'>
+                    <td><?= esc($i->id) ?></td>
+                    <td><?= esc($i->nome) ?></td>
+                    <td><span style="color: <?= $i->_cl('vagasLimitadas', $i->vagasLimitadas) ?>;"><?= esc($i->_op('vagasLimitadas', $i->vagasLimitadas)) ?></span></td>
+                    <td><span style="color: <?= $i->_cl('inscricoesAbertas', $i->inscricoesAbertas) ?>;"><?= esc($i->_op('inscricoesAbertas', $i->inscricoesAbertas)) ?></span></td>
+                    <td><span style="color: <?= $i->_cl('divulgar', $i->divulgar) ?>;"><?= esc($i->_op('divulgar', $i->divulgar)) ?></span></td>
+                    <td><?= esc($i->dataInicio) ?></td>
+                    <td><?= esc($i->valor) ?></td>
                 </tr>
             <?PHP } ?>
             </tbody>

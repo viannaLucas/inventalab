@@ -123,7 +123,7 @@
                             <select class="form-control" name="uf" id="uf">
                                 <option value=""></option>
                                 <?php foreach ($ufs as $sigla => $nome) { ?>
-                                    <option value="<?= $sigla; ?>" <?= $participante->uf === $sigla ? 'selected' : ''; ?>><?= $nome; ?></option>
+                                    <option value="<?= esc($sigla, 'attr') ?>" <?= $participante->uf === $sigla ? 'selected' : ''; ?>><?= esc($nome) ?></option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -139,12 +139,8 @@
     </div>
 </div>
 <!-- row closed -->
-<?= $this->endSection('content'); ?>
-
-<?= $this->section('styles'); ?>
-<?= $this->endSection('styles'); ?>
-
-<?= $this->section('scripts'); ?>
+<?= $this->endSection('content'); ?><?= $this->section('styles'); ?>
+<?= esc($this->endSection('styles'); ) ?><?= $this->section('scripts'); ?>
 <script>
     $('.submitButton').on('click', function (e) {
         // $(this).attr('disabled', true);

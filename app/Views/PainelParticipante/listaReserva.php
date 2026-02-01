@@ -1,7 +1,6 @@
 <?= $this->extend('PainelParticipante/template'); ?>
 
 <?= $this->section('content'); ?>
-
 <!-- breadcrumb -->
 <div class="breadcrumb-header justify-content-between">
     <div class="my-auto">
@@ -47,12 +46,12 @@
                             <?php /** @var \App\Entities\ReservaEntity $i */ ?>
                             <?php foreach ($vReservas as $i) : ?>
                                 <tr>
-                                    <td><?= $i->id ?></td>
+                                    <td><?= esc($i->id) ?></td>
                                     <td><?= $i->dataReserva ?> - <?= $i->horaInicio . ' / ' . $i->horaFim ?></td>
-                                    <td><span style="color: <?= $i->_cl('tipo', $i->tipo) ?>;"><?= $i->_op('tipo', $i->tipo) ?></span></td>
-                                    <td><?= $i->numeroConvidados ?></td>
-                                    <td><span style="color: <?= $i->_cl('status', $i->status) ?>;"><?= $i->_op('status', $i->status) ?></span></td>
-                                    <td><?= $formatarHora($i->horaEntrada) . ' / ' . $formatarHora($i->horaSaida) ?></td>
+                                    <td><span style="color: <?= $i->_cl('tipo', $i->tipo) ?>;"><?= esc($i->_op('tipo', $i->tipo)) ?></span></td>
+                                    <td><?= esc($i->numeroConvidados) ?></td>
+                                    <td><span style="color: <?= $i->_cl('status', $i->status) ?>;"><?= esc($i->_op('status', $i->status)) ?></span></td>
+                                    <td><?= esc($formatarHora($i->horaEntrada) . ' / ' . $formatarHora($i->horaSaida) ) ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         <?php else : ?>

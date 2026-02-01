@@ -34,12 +34,12 @@
                     <tbody>
                     <?PHP foreach ($vServico as $i) { ?>
                         <tr>
-                            <td><?= $i->id ?></td>
-                            <td><?= $i->Nome ?></td>
-                            <td><?= $i->descricao ?></td>
-                            <td><?= $i->valor ?></td>
-                            <td><?= $i->unidade ?></td>
-                            <td><span style="color: <?= $i->_cl('ativo', $i->ativo) ?>;"><?= $i->_op('ativo', $i->ativo) ?></span></td>
+                            <td><?= esc($i->id) ?></td>
+                            <td><?= esc($i->Nome) ?></td>
+                            <td><?= esc($i->descricao) ?></td>
+                            <td><?= esc($i->valor) ?></td>
+                            <td><?= esc($i->unidade) ?></td>
+                            <td><span style="color: <?= $i->_cl('ativo', $i->ativo) ?>;"><?= esc($i->_op('ativo', $i->ativo)) ?></span></td>
                             <td>
                                 <a href="<?php echo base_url('Servico/alterar/' . $i->id); ?>" class="btn btn-primary  btn-sm">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -59,8 +59,7 @@
                     </tbody>
                 </table>
             </div>
-            <?= $pager->links('default', 'templatePaginacao') ?>
-        </div>
+            <?= $pager->links('default', 'templatePaginacao') ?></div>
     </div>
 </div>
 <!-- row closed -->

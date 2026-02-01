@@ -22,19 +22,19 @@
                 <div class="form-row">
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Nome</label> 
-                        <input class="form-control" name="nome" id="nome" type="text" maxlength="250" value="<?= old('nome') ?>">
+                        <input class="form-control" name="nome" id="nome" type="text" maxlength="250" value="<?= esc(old('nome'), 'attr') ?>">
                     </div>                    
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Telefone</label> 
-                        <input class="form-control maskTel" name="telefone" id="telefone" type="text" value="<?= old('telefone') ?>">
+                        <input class="form-control maskTel" name="telefone" id="telefone" type="text" value="<?= esc(old('telefone'), 'attr') ?>">
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Email</label> 
-                        <input class="form-control" name="email" id="email" type="text" maxlength="250" value="<?= old('email') ?>">
+                        <input class="form-control" name="email" id="email" type="text" maxlength="250" value="<?= esc(old('email'), 'attr') ?>">
                     </div>                    
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Data Nascimento</label> 
-                        <input class="form-control maskData" name="dataNascimento" id="dataNascimento" type="text" value="<?= old('dataNascimento') ?>">
+                        <input class="form-control maskData" name="dataNascimento" id="dataNascimento" type="text" value="<?= esc(old('dataNascimento'), 'attr') ?>">
                     </div>                    
                     <div class="form-group col-12 col-md-6 ">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Termo Responsabilidade</label>
@@ -48,13 +48,13 @@
                         <select class="form-control" name="suspenso" id="suspenso" required="" >
                             <option value="" <?= old('suspenso')=='' ? 'selected' : ''; ?>></option>
                             <?PHP foreach (App\Entities\ParticipanteEntity::_op('suspenso') as $k => $op){ ?>
-                            <option value="<?= $k; ?>" <?= old('suspenso') === $k ? 'selected' : ''; ?>><?= $op; ?></option>
+                            <option value="<?= esc($k, 'attr') ?>" <?= old('suspenso') === $k ? 'selected' : ''; ?>><?= esc($op) ?></option>
                             <?PHP } ?>
                         </select>
                     </div>                    
                     <div class="form-group col-12 ">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Observações Gerais</label> 
-                        <textarea name="observacoesGerais" id="observacoesGerais" class="form-control" placeholder="" rows="3"><?= old('observacoesGerais') ?></textarea>
+                        <textarea name="observacoesGerais" id="observacoesGerais" class="form-control" placeholder="" rows="3"><?= esc(old('observacoesGerais')) ?></textarea>
                     </div>                                        
                 <fieldset class="border rounded-10 m-0 mb-3 p-2 w-100">
                     <div class="border-bottom mx-n1 mb-3">
@@ -64,7 +64,7 @@
                         <div class="form-group col-auto">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">Recurso Trabalho</label> 
                             <div class="input-group mb-3">
-                                <input class="form-control" name="habilidades_RecursoTrabalho_id_Text" id="habilidades_RecursoTrabalho_id_Text" type="text" disabled="true" onclick="$('#addonSearchhabilidades_RecursoTrabalho_id').click()" value="<?= old('habilidades_RecursoTrabalho_id_Text'); ?>"/>
+                                <input class="form-control" name="habilidades_RecursoTrabalho_id_Text" id="habilidades_RecursoTrabalho_id_Text" type="text" disabled="true" onclick="$('#addonSearchhabilidades_RecursoTrabalho_id').click()" value="<?= esc(old('habilidades_RecursoTrabalho_id_Text'), 'attr') ?>"/>
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary" type="button" id="addonSearchhabilidades_RecursoTrabalho_id" 
                                             data-toggle="modal" data-target="#modalFK" data-title='Localizar >Recurso Trabalho'
@@ -74,7 +74,7 @@
                                         </svg>
                                     </button>
                                 </div>
-                                <input class="d-none" name="habilidades_RecursoTrabalho_id" id="habilidades_RecursoTrabalho_id" type="text" value="<?= old('habilidades_RecursoTrabalho_id'); ?>" />
+                                <input class="d-none" name="habilidades_RecursoTrabalho_id" id="habilidades_RecursoTrabalho_id" type="text" value="<?= esc(old('habilidades_RecursoTrabalho_id'), 'attr') ?>" />
                             </div>
                         </div>                        
                         <div class="form-group col-auto">
@@ -149,39 +149,39 @@
                         </div>
                         <div class="form-group col-12 col-md-6 nome-responsavel-container <?= $faturarResponsavelChecked ? '' : 'd-none'; ?>">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">Nome do Responsável</label> 
-                            <input class="form-control" name="nomeResponsavel" id="nomeResponsavel" type="text" maxlength="100" value="<?= old('nomeResponsavel') ?>">
+                            <input class="form-control" name="nomeResponsavel" id="nomeResponsavel" type="text" maxlength="100" value="<?= esc(old('nomeResponsavel'), 'attr') ?>">
                         </div>
                         <div class="form-group col-12 col-md-6">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">CPF</label> 
-                            <input class="form-control maskCPF" name="cpf" id="cpf" type="text" maxlength="20" value="<?= old('cpf') ?>">
+                            <input class="form-control maskCPF" name="cpf" id="cpf" type="text" maxlength="20" value="<?= esc(old('cpf'), 'attr') ?>">
                         </div>
                         <div class="form-group col-12 col-md-6">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">CEP</label> 
-                            <input class="form-control" name="cep" id="cep" type="text" maxlength="10" value="<?= old('cep') ?>">
+                            <input class="form-control" name="cep" id="cep" type="text" maxlength="10" value="<?= esc(old('cep'), 'attr') ?>">
                         </div>
                         <div class="form-group col-12">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">Logradouro</label> 
-                            <input class="form-control" name="logradouro" id="logradouro" type="text" maxlength="200" value="<?= old('logradouro') ?>">
+                            <input class="form-control" name="logradouro" id="logradouro" type="text" maxlength="200" value="<?= esc(old('logradouro'), 'attr') ?>">
                         </div>
                         <div class="form-group col-12 col-md-6">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">Número</label> 
-                            <input class="form-control maskNumero20" name="numero" id="numero" type="text" maxlength="20" value="<?= old('numero') ?>">
+                            <input class="form-control maskNumero20" name="numero" id="numero" type="text" maxlength="20" value="<?= esc(old('numero'), 'attr') ?>">
                         </div>
                         <div class="form-group col-12 col-md-6">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">Bairro</label> 
-                            <input class="form-control" name="bairro" id="bairro" type="text" maxlength="100" value="<?= old('bairro') ?>">
+                            <input class="form-control" name="bairro" id="bairro" type="text" maxlength="100" value="<?= esc(old('bairro'), 'attr') ?>">
                         </div>
                         <div class="form-group col-12 col-md-6">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">Cidade</label> 
-                            <input class="form-control" name="cidade" id="cidade" type="text" maxlength="100" value="<?= old('cidade') ?>">
+                            <input class="form-control" name="cidade" id="cidade" type="text" maxlength="100" value="<?= esc(old('cidade'), 'attr') ?>">
                         </div>
-                        <input type="hidden" name="codigoCidade" id="codigoCidade" value="<?= old('codigoCidade') ?>">
+                        <input type="hidden" name="codigoCidade" id="codigoCidade" value="<?= esc(old('codigoCidade'), 'attr') ?>">
                         <div class="form-group col-12 col-md-6">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">Estado</label> 
                             <select class="form-control" name="uf" id="uf">
                                 <option value=""></option>
                                 <?php foreach ($ufs as $sigla => $nome) { ?>
-                                    <option value="<?= $sigla; ?>" <?= $ufSelecionada === $sigla ? 'selected' : ''; ?>><?= $nome; ?></option>
+                                    <option value="<?= esc($sigla, 'attr') ?>" <?= $ufSelecionada === $sigla ? 'selected' : ''; ?>><?= esc($nome) ?></option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -212,12 +212,8 @@
     </tr>
 </template>
 <!-- content closed -->
-<?= $this->endSection('content'); ?>
-
-<?= $this->section('styles'); ?>
-<?= $this->endSection('styles'); ?>
-
-<?= $this->section('scripts'); ?>
+<?= $this->endSection('content'); ?><?= $this->section('styles'); ?>
+<?= esc($this->endSection('styles'); ) ?><?= $this->section('scripts'); ?>
 <script>
     $('.submitButton').on('click', function(e){
         //$(this).attr('disabled', true);

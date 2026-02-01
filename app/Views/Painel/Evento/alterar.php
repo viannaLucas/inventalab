@@ -10,16 +10,16 @@
     </div>
     <div class="d-flex my-xl-auto right-content">
         <div class="pr-1 mb-xl-0">
-            <a href="<?= base_url('Evento/controlePresenca/' . $evento->id); ?>" class="btn btn-secondary">Definir Presença</a>
+            <a href="<?= esc(base_url('Evento/controlePresenca/' . $evento->id), 'attr') ?>" class="btn btn-secondary">Definir Presença</a>
         </div>
         <div class="pr-1 mb-xl-0">
-            <a href="<?= base_url('Evento/imprimirListaPresenca/' . $evento->id); ?>" class="btn btn-secondary">Imprimir Lista Presença</a>
+            <a href="<?= esc(base_url('Evento/imprimirListaPresenca/' . $evento->id), 'attr') ?>" class="btn btn-secondary">Imprimir Lista Presença</a>
         </div>
         <div class="pr-1 mb-xl-0">
-            <a href="<?= base_url('Evento/imprimirEntregaMaterial/' . $evento->id); ?>" class="btn btn-secondary">Imprimir Lista Material</a>
+            <a href="<?= esc(base_url('Evento/imprimirEntregaMaterial/' . $evento->id), 'attr') ?>" class="btn btn-secondary">Imprimir Lista Material</a>
         </div>
         <div class="pr-1 mb-xl-0">
-            <a href="<?= base_url('Evento/exportarListaParticipante/' . $evento->id); ?>" class="btn btn-secondary">Exportar Participantes</a>
+            <a href="<?= esc(base_url('Evento/exportarListaParticipante/' . $evento->id), 'attr') ?>" class="btn btn-secondary">Exportar Participantes</a>
         </div>
     </div>
 </div>
@@ -34,24 +34,24 @@
         </div>
         <div class="card-body pt-0">
             <form id='formAlterar' action="<?PHP echo base_url('Evento/doAlterar'); ?>" class="needs-validation" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="id" value="<?= $evento->id ?>" />
+                <input type="hidden" name="id" value="<?= esc($evento->id, 'attr') ?>" />
                 <div class="row">
                     <div class="form-group col-12 col-md-12">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Nome</label>
-                        <input class="form-control" name="nome" id="nome" type="text" maxlength="150" value="<?= $evento->nome ?>">
+                        <input class="form-control" name="nome" id="nome" type="text" maxlength="150" value="<?= esc($evento->nome, 'attr') ?>">
                     </div>
                     <div class="form-group col-12 ">
                         <label>Imagem <?PHP if($evento->imagem != '') { ?>
-                            <a class="btn btn-sm btn-primary ml-3" href="<?PHP echo base_url($evento->imagem); ?>" target="_blank">Fazer Download</a>
+                            <a class="btn btn-sm btn-primary ml-3" href="<?= esc(base_url($evento->imagem), 'attr') ?>" target="_blank">Fazer Download</a>
                             <?PHP } ?>
                         </label>
                         <input type="file" class="dropify" id="imagem" name="imagem" accept=".jpg,.jpeg,.webp,.png"
-                               data-default-file="<?PHP echo $evento->imagem != '' ? base_url($evento->imagem) : ''; ?>"
+                               data-default-file="<?= esc($evento->imagem != '' ? base_url($evento->imagem) : '', 'attr') ?>"
                                data-allowed-file-extensions="webp png jpeg jpg" data-max-file-size="10M" >
                     </div>
                     <div class="form-group col-12">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Descrição</label>
-                        <textarea name="descricao" id="descricao" class="form-control" placeholder="" rows="3"><?= $evento->descricao ?></textarea>
+                        <textarea name="descricao" id="descricao" class="form-control" placeholder="" rows="3"><?= esc($evento->descricao) ?></textarea>
                         <small class="form-text text-muted">Uma breve descrição de um parágrafo sobre o evento.</small>
                     </div>
                     <div class="form-group col-12 col-md-6">
@@ -59,21 +59,21 @@
                         <select class="form-control" name="vagasLimitadas" id="vagasLimitadas" required="">
                             <option value="" <?= (string)$evento->vagasLimitadas === '' ? 'selected' : ''; ?>></option>
                             <?PHP foreach (App\Entities\EventoEntity::_op('vagasLimitadas') as $k => $op) { ?>
-                                <option value="<?= $k; ?>" <?= (string)$evento->vagasLimitadas === (string)$k ? 'selected' : ''; ?>><?= $op; ?></option>
+                                <option value="<?= esc($k, 'attr') ?>" <?= (string)$evento->vagasLimitadas === (string)$k ? 'selected' : ''; ?>><?= esc($op) ?></option>
                             <?PHP } ?>
                         </select>
                         <small class="form-text text-muted">Definir se é um evento com vagas limitadas como curso, ou se é um evento de acesso livre como amostras e exposições.</small>
                     </div>
                     <div class="form-group col-12 col-md-6 <?= (string)$evento->vagasLimitadas === '1' ? '' : 'd-none'; ?>" id="numeroVagasGroup">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Número Vagas</label>
-                        <input class="form-control maskInteiro" name="numeroVagas" id="numeroVagas" type="text" value="<?= $evento->numeroVagas ?>" <?= (string)$evento->vagasLimitadas === '1' ? 'required' : ''; ?>>
+                        <input class="form-control maskInteiro" name="numeroVagas" id="numeroVagas" type="text" value="<?= esc($evento->numeroVagas, 'attr') ?>" <?= (string)$evento->vagasLimitadas === '1' ? 'required' : ''; ?>>
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600" for="inscricoesAbertas">Inscrições Abertas</label>
                         <select class="form-control" name="inscricoesAbertas" id="inscricoesAbertas" required="">
                             <option value="" <?= (string)$evento->inscricoesAbertas === '' ? 'selected' : ''; ?>></option>
                             <?PHP foreach (App\Entities\EventoEntity::_op('inscricoesAbertas') as $k => $op) { ?>
-                                <option value="<?= $k; ?>" <?= (string)$evento->inscricoesAbertas === (string)$k ? 'selected' : ''; ?>><?= $op; ?></option>
+                                <option value="<?= esc($k, 'attr') ?>" <?= (string)$evento->inscricoesAbertas === (string)$k ? 'selected' : ''; ?>><?= esc($op) ?></option>
                             <?PHP } ?>
                         </select>
                         <small class="form-text text-muted">Inscrições podem ser realizadas pelo próprio Participante ou apenas por administradores e monitores.</small>
@@ -83,14 +83,14 @@
                         <select class="form-control" name="divulgar" id="divulgar" required="">
                             <option value="" <?= (string)$evento->divulgar === '' ? 'selected' : ''; ?>></option>
                             <?PHP foreach (App\Entities\EventoEntity::_op('divulgar') as $k => $op) { ?>
-                                <option value="<?= $k; ?>" <?= (string)$evento->divulgar === (string)$k ? 'selected' : ''; ?>><?= $op; ?></option>
+                                <option value="<?= esc($k, 'attr') ?>" <?= (string)$evento->divulgar === (string)$k ? 'selected' : ''; ?>><?= esc($op) ?></option>
                             <?PHP } ?>
                         </select>
                         <small class="form-text text-muted">Evento será divulgado na página principal, tornando as infirmações públicas na página principal.</small>
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Data Início</label>
-                        <input class="form-control maskData" name="dataInicio" id="dataInicio" type="text" value="<?= $evento->dataInicio ?>">
+                        <input class="form-control maskData" name="dataInicio" id="dataInicio" type="text" value="<?= esc($evento->dataInicio, 'attr') ?>">
                         <small class="form-text text-muted">Data do primeiro dia do evento.</small>
                     </div>
                     <div class="form-group col-12 col-md-12">
@@ -98,13 +98,13 @@
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Valor</label>
-                        <input class="form-control maskReal" name="valor" id="valor" type="text" value="<?= $evento->valor ?>">
+                        <input class="form-control maskReal" name="valor" id="valor" type="text" value="<?= esc($evento->valor, 'attr') ?>">
                         <small class="form-text text-muted">Valor de inscrição para cada participate, deixe com valor 0,00 para sem cobrança.</small>
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Serviço</label>
                         <div class="input-group">
-                            <input class="form-control" name="Servico_id_Text" id="Servico_id_Text" type="text" disabled="true" onclick="$('#addonSearchServico_id').click()" value="<?= $evento->getServico()->Nome ?>"/>
+                            <input class="form-control" name="Servico_id_Text" id="Servico_id_Text" type="text" disabled="true" onclick="$('#addonSearchServico_id').click()" value="<?= esc($evento->getServico()->Nome, 'attr') ?>"/>
                             <div class="input-group-append">
                                 <button class="btn btn-outline-secondary" type="button" id="addonSearchServico_id"
                                     data-toggle="modal" data-target="#modalFK" data-title='Localizar Serviço'
@@ -114,13 +114,13 @@
                                     </svg>
                                 </button>
                             </div>
-                            <input class="d-none" name="Servico_id" id="Servico_id" type="text" value="<?= $evento->Servico_id ?>" />
+                            <input class="d-none" name="Servico_id" id="Servico_id" type="text" value="<?= esc($evento->Servico_id, 'attr') ?>" />
                         </div>
                     </div>
                     <div class="col-12">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Informações do evento</label>
                         <small class="form-text text-muted">Texto com as informações do evento, quando evento for público será apresentado na página principal.</small>
-                        <textarea name="texto" id="texto" class="form-control summernote"><?= $evento->texto ?></textarea>
+                        <textarea name="texto" id="texto" class="form-control summernote"><?= esc($evento->texto) ?></textarea>
                     </div>
                     <fieldset class="border rounded-10 m-0 mb-3 p-2 w-100">
                         <a id="listaReservas"></a>
@@ -131,7 +131,7 @@
                         <div class="form-row px-2 align-items-end">
                             <div class="form-group col-sm-3 col-12">
                                 <label class="main-content-label tx-11 tx-medium tx-gray-600" for="reservaespaco_data">Data</label>
-                                <input class="form-control maskData" name="reservaespaco_data" id="reservaespaco_data" type="text" value="<?= old('reservaespaco_data') ?>">
+                                <input class="form-control maskData" name="reservaespaco_data" id="reservaespaco_data" type="text" value="<?= esc(old('reservaespaco_data'), 'attr') ?>">
                             </div>
                             <div class="form-group col-sm-2 col-12">
                                 <div class="form-check mt-sm-4 pt-sm-2">
@@ -141,11 +141,11 @@
                             </div>
                             <div class="form-group col-sm-2 col-12">
                                 <label class="main-content-label tx-11 tx-medium tx-gray-600" for="reservaespaco_horaInicio">Hora Início</label>
-                                <input class="form-control" name="reservaespaco_horaInicio" id="reservaespaco_horaInicio" type="time" value="<?= old('reservaespaco_horaInicio') ?>">
+                                <input class="form-control" name="reservaespaco_horaInicio" id="reservaespaco_horaInicio" type="time" value="<?= esc(old('reservaespaco_horaInicio'), 'attr') ?>">
                             </div>
                             <div class="form-group col-sm-2 col-12">
                                 <label class="main-content-label tx-11 tx-medium tx-gray-600" for="reservaespaco_horaFim">Hora Fim</label>
-                                <input class="form-control" name="reservaespaco_horaFim" id="reservaespaco_horaFim" type="time" value="<?= old('reservaespaco_horaFim') ?>">
+                                <input class="form-control" name="reservaespaco_horaFim" id="reservaespaco_horaFim" type="time" value="<?= esc(old('reservaespaco_horaFim'), 'attr') ?>">
                             </div>
                             <div class="form-group col-sm-auto col-12">
                                 <label class="main-content-label tx-11 tx-medium tx-gray-600 d-block">&nbsp;</label>
@@ -365,12 +365,8 @@
     </div>
 </div>
 <!-- content closed -->
-<?= $this->endSection('content'); ?>
-
-<?= $this->section('styles'); ?>
-<?= $this->endSection('styles'); ?>
-
-<?= $this->section('scripts'); ?>
+<?= $this->endSection('content'); ?><?= $this->section('styles'); ?>
+<?= $this->endSection('styles'); ?><?= $this->section('scripts'); ?>
 <script>
     function formatModalMessage(message) {
         if (typeof message !== 'string') {
@@ -815,7 +811,7 @@
             }
         }
     ?>
-        insertRowParticipanteEvento(<?= json_encode($o) ?>);
+        insertRowParticipanteEvento(<?= json_encode($o ?>);
     <?PHP } ?>
 
     function verificarDataHoraReservas() {

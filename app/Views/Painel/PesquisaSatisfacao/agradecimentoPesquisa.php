@@ -97,7 +97,7 @@
                         <div class="success-icon">✓</div>
                         <p class="lead mb-3">Recebemos seu feedback com sucesso.</p>
                         <p class="mb-4">A sua contribuição é essencial para que o InventaLab continue evoluindo e oferecendo experiências cada vez melhores.</p>
-                        <a href="<?= base_url('PainelParticipante/home') ?>" class="btn btn-secondary">Voltar ao Painel</a>
+                        <a href="<?= esc(base_url('PainelParticipante/home'), 'attr') ?>" class="btn btn-secondary">Voltar ao Painel</a>
                         <footer>
                             <small>Até breve! Continue contando com o InventaLab.</small>
                         </footer>

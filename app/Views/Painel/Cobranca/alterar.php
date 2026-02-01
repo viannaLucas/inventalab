@@ -19,13 +19,13 @@
         </div>
         <div class="card-body pt-0">
             <form id='formAlterar' action="<?PHP echo base_url('Cobranca/doAlterar'); ?>" class="needs-validation" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="id" value="<?= $cobranca->id ?>" />
+                <input type="hidden" name="id" value="<?= esc($cobranca->id, 'attr') ?>" />
                 <div class="form-row">
 
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Participante</label>
                         <div class="input-group">
-                            <input class="form-control" name="Participante_id_Text" id="Participante_id_Text" type="text" disabled="true" onclick="$('#addonSearchParticipante_id').click()" value="<?= $cobranca->getParticipante()->nome ?>" />
+                            <input class="form-control" name="Participante_id_Text" id="Participante_id_Text" type="text" disabled="true" onclick="$('#addonSearchParticipante_id').click()" value="<?= esc($cobranca->getParticipante()->nome, 'attr') ?>" />
                             <div class="input-group-append">
                                 <button class="btn btn-outline-secondary" type="button" id="addonSearchParticipante_id"
                                     data-toggle="modal" data-target="#modalFK" data-title='Localizar Participante'
@@ -35,29 +35,29 @@
                                     </svg>
                                 </button>
                             </div>
-                            <input class="d-none" name="Participante_id" id="Participante_id" type="text" value="<?= $cobranca->Participante_id ?>" />
+                            <input class="d-none" name="Participante_id" id="Participante_id" type="text" value="<?= esc($cobranca->Participante_id, 'attr') ?>" />
                         </div>
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Data</label>
-                        <input class="form-control maskData" name="data" id="data" type="text" value="<?= $cobranca->data ?>">
+                        <input class="form-control maskData" name="data" id="data" type="text" value="<?= esc($cobranca->data, 'attr') ?>">
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Valor</label>
-                        <input class="form-control maskReal" name="valor" id="valor" type="text" value="<?= $cobranca->valor ?>" readonly="true">
+                        <input class="form-control maskReal" name="valor" id="valor" type="text" value="<?= esc($cobranca->valor, 'attr') ?>" readonly="true">
                     </div>
 
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600" for="situacao">Situação</label>
                         <select class="form-control" name="situacao" id="situacao" required="">
                             <?PHP foreach (App\Entities\CobrancaEntity::_op('situacao') as $k => $op) { ?>
-                                <option value="<?= $k; ?>" <?= ((int)$cobranca->situacao) === $k ? 'selected' : ''; ?>><?= $op; ?></option>
+                                <option value="<?= esc($k, 'attr') ?>" <?= ((int)$cobranca->situacao) === $k ? 'selected' : ''; ?>><?= esc($op) ?></option>
                             <?PHP } ?>
                         </select>
                     </div>
                     <div class="form-group col-12 ">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Observações</label>
-                        <textarea name="observacoes" id="observacoes" class="form-control" placeholder="" rows="3"><?= $cobranca->observacoes ?></textarea>
+                        <textarea name="observacoes" id="observacoes" class="form-control" placeholder="" rows="3"><?= esc($cobranca->observacoes) ?></textarea>
                     </div>
                     <fieldset class="border rounded-10 m-0 mb-3 p-2 w-100">
                         <div class="border-bottom mx-n1 mb-3">
@@ -230,12 +230,8 @@
 </template>
 <?php endif; ?>
 <!-- content closed -->
-<?= $this->endSection('content'); ?>
-
-<?= $this->section('styles'); ?>
-<?= $this->endSection('styles'); ?>
-
-<?= $this->section('scripts'); ?>
+<?= $this->endSection('content'); ?><?= $this->section('styles'); ?>
+<?= $this->endSection('styles'); ?><?= $this->section('scripts'); ?>
 <script>
     $('.submitButton').on('click', function(e) {
         //$(this).attr('disabled', true);
@@ -489,7 +485,7 @@
     <?PHP foreach ($cobranca->getListCobrancaProduto() as $i => $o) {
         $o->Produto_id_Text = $o->getProduto()->nome;
     ?>
-        insertRowCobrancaProduto(<?= json_encode($o) ?>);
+        insertRowCobrancaProduto(<?= json_encode($o ?>);
     <?PHP } ?>
     */
 </script>

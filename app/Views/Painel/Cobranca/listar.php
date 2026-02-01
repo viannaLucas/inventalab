@@ -33,11 +33,11 @@
                     <tbody>
                     <?PHP foreach ($vCobranca as $i) { ?>
                         <tr>
-                            <td><?= $i->id ?></td>
+                            <td><?= esc($i->id) ?></td>
                             <td><?= $i->getParticipante()?->nome ?></td>
-                            <td><?= $i->data ?></td>
-                            <td><?= $i->valor ?></td>
-                            <td><span style="color: <?= $i->_cl('situacao', $i->situacao) ?>;"><?= $i->_op('situacao', $i->situacao) ?></span></td>
+                            <td><?= esc($i->data) ?></td>
+                            <td><?= esc($i->valor) ?></td>
+                            <td><span style="color: <?= $i->_cl('situacao', $i->situacao) ?>;"><?= esc($i->_op('situacao', $i->situacao)) ?></span></td>
                             <td>
                                 <a href="<?php echo base_url('Cobranca/alterar/' . $i->id); ?>" class="btn btn-primary  btn-sm">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -57,8 +57,7 @@
                     </tbody>
                 </table>
             </div>
-            <?= $pager->links('default', 'templatePaginacao') ?>
-        </div>
+            <?= $pager->links('default', 'templatePaginacao') ?></div>
     </div>
 </div>
 <!-- row closed -->

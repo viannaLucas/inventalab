@@ -23,20 +23,20 @@
                     
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Data</label> 
-                        <input class="form-control maskData" name="data" id="data" type="text" value="<?= old('data') ?>">
+                        <input class="form-control maskData" name="data" id="data" type="text" value="<?= esc(old('data'), 'attr') ?>">
                     </div>                    <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Hora Início</label> 
-                        <input class="form-control" name="horaInicio" id="horaInicio" type="text" maxlength="10" value="<?= old('horaInicio') ?>">
+                        <input class="form-control" name="horaInicio" id="horaInicio" type="text" maxlength="10" value="<?= esc(old('horaInicio'), 'attr') ?>">
                     </div>                    <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Hora Fim</label> 
-                        <input class="form-control" name="horaFim" id="horaFim" type="text" maxlength="10" value="<?= old('horaFim') ?>">
+                        <input class="form-control" name="horaFim" id="horaFim" type="text" maxlength="10" value="<?= esc(old('horaFim'), 'attr') ?>">
                     </div>                    
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600" for="tipo">Tipo</label> 
                         <select class="form-control" name="tipo" id="tipo" required="" >
                             <option value="" <?= old('tipo')=='' ? 'selected' : ''; ?>></option>
                             <?PHP foreach (App\Entities\DatasExtraordinariasEntity::_op('tipo') as $k => $op){ ?>
-                            <option value="<?= $k; ?>" <?= old('tipo') === $k ? 'selected' : ''; ?>><?= $op; ?></option>
+                            <option value="<?= esc($k, 'attr') ?>" <?= old('tipo') === $k ? 'selected' : ''; ?>><?= esc($op) ?></option>
                             <?PHP } ?>
                         </select>
                     </div>                                        
@@ -49,12 +49,8 @@
 </div>
 
 <!-- content closed -->
-<?= $this->endSection('content'); ?>
-
-<?= $this->section('styles'); ?>
-<?= $this->endSection('styles'); ?>
-
-<?= $this->section('scripts'); ?>
+<?= $this->endSection('content'); ?><?= $this->section('styles'); ?>
+<?= esc($this->endSection('styles'); ) ?><?= $this->section('scripts'); ?>
 <script>
     $('.submitButton').on('click', function(e){
         //$(this).attr('disabled', true);

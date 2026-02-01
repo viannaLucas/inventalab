@@ -13,12 +13,12 @@
             </thead>
             <tbody>
             <?PHP foreach ($vDatasExtraordinarias as $i) { ?>
-                <tr data-id='<?= $i->id ?>' data-text='<?= $i->data ?>'>
-                    <td><?= $i->id ?></td>
-                    <td><?= $i->data ?></td>
-                    <td><?= $i->horaInicio ?></td>
-                    <td><?= $i->horaFim ?></td>
-                    <td><span style="color: <?= $i->_cl('tipo', $i->tipo) ?>;"><?= $i->_op('tipo', $i->tipo) ?></span></td>
+                <tr data-id='<?= esc($i->id, 'attr') ?>' data-text='<?= esc($i->data, 'attr') ?>'>
+                    <td><?= esc($i->id) ?></td>
+                    <td><?= esc($i->data) ?></td>
+                    <td><?= esc($i->horaInicio) ?></td>
+                    <td><?= esc($i->horaFim) ?></td>
+                    <td><span style="color: <?= $i->_cl('tipo', $i->tipo) ?>;"><?= esc($i->_op('tipo', $i->tipo)) ?></span></td>
                 </tr>
             <?PHP } ?>
             </tbody>

@@ -19,18 +19,18 @@
         </div>
         <div class="card-body pt-0">
             <form id='formAlterar' action="<?PHP echo base_url('TemplateTermo/doAlterar'); ?>" class="needs-validation" method="post" enctype="multipart/form-data" >
-                <input type="hidden" name="id" value="<?= $templatetermo->id ?>" />
+                <input type="hidden" name="id" value="<?= esc($templatetermo->id, 'attr') ?>" />
                 <div class="form-row">
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600" for="requererTermo">Requerer Termo</label> 
                         <select class="form-control" name="requererTermo" id="requererTermo" required="">
                             <?PHP foreach (App\Entities\TemplateTermoEntity::_op('requererTermo') as $k => $op){ ?>
-                            <option value="<?= $k; ?>" <?= ((int)$templatetermo->requererTermo) === $k ? 'selected' : ''; ?>><?= $op; ?></option>
+                            <option value="<?= esc($k, 'attr') ?>" <?= ((int)$templatetermo->requererTermo) === $k ? 'selected' : ''; ?>><?= esc($op) ?></option>
                             <?PHP } ?>
                         </select>
                     </div>
                     <div class="col-12">
-                        <textarea name="texto" id="texto" class="form-control summernote"><?= $templatetermo->texto ?></textarea>
+                        <textarea name="texto" id="texto" class="form-control summernote"><?= esc($templatetermo->texto) ?></textarea>
                     </div>
                 </div>                                        
                 <div class="form-group mb-0 mt-3 text-center col-12">
@@ -42,12 +42,8 @@
 </div>
 
 <!-- content closed -->
-<?= $this->endSection('content'); ?>
-
-<?= $this->section('styles'); ?>
-<?= $this->endSection('styles'); ?>
-
-<?= $this->section('scripts'); ?>
+<?= $this->endSection('content'); ?><?= $this->section('styles'); ?>
+<?= esc($this->endSection('styles'); ) ?><?= $this->section('scripts'); ?>
 <script>
     $('.submitButton').on('click', function(e){
         //$(this).attr('disabled', true);

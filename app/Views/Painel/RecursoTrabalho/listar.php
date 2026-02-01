@@ -34,12 +34,12 @@
                     <tbody>
                     <?PHP foreach ($vRecursoTrabalho as $i) { ?>
                         <tr>
-                            <td><?= $i->id ?></td>
-                            <td><?= $i->nome ?></td>
-                            <td><span style="color: <?= $i->_cl('tipo', $i->tipo) ?>;"><?= $i->_op('tipo', $i->tipo) ?></span></td>
-                            <td><span style="color: <?= $i->_cl('requerHabilidade', $i->requerHabilidade) ?>;"><?= $i->_op('requerHabilidade', $i->requerHabilidade) ?></span></td>
-                            <td><span style="color: <?= $i->_cl('usoExclusivo', $i->usoExclusivo) ?>;"><?= $i->_op('usoExclusivo', $i->usoExclusivo) ?></span></td>
-                            <td><span style="color: <?= $i->_cl('situacaoTrabalho', $i->situacaoTrabalho) ?>;"><?= $i->_op('situacaoTrabalho', $i->situacaoTrabalho) ?></span></td>
+                            <td><?= esc($i->id) ?></td>
+                            <td><?= esc($i->nome) ?></td>
+                            <td><span style="color: <?= $i->_cl('tipo', $i->tipo) ?>;"><?= esc($i->_op('tipo', $i->tipo)) ?></span></td>
+                            <td><span style="color: <?= $i->_cl('requerHabilidade', $i->requerHabilidade) ?>;"><?= esc($i->_op('requerHabilidade', $i->requerHabilidade)) ?></span></td>
+                            <td><span style="color: <?= $i->_cl('usoExclusivo', $i->usoExclusivo) ?>;"><?= esc($i->_op('usoExclusivo', $i->usoExclusivo)) ?></span></td>
+                            <td><span style="color: <?= $i->_cl('situacaoTrabalho', $i->situacaoTrabalho) ?>;"><?= esc($i->_op('situacaoTrabalho', $i->situacaoTrabalho)) ?></span></td>
                             <td>
                                 <a href="<?php echo base_url('RecursoTrabalho/alterar/' . $i->id); ?>" class="btn btn-primary  btn-sm">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -59,8 +59,7 @@
                     </tbody>
                 </table>
             </div>
-            <?= $pager->links('default', 'templatePaginacao') ?>
-        </div>
+            <?= $pager->links('default', 'templatePaginacao') ?></div>
     </div>
 </div>
 <!-- row closed -->

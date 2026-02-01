@@ -48,15 +48,15 @@
                     <tbody class="text-center">
                     <?PHP foreach ($vReserva as $i) { ?>
                         <tr>
-                            <td><?= $i->id ?></td>
-                            <td><?= $i->dataCadastro ?></td>
-                            <td><?= $i->dataReserva ?></td>
-                            <td><?= $i->horaInicio.' - '.$i->horaFim ?></td>
-                            <td><span style="color: <?= $i->_cl('tipo', $i->tipo) ?>;"><?= $i->_op('tipo', $i->tipo) ?></span></td>
-                            <td><?= $i->numeroConvidados ?></td>
-                            <td><span style="color: <?= $i->_cl('status', $i->status) ?>;"><?= $i->_op('status', $i->status) ?></span></td>
-                            <td><span style="color: <?= $i->_cl('turmaEscola', $i->turmaEscola) ?>;"><?= $i->_op('turmaEscola', $i->turmaEscola) ?></span></td>
-                            <td><?= $formatarHora($i->horaEntrada) . ' / ' . $formatarHora($i->horaSaida) ?></td>
+                            <td><?= esc($i->id) ?></td>
+                            <td><?= esc($i->dataCadastro) ?></td>
+                            <td><?= esc($i->dataReserva) ?></td>
+                            <td><?= esc($i->horaInicio.' - '.$i->horaFim) ?></td>
+                            <td><span style="color: <?= $i->_cl('tipo', $i->tipo) ?>;"><?= esc($i->_op('tipo', $i->tipo)) ?></span></td>
+                            <td><?= esc($i->numeroConvidados) ?></td>
+                            <td><span style="color: <?= $i->_cl('status', $i->status) ?>;"><?= esc($i->_op('status', $i->status)) ?></span></td>
+                            <td><span style="color: <?= $i->_cl('turmaEscola', $i->turmaEscola) ?>;"><?= esc($i->_op('turmaEscola', $i->turmaEscola)) ?></span></td>
+                            <td><?= esc($formatarHora($i->horaEntrada) . ' / ' . $formatarHora($i->horaSaida)) ?></td>
                             <td>
                                 <a href="<?php echo base_url('Reserva/alterar/' . $i->id); ?>" class="btn btn-primary  btn-sm">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -76,8 +76,7 @@
                     </tbody>
                 </table>
             </div>
-            <?= $pager->links('default', 'templatePaginacao') ?>
-        </div>
+            <?= $pager->links('default', 'templatePaginacao') ?></div>
     </div>
 </div>
 <!-- row closed -->

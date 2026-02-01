@@ -34,17 +34,17 @@
                     $avatar = \App\Models\UsuarioModel::getSessao()->foto; 
                     if($avatar == '') $avatar = '/assets/img/faces/default_avatar.jpg';
                     ?>
-                    <a class="profile-user d-flex" href=""><img alt="" src="<?= base_url($avatar); ?>" ></a>
+                    <a class="profile-user d-flex" href=""><img alt="" src="<?= esc(base_url($avatar), 'attr') ?>" ></a>
                     <div class="dropdown-menu">
                         <div class="main-header-profile bg-primary p-3">
                             <div class="d-flex wd-100p">
-                                <div class="main-img-user"><img alt="" src="<?= base_url($avatar); ?>" class=""></div>
+                                <div class="main-img-user"><img alt="" src="<?= esc(base_url($avatar), 'attr') ?>" class=""></div>
                                 <div class="ml-3 my-auto">
-                                    <h6><?= \App\Models\UsuarioModel::getSessao()->nome; ?></h6>
+                                    <h6><?= esc(\App\Models\UsuarioModel::getSessao()->nome) ?></h6>
                                 </div>
                             </div>
                         </div>
-                        <a class="dropdown-item" href="<?= base_url('Painel/alterarPerfil'); ?>"><i class="bx bx-user-circle"></i> Perfil</a>
+                        <a class="dropdown-item" href="<?= esc(base_url('Painel/alterarPerfil'), 'attr') ?>"><i class="bx bx-user-circle"></i> Perfil</a>
                         <a class="dropdown-item" href="<?php echo base_url('Painel/logout'); ?>"><i class="bx bx-log-out"></i> Sair</a>
                     </div>
                 </div>

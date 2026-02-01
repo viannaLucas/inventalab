@@ -12,11 +12,11 @@
             </thead>
             <tbody>
             <?PHP foreach ($vHorarioFuncionamento as $i) { ?>
-                <tr data-id='<?= $i->id ?>' data-text='<?= $i->diaSemana ?>'>
-                    <td><?= $i->id ?></td>
-                    <td><span style="color: <?= $i->_cl('diaSemana', $i->diaSemana) ?>;"><?= $i->_op('diaSemana', $i->diaSemana) ?></span></td>
-                    <td><?= $i->horaInicio ?></td>
-                    <td><?= $i->horaFinal ?></td>
+                <tr data-id='<?= esc($i->id, 'attr') ?>' data-text='<?= esc($i->diaSemana, 'attr') ?>'>
+                    <td><?= esc($i->id) ?></td>
+                    <td><span style="color: <?= $i->_cl('diaSemana', $i->diaSemana) ?>;"><?= esc($i->_op('diaSemana', $i->diaSemana)) ?></span></td>
+                    <td><?= esc($i->horaInicio) ?></td>
+                    <td><?= esc($i->horaFinal) ?></td>
                 </tr>
             <?PHP } ?>
             </tbody>

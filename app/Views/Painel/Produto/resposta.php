@@ -35,12 +35,12 @@
                     <tbody>
                     <?PHP foreach ($vProduto as $i) { ?>
                         <tr>
-                            <td><?= $i->id ?></td>
-                            <td><?= $i->nome ?></td>
-                            <!-- <td><?= $i->valor ?></td> -->
-                            <td><?= $i->estoqueMinimo ?></td>
-                            <td><?= $i->estoqueAtual ?></td>
-                            <td><span style="color: <?= $i->_cl('ativo', $i->ativo) ?>;"><?= $i->_op('ativo', $i->ativo) ?></span></td>
+                            <td><?= esc($i->id) ?></td>
+                            <td><?= esc($i->nome) ?></td>
+                            <!-- <td><?= esc($i->valor) ?></td> -->
+                            <td><?= esc($i->estoqueMinimo) ?></td>
+                            <td><?= esc($i->estoqueAtual) ?></td>
+                            <td><span style="color: <?= $i->_cl('ativo', $i->ativo) ?>;"><?= esc($i->_op('ativo', $i->ativo)) ?></span></td>
                             <td>
                                 <a href="<?php echo base_url('Produto/alterar/' . $i->id); ?>" class="btn btn-primary  btn-sm">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -60,8 +60,7 @@
                     </tbody>
                 </table>
             </div>
-            <?= $pager->links('default', 'templatePaginacao') ?>
-        </div>
+            <?= $pager->links('default', 'templatePaginacao') ?></div>
     </div>
 </div>
 <!-- row closed -->

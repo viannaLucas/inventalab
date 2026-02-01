@@ -44,8 +44,8 @@ if($controlePresenca instanceof ControlePresencaEntity){
                     <tbody>
                     <?PHP foreach ($participantes as $i) { ?>
                         <tr>
-                            <td width=200><div data-controle-presenca='<?= $controlePresenca->id; ?>' data-participante='<?= $i->getParticipante()->id; ?>' class="btn btn-success btn-presenca">Adicionar Presença</div></td>
-                            <td><h4><?= $i->getParticipante()->nome ?></h4></td>
+                            <td width=200><div data-controle-presenca='<?= esc($controlePresenca->id, 'attr') ?>' data-participante='<?= esc($i->getParticipante()->id, 'attr') ?>' class="btn btn-success btn-presenca">Adicionar Presença</div></td>
+                            <td><h4><?= esc($i->getParticipante()->nome) ?></h4></td>
                         </tr>
                     <?php } ?>
                     </tbody>
@@ -104,9 +104,7 @@ if($controlePresenca instanceof ControlePresencaEntity){
 </div>
 <?PHP } ?>
 <!-- row closed -->
-<?= $this->endSection('content'); ?>
-
-<?= $this->section('scripts'); ?>
+<?= esc($this->endSection('content'); ) ?><?= $this->section('scripts'); ?>
 <script>
 // Presença: click handler + fetch + toast + limpar filtro
 document.addEventListener('click', async function (e) {

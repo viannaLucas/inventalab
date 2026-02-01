@@ -25,17 +25,17 @@
                         <select class="form-control" name="diaSemana" id="diaSemana" required="" >
                             <option value="" <?= old('diaSemana')=='' ? 'selected' : ''; ?>></option>
                             <?PHP foreach (App\Entities\HorarioFuncionamentoEntity::_op('diaSemana') as $k => $op){ ?>
-                            <option value="<?= $k; ?>" <?= old('diaSemana') === $k ? 'selected' : ''; ?>><?= $op; ?></option>
+                            <option value="<?= esc($k, 'attr') ?>" <?= old('diaSemana') === $k ? 'selected' : ''; ?>><?= esc($op) ?></option>
                             <?PHP } ?>
                         </select>
                     </div>
                     <div class="form-group col-6 col-md-4">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Hora Início</label> 
-                        <input class="form-control" name="horaInicio" id="horaInicio" type="time" maxlength="10" value="<?= old('horaInicio') ?>">
+                        <input class="form-control" name="horaInicio" id="horaInicio" type="time" maxlength="10" value="<?= esc(old('horaInicio'), 'attr') ?>">
                     </div>
                     <div class="form-group col-6 col-md-4">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Hora Final</label> 
-                        <input class="form-control" name="horaFinal" id="horaFinal" type="time" maxlength="10" value="<?= old('horaFinal') ?>">
+                        <input class="form-control" name="horaFinal" id="horaFinal" type="time" maxlength="10" value="<?= esc(old('horaFinal'), 'attr') ?>">
                     </div>
                     <div class="form-group mb-0 mt-3 text-center col-12">
                         <button type="submit" class="btn btn-primary submitButton">Cadastrar</button>
@@ -70,10 +70,10 @@
                             <tbody>
                             <?PHP foreach ($vHorarioFuncionamento as $i) { ?>
                                 <tr>
-                                    <td><?= $i->id ?></td>
-                                    <td><span style="color: <?= $i->_cl('diaSemana', $i->diaSemana) ?>;"><?= $i->_op('diaSemana', $i->diaSemana) ?></span></td>
-                                    <td><?= $i->horaInicio ?></td>
-                                    <td><?= $i->horaFinal ?></td>
+                                    <td><?= esc($i->id) ?></td>
+                                    <td><span style="color: <?= $i->_cl('diaSemana', $i->diaSemana) ?>;"><?= esc($i->_op('diaSemana', $i->diaSemana)) ?></span></td>
+                                    <td><?= esc($i->horaInicio) ?></td>
+                                    <td><?= esc($i->horaFinal) ?></td>
                                     <td>
                                         <a href="<?php echo base_url('HorarioFuncionamento/alterar/' . $i->id); ?>" class="btn btn-primary  btn-sm">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -115,22 +115,22 @@
                     
                     <div class="form-group col-12 col-md-2">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Data</label> 
-                        <input class="form-control maskData" name="data" id="data" type="text" value="<?= old('data') ?>">
+                        <input class="form-control maskData" name="data" id="data" type="text" value="<?= esc(old('data'), 'attr') ?>">
                     </div>
                     <div class="form-group col-12 col-md-2">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Hora Início</label> 
-                        <input class="form-control" name="horaInicio" id="horaInicio" type="time" maxlength="10" value="<?= old('horaInicio') ?>">
+                        <input class="form-control" name="horaInicio" id="horaInicio" type="time" maxlength="10" value="<?= esc(old('horaInicio'), 'attr') ?>">
                     </div>
                     <div class="form-group col-12 col-md-2">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Hora Fim</label> 
-                        <input class="form-control" name="horaFim" id="horaFim" type="time" maxlength="10" value="<?= old('horaFim') ?>">
+                        <input class="form-control" name="horaFim" id="horaFim" type="time" maxlength="10" value="<?= esc(old('horaFim'), 'attr') ?>">
                     </div>                    
                     <div class="form-group col-12 col-md-2">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600" for="tipo">Tipo</label> 
                         <select class="form-control" name="tipo" id="tipo" required="" >
                             <option value="" <?= old('tipo')=='' ? 'selected' : ''; ?>></option>
                             <?PHP foreach (App\Entities\DatasExtraordinariasEntity::_op('tipo') as $k => $op){ ?>
-                            <option value="<?= $k; ?>" <?= old('tipo') === $k ? 'selected' : ''; ?>><?= $op; ?></option>
+                            <option value="<?= esc($k, 'attr') ?>" <?= old('tipo') === $k ? 'selected' : ''; ?>><?= esc($op) ?></option>
                             <?PHP } ?>
                         </select>
                     </div>
@@ -157,11 +157,11 @@
                         <tbody>
                         <?PHP foreach ($vDatasExtraordinarias as $i) { ?>
                             <tr>
-                                <td><?= $i->id ?></td>
-                                <td><?= $i->data ?></td>
-                                <td><?= $i->horaInicio ?></td>
-                                <td><?= $i->horaFim ?></td>
-                                <td><span style="color: <?= $i->_cl('tipo', $i->tipo) ?>;"><?= $i->_op('tipo', $i->tipo) ?></span></td>
+                                <td><?= esc($i->id) ?></td>
+                                <td><?= esc($i->data) ?></td>
+                                <td><?= esc($i->horaInicio) ?></td>
+                                <td><?= esc($i->horaFim) ?></td>
+                                <td><span style="color: <?= $i->_cl('tipo', $i->tipo) ?>;"><?= esc($i->_op('tipo', $i->tipo)) ?></span></td>
                                 <td>
                                     <a href="<?php echo base_url('DatasExtraordinarias/alterar/' . $i->id); ?>" class="btn btn-primary  btn-sm">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -188,9 +188,7 @@
 
 
 <!-- content closed -->
-<?= $this->endSection('content'); ?>
-
-<?= $this->section('styles'); ?>
+<?= esc($this->endSection('content'); ) ?><?= $this->section('styles'); ?>
 <style>
     .schedule-timeline {
         border: 1px solid rgba(0,0,0,.125);

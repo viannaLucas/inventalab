@@ -8,11 +8,11 @@
 
         <link href="<?= base_url() ?>assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
 
-        <link rel="apple-touch-icon" href="<?= base_url('assets/img/brand/favicon.png'); ?>" sizes="180x180">
-        <link rel="icon" href="<?= base_url('assets/img/brand/favicon.png'); ?>" sizes="32x32" type="image/png">
-        <link rel="icon" href="<?= base_url('assets/img/brand/favicon.png'); ?>" sizes="16x16" type="image/png">
-        <link rel="mask-icon" href="<?= base_url('assets/img/brand/favicon.png'); ?>" color="#563d7c">
-        <link rel="icon" href="<?= base_url('assets/img/brand/favicon.png'); ?>">
+        <link rel="apple-touch-icon" href="<?= esc(base_url('assets/img/brand/favicon.png'), 'attr') ?>" sizes="180x180">
+        <link rel="icon" href="<?= esc(base_url('assets/img/brand/favicon.png'), 'attr') ?>" sizes="32x32" type="image/png">
+        <link rel="icon" href="<?= esc(base_url('assets/img/brand/favicon.png'), 'attr') ?>" sizes="16x16" type="image/png">
+        <link rel="mask-icon" href="<?= esc(base_url('assets/img/brand/favicon.png'), 'attr') ?>" color="#563d7c">
+        <link rel="icon" href="<?= esc(base_url('assets/img/brand/favicon.png'), 'attr') ?>">
         <meta name="theme-color" content="#563d7c">
 
         <style>
@@ -34,13 +34,13 @@
     <body>
         <div class="card card-confirm shadow border-0">
             <div class="card-body p-4 p-md-5 text-center">
-                <img class="mb-4" src="<?= base_url('assets/img/brand/logoLogin.png'); ?>" alt="" width="180">
+                <img class="mb-4" src="<?= esc(base_url('assets/img/brand/logoLogin.png'), 'attr') ?>" alt="" width="180">
                 <h1 class="h3 mb-3">Cadastro realizado com sucesso!</h1>
                 <p class="text-muted mb-4">
                     Enviamos um e-mail para confirmação do seu cadastro.
                     Verifique sua caixa de entrada (e o spam) e clique no link para ativar sua conta.
                 </p>
-                <a href="<?= base_url('PainelParticipante/login'); ?>" class="btn btn-primary btn-lg">Realizar Login</a>
+                <a href="<?= esc(base_url('PainelParticipante/login'), 'attr') ?>" class="btn btn-primary btn-lg">Realizar Login</a>
             </div>
         </div>
     </body>

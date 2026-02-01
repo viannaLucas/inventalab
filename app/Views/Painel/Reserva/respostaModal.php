@@ -19,18 +19,18 @@
             </thead>
             <tbody>
             <?PHP foreach ($vReserva as $i) { ?>
-                <tr data-id='<?= $i->id ?>' data-text='<?= $i->dataReserva ?>'>
-                    <td><?= $i->id ?></td>
-                    <td><?= $i->dataCadastro ?></td>
-                    <td><?= $i->dataReserva ?></td>
-                    <td><?= $i->horaInicio ?></td>
-                    <td><?= $i->horaFim ?></td>
-                    <td><span style="color: <?= $i->_cl('tipo', $i->tipo) ?>;"><?= $i->_op('tipo', $i->tipo) ?></span></td>
-                    <td><?= $i->numeroConvidados ?></td>
-                    <td><span style="color: <?= $i->_cl('status', $i->status) ?>;"><?= $i->_op('status', $i->status) ?></span></td>
-                    <td><span style="color: <?= $i->_cl('turmaEscola', $i->turmaEscola) ?>;"><?= $i->_op('turmaEscola', $i->turmaEscola) ?></span></td>
-                    <td><?= $i->horaEntrada ?></td>
-                    <td><?= $i->horaSaida ?></td>
+                <tr data-id='<?= esc($i->id, 'attr') ?>' data-text='<?= esc($i->dataReserva, 'attr') ?>'>
+                    <td><?= esc($i->id) ?></td>
+                    <td><?= esc($i->dataCadastro) ?></td>
+                    <td><?= esc($i->dataReserva) ?></td>
+                    <td><?= esc($i->horaInicio) ?></td>
+                    <td><?= esc($i->horaFim) ?></td>
+                    <td><span style="color: <?= $i->_cl('tipo', $i->tipo) ?>;"><?= esc($i->_op('tipo', $i->tipo)) ?></span></td>
+                    <td><?= esc($i->numeroConvidados) ?></td>
+                    <td><span style="color: <?= $i->_cl('status', $i->status) ?>;"><?= esc($i->_op('status', $i->status)) ?></span></td>
+                    <td><span style="color: <?= $i->_cl('turmaEscola', $i->turmaEscola) ?>;"><?= esc($i->_op('turmaEscola', $i->turmaEscola)) ?></span></td>
+                    <td><?= esc($i->horaEntrada) ?></td>
+                    <td><?= esc($i->horaSaida) ?></td>
                 </tr>
             <?PHP } ?>
             </tbody>

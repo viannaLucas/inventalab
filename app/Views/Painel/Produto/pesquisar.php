@@ -58,7 +58,7 @@
                         <label class="main-content-label tx-11 tx-medium tx-gray-600" for="ativo">Ativo</label> 
                         <select class="form-control select2" name="ativo[]" id="ativo" multiple="multiple">
                             <?PHP foreach (App\Entities\ProdutoEntity::_op('ativo') as $k => $op){ ?>
-                            <option value="<?= $k; ?>"><?= $op; ?></option>
+                            <option value="<?= esc($k, 'attr') ?>"><?= esc($op ) ?></option>
                             <?PHP } ?>
                         </select>
                     </div>                               

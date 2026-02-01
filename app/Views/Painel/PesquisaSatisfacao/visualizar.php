@@ -18,31 +18,31 @@
             <h4 class="card-title mb-1">Visualizar</h4>
         </div>
         <div class="card-body pt-0">
-                <input type="hidden" name="id" value="<?= $pesquisasatisfacao->id ?>" />
+                <input type="hidden" name="id" value="<?= esc($pesquisasatisfacao->id, 'attr') ?>" />
                 <div class="form-row">
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Resposta 1</label> 
-                        <input class="form-control maskInteiro" name="resposta1" id="resposta1" type="text" value="<?= $pesquisasatisfacao->resposta1 ?>">
+                        <input class="form-control maskInteiro" name="resposta1" id="resposta1" type="text" value="<?= esc($pesquisasatisfacao->resposta1, 'attr') ?>">
                     </div>                    
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Resposta 2</label> 
-                        <input class="form-control maskInteiro" name="resposta2" id="resposta2" type="text" value="<?= $pesquisasatisfacao->resposta2 ?>">
+                        <input class="form-control maskInteiro" name="resposta2" id="resposta2" type="text" value="<?= esc($pesquisasatisfacao->resposta2, 'attr') ?>">
                     </div>                    
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Resposta 3</label> 
-                        <input class="form-control maskInteiro" name="resposta3" id="resposta3" type="text" value="<?= $pesquisasatisfacao->resposta3 ?>">
+                        <input class="form-control maskInteiro" name="resposta3" id="resposta3" type="text" value="<?= esc($pesquisasatisfacao->resposta3, 'attr') ?>">
                     </div>                    
                     <div class="form-group col-12 ">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Resposta 4</label> 
-                        <textarea name="resposta4" id="resposta4" class="form-control" placeholder="" rows="3"><?= $pesquisasatisfacao->resposta4 ?></textarea>
+                        <textarea name="resposta4" id="resposta4" class="form-control" placeholder="" rows="3"><?= esc($pesquisasatisfacao->resposta4) ?></textarea>
                     </div>                    
                     <div class="form-group col-12 ">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Resposta 5</label> 
-                        <textarea name="resposta5" id="resposta5" class="form-control" placeholder="" rows="3"><?= $pesquisasatisfacao->resposta5 ?></textarea>
+                        <textarea name="resposta5" id="resposta5" class="form-control" placeholder="" rows="3"><?= esc($pesquisasatisfacao->resposta5) ?></textarea>
                     </div>                    
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Data Resposta</label> 
-                        <input class="form-control maskData" name="dataResposta" id="dataResposta" type="text" value="<?= $pesquisasatisfacao->dataResposta ?>">
+                        <input class="form-control maskData" name="dataResposta" id="dataResposta" type="text" value="<?= esc($pesquisasatisfacao->dataResposta, 'attr') ?>">
                     </div>                                        
                 <div class="form-group mb-0 mt-3 text-center col-12">
                     <button type="button" onclick="history.back()" class="btn btn-primary submitButton">Voltar</button>
@@ -52,10 +52,6 @@
 </div>
 
 <!-- content closed -->
-<?= $this->endSection('content'); ?>
-
-<?= $this->section('styles'); ?>
-<?= $this->endSection('styles'); ?>
-
-<?= $this->section('scripts'); ?>
+<?= $this->endSection('content'); ?><?= $this->section('styles'); ?>
+<?= esc($this->endSection('styles'); ) ?><?= $this->section('scripts'); ?>
 <?= $this->endSection('scripts'); ?>

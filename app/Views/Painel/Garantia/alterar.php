@@ -19,13 +19,13 @@
         </div>
         <div class="card-body pt-0">
             <form id='formAlterar' action="<?PHP echo base_url('Garantia/doAlterar'); ?>" class="needs-validation" method="post" enctype="multipart/form-data" >
-                <input type="hidden" name="id" value="<?= $garantia->id ?>" />
+                <input type="hidden" name="id" value="<?= esc($garantia->id, 'attr') ?>" />
                 <div class="form-row">
                     
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Recurso Trabalho</label> 
                         <div class="input-group">
-                            <input class="form-control" name="RecursoTrabalho_id_Text" id="RecursoTrabalho_id_Text" type="text" disabled="true" onclick="$('#addonSearchRecursoTrabalho_id').click()" value="<?= $garantia->getRecursoTrabalho()->nome ?>"/>
+                            <input class="form-control" name="RecursoTrabalho_id_Text" id="RecursoTrabalho_id_Text" type="text" disabled="true" onclick="$('#addonSearchRecursoTrabalho_id').click()" value="<?= esc($garantia->getRecursoTrabalho()->nome, 'attr') ?>"/>
                             <div class="input-group-append">
                                 <button class="btn btn-outline-secondary" type="button" id="addonSearchRecursoTrabalho_id" 
                                         data-toggle="modal" data-target="#modalFK" data-title='Localizar Recurso Trabalho'
@@ -35,27 +35,27 @@
                                     </svg>
                                 </button>
                             </div>
-                            <input class="d-none" name="RecursoTrabalho_id" id="RecursoTrabalho_id" type="text" value="<?= $garantia->RecursoTrabalho_id ?>" />
+                            <input class="d-none" name="RecursoTrabalho_id" id="RecursoTrabalho_id" type="text" value="<?= esc($garantia->RecursoTrabalho_id, 'attr') ?>" />
                         </div>
                     </div>                    <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Descrição</label> 
-                        <input class="form-control" name="descricao" id="descricao" type="text" maxlength="200" value="<?= $garantia->descricao ?>">
+                        <input class="form-control" name="descricao" id="descricao" type="text" maxlength="200" value="<?= esc($garantia->descricao, 'attr') ?>">
                     </div>                    
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600" for="tipo">Tipo</label> 
                         <select class="form-control" name="tipo" id="tipo" required="" >
                             <?PHP foreach (App\Entities\GarantiaEntity::_op('tipo') as $k => $op){ ?>
-                            <option value="<?= $k; ?>" <?= ((int)$garantia->tipo) === $k ? 'selected' : ''; ?>><?= $op; ?></option>
+                            <option value="<?= esc($k, 'attr') ?>" <?= ((int)$garantia->tipo) === $k ? 'selected' : ''; ?>><?= esc($op) ?></option>
                             <?PHP } ?>
                         </select>
                     </div>                    
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Data Início</label> 
-                        <input class="form-control maskData" name="dataInicio" id="dataInicio" type="text" value="<?= $garantia->dataInicio ?>">
+                        <input class="form-control maskData" name="dataInicio" id="dataInicio" type="text" value="<?= esc($garantia->dataInicio, 'attr') ?>">
                     </div>                    
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Data Fim</label> 
-                        <input class="form-control maskData" name="dataFim" id="dataFim" type="text" value="<?= $garantia->dataFim ?>">
+                        <input class="form-control maskData" name="dataFim" id="dataFim" type="text" value="<?= esc($garantia->dataFim, 'attr') ?>">
                     </div>                                        
                 <div class="form-group mb-0 mt-3 text-center col-12">
                     <button type="submit" class="btn btn-primary submitButton">Alterar</button>
@@ -66,12 +66,8 @@
 </div>
 
 <!-- content closed -->
-<?= $this->endSection('content'); ?>
-
-<?= $this->section('styles'); ?>
-<?= $this->endSection('styles'); ?>
-
-<?= $this->section('scripts'); ?>
+<?= $this->endSection('content'); ?><?= $this->section('styles'); ?>
+<?= esc($this->endSection('styles'); ) ?><?= $this->section('scripts'); ?>
 <script>
     $('.submitButton').on('click', function(e){
         //$(this).attr('disabled', true);

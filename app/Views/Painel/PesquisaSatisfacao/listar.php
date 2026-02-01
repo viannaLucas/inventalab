@@ -32,10 +32,10 @@
                     <tbody>
                         <?PHP foreach ($vPesquisaSatisfacao as $i) { ?>
                             <tr>
-                                <td><?= $i->dataResposta ?></td>
-                                <td><?= $i->resposta1 ?></td>
-                                <td><?= $i->resposta2 ?></td>
-                                <td><?= $i->resposta3 ?></td>
+                                <td><?= esc($i->dataResposta) ?></td>
+                                <td><?= esc($i->resposta1) ?></td>
+                                <td><?= esc($i->resposta2) ?></td>
+                                <td><?= esc($i->resposta3) ?></td>
                                 <td>
                                     <a href="<?php echo base_url('PesquisaSatisfacao/visualizar/' . $i->id); ?>" class="btn btn-primary  btn-sm">
 
@@ -50,8 +50,7 @@
                     </tbody>
                 </table>
             </div>
-            <?= $pager->links('default', 'templatePaginacao') ?>
-        </div>
+            <?= $pager->links('default', 'templatePaginacao') ?></div>
     </div>
 </div>
 <!-- row closed -->

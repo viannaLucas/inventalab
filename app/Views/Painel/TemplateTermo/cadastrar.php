@@ -22,10 +22,10 @@
                 <div class="form-row">
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Nome</label> 
-                        <input class="form-control" name="nome" id="nome" type="text" maxlength="100" value="<?= old('nome') ?>">
+                        <input class="form-control" name="nome" id="nome" type="text" maxlength="100" value="<?= esc(old('nome'), 'attr') ?>">
                     </div>                    
                     <div class="col-12">
-                        <textarea name="texto" id="texto" class="form-control summernote"><?= old('texto') ?></textarea>
+                        <textarea name="texto" id="texto" class="form-control summernote"><?= esc(old('texto')) ?></textarea>
                     </div>
                 </div>                                        
                 <div class="form-group mb-0 mt-3 text-center col-12">
@@ -37,12 +37,8 @@
 </div>
 
 <!-- content closed -->
-<?= $this->endSection('content'); ?>
-
-<?= $this->section('styles'); ?>
-<?= $this->endSection('styles'); ?>
-
-<?= $this->section('scripts'); ?>
+<?= $this->endSection('content'); ?><?= $this->section('styles'); ?>
+<?= esc($this->endSection('styles'); ) ?><?= $this->section('scripts'); ?>
 <script>
     $('.submitButton').on('click', function(e){
         //$(this).attr('disabled', true);

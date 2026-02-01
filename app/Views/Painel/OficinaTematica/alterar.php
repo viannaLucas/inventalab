@@ -19,14 +19,14 @@
         </div>
         <div class="card-body pt-0">
             <form id='formAlterar' action="<?PHP echo base_url('OficinaTematica/doAlterar'); ?>" class="needs-validation" method="post" enctype="multipart/form-data" >
-                <input type="hidden" name="id" value="<?= $oficinatematica->id ?>" />
+                <input type="hidden" name="id" value="<?= esc($oficinatematica->id, 'attr') ?>" />
                 <div class="form-row">
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Nome</label> 
-                        <input class="form-control" name="nome" id="nome" type="text" maxlength="150" value="<?= $oficinatematica->nome ?>">
+                        <input class="form-control" name="nome" id="nome" type="text" maxlength="150" value="<?= esc($oficinatematica->nome, 'attr') ?>">
                     </div>                    
                     <div class="col-12">
-                        <textarea name="descricaoAtividade" id="descricaoAtividade" class="form-control summernote"><?= $oficinatematica->descricaoAtividade ?></textarea>
+                        <textarea name="descricaoAtividade" id="descricaoAtividade" class="form-control summernote"><?= esc($oficinatematica->descricaoAtividade) ?></textarea>
                     </div>
                 </div>                                    
                 <br>    
@@ -207,12 +207,8 @@
     </tr>
 </template>
 <!-- content closed -->
-<?= $this->endSection('content'); ?>
-
-<?= $this->section('styles'); ?>
-<?= $this->endSection('styles'); ?>
-
-<?= $this->section('scripts'); ?>
+<?= $this->endSection('content'); ?><?= $this->section('styles'); ?>
+<?= $this->endSection('styles'); ?><?= $this->section('scripts'); ?>
 <script>
     $('.submitButton').on('click', function(e){
         //$(this).attr('disabled', true);
@@ -429,7 +425,7 @@
 <?PHP foreach ($oficinatematica->getListRecursoOficina() as $i => $o) {
     $o->RecursoTrabalho_id_Text = $o->getRecursoTrabalho()->nome;
 ?>
-    insertRowRecursoOficina(<?= json_encode($o) ?>);
+    insertRowRecursoOficina(<?= json_encode($o ?>);
 <?PHP } ?>
 
 

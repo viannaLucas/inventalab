@@ -22,11 +22,11 @@
                 <div class="form-row">
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Nome</label> 
-                        <input class="form-control" name="nome" id="nome" type="text" maxlength="50" value="<?= old('nome') ?>">
+                        <input class="form-control" name="nome" id="nome" type="text" maxlength="50" value="<?= esc(old('nome'), 'attr') ?>">
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Email Login</label> 
-                        <input class="form-control" name="login" id="login" type="text" maxlength="50" value="<?= old('login') ?>">
+                        <input class="form-control" name="login" id="login" type="text" maxlength="50" value="<?= esc(old('login'), 'attr' ) ?>">
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600" for="ativo">Ativo</label> 

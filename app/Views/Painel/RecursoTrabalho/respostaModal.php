@@ -14,13 +14,13 @@
             </thead>
             <tbody>
             <?PHP foreach ($vRecursoTrabalho as $i) { ?>
-                <tr data-id='<?= $i->id ?>' data-text='<?= $i->nome ?>'>
-                    <td><?= $i->id ?></td>
-                    <td><?= $i->nome ?></td>
-                    <td><span style="color: <?= $i->_cl('tipo', $i->tipo) ?>;"><?= $i->_op('tipo', $i->tipo) ?></span></td>
-                    <td><span style="color: <?= $i->_cl('requerHabilidade', $i->requerHabilidade) ?>;"><?= $i->_op('requerHabilidade', $i->requerHabilidade) ?></span></td>
-                    <td><span style="color: <?= $i->_cl('usoExclusivo', $i->usoExclusivo) ?>;"><?= $i->_op('usoExclusivo', $i->usoExclusivo) ?></span></td>
-                    <td><span style="color: <?= $i->_cl('situacaoTrabalho', $i->situacaoTrabalho) ?>;"><?= $i->_op('situacaoTrabalho', $i->situacaoTrabalho) ?></span></td>
+                <tr data-id='<?= esc($i->id, 'attr') ?>' data-text='<?= esc($i->nome, 'attr') ?>'>
+                    <td><?= esc($i->id) ?></td>
+                    <td><?= esc($i->nome) ?></td>
+                    <td><span style="color: <?= $i->_cl('tipo', $i->tipo) ?>;"><?= esc($i->_op('tipo', $i->tipo)) ?></span></td>
+                    <td><span style="color: <?= $i->_cl('requerHabilidade', $i->requerHabilidade) ?>;"><?= esc($i->_op('requerHabilidade', $i->requerHabilidade)) ?></span></td>
+                    <td><span style="color: <?= $i->_cl('usoExclusivo', $i->usoExclusivo) ?>;"><?= esc($i->_op('usoExclusivo', $i->usoExclusivo)) ?></span></td>
+                    <td><span style="color: <?= $i->_cl('situacaoTrabalho', $i->situacaoTrabalho) ?>;"><?= esc($i->_op('situacaoTrabalho', $i->situacaoTrabalho)) ?></span></td>
                 </tr>
             <?PHP } ?>
             </tbody>

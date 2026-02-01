@@ -57,8 +57,8 @@
         <header class="sticky top-0 z-50 w-full border-b border-border-light dark:border-border-dark bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm" id="inicio">
             <div class="container mx-auto flex items-center justify-between px-4 py-3">
                 <div class="flex items-center gap-3">
-                    <a href="<?= base_url(); ?>">
-                        <img src="<?= base_url('assets/img/brand/logoLogin.png'); ?>" alt="Logo" class="max-w-[150px]" />
+                    <a href="<?= esc(base_url(), 'attr') ?>">
+                        <img src="<?= esc(base_url('assets/img/brand/logoLogin.png'), 'attr') ?>" alt="Logo" class="max-w-[150px]" />
                     </a>
                 </div>
                 <nav class="hidden items-center gap-8 lg:flex">
@@ -70,14 +70,13 @@
                     <a class="text-sm font-medium hover:text-primary" href="#contato">Contato</a>
                 </nav>
                 <div class="hidden items-center gap-2 lg:flex">
-                    <a href="<?= base_url('PainelParticipante/cadastrar'); ?>" class="flex h-10 cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-primary px-4 text-sm font-bold text-white"><span class="truncate">Cadastrar</span></a>
-                    <a href="<?= base_url('PainelParticipante/login'); ?>" class="flex h-10 cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-primary/20 dark:bg-primary/30 px-4 text-sm font-bold text-primary"><span class="truncate">Entrar</span></a>
+                    <a href="<?= esc(base_url('PainelParticipante/cadastrar'), 'attr') ?>" class="flex h-10 cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-primary px-4 text-sm font-bold text-white"><span class="truncate">Cadastrar</span></a>
+                    <a href="<?= esc(base_url('PainelParticipante/login'), 'attr') ?>" class="flex h-10 cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-primary/20 dark:bg-primary/30 px-4 text-sm font-bold text-primary"><span class="truncate">Entrar</span></a>
                 </div>
             </div>
         </header>
         <main class="flex-1">
-            <?= $this->renderSection('content'); ?>
-        </main>
+            <?= $this->renderSection('content'); ?></main>
         <!-- Footer -->
         <footer class="bg-card-light dark:bg-card-dark border-t border-border-light dark:border-border-dark">
             <div class="container mx-auto px-4 py-8">

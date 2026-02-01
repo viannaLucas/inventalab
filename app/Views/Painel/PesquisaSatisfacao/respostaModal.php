@@ -14,13 +14,13 @@
             </thead>
             <tbody>
             <?PHP foreach ($vPesquisaSatisfacao as $i) { ?>
-                <tr data-id='<?= $i->id ?>' data-text='<?= $i->id ?>'>
-                    <td><?= $i->id ?></td>
-                    <td><?= $i->Participante_id ?></td>
-                    <td><?= $i->resposta1 ?></td>
-                    <td><?= $i->resposta2 ?></td>
-                    <td><?= $i->resposta3 ?></td>
-                    <td><?= $i->dataResposta ?></td>
+                <tr data-id='<?= esc($i->id, 'attr') ?>' data-text='<?= esc($i->id, 'attr') ?>'>
+                    <td><?= esc($i->id) ?></td>
+                    <td><?= esc($i->Participante_id) ?></td>
+                    <td><?= esc($i->resposta1) ?></td>
+                    <td><?= esc($i->resposta2) ?></td>
+                    <td><?= esc($i->resposta3) ?></td>
+                    <td><?= esc($i->dataResposta) ?></td>
                 </tr>
             <?PHP } ?>
             </tbody>

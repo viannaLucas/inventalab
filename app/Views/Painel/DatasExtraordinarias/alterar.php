@@ -19,24 +19,24 @@
         </div>
         <div class="card-body pt-0">
             <form id='formAlterar' action="<?PHP echo base_url('DatasExtraordinarias/doAlterar'); ?>" class="needs-validation" method="post" enctype="multipart/form-data" >
-                <input type="hidden" name="id" value="<?= $datasextraordinarias->id ?>" />
+                <input type="hidden" name="id" value="<?= esc($datasextraordinarias->id, 'attr') ?>" />
                 <div class="form-row">
                     
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Data</label> 
-                        <input class="form-control maskData" name="data" id="data" type="text" value="<?= $datasextraordinarias->data ?>">
+                        <input class="form-control maskData" name="data" id="data" type="text" value="<?= esc($datasextraordinarias->data, 'attr') ?>">
                     </div>                    <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Hora Início</label> 
-                        <input class="form-control" name="horaInicio" id="horaInicio" type="text" maxlength="10" value="<?= $datasextraordinarias->horaInicio ?>">
+                        <input class="form-control" name="horaInicio" id="horaInicio" type="text" maxlength="10" value="<?= esc($datasextraordinarias->horaInicio, 'attr') ?>">
                     </div>                    <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Hora Fim</label> 
-                        <input class="form-control" name="horaFim" id="horaFim" type="text" maxlength="10" value="<?= $datasextraordinarias->horaFim ?>">
+                        <input class="form-control" name="horaFim" id="horaFim" type="text" maxlength="10" value="<?= esc($datasextraordinarias->horaFim, 'attr') ?>">
                     </div>                    
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600" for="tipo">Tipo</label> 
                         <select class="form-control" name="tipo" id="tipo" required="" >
                             <?PHP foreach (App\Entities\DatasExtraordinariasEntity::_op('tipo') as $k => $op){ ?>
-                            <option value="<?= $k; ?>" <?= ((int)$datasextraordinarias->tipo) === $k ? 'selected' : ''; ?>><?= $op; ?></option>
+                            <option value="<?= esc($k, 'attr') ?>" <?= ((int)$datasextraordinarias->tipo) === $k ? 'selected' : ''; ?>><?= esc($op) ?></option>
                             <?PHP } ?>
                         </select>
                     </div>                                        
@@ -49,12 +49,8 @@
 </div>
 
 <!-- content closed -->
-<?= $this->endSection('content'); ?>
-
-<?= $this->section('styles'); ?>
-<?= $this->endSection('styles'); ?>
-
-<?= $this->section('scripts'); ?>
+<?= $this->endSection('content'); ?><?= $this->section('styles'); ?>
+<?= esc($this->endSection('styles'); ) ?><?= $this->section('scripts'); ?>
 <script>
     $('.submitButton').on('click', function(e){
         //$(this).attr('disabled', true);

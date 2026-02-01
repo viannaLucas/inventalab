@@ -24,7 +24,7 @@
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Participante</label> 
                         <div class="input-group">
-                            <input class="form-control" name="Participante_id_Text" id="Participante_id_Text" type="text" disabled="true" onclick="$('#addonSearchParticipante_id').click()" value="<?= old('Participante_id_Text'); ?>"/>
+                            <input class="form-control" name="Participante_id_Text" id="Participante_id_Text" type="text" disabled="true" onclick="$('#addonSearchParticipante_id').click()" value="<?= esc(old('Participante_id_Text'), 'attr') ?>"/>
                             <div class="input-group-append">
                                 <button class="btn btn-outline-secondary" type="button" id="addonSearchParticipante_id" 
                                         data-toggle="modal" data-target="#modalFK" data-title='Localizar Participante'
@@ -34,23 +34,23 @@
                                     </svg>
                                 </button>
                             </div>
-                            <input class="d-none" name="Participante_id" id="Participante_id" type="text" value="<?= old('Participante_id'); ?>" />
+                            <input class="d-none" name="Participante_id" id="Participante_id" type="text" value="<?= esc(old('Participante_id'), 'attr') ?>" />
                         </div>
                     </div>                    
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Data</label> 
-                        <input class="form-control maskData" name="data" id="data" type="text" value="<?= old('data') ?>">
+                        <input class="form-control maskData" name="data" id="data" type="text" value="<?= esc(old('data'), 'attr') ?>">
                     </div>                    
                     <div class="form-group col-12 ">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Observações</label> 
-                        <textarea name="observacoes" id="observacoes" class="form-control" placeholder="" rows="3"><?= old('observacoes') ?></textarea>
+                        <textarea name="observacoes" id="observacoes" class="form-control" placeholder="" rows="3"><?= esc(old('observacoes')) ?></textarea>
                     </div>                    
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600" for="situacao">Situação</label> 
                         <select class="form-control" name="situacao" id="situacao" required="" >
                             <option value="" <?= old('situacao')=='' ? 'selected' : ''; ?>></option>
                             <?PHP foreach (App\Entities\CobrancaEntity::_op('situacao') as $k => $op){ ?>
-                            <option value="<?= $k; ?>" <?= old('situacao') === $k ? 'selected' : ''; ?>><?= $op; ?></option>
+                            <option value="<?= esc($k, 'attr') ?>" <?= old('situacao') === $k ? 'selected' : ''; ?>><?= esc($op) ?></option>
                             <?PHP } ?>
                         </select>
                     </div>                                        
@@ -62,7 +62,7 @@
                         <div class="form-group col-auto">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">Serviço</label> 
                             <div class="input-group mb-3">
-                                <input class="form-control" name="cobrancaservico_Servico_id_Text" id="cobrancaservico_Servico_id_Text" type="text" disabled="true" onclick="$('#addonSearchcobrancaservico_Servico_id').click()" value="<?= old('cobrancaservico_Servico_id_Text'); ?>"/>
+                                <input class="form-control" name="cobrancaservico_Servico_id_Text" id="cobrancaservico_Servico_id_Text" type="text" disabled="true" onclick="$('#addonSearchcobrancaservico_Servico_id').click()" value="<?= esc(old('cobrancaservico_Servico_id_Text'), 'attr') ?>"/>
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary" type="button" id="addonSearchcobrancaservico_Servico_id" 
                                             data-toggle="modal" data-target="#modalFK" data-title='Localizar >Serviço'
@@ -72,16 +72,16 @@
                                         </svg>
                                     </button>
                                 </div>
-                                <input class="d-none" name="cobrancaservico_Servico_id" id="cobrancaservico_Servico_id" type="text" value="<?= old('cobrancaservico_Servico_id'); ?>" />
+                                <input class="d-none" name="cobrancaservico_Servico_id" id="cobrancaservico_Servico_id" type="text" value="<?= esc(old('cobrancaservico_Servico_id'), 'attr') ?>" />
                             </div>
                         </div>                        
                         <div class="form-group col-auto">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">Quantidade</label> 
-                            <input class="form-control maskInteiro" name="cobrancaservico_quantidade" id="cobrancaservico_quantidade" type="text" value="<?= old('cobrancaservico_quantidade') ?>">
+                            <input class="form-control maskInteiro" name="cobrancaservico_quantidade" id="cobrancaservico_quantidade" type="text" value="<?= esc(old('cobrancaservico_quantidade'), 'attr') ?>">
                         </div>                        
                         <div class="form-group col-auto">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">Valor Unitário</label> 
-                            <input class="form-control maskReal" name="cobrancaservico_valorUnitario" id="cobrancaservico_valorUnitario" type="text" value="<?= old('cobrancaservico_valorUnitario', '0,00') ?>">
+                            <input class="form-control maskReal" name="cobrancaservico_valorUnitario" id="cobrancaservico_valorUnitario" type="text" value="<?= esc(old('cobrancaservico_valorUnitario', '0,00'), 'attr') ?>">
                         </div>                        
                         <div class="form-group col-auto">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">&nbsp;</label> 
@@ -118,7 +118,7 @@
                         <div class="form-group col-auto">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">Produto</label> 
                             <div class="input-group mb-3">
-                                <input class="form-control" name="cobrancaproduto_Produto_id_Text" id="cobrancaproduto_Produto_id_Text" type="text" disabled="true" onclick="$('#addonSearchcobrancaproduto_Produto_id').click()" value="<?= old('cobrancaproduto_Produto_id_Text'); ?>"/>
+                                <input class="form-control" name="cobrancaproduto_Produto_id_Text" id="cobrancaproduto_Produto_id_Text" type="text" disabled="true" onclick="$('#addonSearchcobrancaproduto_Produto_id').click()" value="<?= esc(old('cobrancaproduto_Produto_id_Text'), 'attr') ?>"/>
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary" type="button" id="addonSearchcobrancaproduto_Produto_id" 
                                             data-toggle="modal" data-target="#modalFK" data-title='Localizar Produto'
@@ -128,16 +128,16 @@
                                         </svg>
                                     </button>
                                 </div>
-                                <input class="d-none" name="cobrancaproduto_Produto_id" id="cobrancaproduto_Produto_id" type="text" value="<?= old('cobrancaproduto_Produto_id'); ?>" />
+                                <input class="d-none" name="cobrancaproduto_Produto_id" id="cobrancaproduto_Produto_id" type="text" value="<?= esc(old('cobrancaproduto_Produto_id'), 'attr') ?>" />
                             </div>
                         </div>                        
                         <div class="form-group col-auto">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">Quantidade</label> 
-                            <input class="form-control maskInteiro" name="cobrancaproduto_quantidade" id="cobrancaproduto_quantidade" type="text" value="<?= old('cobrancaproduto_quantidade') ?>">
+                            <input class="form-control maskInteiro" name="cobrancaproduto_quantidade" id="cobrancaproduto_quantidade" type="text" value="<?= esc(old('cobrancaproduto_quantidade'), 'attr') ?>">
                         </div>                        
                         <div class="form-group col-auto">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">Valor Unitário</label> 
-                            <input class="form-control maskReal" name="cobrancaproduto_valorUnitario" id="cobrancaproduto_valorUnitario" type="text" value="<?= old('cobrancaproduto_valorUnitario', '0,00') ?>">
+                            <input class="form-control maskReal" name="cobrancaproduto_valorUnitario" id="cobrancaproduto_valorUnitario" type="text" value="<?= esc(old('cobrancaproduto_valorUnitario', '0,00'), 'attr') ?>">
                         </div>                        
                         <div class="form-group col-auto">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">&nbsp;</label> 
@@ -213,12 +213,8 @@
 </template>
 <?php endif; ?>
 <!-- content closed -->
-<?= $this->endSection('content'); ?>
-
-<?= $this->section('styles'); ?>
-<?= $this->endSection('styles'); ?>
-
-<?= $this->section('scripts'); ?>
+<?= $this->endSection('content'); ?><?= $this->section('styles'); ?>
+<?= esc($this->endSection('styles'); ) ?><?= $this->section('scripts'); ?>
 <script>
     $('.submitButton').on('click', function(e){
         //$(this).attr('disabled', true);

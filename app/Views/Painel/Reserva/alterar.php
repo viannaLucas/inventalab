@@ -57,12 +57,12 @@ $mostrarBotaoCobranca = $horaEntradaDefinida && $horaSaidaDefinida && $semCobran
                     <button
                         type="button"
                         class="btn btn-sm btn-primary js-add-cobranca"
-                        data-reserva="<?= $reserva->id; ?>"
+                        data-reserva="<?= esc($reserva->id, 'attr') ?>"
                         data-participante="<?= esc($participanteNome, 'attr'); ?>"
                         data-hora-entrada="<?= esc($horaEntradaRaw, 'attr'); ?>"
                         data-hora-saida="<?= esc($horaSaidaRaw, 'attr'); ?>"
                         data-data-reserva="<?= esc($reserva->dataReserva, 'attr'); ?>"
-                        data-convidados="<?= (int) $reserva->numeroConvidados; ?>"
+                        data-convidados="<?= esc((int) $reserva->numeroConvidados, 'attr') ?>"
                     >
                         Adicionar Cobrança
                     </button>
@@ -71,40 +71,40 @@ $mostrarBotaoCobranca = $horaEntradaDefinida && $horaSaidaDefinida && $semCobran
         </div>
         <div class="card-body pt-0">
             <form id='formAlterar' action="<?PHP echo base_url('Reserva/doAlterar'); ?>" class="needs-validation" method="post" enctype="multipart/form-data" >
-                <input type="hidden" name="id" value="<?= $reserva->id ?>" />
+                <input type="hidden" name="id" value="<?= esc($reserva->id, 'attr') ?>" />
                 <div class="form-row">
                     
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Data Cadastro</label> 
-                        <input class="form-control maskData" name="dataCadastro" id="dataCadastro" type="text" value="<?= $reserva->dataCadastro ?>" readonly="readonly" aria-readonly="true">
+                        <input class="form-control maskData" name="dataCadastro" id="dataCadastro" type="text" value="<?= esc($reserva->dataCadastro, 'attr') ?>" readonly="readonly" aria-readonly="true">
                     </div>                    
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Data Reserva</label> 
-                        <input class="form-control maskData" name="dataReserva" id="dataReserva" type="text" value="<?= $reserva->dataReserva ?>">
+                        <input class="form-control maskData" name="dataReserva" id="dataReserva" type="text" value="<?= esc($reserva->dataReserva, 'attr') ?>">
                     </div>                    <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Hora Início</label> 
-                        <input class="form-control" name="horaInicio" id="horaInicio" type="text" maxlength="10" value="<?= $reserva->horaInicio ?>">
+                        <input class="form-control" name="horaInicio" id="horaInicio" type="text" maxlength="10" value="<?= esc($reserva->horaInicio, 'attr') ?>">
                     </div>                    <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Hora Fim</label> 
-                        <input class="form-control" name="horaFim" id="horaFim" type="text" maxlength="10" value="<?= $reserva->horaFim ?>">
+                        <input class="form-control" name="horaFim" id="horaFim" type="text" maxlength="10" value="<?= esc($reserva->horaFim, 'attr') ?>">
                     </div>                    
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600" for="tipo">Tipo</label> 
                         <select class="form-control" name="tipo" id="tipo" required="" >
                             <?PHP foreach (App\Entities\ReservaEntity::_op('tipo') as $k => $op){ ?>
-                            <option value="<?= $k; ?>" <?= ((int)$reserva->tipo) === $k ? 'selected' : ''; ?>><?= $op; ?></option>
+                            <option value="<?= esc($k, 'attr') ?>" <?= ((int)$reserva->tipo) === $k ? 'selected' : ''; ?>><?= esc($op) ?></option>
                             <?PHP } ?>
                         </select>
                     </div>                    
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Número Convidados</label> 
-                        <input class="form-control maskInteiro" name="numeroConvidados" id="numeroConvidados" type="text" value="<?= $reserva->numeroConvidados ?>">
+                        <input class="form-control maskInteiro" name="numeroConvidados" id="numeroConvidados" type="text" value="<?= esc($reserva->numeroConvidados, 'attr') ?>">
                     </div>                    
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600" for="status">Status</label> 
                         <select class="form-control" name="status" id="status" required="" >
                             <?PHP foreach (App\Entities\ReservaEntity::_op('status') as $k => $op){ ?>
-                            <option value="<?= $k; ?>" <?= ((int)$reserva->status) === $k ? 'selected' : ''; ?>><?= $op; ?></option>
+                            <option value="<?= esc($k, 'attr') ?>" <?= ((int)$reserva->status) === $k ? 'selected' : ''; ?>><?= esc($op) ?></option>
                             <?PHP } ?>
                         </select>
                     </div>                    
@@ -112,26 +112,26 @@ $mostrarBotaoCobranca = $horaEntradaDefinida && $horaSaidaDefinida && $semCobran
                         <label class="main-content-label tx-11 tx-medium tx-gray-600" for="turmaEscola">Turma Escola</label> 
                         <select class="form-control" name="turmaEscola" id="turmaEscola" required="" >
                             <?PHP foreach (App\Entities\ReservaEntity::_op('turmaEscola') as $k => $op){ ?>
-                            <option value="<?= $k; ?>" <?= ((int)$reserva->turmaEscola) === $k ? 'selected' : ''; ?>><?= $op; ?></option>
+                            <option value="<?= esc($k, 'attr') ?>" <?= ((int)$reserva->turmaEscola) === $k ? 'selected' : ''; ?>><?= esc($op) ?></option>
                             <?PHP } ?>
                         </select>
                     </div>
                     <div class="form-group col-12 col-md-6 turma-escola-field" id="grupoNomeEscola">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Nome Escola</label> 
-                        <input class="form-control" name="nomeEscola" id="nomeEscola" type="text" maxlength="250" value="<?= $reserva->nomeEscola ?>">
+                        <input class="form-control" name="nomeEscola" id="nomeEscola" type="text" maxlength="250" value="<?= esc($reserva->nomeEscola, 'attr') ?>">
                     </div>
                     <div class="form-group col-12 col-md-6 turma-escola-field" id="grupoAnoTurma">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Ano Turma</label> 
-                        <input class="form-control" name="anoTurma" id="anoTurma" type="text" maxlength="10" value="<?= $reserva->anoTurma ?>">
+                        <input class="form-control" name="anoTurma" id="anoTurma" type="text" maxlength="10" value="<?= esc($reserva->anoTurma, 'attr') ?>">
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Hora Entrada</label> 
-                        <input class="form-control maskHora" name="horaEntrada" id="horaEntrada" type="text" maxlength="5" value="<?= $formatarHoraBr($reserva->horaEntrada) ?>">
+                        <input class="form-control maskHora" name="horaEntrada" id="horaEntrada" type="text" maxlength="5" value="<?= esc($formatarHoraBr($reserva->horaEntrada), 'attr') ?>">
                         <small class="text-muted">Padrão HH:MM</small>
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Hora Saída</label> 
-                        <input class="form-control maskHora" name="horaSaida" id="horaSaida" type="text" maxlength="5" value="<?= $formatarHoraBr($reserva->horaSaida) ?>">
+                        <input class="form-control maskHora" name="horaSaida" id="horaSaida" type="text" maxlength="5" value="<?= esc($formatarHoraBr($reserva->horaSaida), 'attr') ?>">
                         <small class="text-muted">Padrão HH:MM</small>
                     </div>                                        
                 <?php if (!empty($listaAtividadeLivre)) : ?>
@@ -152,7 +152,7 @@ $mostrarBotaoCobranca = $horaEntradaDefinida && $horaSaidaDefinida && $semCobran
                                     <td><?= esc($atividadeLivre->descricao ?? ''); ?></td>
                                     <td class="text-right">
                                         <?php if (!empty($atividadeLivre->id)) { ?>
-                                            <a class="btn btn-primary btn-sm" href="<?= base_url('AtividadeLivre/alterar/' . $atividadeLivre->id); ?>">Visualizar</a>
+                                            <a class="btn btn-primary btn-sm" href="<?= esc(base_url('AtividadeLivre/alterar/' . $atividadeLivre->id), 'attr') ?>">Visualizar</a>
                                         <?php } else { ?>
                                             <span class="text-muted">Indisponível</span>
                                         <?php } ?>
@@ -184,11 +184,11 @@ $mostrarBotaoCobranca = $horaEntradaDefinida && $horaSaidaDefinida && $semCobran
                                     <td><?= esc($evento->nome ?? ''); ?></td>
                                     <td class="text-right">
                                         <?php if (!empty($evento->id)) { ?>
-                                            <a class="btn btn-primary btn-sm" href="<?= base_url('Evento/alterar/' . $evento->id); ?>">Visualizar</a>
+                                            <a class="btn btn-primary btn-sm" href="<?= esc(base_url('Evento/alterar/' . $evento->id), 'attr') ?>">Visualizar</a>
                                         <?php } else { ?>
                                             <span class="text-muted">Indisponível</span>
                                         <?php } ?>
-                                        <input type="hidden" name="EventoReserva[<?= $idx ?>][Evento_id]" value="<?= $eventoReserva->Evento_id ?>">
+                                        <input type="hidden" name="EventoReserva[<?= $idx ?>][Evento_id]" value="<?= esc($eventoReserva->Evento_id, 'attr') ?>">
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -204,8 +204,8 @@ $mostrarBotaoCobranca = $horaEntradaDefinida && $horaSaidaDefinida && $semCobran
                         <div class="border-bottom mx-n1 mb-3">
                             <h4 class="px-2">Oficina Temática Reserva</h4>
                         </div>
-                        <input type="hidden" name="OficinaTematicaReserva[0][OficinaTematica_id]" value="<?= $oficinaTematicaSelecionada->OficinaTematica_id ?>">
-                        <input type="hidden" name="OficinaTematicaReserva[0][observacao]" value="<?= $observacaoOficina ?>">
+                        <input type="hidden" name="OficinaTematicaReserva[0][OficinaTematica_id]" value="<?= esc($oficinaTematicaSelecionada->OficinaTematica_id, 'attr') ?>">
+                        <input type="hidden" name="OficinaTematicaReserva[0][observacao]" value="<?= esc($observacaoOficina, 'attr') ?>">
                         <table class="table table-striped mb-0">
                             <thead>
                                 <tr>
@@ -220,7 +220,7 @@ $mostrarBotaoCobranca = $horaEntradaDefinida && $horaSaidaDefinida && $semCobran
                                     <td><?= $observacaoOficina !== '' ? esc($observacaoOficina) : '-'; ?></td>
                                     <td class="text-right">
                                         <?php if (!empty($oficina->id)) { ?>
-                                            <a class="btn btn-primary btn-sm" href="<?= base_url('OficinaTematica/alterar/' . $oficina->id); ?>">Visualizar</a>
+                                            <a class="btn btn-primary btn-sm" href="<?= esc(base_url('OficinaTematica/alterar/' . $oficina->id), 'attr') ?>">Visualizar</a>
                                         <?php } else { ?>
                                             <span class="text-muted">Indisponível</span>
                                         <?php } ?>
@@ -250,11 +250,11 @@ $mostrarBotaoCobranca = $horaEntradaDefinida && $horaSaidaDefinida && $semCobran
                                     <td><?= esc($participante->nome ?? ''); ?></td>
                                     <td class="text-right">
                                         <?php if (!empty($participante->id)) { ?>
-                                            <a class="btn btn-primary btn-sm" href="<?= base_url('Participante/alterar/' . $participante->id); ?>">Visualizar</a>
+                                            <a class="btn btn-primary btn-sm" href="<?= esc(base_url('Participante/alterar/' . $participante->id), 'attr') ?>">Visualizar</a>
                                         <?php } else { ?>
                                             <span class="text-muted">Indisponível</span>
                                         <?php } ?>
-                                        <input type="hidden" name="ReservaParticipante[<?= $idx ?>][Participante_id]" value="<?= $reservaParticipante->Participante_id ?>">
+                                        <input type="hidden" name="ReservaParticipante[<?= $idx ?>][Participante_id]" value="<?= esc($reservaParticipante->Participante_id, 'attr') ?>">
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -289,7 +289,7 @@ $mostrarBotaoCobranca = $horaEntradaDefinida && $horaSaidaDefinida && $semCobran
                                     <td><?= $observacoesCobranca !== '' ? esc($observacoesCobranca) : '-'; ?></td>
                                     <td class="text-right">
                                         <?php if (!empty($cobranca->id)) { ?>
-                                            <a class="btn btn-primary btn-sm" href="<?= base_url('Cobranca/alterar/' . $cobranca->id); ?>">Visualizar</a>
+                                            <a class="btn btn-primary btn-sm" href="<?= esc(base_url('Cobranca/alterar/' . $cobranca->id), 'attr') ?>">Visualizar</a>
                                         <?php } else { ?>
                                             <span class="text-muted">Indisponível</span>
                                         <?php } ?>
@@ -308,9 +308,7 @@ $mostrarBotaoCobranca = $horaEntradaDefinida && $horaSaidaDefinida && $semCobran
 </div>
 
 <!-- content closed -->
-<?= $this->endSection('content'); ?>
-
-<?= $this->section('modal'); ?>
+<?= $this->endSection('content'); ?><?= $this->section('modal'); ?>
 <div class="modal fade" id="modalReservaConsumo" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content modal-content-demo">
@@ -365,12 +363,8 @@ $mostrarBotaoCobranca = $horaEntradaDefinida && $horaSaidaDefinida && $semCobran
         </div>
     </div>
 </div>
-<?= $this->endSection(); ?>
-
-<?= $this->section('styles'); ?>
-<?= $this->endSection('styles'); ?>
-
-<?= $this->section('scripts'); ?>
+<?= $this->endSection(); ?><?= $this->section('styles'); ?>
+<?= esc($this->endSection('styles'); ) ?><?= $this->section('scripts'); ?>
 <script>
     const TURMA_ESCOLA_SIM = '0';
     const MASK_HORA = '00:00';

@@ -168,8 +168,8 @@
                                 <div class="rating-options">
                                     <?php for ($i = 0; $i <= 10; $i++) : ?>
                                         <label class="rating-option" for="uso-geral-<?= $i ?>">
-                                            <input type="radio" id="uso-geral-<?= $i ?>" name="uso_geral" value="<?= $i ?>" required>
-                                            <span><?= $i ?></span>
+                                            <input type="radio" id="uso-geral-<?= $i ?>" name="uso_geral" value="<?= esc($i, 'attr') ?>" required>
+                                            <span><?= esc($i) ?></span>
                                         </label>
                                     <?php endfor; ?>
                                 </div>
@@ -181,8 +181,8 @@
                                 <div class="rating-options">
                                     <?php for ($i = 0; $i <= 10; $i++) : ?>
                                         <label class="rating-option" for="atendimento-<?= $i ?>">
-                                            <input type="radio" id="atendimento-<?= $i ?>" name="atendimento" value="<?= $i ?>" required>
-                                            <span><?= $i ?></span>
+                                            <input type="radio" id="atendimento-<?= $i ?>" name="atendimento" value="<?= esc($i, 'attr') ?>" required>
+                                            <span><?= esc($i) ?></span>
                                         </label>
                                     <?php endfor; ?>
                                 </div>
@@ -194,8 +194,8 @@
                                 <div class="rating-options">
                                     <?php for ($i = 0; $i <= 10; $i++) : ?>
                                         <label class="rating-option" for="equipamentos-<?= $i ?>">
-                                            <input type="radio" id="equipamentos-<?= $i ?>" name="equipamentos" value="<?= $i ?>" required>
-                                            <span><?= $i ?></span>
+                                            <input type="radio" id="equipamentos-<?= $i ?>" name="equipamentos" value="<?= esc($i, 'attr') ?>" required>
+                                            <span><?= esc($i) ?></span>
                                         </label>
                                     <?php endfor; ?>
                                 </div>

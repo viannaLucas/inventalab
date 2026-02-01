@@ -19,29 +19,29 @@
         </div>
         <div class="card-body pt-0">
             <form id='formAlterar' action="<?PHP echo base_url('Servico/doAlterar'); ?>" class="needs-validation" method="post" enctype="multipart/form-data" >
-                <input type="hidden" name="id" value="<?= $servico->id ?>" />
+                <input type="hidden" name="id" value="<?= esc($servico->id, 'attr') ?>" />
                 <div class="form-row">
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Nome</label> 
-                        <input class="form-control" name="Nome" id="Nome" type="text" maxlength="100" value="<?= $servico->Nome ?>">
+                        <input class="form-control" name="Nome" id="Nome" type="text" maxlength="100" value="<?= esc($servico->Nome, 'attr') ?>">
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Valor</label> 
-                        <input class="form-control maskReal" name="valor" id="valor" type="text" value="<?= $servico->valor ?>">
+                        <input class="form-control maskReal" name="valor" id="valor" type="text" value="<?= esc($servico->valor, 'attr') ?>">
                     </div>
                     <div class="form-group col-12">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Descrição</label> 
-                        <textarea class="form-control" name="descricao" id="descricao" rows="2" maxlength="250"><?= $servico->descricao ?></textarea>
+                        <textarea class="form-control" name="descricao" id="descricao" rows="2" maxlength="250"><?= esc($servico->descricao) ?></textarea>
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Unidade</label> 
-                        <input class="form-control" name="unidade" id="unidade" type="text" maxlength="20" value="<?= $servico->unidade ?>">
+                        <input class="form-control" name="unidade" id="unidade" type="text" maxlength="20" value="<?= esc($servico->unidade, 'attr') ?>">
                     </div>                    
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600" for="ativo">Ativo</label> 
                         <select class="form-control" name="ativo" id="ativo" required="" >
                             <?PHP foreach (App\Entities\ServicoEntity::_op('ativo') as $k => $op){ ?>
-                            <option value="<?= $k; ?>" <?= ((int)$servico->ativo) === $k ? 'selected' : ''; ?>><?= $op; ?></option>
+                            <option value="<?= esc($k, 'attr') ?>" <?= ((int)$servico->ativo) === $k ? 'selected' : ''; ?>><?= esc($op) ?></option>
                             <?PHP } ?>
                         </select>
                     </div>                                        
@@ -100,12 +100,12 @@
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Código</label> 
-                        <input class="form-control" name="codigo" id="codigo" type="text" value="<?= $dadosApi->codigo ?>">
+                        <input class="form-control" name="codigo" id="codigo" type="text" value="<?= esc($dadosApi->codigo, 'attr') ?>">
                         <small id="codigo-descricao" class="form-text text-muted d-none"></small>
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Unidade de Controle</label> 
-                        <input class="form-control" name="UnidadedeControle" id="UnidadedeControle" type="text" maxlength="10" value="<?= $dadosApi->UnidadedeControle ?>" readonly>
+                        <input class="form-control" name="UnidadedeControle" id="UnidadedeControle" type="text" maxlength="10" value="<?= esc($dadosApi->UnidadedeControle, 'attr') ?>" readonly>
                     </div>
                     <div class="form-group col-12 col-md-6 d-none">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Produto Inspecionado</label> 
@@ -130,7 +130,7 @@
                             <option value="S" <?= $dadosApi->ProdutoLiberado === 'S' ? 'selected' : ''; ?>>Sim</option>
                             <option value="N" <?= $dadosApi->ProdutoLiberado === 'N' ? 'selected' : ''; ?>>Não</option>
                         </select>
-                        <input type="hidden" name="ProdutoLiberado" id="ProdutoLiberadoHidden" value="<?= $dadosApi->ProdutoLiberado ?>">
+                        <input type="hidden" name="ProdutoLiberado" id="ProdutoLiberadoHidden" value="<?= esc($dadosApi->ProdutoLiberado, 'attr') ?>">
                     </div>
                     <div class="form-group col-12 col-md-6 d-none">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Produto em Inventário</label> 
@@ -165,15 +165,15 @@
                             <option value="1" <?= $dadosApi->CodigodeSituacaoTributariaCST === '1' ? 'selected' : ''; ?>>1</option>
                             <option value="2" <?= $dadosApi->CodigodeSituacaoTributariaCST === '2' ? 'selected' : ''; ?>>2</option>
                         </select>
-                        <input type="hidden" name="CodigodeSituacaoTributariaCST" id="CodigodeSituacaoTributariaCSTHidden" value="<?= $dadosApi->CodigodeSituacaoTributariaCST ?>">
+                        <input type="hidden" name="CodigodeSituacaoTributariaCST" id="CodigodeSituacaoTributariaCSTHidden" value="<?= esc($dadosApi->CodigodeSituacaoTributariaCST, 'attr') ?>">
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Classificação Fiscal</label> 
-                        <input class="form-control" name="ClassificacaoFiscal" id="ClassificacaoFiscal" type="text" maxlength="10" value="<?= $dadosApi->ClassificacaoFiscal ?>" readonly>
+                        <input class="form-control" name="ClassificacaoFiscal" id="ClassificacaoFiscal" type="text" maxlength="10" value="<?= esc($dadosApi->ClassificacaoFiscal, 'attr') ?>" readonly>
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Grupo de Produto</label> 
-                        <input class="form-control" name="GrupodeProduto" id="GrupodeProduto" type="text" maxlength="30" value="<?= $dadosApi->GrupodeProduto ?>" readonly>
+                        <input class="form-control" name="GrupodeProduto" id="GrupodeProduto" type="text" maxlength="30" value="<?= esc($dadosApi->GrupodeProduto, 'attr') ?>" readonly>
                     </div>
                 <div class="form-group mb-0 mt-3 text-center col-12">
                     <button type="submit" class="btn btn-primary submitButton">Alterar</button>
@@ -202,12 +202,8 @@
 </template>
 
 <!-- content closed -->
-<?= $this->endSection('content'); ?>
-
-<?= $this->section('styles'); ?>
-<?= $this->endSection('styles'); ?>
-
-<?= $this->section('scripts'); ?>
+<?= $this->endSection('content'); ?><?= $this->section('styles'); ?>
+<?= $this->endSection('styles'); ?><?= $this->section('scripts'); ?>
 <script>
     const baseUrlServicoApi = "<?= base_url('Servico/obterDadosServicoApiSesc/'); ?>";
     const baseUrlCodigoUnico = "<?= base_url('Servico/validarCodigoUnico'); ?>";
@@ -527,7 +523,7 @@
     <?PHP foreach ($servico->getListServicoProduto() as $i => $o) {
         $o->Produto_id_Text = $o->getProduto()->nome;
     ?>
-        insertRowServicoProduto(<?= json_encode($o) ?>);
+        insertRowServicoProduto(<?= json_encode($o ?>);
     <?PHP } ?>
 
 </script>    

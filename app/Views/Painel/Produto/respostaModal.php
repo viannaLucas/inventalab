@@ -15,13 +15,13 @@
             </thead>
             <tbody>
             <?PHP foreach ($vProduto as $i) { ?>
-                <tr data-id='<?= $i->id ?>' data-text='<?= $i->nome ?>'>
-                    <td><?= $i->id ?></td>
-                    <td><?= $i->nome ?></td>
-                    <!-- <td><?= $i->valor ?></td> -->
-                    <td><?= $i->estoqueMinimo ?></td>
-                    <td><?= $i->estoqueAtual ?></td>
-                    <!-- <td><span style="color: <?= $i->_cl('ativo', $i->ativo) ?>;"><?= $i->_op('ativo', $i->ativo) ?></span></td> -->
+                <tr data-id='<?= esc($i->id, 'attr') ?>' data-text='<?= esc($i->nome, 'attr') ?>'>
+                    <td><?= esc($i->id) ?></td>
+                    <td><?= esc($i->nome) ?></td>
+                    <!-- <td><?= esc($i->valor) ?></td> -->
+                    <td><?= esc($i->estoqueMinimo) ?></td>
+                    <td><?= esc($i->estoqueAtual) ?></td>
+                    <!-- <td><span style="color: <?= $i->_cl('ativo', $i->ativo) ?>;"><?= esc($i->_op('ativo', $i->ativo)) ?></span></td> -->
                 </tr>
             <?PHP } ?>
             </tbody>

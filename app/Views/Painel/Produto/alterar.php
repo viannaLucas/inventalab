@@ -19,44 +19,44 @@
         </div>
         <div class="card-body pt-0">
             <form id='formAlterar' action="<?PHP echo base_url('Produto/doAlterar'); ?>" class="needs-validation" method="post" enctype="multipart/form-data" >
-                <input type="hidden" name="id" value="<?= $produto->id ?>" />
+                <input type="hidden" name="id" value="<?= esc($produto->id, 'attr') ?>" />
                 <div class="form-row">
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Nome</label> 
-                        <input class="form-control" name="nome" id="nome" type="text" maxlength="200" value="<?= $produto->nome ?>">
+                        <input class="form-control" name="nome" id="nome" type="text" maxlength="200" value="<?= esc($produto->nome, 'attr') ?>">
                     </div>                    
                     <div class="form-group col-12 ">
                         <label>Foto</label>
                         <label>
                             Foto                            <?PHP if($produto->foto != '') { ?>
-                            <a class="btn btn-sm btn-primary ml-3" href="<?PHP echo base_url($produto->foto); ?>" target="_blank">Fazer Download</a>
+                            <a class="btn btn-sm btn-primary ml-3" href="<?= esc(base_url($produto->foto), 'attr') ?>" target="_blank">Fazer Download</a>
                             <?PHP } ?>
                         </label>
                         <input type="hidden" id="foto_removida" name="foto_removida" value="0">
                         <input type="file" class="dropify" id="foto" name="foto" accept=".jpg,.jpeg,.webp,.png" 
-                               data-default-file="<?PHP echo $produto->foto != '' ? base_url($produto->foto) : ''; ?>"
+                               data-default-file="<?= esc($produto->foto != '' ? base_url($produto->foto) : '', 'attr') ?>"
                                data-allowed-file-extensions="webp png jpeg jpg" data-max-file-size="10M" >
                     </div>                    
                     <!-- Valor desabilitado temporariamente -->
                     <!--
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Valor</label> 
-                        <input class="form-control maskReal" name="valor" id="valor" type="text" value="<?= $produto->valor ?>">
+                        <input class="form-control maskReal" name="valor" id="valor" type="text" value="<?= esc($produto->valor, 'attr') ?>">
                     </div>
                     -->
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Estoque Mínimo</label> 
-                        <input class="form-control maskInteiro" name="estoqueMinimo" id="estoqueMinimo" type="text" value="<?= $produto->estoqueMinimo ?>">
+                        <input class="form-control maskInteiro" name="estoqueMinimo" id="estoqueMinimo" type="text" value="<?= esc($produto->estoqueMinimo, 'attr') ?>">
                     </div>                    
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Estoque Atual</label> 
-                        <input class="form-control maskInteiro" name="estoqueAtual" id="estoqueAtual" type="text" value="<?= $produto->estoqueAtual ?>">
+                        <input class="form-control maskInteiro" name="estoqueAtual" id="estoqueAtual" type="text" value="<?= esc($produto->estoqueAtual, 'attr') ?>">
                     </div>                                        
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600" for="ativo">Ativo</label> 
                         <select class="form-control" name="ativo" id="ativo" required="" >
                             <?PHP foreach (App\Entities\ProdutoEntity::_op('ativo') as $k => $op){ ?>
-                            <option value="<?= $k; ?>" <?= ((int)$produto->ativo) === $k ? 'selected' : ''; ?>><?= $op; ?></option>
+                            <option value="<?= esc($k, 'attr') ?>" <?= ((int)$produto->ativo) === $k ? 'selected' : ''; ?>><?= esc($op) ?></option>
                             <?PHP } ?>
                         </select>
                     </div>                                        
@@ -67,11 +67,11 @@
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Código</label> 
-                        <input class="form-control" type="text" value="<?= $dadosApi->codigo ?>" readonly>
+                        <input class="form-control" type="text" value="<?= esc($dadosApi->codigo, 'attr') ?>" readonly>
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Unidade de Controle</label> 
-                        <input class="form-control" name="UnidadedeControle" id="UnidadedeControle" type="text" maxlength="10" value="<?= $dadosApi->UnidadedeControle ?>">
+                        <input class="form-control" name="UnidadedeControle" id="UnidadedeControle" type="text" maxlength="10" value="<?= esc($dadosApi->UnidadedeControle, 'attr') ?>">
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Produto Inspecionado</label> 
@@ -133,11 +133,11 @@
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Classificação Fiscal</label> 
-                        <input class="form-control" name="ClassificacaoFiscal" id="ClassificacaoFiscal" type="text" maxlength="10" value="<?= $dadosApi->ClassificacaoFiscal ?>">
+                        <input class="form-control" name="ClassificacaoFiscal" id="ClassificacaoFiscal" type="text" maxlength="10" value="<?= esc($dadosApi->ClassificacaoFiscal, 'attr') ?>">
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Grupo de Produto</label> 
-                        <input class="form-control" name="GrupodeProduto" id="GrupodeProduto" type="text" maxlength="30" value="<?= $dadosApi->GrupodeProduto ?>">
+                        <input class="form-control" name="GrupodeProduto" id="GrupodeProduto" type="text" maxlength="30" value="<?= esc($dadosApi->GrupodeProduto, 'attr') ?>">
                     </div>
                     -->
                 <div class="form-group mb-0 mt-3 text-center col-12">
@@ -149,12 +149,8 @@
 </div>
 
 <!-- content closed -->
-<?= $this->endSection('content'); ?>
-
-<?= $this->section('styles'); ?>
-<?= $this->endSection('styles'); ?>
-
-<?= $this->section('scripts'); ?>
+<?= $this->endSection('content'); ?><?= $this->section('styles'); ?>
+<?= esc($this->endSection('styles'); ) ?><?= $this->section('scripts'); ?>
 <script>
     $('.submitButton').on('click', function(e){
         //$(this).attr('disabled', true);

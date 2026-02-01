@@ -3,7 +3,6 @@
 use App\Entities\Cast\CastCurrencyBR;
 ?>
 <?= $this->extend('PainelParticipante/template'); ?>
-
 <?= $this->section('content'); ?>
 
 <!-- breadcrumb -->
@@ -58,8 +57,8 @@ use App\Entities\Cast\CastCurrencyBR;
                                     <?php foreach ($vReservas as $i) : ?>
                                         <tr>
                                             <td><?= $i->dataReserva ?> - <?= $i->horaInicio . ' / ' . $i->horaFim ?></td>
-                                            <td><?= $i->numeroConvidados ?></td>
-                                            <td><span style="color: <?= $i->_cl('status', $i->status) ?>;"><?= $i->_op('status', $i->status) ?></span></td>
+                                            <td><?= esc($i->numeroConvidados) ?></td>
+                                            <td><span style="color: <?= $i->_cl('status', $i->status) ?>;"><?= esc($i->_op('status', $i->status)) ?></span></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 <?php else : ?>
@@ -111,9 +110,9 @@ use App\Entities\Cast\CastCurrencyBR;
                                     <?php foreach ($vReservas as $i) : ?>
                                         <tr>
                                             <td><?= $i->dataReserva ?> - <?= $i->horaInicio . ' / ' . $i->horaFim ?></td>
-                                            <td><?= $i->numeroConvidados ?></td>
-                                            <td><span style="color: <?= $i->_cl('status', $i->status) ?>;"><?= $i->_op('status', $i->status) ?></span></td>
-                                            <td><?= $formatarHora($i->horaEntrada) . ' / ' . $formatarHora($i->horaSaida) ?></td>
+                                            <td><?= esc($i->numeroConvidados) ?></td>
+                                            <td><span style="color: <?= $i->_cl('status', $i->status) ?>;"><?= esc($i->_op('status', $i->status)) ?></span></td>
+                                            <td><?= esc($formatarHora($i->horaEntrada) . ' / ' . $formatarHora($i->horaSaida)) ?></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 <?php else : ?>
@@ -143,13 +142,13 @@ use App\Entities\Cast\CastCurrencyBR;
                         <?php foreach($eventos as $evento){ ;?>
                         <div class="col-xl-4 col-lg-4 col-md-12">
                             <div class="card">
-                                <img class="card-img-top w-100" src="<?= base_url($evento->imagem) ?>" alt="">
+                                <img class="card-img-top w-100" src="<?= esc(base_url($evento->imagem), 'attr') ?>" alt="">
                                 <div class="card-body">
-                                    <h4 class="card-title mb-3"><?= esc($evento->nome) ;?></h4>
+                                    <h4 class="card-title mb-3"><?= esc($evento->nome) ; ?></h4>
                                     <div class="card-text">Data Início: <?= $evento->dataInicio ?></div>
                                     <div class="card-text">Valor: <?= CastCurrencyBR::set($evento->valor) > 0 ? esc('R$ '.$evento->valor) : 'Gratuito'; ?></div>
-                                    <a class="btn btn-outline-secondary" href="<?= base_url('PainelParticipante/inscricao/'.$evento->id.'/'.$evento->gerarSlug()) ;?>">Incrição</a>
-                                    <a class="btn btn-outline-primary" target="_blank" href="<?= base_url('detalheEvento/'.$evento->id.'/'.$evento->gerarSlug()) ;?>">Veja Mais</a>
+                                    <a class="btn btn-outline-secondary" href="<?= esc(base_url('PainelParticipante/inscricao/'.$evento->id.'/'.$evento->gerarSlug()) , 'attr') ?>">Incrição</a>
+                                    <a class="btn btn-outline-primary" target="_blank" href="<?= esc(base_url('detalheEvento/'.$evento->id.'/'.$evento->gerarSlug()) , 'attr' ) ?>">Veja Mais</a>
                                 </div>
                             </div>
                         </div>

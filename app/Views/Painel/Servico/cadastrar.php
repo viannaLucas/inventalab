@@ -22,19 +22,19 @@
                 <div class="form-row">
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Nome</label> 
-                        <input class="form-control" name="Nome" id="Nome" type="text" maxlength="100" value="<?= old('Nome') ?>">
+                        <input class="form-control" name="Nome" id="Nome" type="text" maxlength="100" value="<?= esc(old('Nome'), 'attr') ?>">
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Valor</label> 
-                        <input class="form-control maskReal" name="valor" id="valor" type="text" value="<?= old('valor', '0,00') ?>">
+                        <input class="form-control maskReal" name="valor" id="valor" type="text" value="<?= esc(old('valor', '0,00'), 'attr') ?>">
                     </div>
                     <div class="form-group col-12">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Descrição</label> 
-                        <textarea class="form-control" name="descricao" id="descricao" rows="2" maxlength="250"><?= old('descricao') ?></textarea>
+                        <textarea class="form-control" name="descricao" id="descricao" rows="2" maxlength="250"><?= esc(old('descricao')) ?></textarea>
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Unidade</label> 
-                        <input class="form-control" name="unidade" id="unidade" type="text" maxlength="20" value="<?= old('unidade') ?>">
+                        <input class="form-control" name="unidade" id="unidade" type="text" maxlength="20" value="<?= esc(old('unidade'), 'attr') ?>">
                         <small class="form-text text-muted">Ex.: "Por minuto", "Por Hora", "A cada uso".</small>
                     </div>                    
                     <div class="form-group col-12 col-md-6">
@@ -42,7 +42,7 @@
                         <select class="form-control" name="ativo" id="ativo" required="" >
                             <option value="" <?= old('ativo')=='' ? 'selected' : ''; ?>></option>
                             <?PHP foreach (App\Entities\ServicoEntity::_op('ativo') as $k => $op){ ?>
-                            <option value="<?= $k; ?>" <?= old('ativo') === $k ? 'selected' : ''; ?>><?= $op; ?></option>
+                            <option value="<?= esc($k, 'attr') ?>" <?= old('ativo') === $k ? 'selected' : ''; ?>><?= esc($op) ?></option>
                             <?PHP } ?>
                         </select>
                     </div>                                        
@@ -54,7 +54,7 @@
                         <div class="form-group col-auto">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">Produto</label> 
                             <div class="input-group mb-3">
-                                <input class="form-control" name="servicoproduto_Produto_id_Text" id="servicoproduto_Produto_id_Text" type="text" disabled="true" onclick="$('#addonSearchservicoproduto_Produto_id').click()" value="<?= old('servicoproduto_Produto_id_Text'); ?>"/>
+                                <input class="form-control" name="servicoproduto_Produto_id_Text" id="servicoproduto_Produto_id_Text" type="text" disabled="true" onclick="$('#addonSearchservicoproduto_Produto_id').click()" value="<?= esc(old('servicoproduto_Produto_id_Text'), 'attr') ?>"/>
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary" type="button" id="addonSearchservicoproduto_Produto_id" 
                                             data-toggle="modal" data-target="#modalFK" data-title='Localizar Produto'
@@ -64,12 +64,12 @@
                                         </svg>
                                     </button>
                                 </div>
-                                <input class="d-none" name="servicoproduto_Produto_id" id="servicoproduto_Produto_id" type="text" value="<?= old('servicoproduto_Produto_id'); ?>" />
+                                <input class="d-none" name="servicoproduto_Produto_id" id="servicoproduto_Produto_id" type="text" value="<?= esc(old('servicoproduto_Produto_id'), 'attr') ?>" />
                             </div>
                         </div>                        
                         <div class="form-group col-auto">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">Quantidade</label> 
-                            <input class="form-control maskInteiro" name="servicoproduto_quantidade" id="servicoproduto_quantidade" type="text" value="<?= old('servicoproduto_quantidade') ?>">
+                            <input class="form-control maskInteiro" name="servicoproduto_quantidade" id="servicoproduto_quantidade" type="text" value="<?= esc(old('servicoproduto_quantidade'), 'attr') ?>">
                         </div>                        
                         <div class="form-group col-auto">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">&nbsp;</label> 
@@ -101,12 +101,12 @@
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Código Serviço Cadastrado no MXM</label> 
-                        <input class="form-control" name="codigo" id="codigo" type="text" maxlength="10" value="<?= old('codigo') ?>">
+                        <input class="form-control" name="codigo" id="codigo" type="text" maxlength="10" value="<?= esc(old('codigo'), 'attr') ?>">
                         <small id="codigo-descricao" class="form-text text-muted d-none"></small>
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Unidade de Controle</label> 
-                        <input class="form-control" name="UnidadedeControle" id="UnidadedeControle" type="text" maxlength="10" value="<?= old('UnidadedeControle') ?>" readonly>
+                        <input class="form-control" name="UnidadedeControle" id="UnidadedeControle" type="text" maxlength="10" value="<?= esc(old('UnidadedeControle'), 'attr') ?>" readonly>
                     </div>
                     <div class="form-group col-12 col-md-6 d-none">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Produto Inspecionado</label> 
@@ -131,7 +131,7 @@
                             <option value="S" <?= old('ProdutoLiberado') === 'S' ? 'selected' : ''; ?>>Sim</option>
                             <option value="N" <?= old('ProdutoLiberado') === 'N' ? 'selected' : ''; ?>>Não</option>
                         </select>
-                        <input type="hidden" name="ProdutoLiberado" id="ProdutoLiberadoHidden" value="<?= old('ProdutoLiberado') ?>">
+                        <input type="hidden" name="ProdutoLiberado" id="ProdutoLiberadoHidden" value="<?= esc(old('ProdutoLiberado'), 'attr') ?>">
                     </div>
                     <div class="form-group col-12 col-md-6 d-none">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Produto em Inventário</label> 
@@ -166,15 +166,15 @@
                             <option value="1" <?= old('CodigodeSituacaoTributariaCST') === '1' ? 'selected' : ''; ?>>1</option>
                             <option value="2" <?= old('CodigodeSituacaoTributariaCST') === '2' ? 'selected' : ''; ?>>2</option>
                         </select>
-                        <input type="hidden" name="CodigodeSituacaoTributariaCST" id="CodigodeSituacaoTributariaCSTHidden" value="<?= old('CodigodeSituacaoTributariaCST') ?>">
+                        <input type="hidden" name="CodigodeSituacaoTributariaCST" id="CodigodeSituacaoTributariaCSTHidden" value="<?= esc(old('CodigodeSituacaoTributariaCST'), 'attr') ?>">
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Classificação Fiscal</label> 
-                        <input class="form-control" name="ClassificacaoFiscal" id="ClassificacaoFiscal" type="text" maxlength="10" value="<?= old('ClassificacaoFiscal') ?>" readonly>
+                        <input class="form-control" name="ClassificacaoFiscal" id="ClassificacaoFiscal" type="text" maxlength="10" value="<?= esc(old('ClassificacaoFiscal'), 'attr') ?>" readonly>
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Grupo de Produto</label> 
-                        <input class="form-control" name="GrupodeProduto" id="GrupodeProduto" type="text" maxlength="30" value="<?= old('GrupodeProduto') ?>" readonly>
+                        <input class="form-control" name="GrupodeProduto" id="GrupodeProduto" type="text" maxlength="30" value="<?= esc(old('GrupodeProduto'), 'attr') ?>" readonly>
                     </div>
                 <div class="form-group mb-0 mt-3 text-center col-12">
                     <button type="submit" class="btn btn-primary submitButton">Cadastrar</button>
@@ -203,12 +203,8 @@
 </template>
 
 <!-- content closed -->
-<?= $this->endSection('content'); ?>
-
-<?= $this->section('styles'); ?>
-<?= $this->endSection('styles'); ?>
-
-<?= $this->section('scripts'); ?>
+<?= $this->endSection('content'); ?><?= $this->section('styles'); ?>
+<?= esc($this->endSection('styles'); ) ?><?= $this->section('scripts'); ?>
 <script>
     const baseUrlServicoApi = "<?= base_url('Servico/obterDadosServicoApiSesc/'); ?>";
     const baseUrlCodigoUnico = "<?= base_url('Servico/validarCodigoUnico'); ?>";

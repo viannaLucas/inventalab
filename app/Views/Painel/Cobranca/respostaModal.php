@@ -13,12 +13,12 @@
             </thead>
             <tbody>
             <?PHP foreach ($vCobranca as $i) { ?>
-                <tr data-id='<?= $i->id ?>' data-text='<?= $i->id ?>'>
-                    <td><?= $i->id ?></td>
+                <tr data-id='<?= esc($i->id, 'attr') ?>' data-text='<?= esc($i->id, 'attr') ?>'>
+                    <td><?= esc($i->id) ?></td>
                     <td><?= $i->getParticipante()?->nome ?></td>
-                    <td><?= $i->data ?></td>
-                    <td><?= $i->valor ?></td>
-                    <td><span style="color: <?= $i->_cl('situacao', $i->situacao) ?>;"><?= $i->_op('situacao', $i->situacao) ?></span></td>
+                    <td><?= esc($i->data) ?></td>
+                    <td><?= esc($i->valor) ?></td>
+                    <td><span style="color: <?= $i->_cl('situacao', $i->situacao) ?>;"><?= esc($i->_op('situacao', $i->situacao)) ?></span></td>
                 </tr>
             <?PHP } ?>
             </tbody>

@@ -7,13 +7,13 @@
         <title>Recuperar Senha</title>
 
         <link href="<?= base_url() ?>assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
-        <link href="<?= base_url('assets/css/auth.css'); ?>" rel="stylesheet"/>
+        <link href="<?= esc(base_url('assets/css/auth.css'), 'attr') ?>" rel="stylesheet"/>
 
-        <link rel="apple-touch-icon" href="<?= base_url('assets/img/brand/favicon.png'); ?>" sizes="180x180">
-        <link rel="icon" href="<?= base_url('assets/img/brand/favicon.png'); ?>" sizes="32x32" type="image/png">
-        <link rel="icon" href="<?= base_url('assets/img/brand/favicon.png'); ?>" sizes="16x16" type="image/png">
-        <link rel="mask-icon" href="<?= base_url('assets/img/brand/favicon.png'); ?>" color="#563d7c">
-        <link rel="icon" href="<?= base_url('assets/img/brand/favicon.png'); ?>">
+        <link rel="apple-touch-icon" href="<?= esc(base_url('assets/img/brand/favicon.png'), 'attr') ?>" sizes="180x180">
+        <link rel="icon" href="<?= esc(base_url('assets/img/brand/favicon.png'), 'attr') ?>" sizes="32x32" type="image/png">
+        <link rel="icon" href="<?= esc(base_url('assets/img/brand/favicon.png'), 'attr') ?>" sizes="16x16" type="image/png">
+        <link rel="mask-icon" href="<?= esc(base_url('assets/img/brand/favicon.png'), 'attr') ?>" color="#563d7c">
+        <link rel="icon" href="<?= esc(base_url('assets/img/brand/favicon.png'), 'attr') ?>">
         <meta name="theme-color" content="#2563eb">
     </head>
     <body class="auth-page auth-page--recovery">
@@ -21,7 +21,7 @@
             <section class="auth-card">
                 <div class="auth-brand">
                     <span class="auth-eyebrow auth-stagger delay-1">InventaLab</span>
-                    <img class="auth-logo auth-stagger delay-2" src="<?= base_url('assets/img/brand/logoLogin.png'); ?>" alt="InventaLab">
+                    <img class="auth-logo auth-stagger delay-2" src="<?= esc(base_url('assets/img/brand/logoLogin.png'), 'attr') ?>" alt="InventaLab">
                     <h1 class="auth-title auth-stagger delay-3">Recuperar acesso</h1>
                     <p class="auth-subtitle auth-stagger delay-4">Vamos enviar as instruções para redefinir sua senha.</p>
                 </div>
@@ -50,7 +50,7 @@
                             <button class="btn btn-primary btn-lg" type="submit">Enviar instruções</button>
                         </div>
                         <div class="auth-links">
-                            <a href="<?= base_url('PainelParticipante/login'); ?>">Voltar ao login</a>
+                            <a href="<?= esc(base_url('PainelParticipante/login'), 'attr') ?>">Voltar ao login</a>
                         </div>
                     </form>
                 </div>

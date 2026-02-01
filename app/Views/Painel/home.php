@@ -18,7 +18,7 @@
                 <div class="d-flex justify-content-between">
                     <h4 class="card-title mb-0">Reservas de Hoje</h4>
                     <?php if (\App\Models\UsuarioModel::getSessao()->verificarPermissao('Reserva', 'cadastrar')) { ;?>
-                    <a href="<?= base_url('Reserva/cadastrar') ?>" class="btn btn-sm btn-secondary">Adicionar Reserva</a>
+                    <a href="<?= esc(base_url('Reserva/cadastrar'), 'attr') ?>" class="btn btn-sm btn-secondary">Adicionar Reserva</a>
                     <?php } ;?>
                 </div>
                 <p class="tx-12 text-muted mb-0">Lista de Reservas agendadas para hoje.</p>
@@ -49,14 +49,14 @@
                                         ?>
                                             <tr>
                                                 <td>
-                                                    <div><?= $nomeParticipante ?></div>
-                                                    <div>Reserva <?= $i->op_tipo[$i->tipo] ?> das <?= $i->horaInicio . " às " . $i->horaFim ?> <?= $i->numeroConvidados + 1 ?> <?= $i->numeroConvidados == 0 ? 'Participante' : 'Participantes';  ?></div>
-                                                    <div><?= $textoEntradaSaida; ?></div>
-                                                    <div class="text-muted"><?= $i->nomeEscola . $textoAno ?></div>
+                                                    <div><?= esc($nomeParticipante) ?></div>
+                                                    <div>Reserva <?= $i->op_tipo[$i->tipo] ?> das <?= $i->horaInicio . " às " . $i->horaFim ?> <?= esc($i->numeroConvidados + 1) ?><?= $i->numeroConvidados == 0 ? 'Participante' : 'Participantes';  ?></div>
+                                                    <div><?= esc($textoEntradaSaida) ?></div>
+                                                    <div class="text-muted"><?= esc($i->nomeEscola . $textoAno) ?></div>
                                                 </td>
                                                 <td class="text-right">
                                                         <?php if ($horaEntrada == '') { ?>
-                                                            <div data-reserva='<?= $i->id; ?>' data-idade="<?= (int) ($i->idadeParticipante ?? 0); ?>" data-termo="<?= (int) ($i->temTermoResponsabilidade ?? 0); ?>" data-suspenso="<?= (int) ($i->participanteSuspenso ?? 0); ?>" class="btn btn-sm btn-success btn-entrada">
+                                                            <div data-reserva='<?= esc($i->id, 'attr') ?>' data-idade="<?= (int) ($i->idadeParticipante ?? 0); ?>" data-termo="<?= (int) ($i->temTermoResponsabilidade ?? 0); ?>" data-suspenso="<?= (int) ($i->participanteSuspenso ?? 0); ?>" class="btn btn-sm btn-success btn-entrada">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
                                                                     <title>Definir Entrada</title>
                                                                     <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z" />
@@ -66,14 +66,14 @@
 
                                                             </div>
                                                         <?php } elseif ($horaSaida == '') { ?>
-                                                            <div data-reserva='<?= $i->id; ?>' data-participante="<?= esc($nomeParticipante, 'attr'); ?>" class="btn  btn-sm btn-secondary btn-add-consumo">
+                                                            <div data-reserva='<?= esc($i->id, 'attr') ?>' data-participante="<?= esc($nomeParticipante, 'attr'); ?>" class="btn  btn-sm btn-secondary btn-add-consumo">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list-check" viewBox="0 0 16 16">
                                                                     <title>Adicionar Consumo</title>
                                                                     <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5M3.854 2.146a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L2 3.293l1.146-1.147a.5.5 0 0 1 .708 0m0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L2 7.293l1.146-1.147a.5.5 0 0 1 .708 0m0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0" />
                                                                 </svg>
                                                                 <span class="pl-1">Adicionar Consumo &nbsp;&nbsp;</span>
                                                             </div>
-                                                            <div data-reserva='<?= $i->id; ?>' data-participante="<?= esc($nomeParticipante, 'attr'); ?>" data-hora-entrada="<?= esc($i->horaEntrada, 'attr'); ?>" data-convidados="<?= (int) $i->numeroConvidados; ?>" class="btn btn-sm btn-info btn-saida">
+                                                            <div data-reserva='<?= esc($i->id, 'attr') ?>' data-participante="<?= esc($nomeParticipante, 'attr'); ?>" data-hora-entrada="<?= esc($i->horaEntrada, 'attr'); ?>" data-convidados="<?= esc((int) $i->numeroConvidados, 'attr') ?>" class="btn btn-sm btn-info btn-saida">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
                                                                     <title>Definir Saída</title>
                                                                     <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
@@ -135,15 +135,15 @@
                         <tbody class="text-center">
                         <?PHP foreach ($vReservasSemSaida as $i) { ?>
                             <tr>
-                                <td><?= $i->id ?></td>
-                                <td><?= $i->dataCadastro ?></td>
-                                <td><?= $i->dataReserva ?></td>
-                                <td><?= $i->horaInicio.' - '.$i->horaFim ?></td>
-                                <td><span style="color: <?= $i->_cl('tipo', $i->tipo) ?>;"><?= $i->_op('tipo', $i->tipo) ?></span></td>
-                                <td><?= $i->numeroConvidados ?></td>
-                                <td><span style="color: <?= $i->_cl('status', $i->status) ?>;"><?= $i->_op('status', $i->status) ?></span></td>
-                                <td><span style="color: <?= $i->_cl('turmaEscola', $i->turmaEscola) ?>;"><?= $i->_op('turmaEscola', $i->turmaEscola) ?></span></td>
-                                <td><?= $formatarHora($i->horaEntrada) . ' / ' . $formatarHora($i->horaSaida) ?></td>
+                                <td><?= esc($i->id) ?></td>
+                                <td><?= esc($i->dataCadastro) ?></td>
+                                <td><?= esc($i->dataReserva) ?></td>
+                                <td><?= esc($i->horaInicio.' - '.$i->horaFim) ?></td>
+                                <td><span style="color: <?= $i->_cl('tipo', $i->tipo) ?>;"><?= esc($i->_op('tipo', $i->tipo)) ?></span></td>
+                                <td><?= esc($i->numeroConvidados) ?></td>
+                                <td><span style="color: <?= $i->_cl('status', $i->status) ?>;"><?= esc($i->_op('status', $i->status)) ?></span></td>
+                                <td><span style="color: <?= $i->_cl('turmaEscola', $i->turmaEscola) ?>;"><?= esc($i->_op('turmaEscola', $i->turmaEscola)) ?></span></td>
+                                <td><?= esc($formatarHora($i->horaEntrada) . ' / ' . $formatarHora($i->horaSaida)) ?></td>
                                 <td>
                                     <a href="<?php echo base_url('Reserva/alterar/' . $i->id); ?>" class="btn btn-primary  btn-sm">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -172,9 +172,7 @@
     <?php } ;?>
 </div>
 
-<?= $this->endSection('content'); ?>
-
-<?= $this->section('modal'); ?>
+<?= $this->endSection('content'); ?><?= $this->section('modal'); ?>
 
 <template id="horario-modal-template">
     <div class="modal fade" id="{modalId}" tabindex="-1" role="dialog" aria-hidden="true">
@@ -441,8 +439,7 @@
     </div>
 </div>
 
-<?= $this->endSection(); ?>
-<?= $this->section('scripts'); ?>
+<?= $this->endSection(); ?><?= $this->section('scripts'); ?>
 <script>
     (function($) {
         'use strict';
@@ -1719,7 +1716,7 @@
             });
         });
 
-        var requererTermo = <?= (int) ($requererTermo ?? 0) ?>;
+        var requererTermo = <?= (int) ($requererTermo ?? 0 ?>;
 
         $(document).on('click', '.btn-entrada', function() {
             var $btn = $(this);

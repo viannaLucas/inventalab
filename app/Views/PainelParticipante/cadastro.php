@@ -5,8 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>Cadastro de Participante</title>
         <link href="<?= base_url() ?>assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
-        <link href="<?= base_url('assets/css/auth.css'); ?>" rel="stylesheet"/>
-        <link rel="icon" href="<?= base_url('assets/img/brand/favicon.png'); ?>">
+        <link href="<?= esc(base_url('assets/css/auth.css'), 'attr') ?>" rel="stylesheet"/>
+        <link rel="icon" href="<?= esc(base_url('assets/img/brand/favicon.png'), 'attr') ?>">
         <meta name="theme-color" content="#2563eb">
     </head>
     <body class="auth-page auth-page--signup">
@@ -14,7 +14,7 @@
             <section class="auth-card auth-card--wide">
                 <div class="auth-brand">
                     <span class="auth-eyebrow auth-stagger delay-1">InventaLab</span>
-                    <img class="auth-logo auth-stagger delay-2" src="<?= base_url('assets/img/brand/logoLogin.png'); ?>" alt="InventaLab">
+                    <img class="auth-logo auth-stagger delay-2" src="<?= esc(base_url('assets/img/brand/logoLogin.png'), 'attr') ?>" alt="InventaLab">
                     <h1 class="auth-title auth-stagger delay-3">Crie sua conta</h1>
                     <p class="auth-subtitle auth-stagger delay-4">Um cadastro simples para acompanhar inscrições, acessos e atualizações.</p>
                 </div>
@@ -163,7 +163,7 @@
                                     <select name="uf" id="uf" class="form-control" required>
                                         <option value=""></option>
                                         <?php foreach ($ufs as $sigla => $nome) { ?>
-                                            <option value="<?= $sigla; ?>" <?= $ufSelecionada === $sigla ? 'selected' : ''; ?>><?= $nome; ?></option>
+                                            <option value="<?= esc($sigla, 'attr') ?>" <?= $ufSelecionada === $sigla ? 'selected' : ''; ?>><?= esc($nome) ?></option>
                                         <?php } ?>
                                     </select>
                                     <label for="uf">Estado</label>
@@ -171,7 +171,7 @@
                             </div>
                         </div>
                         <div class="auth-actions">
-                            <a class="btn btn-outline-secondary btn-lg" href="<?= base_url('PainelParticipante/login'); ?>">Cancelar</a>
+                            <a class="btn btn-outline-secondary btn-lg" href="<?= esc(base_url('PainelParticipante/login'), 'attr') ?>">Cancelar</a>
                             <button class="btn btn-primary btn-lg" type="submit">Cadastrar</button>
                         </div>
                     </form>

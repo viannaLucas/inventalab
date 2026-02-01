@@ -24,7 +24,7 @@
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Recurso Trabalho</label> 
                         <div class="input-group">
-                            <input class="form-control" name="RecursoTrabalho_id_Text" id="RecursoTrabalho_id_Text" type="text" disabled="true" onclick="$('#addonSearchRecursoTrabalho_id').click()" value="<?= old('RecursoTrabalho_id_Text'); ?>"/>
+                            <input class="form-control" name="RecursoTrabalho_id_Text" id="RecursoTrabalho_id_Text" type="text" disabled="true" onclick="$('#addonSearchRecursoTrabalho_id').click()" value="<?= esc(old('RecursoTrabalho_id_Text'), 'attr') ?>"/>
                             <div class="input-group-append">
                                 <button class="btn btn-outline-secondary" type="button" id="addonSearchRecursoTrabalho_id" 
                                         data-toggle="modal" data-target="#modalFK" data-title='Localizar Recurso Trabalho'
@@ -34,28 +34,28 @@
                                     </svg>
                                 </button>
                             </div>
-                            <input class="d-none" name="RecursoTrabalho_id" id="RecursoTrabalho_id" type="text" value="<?= old('RecursoTrabalho_id'); ?>" />
+                            <input class="d-none" name="RecursoTrabalho_id" id="RecursoTrabalho_id" type="text" value="<?= esc(old('RecursoTrabalho_id'), 'attr') ?>" />
                         </div>
                     </div>                    <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Descrição</label> 
-                        <input class="form-control" name="descricao" id="descricao" type="text" maxlength="200" value="<?= old('descricao') ?>">
+                        <input class="form-control" name="descricao" id="descricao" type="text" maxlength="200" value="<?= esc(old('descricao'), 'attr') ?>">
                     </div>                    
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600" for="tipo">Tipo</label> 
                         <select class="form-control" name="tipo" id="tipo" required="" >
                             <option value="" <?= old('tipo')=='' ? 'selected' : ''; ?>></option>
                             <?PHP foreach (App\Entities\GarantiaEntity::_op('tipo') as $k => $op){ ?>
-                            <option value="<?= $k; ?>" <?= old('tipo') === $k ? 'selected' : ''; ?>><?= $op; ?></option>
+                            <option value="<?= esc($k, 'attr') ?>" <?= old('tipo') === $k ? 'selected' : ''; ?>><?= esc($op) ?></option>
                             <?PHP } ?>
                         </select>
                     </div>                    
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Data Início</label> 
-                        <input class="form-control maskData" name="dataInicio" id="dataInicio" type="text" value="<?= old('dataInicio') ?>">
+                        <input class="form-control maskData" name="dataInicio" id="dataInicio" type="text" value="<?= esc(old('dataInicio'), 'attr') ?>">
                     </div>                    
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Data Fim</label> 
-                        <input class="form-control maskData" name="dataFim" id="dataFim" type="text" value="<?= old('dataFim') ?>">
+                        <input class="form-control maskData" name="dataFim" id="dataFim" type="text" value="<?= esc(old('dataFim'), 'attr') ?>">
                     </div>                                        
                 <div class="form-group mb-0 mt-3 text-center col-12">
                     <button type="submit" class="btn btn-primary submitButton">Cadastrar</button>
@@ -66,12 +66,8 @@
 </div>
 
 <!-- content closed -->
-<?= $this->endSection('content'); ?>
-
-<?= $this->section('styles'); ?>
-<?= $this->endSection('styles'); ?>
-
-<?= $this->section('scripts'); ?>
+<?= $this->endSection('content'); ?><?= $this->section('styles'); ?>
+<?= esc($this->endSection('styles'); ) ?><?= $this->section('scripts'); ?>
 <script>
     $('.submitButton').on('click', function(e){
         //$(this).attr('disabled', true);

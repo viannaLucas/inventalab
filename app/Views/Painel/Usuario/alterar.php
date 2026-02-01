@@ -71,8 +71,8 @@
                                     foreach ($lm as $nm => $m) {
                                         ?>
                                         <tr class="permissoesUsuario">
-                                            <td class="text-left "><label class="ckbox"><input type="checkbox" name="permissoes[]" value="<?= $c . '.' . $nm; ?>" <?= in_array($c . '.' . $nm, $usuario->getPermissoes()) ? 'checked=""' : ''; ?> ><span><?= $c; ?>: <?= $m['label']; ?></span></label></td>
-                                            <td><?= $m['descricao']; ?></td>
+                                            <td class="text-left "><label class="ckbox"><input type="checkbox" name="permissoes[]" value="<?= esc($c . '.' . $nm, 'attr') ?>" <?= in_array($c . '.' . $nm, $usuario->getPermissoes()) ? 'checked=""' : ''; ?> ><span><?= $c; ?>: <?= $m['label']; ?></span></label></td>
+                                            <td><?= esc($m['descricao']) ?></td>
                                         </tr>
                                     <?PHP }
                                 } ?>
@@ -90,12 +90,8 @@
     </div>
 </div>
 <!-- row closed -->
-<?= $this->endSection('content'); ?>
-
-<?= $this->section('styles'); ?>
-<?= $this->endSection('styles'); ?>
-
-<?= $this->section('scripts'); ?>
+<?= $this->endSection('content'); ?><?= $this->section('styles'); ?>
+<?= esc($this->endSection('styles'); ) ?><?= $this->section('scripts'); ?>
 <script>
     $('.submitButton').on('click', function (e) {
         //$(this).attr('disabled', true);

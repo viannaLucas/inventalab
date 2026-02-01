@@ -22,7 +22,7 @@
                 <div class="row">
                     <div class="form-group col-12 col-md-12">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Nome</label>
-                        <input class="form-control" name="nome" id="nome" type="text" maxlength="150" value="<?= old('nome') ?>">
+                        <input class="form-control" name="nome" id="nome" type="text" maxlength="150" value="<?= esc(old('nome'), 'attr') ?>">
                     </div>
                     <div class="form-group col-12 ">
                         <label>Imagem</label>
@@ -31,7 +31,7 @@
                     </div>
                     <div class="form-group col-12 ">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Descrição</label>
-                        <textarea name="descricao" id="descricao" class="form-control" placeholder="" rows="3"><?= old('descricao') ?></textarea>
+                        <textarea name="descricao" id="descricao" class="form-control" placeholder="" rows="3"><?= esc(old('descricao')) ?></textarea>
                         <small class="form-text text-muted">Uma breve descrição de um parágrafo sobre o evento.</small>
                     </div>
                     <div class="form-group col-12 col-md-6">
@@ -39,21 +39,21 @@
                         <select class="form-control" name="vagasLimitadas" id="vagasLimitadas" required="">
                             <option value="" <?= old('vagasLimitadas') == '' ? 'selected' : ''; ?>></option>
                             <?PHP foreach (App\Entities\EventoEntity::_op('vagasLimitadas') as $k => $op) { ?>
-                                <option value="<?= $k; ?>" <?= old('vagasLimitadas') === $k ? 'selected' : ''; ?>><?= $op; ?></option>
+                                <option value="<?= esc($k, 'attr') ?>" <?= old('vagasLimitadas') === $k ? 'selected' : ''; ?>><?= esc($op) ?></option>
                             <?PHP } ?>
                         </select>
                         <small class="form-text text-muted">Definir se é um evento com vagas limitadas como curso, ou se é um evento de acesso livre como amostras e exposições.</small>
                     </div>
                     <div class="form-group col-12 col-md-6 <?= old('vagasLimitadas') === '1' ? '' : 'd-none'; ?>" id="numeroVagasGroup">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Número Vagas</label>
-                        <input class="form-control maskInteiro" name="numeroVagas" id="numeroVagas" type="text" value="<?= old('numeroVagas') ?>" <?= old('vagasLimitadas') === '1' ? 'required' : ''; ?>>
+                        <input class="form-control maskInteiro" name="numeroVagas" id="numeroVagas" type="text" value="<?= esc(old('numeroVagas'), 'attr') ?>" <?= old('vagasLimitadas') === '1' ? 'required' : ''; ?>>
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600" for="inscricoesAbertas">Inscrições Abertas</label>
                         <select class="form-control" name="inscricoesAbertas" id="inscricoesAbertas" required="">
                             <option value="" <?= old('inscricoesAbertas') == '' ? 'selected' : ''; ?>></option>
                             <?PHP foreach (App\Entities\EventoEntity::_op('inscricoesAbertas') as $k => $op) { ?>
-                                <option value="<?= $k; ?>" <?= old('inscricoesAbertas') === $k ? 'selected' : ''; ?>><?= $op; ?></option>
+                                <option value="<?= esc($k, 'attr') ?>" <?= old('inscricoesAbertas') === $k ? 'selected' : ''; ?>><?= esc($op) ?></option>
                             <?PHP } ?>
                         </select>
                         <small class="form-text text-muted">Inscrições podem ser realizadas pelo próprio Participante ou apenas por administradores e monitores.</small>
@@ -63,14 +63,14 @@
                         <select class="form-control" name="divulgar" id="divulgar" required="">
                             <option value="" <?= old('divulgar') == '' ? 'selected' : ''; ?>></option>
                             <?PHP foreach (App\Entities\EventoEntity::_op('divulgar') as $k => $op) { ?>
-                                <option value="<?= $k; ?>" <?= old('divulgar') === $k ? 'selected' : ''; ?>><?= $op; ?></option>
+                                <option value="<?= esc($k, 'attr') ?>" <?= old('divulgar') === $k ? 'selected' : ''; ?>><?= esc($op) ?></option>
                             <?PHP } ?>
                         </select>
                         <small class="form-text text-muted">Evento será divulgado na página principal, tornando as infirmações públicas na página principal.</small>
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Data Início</label>
-                        <input class="form-control maskData" name="dataInicio" id="dataInicio" type="text" value="<?= old('dataInicio') ?>">
+                        <input class="form-control maskData" name="dataInicio" id="dataInicio" type="text" value="<?= esc(old('dataInicio'), 'attr') ?>">
                         <small class="form-text text-muted">Data do primeiro dia do evento.</small>
                     </div>
                     <div class="form-group col-12 col-md-12">
@@ -78,13 +78,13 @@
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Valor</label>
-                        <input class="form-control maskReal" name="valor" id="valor" type="text" value="<?= old('valor', '0,00') ?>">
+                        <input class="form-control maskReal" name="valor" id="valor" type="text" value="<?= esc(old('valor', '0,00'), 'attr') ?>">
                         <small class="form-text text-muted">Valor de inscrição para cada participate, deixe com valor 0,00 para sem cobrança.</small>
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Serviço</label>
                         <div class="input-group">
-                            <input class="form-control" name="Servico_id_Text" id="Servico_id_Text" type="text" disabled="true" onclick="$('#addonSearchServico_id').click()" value="<?= old('Servico_id_Text'); ?>"/>
+                            <input class="form-control" name="Servico_id_Text" id="Servico_id_Text" type="text" disabled="true" onclick="$('#addonSearchServico_id').click()" value="<?= esc(old('Servico_id_Text'), 'attr') ?>"/>
                             <div class="input-group-append">
                                 <button class="btn btn-outline-secondary" type="button" id="addonSearchServico_id"
                                     data-toggle="modal" data-target="#modalFK" data-title='Localizar Serviço'
@@ -94,7 +94,7 @@
                                     </svg>
                                 </button>
                             </div>
-                            <input class="d-none" name="Servico_id" id="Servico_id" type="text" value="<?= old('Servico_id'); ?>" />
+                            <input class="d-none" name="Servico_id" id="Servico_id" type="text" value="<?= esc(old('Servico_id'), 'attr') ?>" />
                         </div>
                         <small class="form-text text-muted">Selecione o serviço referente ao evento.</small>
                     
@@ -102,7 +102,7 @@
                     <div class="col-12">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Informações do evento</label>
                         <small class="form-text text-muted">Texto com as informações do evento, quando evento for público será apresentado na página principal.</small>                        
-                        <textarea name="texto" id="texto" class="form-control summernote"><?= old('texto') ?></textarea>
+                        <textarea name="texto" id="texto" class="form-control summernote"><?= esc(old('texto')) ?></textarea>
                     </div>
                     <fieldset class="border rounded-10 m-0 mb-3 p-2 w-100">
                         <div class="border-bottom mx-n1 mb-3">
@@ -112,7 +112,7 @@
                         <div class="form-row px-2 align-items-end">
                             <div class="form-group col-sm-3 col-12">
                                 <label class="main-content-label tx-11 tx-medium tx-gray-600" for="reservaespaco_data">Data</label>
-                                <input class="form-control maskData" name="reservaespaco_data" id="reservaespaco_data" type="text" value="<?= old('reservaespaco_data') ?>">
+                                <input class="form-control maskData" name="reservaespaco_data" id="reservaespaco_data" type="text" value="<?= esc(old('reservaespaco_data'), 'attr') ?>">
                             </div>
                             <div class="form-group col-sm-2 col-12">
                                 <div class="form-check mt-sm-4 pt-sm-2">
@@ -122,11 +122,11 @@
                             </div>
                             <div class="form-group col-sm-2 col-12">
                                 <label class="main-content-label tx-11 tx-medium tx-gray-600" for="reservaespaco_horaInicio">Hora Início</label>
-                                <input class="form-control" name="reservaespaco_horaInicio" id="reservaespaco_horaInicio" type="time" value="<?= old('reservaespaco_horaInicio') ?>">
+                                <input class="form-control" name="reservaespaco_horaInicio" id="reservaespaco_horaInicio" type="time" value="<?= esc(old('reservaespaco_horaInicio'), 'attr') ?>">
                             </div>
                             <div class="form-group col-sm-2 col-12">
                                 <label class="main-content-label tx-11 tx-medium tx-gray-600" for="reservaespaco_horaFim">Hora Fim</label>
-                                <input class="form-control" name="reservaespaco_horaFim" id="reservaespaco_horaFim" type="time" value="<?= old('reservaespaco_horaFim') ?>">
+                                <input class="form-control" name="reservaespaco_horaFim" id="reservaespaco_horaFim" type="time" value="<?= esc(old('reservaespaco_horaFim'), 'attr') ?>">
                             </div>
                             <div class="form-group col-sm-auto col-12">
                                 <label class="main-content-label tx-11 tx-medium tx-gray-600 d-block">&nbsp;</label>
@@ -163,7 +163,7 @@
                         <div class="form-row px-2">
                             <div class="form-group col-auto">
                                 <label class="main-content-label tx-11 tx-medium tx-gray-600">Descrição</label>
-                                <input class="form-control" name="controlepresenca_descricao" id="controlepresenca_descricao" type="text" maxlength="100" value="<?= old('controlepresenca_descricao') ?>">
+                                <input class="form-control" name="controlepresenca_descricao" id="controlepresenca_descricao" type="text" maxlength="100" value="<?= esc(old('controlepresenca_descricao'), 'attr') ?>">
                                 <small class="form-text text-muted">Ex.: Manhã, Tarde, Dia 1</small>
                             </div>
                             <div class="form-group col-auto">
@@ -199,7 +199,7 @@
                             <div class="form-group col-auto">
                                 <label class="main-content-label tx-11 tx-medium tx-gray-600">Participante</label>
                                 <div class="input-group mb-3">
-                                    <input class="form-control" name="participanteevento_Participante_id_Text" id="participanteevento_Participante_id_Text" type="text" disabled="true" onclick="$('#addonSearchparticipanteevento_Participante_id').click()" value="<?= old('participanteevento_Participante_id_Text'); ?>" />
+                                    <input class="form-control" name="participanteevento_Participante_id_Text" id="participanteevento_Participante_id_Text" type="text" disabled="true" onclick="$('#addonSearchparticipanteevento_Participante_id').click()" value="<?= esc(old('participanteevento_Participante_id_Text'), 'attr') ?>" />
                                     <div class="input-group-append">
                                         <button class="btn btn-outline-secondary" type="button" id="addonSearchparticipanteevento_Participante_id"
                                             data-toggle="modal" data-target="#modalFK" data-title='Localizar >Participante'
@@ -209,7 +209,7 @@
                                             </svg>
                                         </button>
                                     </div>
-                                    <input class="d-none" name="participanteevento_Participante_id" id="participanteevento_Participante_id" type="text" value="<?= old('participanteevento_Participante_id'); ?>" />
+                                    <input class="d-none" name="participanteevento_Participante_id" id="participanteevento_Participante_id" type="text" value="<?= esc(old('participanteevento_Participante_id'), 'attr') ?>" />
                                 </div>
                             </div>
                             <div class="form-group col-auto">
@@ -333,12 +333,8 @@
 </div>
 
 <!-- content closed -->
-<?= $this->endSection('content'); ?>
-
-<?= $this->section('styles'); ?>
-<?= $this->endSection('styles'); ?>
-
-<?= $this->section('scripts'); ?>
+<?= $this->endSection('content'); ?><?= $this->section('styles'); ?>
+<?= esc($this->endSection('styles'); ) ?><?= $this->section('scripts'); ?>
 <script>
     function formatModalMessage(message) {
         if (typeof message !== 'string') {

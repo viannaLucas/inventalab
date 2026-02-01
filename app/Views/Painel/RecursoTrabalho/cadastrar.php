@@ -22,14 +22,14 @@
                 <div class="form-row">
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Nome</label> 
-                        <input class="form-control" name="nome" id="nome" type="text" maxlength="200" value="<?= old('nome') ?>">
+                        <input class="form-control" name="nome" id="nome" type="text" maxlength="200" value="<?= esc(old('nome'), 'attr') ?>">
                     </div>                    
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600" for="tipo">Tipo</label> 
                         <select class="form-control" name="tipo" id="tipo" required="" >
                             <option value="" <?= old('tipo')=='' ? 'selected' : ''; ?>></option>
                             <?PHP foreach (App\Entities\RecursoTrabalhoEntity::_op('tipo') as $k => $op){ ?>
-                            <option value="<?= $k; ?>" <?= old('tipo') === $k ? 'selected' : ''; ?>><?= $op; ?></option>
+                            <option value="<?= esc($k, 'attr') ?>" <?= old('tipo') === $k ? 'selected' : ''; ?>><?= esc($op) ?></option>
                             <?PHP } ?>
                         </select>
                     </div>                    
@@ -40,18 +40,18 @@
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Marca do Fabricante</label> 
-                        <input class="form-control" name="marcaFabricante" id="marcaFabricante" type="text" maxlength="200" value="<?= old('marcaFabricante') ?>">
+                        <input class="form-control" name="marcaFabricante" id="marcaFabricante" type="text" maxlength="200" value="<?= esc(old('marcaFabricante'), 'attr') ?>">
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Descrição</label> 
-                        <input class="form-control" name="descricao" id="descricao" type="text" maxlength="200" value="<?= old('descricao') ?>">
+                        <input class="form-control" name="descricao" id="descricao" type="text" maxlength="200" value="<?= esc(old('descricao'), 'attr') ?>">
                     </div>
                     <div class="form-group col-12 col-md-6 campo-equipamento<?= old('tipo') === '1' ? '' : ' d-none'; ?>">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600" for="requerHabilidade">Requer Habilidade</label> 
                         <select class="form-control" name="requerHabilidade" id="requerHabilidade" required="" >
                             <option value="" <?= old('requerHabilidade')=='' ? 'selected' : ''; ?>></option>
                             <?PHP foreach (App\Entities\RecursoTrabalhoEntity::_op('requerHabilidade') as $k => $op){ ?>
-                            <option value="<?= $k; ?>" <?= old('requerHabilidade') === $k ? 'selected' : ''; ?>><?= $op; ?></option>
+                            <option value="<?= esc($k, 'attr') ?>" <?= old('requerHabilidade') === $k ? 'selected' : ''; ?>><?= esc($op) ?></option>
                             <?PHP } ?>
                         </select>
                     </div>                    
@@ -60,7 +60,7 @@
                         <select class="form-control" name="usoExclusivo" id="usoExclusivo" required="" >
                             <option value="" <?= old('usoExclusivo')=='' ? 'selected' : ''; ?>></option>
                             <?PHP foreach (App\Entities\RecursoTrabalhoEntity::_op('usoExclusivo') as $k => $op){ ?>
-                            <option value="<?= $k; ?>" <?= old('usoExclusivo') === $k ? 'selected' : ''; ?>><?= $op; ?></option>
+                            <option value="<?= esc($k, 'attr') ?>" <?= old('usoExclusivo') === $k ? 'selected' : ''; ?>><?= esc($op) ?></option>
                             <?PHP } ?>
                         </select>
                     </div>                    
@@ -69,13 +69,13 @@
                         <select class="form-control" name="situacaoTrabalho" id="situacaoTrabalho" required="" >
                             <option value="" <?= old('situacaoTrabalho')=='' ? 'selected' : ''; ?>></option>
                             <?PHP foreach (App\Entities\RecursoTrabalhoEntity::_op('situacaoTrabalho') as $k => $op){ ?>
-                            <option value="<?= $k; ?>" <?= old('situacaoTrabalho') === $k ? 'selected' : ''; ?>><?= $op; ?></option>
+                            <option value="<?= esc($k, 'attr') ?>" <?= old('situacaoTrabalho') === $k ? 'selected' : ''; ?>><?= esc($op) ?></option>
                             <?PHP } ?>
                         </select>
                     </div>                                        
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Quantidade Disponível</label> 
-                        <input class="form-control maskInteiro" name="quantidadeDisponivel" id="quantidadeDisponivel" type="text" maxlength="200" value="<?= old('quantidadeDisponivel') ?>">
+                        <input class="form-control maskInteiro" name="quantidadeDisponivel" id="quantidadeDisponivel" type="text" maxlength="200" value="<?= esc(old('quantidadeDisponivel'), 'attr') ?>">
                     </div>
                 </div>
                 <fieldset class="border rounded-10 m-0 mb-3 p-2 w-100">
@@ -84,24 +84,24 @@
                     </div>
                     <div class="form-row px-2"><div class="form-group col-auto">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">Descrição</label> 
-                            <input class="form-control" name="garantia_descricao" id="garantia_descricao" type="text" maxlength="200" value="<?= old('garantia_descricao') ?>">
+                            <input class="form-control" name="garantia_descricao" id="garantia_descricao" type="text" maxlength="200" value="<?= esc(old('garantia_descricao'), 'attr') ?>">
                         </div>                        
                         <div class="form-group col-auto">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600" for="garantia_tipo">Tipo</label> 
                             <select class="form-control" name="garantia_tipo" id="garantia_tipo" required="" >
                                 <option value="" <?= old('garantia_tipo')=='' ? 'selected' : ''; ?>></option>
                                 <?PHP foreach (App\Entities\GarantiaEntity::_op('tipo') as $k => $op){ ?>
-                                <option value="<?= $k; ?>" <?= old('garantia_tipo') === $k ? 'selected' : ''; ?>><?= $op; ?></option>
+                                <option value="<?= esc($k, 'attr') ?>" <?= old('garantia_tipo') === $k ? 'selected' : ''; ?>><?= esc($op) ?></option>
                                 <?PHP } ?>
                             </select>
                         </div>                        
                         <div class="form-group col-auto">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">Data Início</label> 
-                            <input class="form-control maskData" name="garantia_dataInicio" id="garantia_dataInicio" type="text" value="<?= old('garantia_dataInicio') ?>">
+                            <input class="form-control maskData" name="garantia_dataInicio" id="garantia_dataInicio" type="text" value="<?= esc(old('garantia_dataInicio'), 'attr') ?>">
                         </div>                        
                         <div class="form-group col-auto">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">Data Fim</label> 
-                            <input class="form-control maskData" name="garantia_dataFim" id="garantia_dataFim" type="text" value="<?= old('garantia_dataFim') ?>">
+                            <input class="form-control maskData" name="garantia_dataFim" id="garantia_dataFim" type="text" value="<?= esc(old('garantia_dataFim'), 'attr') ?>">
                         </div>                        
                         <div class="form-group col-auto">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">&nbsp;</label> 
@@ -158,12 +158,8 @@
     </tr>
 </template>
 <!-- content closed -->
-<?= $this->endSection('content'); ?>
-
-<?= $this->section('styles'); ?>
-<?= $this->endSection('styles'); ?>
-
-<?= $this->section('scripts'); ?>
+<?= $this->endSection('content'); ?><?= $this->section('styles'); ?>
+<?= esc($this->endSection('styles'); ) ?><?= $this->section('scripts'); ?>
 <script>
     $('.submitButton').on('click', function(e){
         //$(this).attr('disabled', true);

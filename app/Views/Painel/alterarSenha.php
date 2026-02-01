@@ -8,11 +8,11 @@
 
         <link href="<?= base_url() ?>assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
 
-        <link rel="apple-touch-icon" href="<?= base_url('assets/img/brand/favicon.png'); ?>" sizes="180x180">
-        <link rel="icon" href="<?= base_url('assets/img/brand/favicon.png'); ?>" sizes="32x32" type="image/png">
-        <link rel="icon" href="<?= base_url('assets/img/brand/favicon.png'); ?>" sizes="16x16" type="image/png">
-        <link rel="mask-icon" href="<?= base_url('assets/img/brand/favicon.png'); ?>" color="#563d7c">
-        <link rel="icon" href="<?= base_url('assets/img/brand/favicon.png'); ?>">
+        <link rel="apple-touch-icon" href="<?= esc(base_url('assets/img/brand/favicon.png'), 'attr') ?>" sizes="180x180">
+        <link rel="icon" href="<?= esc(base_url('assets/img/brand/favicon.png'), 'attr') ?>" sizes="32x32" type="image/png">
+        <link rel="icon" href="<?= esc(base_url('assets/img/brand/favicon.png'), 'attr') ?>" sizes="16x16" type="image/png">
+        <link rel="mask-icon" href="<?= esc(base_url('assets/img/brand/favicon.png'), 'attr') ?>" color="#563d7c">
+        <link rel="icon" href="<?= esc(base_url('assets/img/brand/favicon.png'), 'attr') ?>">
         <meta name="theme-color" content="#563d7c">
 
         <style>
@@ -165,7 +165,7 @@
     <body>
         <form action="<?= base_url('Painel/doAlterarSenha'); ?>" method="post" class="form-signin border border-3 p-3 rounded-lg bg-white shadow">
             <div class="text-center mb-4">
-                <img class="mb-4" src="<?= base_url('assets/img/brand/logoLogin.png'); ?>" alt="" width="200">
+                <img class="mb-4" src="<?= esc(base_url('assets/img/brand/logoLogin.png'), 'attr') ?>" alt="" width="200">
                 <h1 class="h3 mb-3 font-weight-normal">Definir nova senha</h1>
                 <p>Crie uma nova senha para continuar acessando o sistema.</p>
                 <?php
@@ -190,7 +190,7 @@
             </div>
             <button class="btn btn-lg btn-primary btn-block" type="submit">Salvar nova senha</button>
             <div class="text-center mt-3">
-                <a href="<?= base_url('Painel/login'); ?>">Voltar ao login</a>
+                <a href="<?= esc(base_url('Painel/login'), 'attr') ?>">Voltar ao login</a>
             </div>
         </form>
         <script>

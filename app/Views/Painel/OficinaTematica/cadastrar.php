@@ -22,10 +22,10 @@
                 <div class="form-row">
                     <div class="form-group col-12 col-md-12">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Nome</label>
-                        <input class="form-control" name="nome" id="nome" type="text" maxlength="150" value="<?= old('nome') ?>">
+                        <input class="form-control" name="nome" id="nome" type="text" maxlength="150" value="<?= esc(old('nome'), 'attr') ?>">
                     </div>
                     <div class="col-12">
-                        <textarea name="descricaoAtividade" id="descricaoAtividade" class="form-control summernote"><?= old('descricaoAtividade') ?></textarea>
+                        <textarea name="descricaoAtividade" id="descricaoAtividade" class="form-control summernote"><?= esc(old('descricaoAtividade')) ?></textarea>
                     </div>
                 </div>
                 <br>
@@ -36,7 +36,7 @@
                     <div class="form-row px-2">
                         <div class="form-group col-auto">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">Nome</label>
-                            <input class="form-control" name="arquivooficina_nome" id="arquivooficina_nome" type="text" maxlength="50" value="<?= old('arquivooficina_nome') ?>">
+                            <input class="form-control" name="arquivooficina_nome" id="arquivooficina_nome" type="text" maxlength="50" value="<?= esc(old('arquivooficina_nome'), 'attr') ?>">
                         </div>
                         <div class="form-group col-auto ">
                             <label>Arquivo</label>
@@ -77,7 +77,7 @@
                     <div class="form-row px-2">
                         <div class="form-group col-auto">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">Descrição</label>
-                            <input class="form-control" name="materialoficina_descricao" id="materialoficina_descricao" type="text" maxlength="200" value="<?= old('materialoficina_descricao') ?>">
+                            <input class="form-control" name="materialoficina_descricao" id="materialoficina_descricao" type="text" maxlength="200" value="<?= esc(old('materialoficina_descricao'), 'attr') ?>">
                         </div>
                         <div class="form-group col-12 ">
                             <label>Foto</label>
@@ -118,7 +118,7 @@
                         <div class="form-group col-auto">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">Recurso Trabalho</label>
                             <div class="input-group mb-3">
-                                <input class="form-control" name="recursooficina_RecursoTrabalho_id_Text" id="recursooficina_RecursoTrabalho_id_Text" type="text" disabled="true" onclick="$('#addonSearchrecursooficina_RecursoTrabalho_id').click()" value="<?= old('recursooficina_RecursoTrabalho_id_Text'); ?>" />
+                                <input class="form-control" name="recursooficina_RecursoTrabalho_id_Text" id="recursooficina_RecursoTrabalho_id_Text" type="text" disabled="true" onclick="$('#addonSearchrecursooficina_RecursoTrabalho_id').click()" value="<?= esc(old('recursooficina_RecursoTrabalho_id_Text'), 'attr') ?>" />
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary" type="button" id="addonSearchrecursooficina_RecursoTrabalho_id"
                                         data-toggle="modal" data-target="#modalFK" data-title='Localizar >Recurso Trabalho'
@@ -128,7 +128,7 @@
                                         </svg>
                                     </button>
                                 </div>
-                                <input class="d-none" name="recursooficina_RecursoTrabalho_id" id="recursooficina_RecursoTrabalho_id" type="text" value="<?= old('recursooficina_RecursoTrabalho_id'); ?>" />
+                                <input class="d-none" name="recursooficina_RecursoTrabalho_id" id="recursooficina_RecursoTrabalho_id" type="text" value="<?= esc(old('recursooficina_RecursoTrabalho_id'), 'attr') ?>" />
                             </div>
                         </div>
                         <div class="form-group col-auto">
@@ -208,12 +208,8 @@
     </tr>
 </template>
 <!-- content closed -->
-<?= $this->endSection('content'); ?>
-
-<?= $this->section('styles'); ?>
-<?= $this->endSection('styles'); ?>
-
-<?= $this->section('scripts'); ?>
+<?= $this->endSection('content'); ?><?= $this->section('styles'); ?>
+<?= esc($this->endSection('styles'); ) ?><?= $this->section('scripts'); ?>
 <script>
     $('.submitButton').on('click', function(e) {
         //$(this).attr('disabled', true);

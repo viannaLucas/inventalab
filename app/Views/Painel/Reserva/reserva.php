@@ -1,7 +1,6 @@
 <?= $this->extend('template'); ?>
 
 <?= $this->section('content'); ?>
-
 <!-- breadcrumb -->
 <div class="breadcrumb-header justify-content-between">
     <div class="my-auto">
@@ -27,7 +26,7 @@
                         <div class="form-group col-12 col-md-4">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">Participante</label> 
                             <div class="input-group">
-                                <input class="form-control" name="Participante_id_Text" id="Participante_id_Text" type="text" disabled="true" onclick="$('#addonSearchParticipante_id').click()" value="<?= old('Participante_id_Text'); ?>"/>
+                                <input class="form-control" name="Participante_id_Text" id="Participante_id_Text" type="text" disabled="true" onclick="$('#addonSearchParticipante_id').click()" value="<?= esc(old('Participante_id_Text'), 'attr') ?>"/>
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary" type="button" id="addonSearchParticipante_id" 
                                             data-toggle="modal" data-target="#modalFK" data-title='Localizar Participante'
@@ -37,7 +36,7 @@
                                         </svg>
                                     </button>
                                 </div>
-                                <input class="d-none" name="Participante_id" id="Participante_id" type="text" value="<?= old('Participante_id'); ?>" />
+                                <input class="d-none" name="Participante_id" id="Participante_id" type="text" value="<?= esc(old('Participante_id'), 'attr') ?>" />
                             </div>
                             <small class="form-text text-muted">Caso seja um grupo, deve ser selecionado o responsável.</small>
                         </div>  
@@ -74,20 +73,20 @@
                             <select class="form-control" name="turmaEscola" id="turmaEscola">
                                 <option value="" <?= old('turmaEscola') == '' ? 'selected' : ''; ?>></option>
                                 <?PHP foreach (App\Entities\ReservaEntity::_op('turmaEscola') as $k => $op) { ?>
-                                    <option value="<?= $k; ?>" <?= old('turmaEscola') === $k ? 'selected' : ''; ?>><?= $op; ?></option>
+                                    <option value="<?= esc($k, 'attr') ?>" <?= old('turmaEscola') === $k ? 'selected' : ''; ?>><?= esc($op) ?></option>
                                 <?PHP } ?>
                             </select>
                         </div>
                         <div class="form-group col-12 col-md-4 turma-escola-extra d-none" id="nomeEscolaGroup">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600" for="nomeEscola">Nome Escola</label>
-                            <input class="form-control" name="nomeEscola" id="nomeEscola" type="text" maxlength="250" value="<?= old('nomeEscola') ?>">
+                            <input class="form-control" name="nomeEscola" id="nomeEscola" type="text" maxlength="250" value="<?= esc(old('nomeEscola'), 'attr') ?>">
                         </div>
                         <div class="form-group col-12 col-md-4 turma-escola-extra d-none" id="anoTurmaGroup">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600" for="anoTurma">Ano Turma</label>
                             <select class="form-control" name="anoTurma" id="anoTurma">
                                 <option value="" <?= old('anoTurma') == '' ? 'selected' : ''; ?>></option>
                                 <?PHP foreach (App\Entities\ReservaEntity::_op('anoTurma') as $k => $op) { ?>
-                                    <option value="<?= $k; ?>" <?= old('anoTurma') === $k ? 'selected' : ''; ?>><?= $op; ?></option>
+                                    <option value="<?= esc($k, 'attr') ?>" <?= old('anoTurma') === $k ? 'selected' : ''; ?>><?= esc($op) ?></option>
                                 <?PHP } ?>
                             </select>
                         </div>
@@ -112,7 +111,7 @@
                             <div class="form-group col-12 col-md-6">
                                 <label class="main-content-label tx-11 tx-medium tx-gray-600">Oficina Temática</label> 
                                 <div class="input-group">
-                                    <input class="form-control" name="OficinaTematica_id_Text" id="OficinaTematica_id_Text" type="text" readonly="true" onclick="$('#modalTematica').modal('show')" value="<?= old('OficinaTematica_id_Text'); ?>" />
+                                    <input class="form-control" name="OficinaTematica_id_Text" id="OficinaTematica_id_Text" type="text" readonly="true" onclick="$('#modalTematica').modal('show')" value="<?= esc(old('OficinaTematica_id_Text'), 'attr') ?>" />
                                     <div class="input-group-append">
                                         <button class="btn btn-outline-secondary" type="button" id="addonSearchOficinaTematica_id" 
                                                 data-toggle="modal" data-target="#modalTematica">
@@ -121,7 +120,7 @@
                                             </svg>
                                         </button>
                                     </div>
-                                    <input class="d-none" name="OficinaTematica_id" id="OficinaTematica_id" type="text" value="<?= old('OficinaTematica_id'); ?>" />
+                                    <input class="d-none" name="OficinaTematica_id" id="OficinaTematica_id" type="text" value="<?= esc(old('OficinaTematica_id'), 'attr') ?>" />
                                 </div>
                                 <small id="oficinaHint" class="form-text text-muted"></small>
                             </div>
@@ -231,12 +230,12 @@
                             <?PHP foreach ($vOficinaTematica as $i) { ?>
                                 <tr>
                                     <td style="width: 70px;">
-                                        <div class="btn btn-primary btn-sm btnModalSelecionarLista" onclick="idOficina=<?= $i->id ?>; selecionarOficina();" data-id='<?= $i->id ?>'>
+                                        <div class="btn btn-primary btn-sm btnModalSelecionarLista" onclick="idOficina=<?= $i->id ?>; selecionarOficina();" data-id='<?= esc($i->id, 'attr') ?>'>
                                             Selecionar
                                         </div>
                                     </td>
                                     <td style="width: 130px;">
-                                        <div class="btn btn-secondary btn-sm btnModalDetalhes" data-id='<?= $i->id ?>'>
+                                        <div class="btn btn-secondary btn-sm btnModalDetalhes" data-id='<?= esc($i->id, 'attr') ?>'>
                                             Ver Detalhes
                                         </div>
                                     </td>
@@ -270,9 +269,7 @@
 </div>
 
 
-<?= $this->endSection(); ?>
-
-<?= $this->section('styles'); ?>
+<?= $this->endSection(); ?><?= $this->section('styles'); ?>
 <style>
     .card { border: none; border-radius: 1rem; box-shadow: 0 10px 25px rgba(0,0,0,.25); }
     .group-header { background: rgba(0,0,0,.04); border: 1px solid rgba(0,0,0,.08); border-radius: 1rem; }
@@ -393,7 +390,7 @@
   const EXCLUSIVE_RESOURCE_IDS = new Set(RESOURCES.filter(r => r.exclusive).map(r => r.id));
 
   // Oficinas temáticas pré-definidas (5 exemplos maker)
-  const ACTIVITIES = <?= json_encode($lAtividades, JSON_PRETTY_PRINT) ?>;
+  const ACTIVITIES = <?= json_encode($lAtividades, JSON_PRETTY_PRINT ?>;
 
   // Reservas simuladas (em produção: carregar/salvar via API)
   let reservations = [ /* { date, start:'HH:MM', duration: min, people, name, participantId, note, activity: {...} } */ ];

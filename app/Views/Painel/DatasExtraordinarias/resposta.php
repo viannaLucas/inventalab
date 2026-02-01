@@ -33,11 +33,11 @@
                     <tbody>
                     <?PHP foreach ($vDatasExtraordinarias as $i) { ?>
                         <tr>
-                            <td><?= $i->id ?></td>
-                            <td><?= $i->data ?></td>
-                            <td><?= $i->horaInicio ?></td>
-                            <td><?= $i->horaFim ?></td>
-                            <td><span style="color: <?= $i->_cl('tipo', $i->tipo) ?>;"><?= $i->_op('tipo', $i->tipo) ?></span></td>
+                            <td><?= esc($i->id) ?></td>
+                            <td><?= esc($i->data) ?></td>
+                            <td><?= esc($i->horaInicio) ?></td>
+                            <td><?= esc($i->horaFim) ?></td>
+                            <td><span style="color: <?= $i->_cl('tipo', $i->tipo) ?>;"><?= esc($i->_op('tipo', $i->tipo)) ?></span></td>
                             <td>
                                 <a href="<?php echo base_url('DatasExtraordinarias/alterar/' . $i->id); ?>" class="btn btn-primary  btn-sm">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -57,8 +57,7 @@
                     </tbody>
                 </table>
             </div>
-            <?= $pager->links('default', 'templatePaginacao') ?>
-        </div>
+            <?= $pager->links('default', 'templatePaginacao') ?></div>
     </div>
 </div>
 <!-- row closed -->

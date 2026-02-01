@@ -27,7 +27,7 @@
                         <h3 class="text-xl font-bold"><?= esc($evento->nome);; ?></h3>
                         <p class="mt-2 text-sm text-text-muted-light dark:text-text-muted-dark"><?= esc($evento->nome); ?></p>
                         <span class="my-4 text-sm font-semibold text-primary"><?= esc($evento->dataInicio); ?></span>
-                        <a href="<?= base_url('detalheEvento/'.$evento->id.'/'.$evento->gerarSlug()) ;?>" class="mt-auto flex h-10 w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-primary/20 dark:bg-primary/30 text-primary text-sm font-bold"><span class="truncate">Saiba mais</span></a>
+                        <a href="<?= esc(base_url('detalheEvento/'.$evento->id.'/'.$evento->gerarSlug()) , 'attr' ) ?>" class="mt-auto flex h-10 w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-primary/20 dark:bg-primary/30 text-primary text-sm font-bold"><span class="truncate">Saiba mais</span></a>
                     </div>
                 </div>
             <?php }; ?>

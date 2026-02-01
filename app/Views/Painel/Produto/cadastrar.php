@@ -22,7 +22,7 @@
                 <div class="form-row">
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Nome</label> 
-                        <input class="form-control" name="nome" id="nome" type="text" maxlength="200" value="<?= old('nome') ?>">
+                        <input class="form-control" name="nome" id="nome" type="text" maxlength="200" value="<?= esc(old('nome'), 'attr') ?>">
                     </div>                    
                     <div class="form-group col-12 ">
                         <label>Foto</label>
@@ -33,23 +33,23 @@
                     <!--
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Valor</label> 
-                        <input class="form-control maskReal" name="valor" id="valor" type="text" value="<?= old('valor', '0,00') ?>">
+                        <input class="form-control maskReal" name="valor" id="valor" type="text" value="<?= esc(old('valor', '0,00'), 'attr') ?>">
                     </div>
                     -->
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Estoque Mínimo</label> 
-                        <input class="form-control maskInteiro" name="estoqueMinimo" id="estoqueMinimo" type="text" value="<?= old('estoqueMinimo') ?>">
+                        <input class="form-control maskInteiro" name="estoqueMinimo" id="estoqueMinimo" type="text" value="<?= esc(old('estoqueMinimo'), 'attr') ?>">
                     </div>                    
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Estoque Atual</label> 
-                        <input class="form-control maskInteiro" name="estoqueAtual" id="estoqueAtual" type="text" value="<?= old('estoqueAtual') ?>">
+                        <input class="form-control maskInteiro" name="estoqueAtual" id="estoqueAtual" type="text" value="<?= esc(old('estoqueAtual'), 'attr') ?>">
                     </div>                                        
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600" for="ativo">Ativo</label> 
                         <select class="form-control" name="ativo" id="ativo" required="" >
                             <option value="" <?= old('ativo')=='' ? 'selected' : ''; ?>></option>
                             <?PHP foreach (App\Entities\ProdutoEntity::_op('ativo') as $k => $op){ ?>
-                            <option value="<?= $k; ?>" <?= old('ativo') === $k ? 'selected' : ''; ?>><?= $op; ?></option>
+                            <option value="<?= esc($k, 'attr') ?>" <?= old('ativo') === $k ? 'selected' : ''; ?>><?= esc($op) ?></option>
                             <?PHP } ?>
                         </select>
                     </div>                                        
@@ -60,7 +60,7 @@
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Unidade de Controle</label> 
-                        <input class="form-control" name="UnidadedeControle" id="UnidadedeControle" type="text" maxlength="10" value="<?= old('UnidadedeControle') ?>">
+                        <input class="form-control" name="UnidadedeControle" id="UnidadedeControle" type="text" maxlength="10" value="<?= esc(old('UnidadedeControle'), 'attr') ?>">
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Produto Inspecionado</label> 
@@ -122,11 +122,11 @@
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Classificação Fiscal</label> 
-                        <input class="form-control" name="ClassificacaoFiscal" id="ClassificacaoFiscal" type="text" maxlength="10" value="<?= old('ClassificacaoFiscal') ?>">
+                        <input class="form-control" name="ClassificacaoFiscal" id="ClassificacaoFiscal" type="text" maxlength="10" value="<?= esc(old('ClassificacaoFiscal'), 'attr') ?>">
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Grupo de Produto</label> 
-                        <input class="form-control" name="GrupodeProduto" id="GrupodeProduto" type="text" maxlength="30" value="<?= old('GrupodeProduto') ?>">
+                        <input class="form-control" name="GrupodeProduto" id="GrupodeProduto" type="text" maxlength="30" value="<?= esc(old('GrupodeProduto'), 'attr') ?>">
                     </div>
                     -->
                 <div class="form-group mb-0 mt-3 text-center col-12">
@@ -138,12 +138,8 @@
 </div>
 
 <!-- content closed -->
-<?= $this->endSection('content'); ?>
-
-<?= $this->section('styles'); ?>
-<?= $this->endSection('styles'); ?>
-
-<?= $this->section('scripts'); ?>
+<?= $this->endSection('content'); ?><?= $this->section('styles'); ?>
+<?= esc($this->endSection('styles'); ) ?><?= $this->section('scripts'); ?>
 <script>
     $('.submitButton').on('click', function(e){
         //$(this).attr('disabled', true);

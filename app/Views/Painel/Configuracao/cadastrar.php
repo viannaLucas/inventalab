@@ -23,14 +23,14 @@
                     
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Lotação Espaço</label> 
-                        <input class="form-control maskInteiro" name="lotacaoEspaco" id="lotacaoEspaco" type="text" value="<?= old('lotacaoEspaco') ?>">
+                        <input class="form-control maskInteiro" name="lotacaoEspaco" id="lotacaoEspaco" type="text" value="<?= esc(old('lotacaoEspaco'), 'attr') ?>">
                     </div>                    
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Intervalo Entre Pesquisa</label> 
-                        <input class="form-control maskInteiro" name="intervaloEntrePesquisa" id="intervaloEntrePesquisa" type="text" value="<?= old('intervaloEntrePesquisa') ?>">
+                        <input class="form-control maskInteiro" name="intervaloEntrePesquisa" id="intervaloEntrePesquisa" type="text" value="<?= esc(old('intervaloEntrePesquisa'), 'attr') ?>">
                     </div>                    
                     <div class="col-12">
-                        <textarea name="textoEmailConfirmacao" id="textoEmailConfirmacao" class="form-control summernote"><?= old('textoEmailConfirmacao') ?></textarea>
+                        <textarea name="textoEmailConfirmacao" id="textoEmailConfirmacao" class="form-control summernote"><?= esc(old('textoEmailConfirmacao')) ?></textarea>
                     </div>
                 </div>                                        
                 <div class="form-group mb-0 mt-3 text-center col-12">
@@ -42,12 +42,8 @@
 </div>
 
 <!-- content closed -->
-<?= $this->endSection('content'); ?>
-
-<?= $this->section('styles'); ?>
-<?= $this->endSection('styles'); ?>
-
-<?= $this->section('scripts'); ?>
+<?= $this->endSection('content'); ?><?= $this->section('styles'); ?>
+<?= esc($this->endSection('styles'); ) ?><?= $this->section('scripts'); ?>
 <script>
     $('.submitButton').on('click', function(e){
         //$(this).attr('disabled', true);

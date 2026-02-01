@@ -31,9 +31,9 @@
                     <tbody>
                     <?PHP foreach ($vConfiguracao as $i) { ?>
                         <tr>
-                            <td><?= $i->id ?></td>
-                            <td><?= $i->lotacaoEspaco ?></td>
-                            <td><?= $i->intervaloEntrePesquisa ?></td>
+                            <td><?= esc($i->id) ?></td>
+                            <td><?= esc($i->lotacaoEspaco) ?></td>
+                            <td><?= esc($i->intervaloEntrePesquisa) ?></td>
                             <td>
                                 <a href="<?php echo base_url('Configuracao/alterar/' . $i->id); ?>" class="btn btn-primary  btn-sm">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -53,8 +53,7 @@
                     </tbody>
                 </table>
             </div>
-            <?= $pager->links('default', 'templatePaginacao') ?>
-        </div>
+            <?= $pager->links('default', 'templatePaginacao') ?></div>
     </div>
 </div>
 <!-- row closed -->

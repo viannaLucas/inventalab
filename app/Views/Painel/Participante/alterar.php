@@ -19,28 +19,28 @@
         </div>
         <div class="card-body pt-0">
             <form id='formAlterar' action="<?PHP echo base_url('Participante/doAlterar'); ?>" class="needs-validation" method="post" enctype="multipart/form-data" >
-                <input type="hidden" name="id" value="<?= $participante->id ?>" />
+                <input type="hidden" name="id" value="<?= esc($participante->id, 'attr') ?>" />
                 <div class="form-row">
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Nome</label> 
-                        <input class="form-control" name="nome" id="nome" type="text" maxlength="250" value="<?= $participante->nome ?>">
+                        <input class="form-control" name="nome" id="nome" type="text" maxlength="250" value="<?= esc($participante->nome, 'attr') ?>">
                     </div>                    
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Telefone</label> 
-                        <input class="form-control maskTel" name="telefone" id="telefone" type="text" value="<?= $participante->telefone ?>">
+                        <input class="form-control maskTel" name="telefone" id="telefone" type="text" value="<?= esc($participante->telefone, 'attr') ?>">
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Email</label> 
-                        <input class="form-control" name="email" id="email" type="text" maxlength="250" value="<?= $participante->email ?>">
+                        <input class="form-control" name="email" id="email" type="text" maxlength="250" value="<?= esc($participante->email, 'attr') ?>">
                     </div>                    
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Data Nascimento</label> 
-                        <input class="form-control maskData" name="dataNascimento" id="dataNascimento" type="text" value="<?= $participante->dataNascimento ?>">
+                        <input class="form-control maskData" name="dataNascimento" id="dataNascimento" type="text" value="<?= esc($participante->dataNascimento, 'attr') ?>">
                     </div>
                     <div class="form-group col-12 col-md-6 ">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">
                             Termo Responsabilidade <?PHP if($participante->termoResponsabilidade != '') { ?>
-                            <a id="btnDownloadTermo" class="btn btn-sm btn-primary ml-3" href="<?PHP echo base_url($participante->termoResponsabilidade); ?>" target="_blank">Fazer Download</a>
+                            <a id="btnDownloadTermo" class="btn btn-sm btn-primary ml-3" href="<?= esc(base_url($participante->termoResponsabilidade), 'attr') ?>" target="_blank">Fazer Download</a>
                             <?PHP } ?>
                         </label>
                         <div class="custom-file">
@@ -52,13 +52,13 @@
                         <label class="main-content-label tx-11 tx-medium tx-gray-600" for="suspenso">Suspenso</label> 
                         <select class="form-control" name="suspenso" id="suspenso" required="" >
                             <?PHP foreach (App\Entities\ParticipanteEntity::_op('suspenso') as $k => $op){ ?>
-                            <option value="<?= $k; ?>" <?= ((int)$participante->suspenso) === $k ? 'selected' : ''; ?>><?= $op; ?></option>
+                            <option value="<?= esc($k, 'attr') ?>" <?= ((int)$participante->suspenso) === $k ? 'selected' : ''; ?>><?= esc($op) ?></option>
                             <?PHP } ?>
                         </select>
                     </div>                    
                     <div class="form-group col-12 ">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Observações Gerais</label> 
-                        <textarea name="observacoesGerais" id="observacoesGerais" class="form-control" placeholder="" rows="3"><?= $participante->observacoesGerais ?></textarea>
+                        <textarea name="observacoesGerais" id="observacoesGerais" class="form-control" placeholder="" rows="3"><?= esc($participante->observacoesGerais) ?></textarea>
                     </div>                                        
                 <fieldset class="border rounded-10 m-0 mb-3 p-2 w-100">
                     <div class="border-bottom mx-n1 mb-3">
@@ -151,31 +151,31 @@
                         </div>
                         <div class="form-group col-12 col-md-6 nome-responsavel-container <?= $faturarResponsavel ? '' : 'd-none'; ?>">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">Nome do Responsável</label> 
-                            <input class="form-control" name="nomeResponsavel" id="nomeResponsavel" type="text" maxlength="100" value="<?= $participante->nomeResponsavel ?>">
+                            <input class="form-control" name="nomeResponsavel" id="nomeResponsavel" type="text" maxlength="100" value="<?= esc($participante->nomeResponsavel, 'attr') ?>">
                         </div>
                         <div class="form-group col-12 col-md-6">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">CPF</label> 
-                            <input class="form-control maskCPF" name="cpf" id="cpf" type="text" maxlength="20" value="<?= $participante->cpf ?>">
+                            <input class="form-control maskCPF" name="cpf" id="cpf" type="text" maxlength="20" value="<?= esc($participante->cpf, 'attr') ?>">
                         </div>
                         <div class="form-group col-12 col-md-6">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">CEP</label> 
-                            <input class="form-control" name="cep" id="cep" type="text" maxlength="10" value="<?= $participante->cep ?>">
+                            <input class="form-control" name="cep" id="cep" type="text" maxlength="10" value="<?= esc($participante->cep, 'attr') ?>">
                         </div>
                         <div class="form-group col-12">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">Logradouro</label> 
-                            <input class="form-control" name="logradouro" id="logradouro" type="text" maxlength="200" value="<?= $participante->logradouro ?>">
+                            <input class="form-control" name="logradouro" id="logradouro" type="text" maxlength="200" value="<?= esc($participante->logradouro, 'attr') ?>">
                         </div>
                         <div class="form-group col-12 col-md-6">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">Número</label> 
-                            <input class="form-control maskNumero20" name="numero" id="numero" type="text" maxlength="20" value="<?= $participante->numero ?>">
+                            <input class="form-control maskNumero20" name="numero" id="numero" type="text" maxlength="20" value="<?= esc($participante->numero, 'attr') ?>">
                         </div>
                         <div class="form-group col-12 col-md-6">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">Bairro</label> 
-                            <input class="form-control" name="bairro" id="bairro" type="text" maxlength="100" value="<?= $participante->bairro ?>">
+                            <input class="form-control" name="bairro" id="bairro" type="text" maxlength="100" value="<?= esc($participante->bairro, 'attr') ?>">
                         </div>
                         <div class="form-group col-12 col-md-6">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">Cidade</label> 
-                            <input class="form-control" name="cidade" id="cidade" type="text" maxlength="100" value="<?= $participante->cidade ?>">
+                            <input class="form-control" name="cidade" id="cidade" type="text" maxlength="100" value="<?= esc($participante->cidade, 'attr') ?>">
                         </div>
                         <input type="hidden" name="codigoCidade" id="codigoCidade" value="<?= esc($participante->codigoCidade ?? '', 'attr'); ?>">
                         <div class="form-group col-12 col-md-6">
@@ -183,7 +183,7 @@
                             <select class="form-control" name="uf" id="uf">
                                 <option value=""></option>
                                 <?php foreach ($ufs as $sigla => $nome) { ?>
-                                    <option value="<?= $sigla; ?>" <?= $participante->uf === $sigla ? 'selected' : ''; ?>><?= $nome; ?></option>
+                                    <option value="<?= esc($sigla, 'attr') ?>" <?= $participante->uf === $sigla ? 'selected' : ''; ?>><?= esc($nome) ?></option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -214,12 +214,8 @@
     </tr>
 </template>
 <!-- content closed -->
-<?= $this->endSection('content'); ?>
-
-<?= $this->section('styles'); ?>
-<?= $this->endSection('styles'); ?>
-
-<?= $this->section('scripts'); ?>
+<?= $this->endSection('content'); ?><?= $this->section('styles'); ?>
+<?= $this->endSection('styles'); ?><?= $this->section('scripts'); ?>
 <script>
     $('.submitButton').on('click', function(e){
         //$(this).attr('disabled', true);
@@ -422,7 +418,7 @@
 <?PHP foreach ($participante->getListHabilidades() as $i => $o) {
     $o->RecursoTrabalho_id_Text = $o->getRecursoTrabalho()->nome;
 ?>
-    insertRowHabilidades(<?= json_encode($o) ?>);
+    insertRowHabilidades(<?= json_encode($o ?>);
 <?PHP } ?>
 
     // Update file label when a new file is selected

@@ -19,14 +19,14 @@
         </div>
         <div class="card-body pt-0">
             <form id='formAlterar' action="<?PHP echo base_url('Configuracao/doAlterar'); ?>" class="needs-validation" method="post" enctype="multipart/form-data" >
-                <input type="hidden" name="id" value="<?= $configuracao->id ?>" />
+                <input type="hidden" name="id" value="<?= esc($configuracao->id, 'attr') ?>" />
                 <div class="form-row">
                     <div class="form-group col-12 col-md-6"> 
                         <label class="main-content-label tx-11 tx-medium tx-gray-600" for="lotacaoEspaco">Lotação Espaço</label>
                         <button type="button" class="btn btn-link p-0 ml-2 align-baseline text-info" data-toggle="modal" data-target="#configuracaoCampoAjuda" aria-label="Ajuda sobre os campos da configuração">
                             <span class="badge badge-secondary rounded-circle px-2">?</span>
                         </button>
-                        <input class="form-control maskInteiro" name="lotacaoEspaco" id="lotacaoEspaco" type="text" value="<?= $configuracao->lotacaoEspaco ?>">
+                        <input class="form-control maskInteiro" name="lotacaoEspaco" id="lotacaoEspaco" type="text" value="<?= esc($configuracao->lotacaoEspaco, 'attr') ?>">
                         <small class="form-text text-muted">Número de pessoas simultâneas no espaço (lotação)</small>
                     </div>                    
                     <div class="form-group col-12 col-md-6">
@@ -34,13 +34,13 @@
                         <button type="button" class="btn btn-link p-0 ml-2 align-baseline text-info" data-toggle="modal" data-target="#configuracaoCampoAjuda" aria-label="Ajuda sobre os campos da configuração">
                             <span class="badge badge-secondary rounded-circle px-2">?</span>
                         </button>
-                        <input class="form-control maskInteiro" name="intervaloEntrePesquisa" id="intervaloEntrePesquisa" type="text" value="<?= $configuracao->intervaloEntrePesquisa ?>">
+                        <input class="form-control maskInteiro" name="intervaloEntrePesquisa" id="intervaloEntrePesquisa" type="text" value="<?= esc($configuracao->intervaloEntrePesquisa, 'attr') ?>">
                         <small class="form-text text-muted">Intervalo mínimo em dias para enviar pesquisas</small>
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Serviço</label> 
                         <div class="input-group">
-                            <input class="form-control" name="servicoUsoEspaco_Text" id="servicoUsoEspaco_Text" type="text" disabled="true" onclick="$('#addonSearchservicoUsoEspaco').click()" value="<?= $configuracao->getServico()->Nome ?>"/>
+                            <input class="form-control" name="servicoUsoEspaco_Text" id="servicoUsoEspaco_Text" type="text" disabled="true" onclick="$('#addonSearchservicoUsoEspaco').click()" value="<?= esc($configuracao->getServico()->Nome, 'attr') ?>"/>
                             <div class="input-group-append">
                                 <button class="btn btn-outline-secondary" type="button" id="addonSearchservicoUsoEspaco" 
                                         data-toggle="modal" data-target="#modalFK" data-title='Localizar Serviço'
@@ -50,21 +50,21 @@
                                     </svg>
                                 </button>
                             </div>
-                            <input class="d-none" name="servicoUsoEspaco" id="servicoUsoEspaco" type="text" value="<?= $configuracao->getServico()->id ?>" />
+                            <input class="d-none" name="servicoUsoEspaco" id="servicoUsoEspaco" type="text" value="<?= esc($configuracao->getServico()->id, 'attr') ?>" />
                         </div>
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600" for="adicinarCalculoServico">Adicionar Cálculo Serviço</label>
                         <select class="form-control" name="adicinarCalculoServico" id="adicinarCalculoServico" required="">
                             <?PHP foreach (App\Entities\ConfiguracaoEntity::_op('adicinarCalculoServico') as $k => $op) { ?>
-                            <option value="<?= $k; ?>" <?= ((int)$configuracao->adicinarCalculoServico) === $k ? 'selected' : ''; ?>><?= $op; ?></option>
+                            <option value="<?= esc($k, 'attr') ?>" <?= ((int)$configuracao->adicinarCalculoServico) === $k ? 'selected' : ''; ?>><?= esc($op) ?></option>
                             <?PHP } ?>
                         </select>
                         <small class="form-text text-muted">Define se o cálculo do serviço deve ser aplicado automaticamente.</small>
                     </div>
                     <div class="col-12">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600" for="intervaloEntrePesquisa">Texto do Email de Confirmação</label>
-                        <textarea name="textoEmailConfirmacao" id="textoEmailConfirmacao" class="form-control summernote"><?= $configuracao->textoEmailConfirmacao ?></textarea>
+                        <textarea name="textoEmailConfirmacao" id="textoEmailConfirmacao" class="form-control summernote"><?= esc($configuracao->textoEmailConfirmacao) ?></textarea>
                     </div>
                 </div>                                        
                 <div class="form-group mb-0 mt-3 text-center col-12">
@@ -95,12 +95,8 @@
 </div>
 
 <!-- content closed -->
-<?= $this->endSection('content'); ?>
-
-<?= $this->section('styles'); ?>
-<?= $this->endSection('styles'); ?>
-
-<?= $this->section('scripts'); ?>
+<?= $this->endSection('content'); ?><?= $this->section('styles'); ?>
+<?= esc($this->endSection('styles'); ) ?><?= $this->section('scripts'); ?>
 <script>
     $('.submitButton').on('click', function(e){
         //$(this).attr('disabled', true);

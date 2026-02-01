@@ -9,7 +9,7 @@
     <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:600px;margin:0 auto;background:#ffffff;border:1px solid #e5e5e5;border-radius:8px;">
         <tr>
             <td style="padding: 24px; text-align:center; border-bottom:1px solid #eee;">
-                <img src="<?= base_url('assets/img/brand/logoLogin.png'); ?>" alt="InventaLab" width="160"/>
+                <img src="<?= esc(base_url('assets/img/brand/logoLogin.png'), 'attr') ?>" alt="InventaLab" width="160"/>
             </td>
         </tr>
         <tr>

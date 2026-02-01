@@ -32,10 +32,10 @@
                     <tbody>
                     <?PHP foreach ($vHorarioFuncionamento as $i) { ?>
                         <tr>
-                            <td><?= $i->id ?></td>
-                            <td><span style="color: <?= $i->_cl('diaSemana', $i->diaSemana) ?>;"><?= $i->_op('diaSemana', $i->diaSemana) ?></span></td>
-                            <td><?= $i->horaInicio ?></td>
-                            <td><?= $i->horaFinal ?></td>
+                            <td><?= esc($i->id) ?></td>
+                            <td><span style="color: <?= $i->_cl('diaSemana', $i->diaSemana) ?>;"><?= esc($i->_op('diaSemana', $i->diaSemana)) ?></span></td>
+                            <td><?= esc($i->horaInicio) ?></td>
+                            <td><?= esc($i->horaFinal) ?></td>
                             <td>
                                 <a href="<?php echo base_url('HorarioFuncionamento/alterar/' . $i->id); ?>" class="btn btn-primary  btn-sm">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -55,8 +55,7 @@
                     </tbody>
                 </table>
             </div>
-            <?= $pager->links('default', 'templatePaginacao') ?>
-        </div>
+            <?= $pager->links('default', 'templatePaginacao') ?></div>
     </div>
 </div>
 <!-- row closed -->

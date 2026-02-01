@@ -22,11 +22,11 @@
                 <div class="form-row">
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Nome</label> 
-                        <input class="form-control" name="nome" id="nome" type="text" maxlength="50" value="<?= old('nome') ?>">
+                        <input class="form-control" name="nome" id="nome" type="text" maxlength="50" value="<?= esc(old('nome'), 'attr') ?>">
                     </div>
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Email Login</label> 
-                        <input class="form-control email" name="login" id="login" type="text" maxlength="50" value="<?= old('login') ?>">
+                        <input class="form-control email" name="login" id="login" type="text" maxlength="50" value="<?= esc(old('login'), 'attr') ?>">
                     </div>
                     <!-- <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Senha</label> 
@@ -39,7 +39,7 @@
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">&nbsp;</label> 
                         <div class="custom-control custom-switch">
-                            <input  type="checkbox" class="custom-control-input" name='ativo' id="ativo" value="1" <?= old('ativo') == '1' ? 'checked':''  ?> >
+                            <input  type="checkbox" class="custom-control-input" name='ativo' id="ativo" value="1" <?= old('ativo') == '1' ? 'checked':'' ?> >
                             <label class="custom-control-label" for="ativo">Ativo</label>
                         </div>
                     </div>
@@ -67,8 +67,8 @@
                                     foreach ($lm as $nm => $m){ 
                                 ?>
                                 <tr class="permissoesUsuario">
-                                    <td class="text-left "><label class="ckbox"><input type="checkbox" name="permissoes[]" value="<?= $c.'.'.$nm; ?>"><span><?= $c; ?>: <?= $m['label']; ?></span></label></td>
-                                    <td><?= $m['descricao']; ?></td>
+                                    <td class="text-left "><label class="ckbox"><input type="checkbox" name="permissoes[]" value="<?= esc($c.'.'.$nm, 'attr') ?>"><span><?= $c; ?>: <?= $m['label']; ?></span></label></td>
+                                    <td><?= esc($m['descricao']) ?></td>
                                 </tr>
                                 <?PHP } } ?>
                             </tbody>
@@ -85,12 +85,8 @@
     </div>
 </div>
 <!-- row closed -->
-<?= $this->endSection('content'); ?>
-
-<?= $this->section('styles'); ?>
-<?= $this->endSection('styles'); ?>
-
-<?= $this->section('scripts'); ?>
+<?= $this->endSection('content'); ?><?= $this->section('styles'); ?>
+<?= esc($this->endSection('styles'); ) ?><?= $this->section('scripts'); ?>
 <script>
     
     $('.submitButton').on('click', function (e) {

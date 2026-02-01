@@ -14,13 +14,13 @@
             </thead>
             <tbody>
             <?PHP foreach ($vServico as $i) { ?>
-                <tr data-id='<?= $i->id ?>' data-text='<?= $i->Nome ?>' data-valor='<?= $i->valor ?>'>
-                    <!-- <td><?= $i->id ?></td> -->
-                    <td><?= $i->Nome ?></td>
-                    <td><?= $i->descricao ?></td>
-                    <td><?= $i->valor ?></td>
-                    <td><?= $i->unidade ?></td>
-                    <!-- <td><span style="color: <?= $i->_cl('ativo', $i->ativo) ?>;"><?= $i->_op('ativo', $i->ativo) ?></span></td> -->
+                <tr data-id='<?= esc($i->id, 'attr') ?>' data-text='<?= esc($i->Nome, 'attr') ?>' data-valor='<?= esc($i->valor, 'attr') ?>'>
+                    <!-- <td><?= esc($i->id) ?></td> -->
+                    <td><?= esc($i->Nome) ?></td>
+                    <td><?= esc($i->descricao) ?></td>
+                    <td><?= esc($i->valor) ?></td>
+                    <td><?= esc($i->unidade) ?></td>
+                    <!-- <td><span style="color: <?= $i->_cl('ativo', $i->ativo) ?>;"><?= esc($i->_op('ativo', $i->ativo)) ?></span></td> -->
                 </tr>
             <?PHP } ?>
             </tbody>
