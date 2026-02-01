@@ -53,5 +53,5 @@
 
 <!-- content closed -->
 <?= $this->endSection('content'); ?><?= $this->section('styles'); ?>
-<?= esc($this->endSection('styles'); ) ?><?= $this->section('scripts'); ?>
+<?= $this->endSection('styles'); ?><?= $this->section('scripts'); ?>
 <?= $this->endSection('scripts'); ?>

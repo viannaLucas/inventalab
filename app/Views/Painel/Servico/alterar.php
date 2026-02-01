@@ -523,7 +523,7 @@
     <?PHP foreach ($servico->getListServicoProduto() as $i => $o) {
         $o->Produto_id_Text = $o->getProduto()->nome;
     ?>
-        insertRowServicoProduto(<?= json_encode($o ?>);
+        insertRowServicoProduto(<?= json_encode($o) ?>);
     <?PHP } ?>
 
 </script>    

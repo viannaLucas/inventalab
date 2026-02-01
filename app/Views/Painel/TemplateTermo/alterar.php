@@ -43,7 +43,7 @@
 
 <!-- content closed -->
 <?= $this->endSection('content'); ?><?= $this->section('styles'); ?>
-<?= esc($this->endSection('styles'); ) ?><?= $this->section('scripts'); ?>
+<?= $this->endSection('styles'); ?><?= $this->section('scripts'); ?>
 <script>
     $('.submitButton').on('click', function(e){
         //$(this).attr('disabled', true);

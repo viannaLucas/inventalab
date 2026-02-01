@@ -204,7 +204,7 @@
 
 <!-- content closed -->
 <?= $this->endSection('content'); ?><?= $this->section('styles'); ?>
-<?= esc($this->endSection('styles'); ) ?><?= $this->section('scripts'); ?>
+<?= $this->endSection('styles'); ?><?= $this->section('scripts'); ?>
 <script>
     const baseUrlServicoApi = "<?= base_url('Servico/obterDadosServicoApiSesc/'); ?>";
     const baseUrlCodigoUnico = "<?= base_url('Servico/validarCodigoUnico'); ?>";

@@ -418,7 +418,7 @@
 <?PHP foreach ($participante->getListHabilidades() as $i => $o) {
     $o->RecursoTrabalho_id_Text = $o->getRecursoTrabalho()->nome;
 ?>
-    insertRowHabilidades(<?= json_encode($o ?>);
+    insertRowHabilidades(<?= json_encode($o) ?>);
 <?PHP } ?>
 
     // Update file label when a new file is selected

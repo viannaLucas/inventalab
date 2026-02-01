@@ -485,7 +485,7 @@
     <?PHP foreach ($cobranca->getListCobrancaProduto() as $i => $o) {
         $o->Produto_id_Text = $o->getProduto()->nome;
     ?>
-        insertRowCobrancaProduto(<?= json_encode($o ?>);
+        insertRowCobrancaProduto(<?= json_encode($o) ?>);
     <?PHP } ?>
     */
 </script>

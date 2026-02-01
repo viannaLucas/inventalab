@@ -364,7 +364,7 @@ $mostrarBotaoCobranca = $horaEntradaDefinida && $horaSaidaDefinida && $semCobran
     </div>
 </div>
 <?= $this->endSection(); ?><?= $this->section('styles'); ?>
-<?= esc($this->endSection('styles'); ) ?><?= $this->section('scripts'); ?>
+<?= $this->endSection('styles'); ?><?= $this->section('scripts'); ?>
 <script>
     const TURMA_ESCOLA_SIM = '0';
     const MASK_HORA = '00:00';

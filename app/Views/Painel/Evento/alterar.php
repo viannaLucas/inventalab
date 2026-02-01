@@ -811,7 +811,7 @@
             }
         }
     ?>
-        insertRowParticipanteEvento(<?= json_encode($o ?>);
+        insertRowParticipanteEvento(<?= json_encode($o) ?>);
     <?PHP } ?>
 
     function verificarDataHoraReservas() {
