@@ -223,6 +223,11 @@ class Reserva extends BaseController {
         if ($e === null) {
             return $this->returnWithError('Registro não encontrado.');
         } 
+        //verifica se é reserva de um evento e trasfere se for
+        $lev = $e->getListEventoReserva();
+        if(count($lev)>0){
+            return redirect()->to('Evento/alterar/'.$lev[0]->Evento_id.'#listaReservas');
+        }
         $servicoModel = new ServicoModel();
         $configuracao = ConfiguracaoModel::getConfiguracao();
         $usarCalculoUsoEspaco = false;

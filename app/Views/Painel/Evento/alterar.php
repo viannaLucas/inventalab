@@ -123,7 +123,8 @@
                         <textarea name="texto" id="texto" class="form-control summernote"><?= $evento->texto ?></textarea>
                     </div>
                     <fieldset class="border rounded-10 m-0 mb-3 p-2 w-100">
-                        <div class="border-bottom mx-n1 mb-3">
+                        <a id="listaReservas"></a>
+                        <div class="border-bottom mx-n1 mb-3" >
                             <h4 class="px-2">Reservas do Espaço</h4>
                             <p class="px-3 text-muted">Cadastre cada período em que o evento ocupará o espaço físico. É possível adicionar mais de um dia, inclusive com horários distintos.</p>
                         </div>

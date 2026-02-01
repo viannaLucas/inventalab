@@ -287,45 +287,45 @@ class UsuarioEntity extends EntityBase {
             // //     ],
                 
             // // ],
-            // 'Evento' => [
-            //     'alterar' => [
-            //         'metodos' => ['Evento::alterar', 'Evento::doAlterar','Evento::verificarDatasReserva', 'Participante::pesquisaModal', 'Servico::pesquisaModal'],
-            //         'label' => 'Alterar',
-            //         'descricao' => 'Permite alterar Evento',
-            //         'tipoAcesso' => 'usuario'
-            //     ],
-            //     'pesquisar' => [
-            //         'metodos' => ['Evento::pesquisar', 'Evento::doPesquisar',],
-            //         'label' => 'Pesquisar',
-            //         'descricao' => 'Permite Pesquisar Evento',
-            //         'tipoAcesso' => 'usuario'
-            //     ],
-            //     'cadastrar' => [
-            //         'metodos' => ['Evento::cadastrar', 'Evento::doCadastrar', 'Evento::verificarDatasReserva', 'Servico::pesquisaModal','Participante::pesquisaModal'],
-            //         'label' => 'Cadastrar',
-            //         'descricao' => 'Permite Cadastrar Evento',
-            //         'tipoAcesso' => 'usuario'
-            //     ],
-            //     'listar' => [
-            //         'metodos' => ['Evento::listar'],
-            //         'label' => 'Listar',
-            //         'descricao' => 'Permite Listar Evento',
-            //         'tipoAcesso' => 'usuario'
-            //     ],
-            //     'excluir' => [
-            //         'metodos' => ['Evento::excluir'],
-            //         'label' => 'Excluir',
-            //         'descricao' => 'Permite Excluir Evento',
-            //         'tipoAcesso' => 'usuario'
-            //     ],
-            //     'controlePresenca' => [
-            //         'metodos' => ['Evento::controlePresenca', 'Evento::definirPresenca', 'Evento::getPresentesEmControle', 'Evento::imprimirListaPresenca', 'Evento::imprimirEntregaMaterial', 'Evento::exportarListaParticipante'],
-            //         'label' => 'Controle Presença',
-            //         'descricao' => 'Permite definir presença dos participantes em um Controle de Presença de um Evento',
-            //         'tipoAcesso' => 'usuario'
-            //     ],
+            'Evento' => [
+                'alterar' => [
+                    'metodos' => ['Evento::alterar', 'Evento::doAlterar','Evento::verificarDatasReserva', 'Participante::pesquisaModal', 'Servico::pesquisaModal'],
+                    'label' => 'Alterar',
+                    'descricao' => 'Permite alterar Evento',
+                    'tipoAcesso' => 'usuario'
+                ],
+                'pesquisar' => [
+                    'metodos' => ['Evento::pesquisar', 'Evento::doPesquisar',],
+                    'label' => 'Pesquisar',
+                    'descricao' => 'Permite Pesquisar Evento',
+                    'tipoAcesso' => 'usuario'
+                ],
+                'cadastrar' => [
+                    'metodos' => ['Evento::cadastrar', 'Evento::doCadastrar', 'Evento::verificarDatasReserva', 'Servico::pesquisaModal','Participante::pesquisaModal'],
+                    'label' => 'Cadastrar',
+                    'descricao' => 'Permite Cadastrar Evento',
+                    'tipoAcesso' => 'usuario'
+                ],
+                'listar' => [
+                    'metodos' => ['Evento::listar'],
+                    'label' => 'Listar',
+                    'descricao' => 'Permite Listar Evento',
+                    'tipoAcesso' => 'usuario'
+                ],
+                'excluir' => [
+                    'metodos' => ['Evento::excluir'],
+                    'label' => 'Excluir',
+                    'descricao' => 'Permite Excluir Evento',
+                    'tipoAcesso' => 'usuario'
+                ],
+                'controlePresenca' => [
+                    'metodos' => ['Evento::controlePresenca', 'Evento::definirPresenca', 'Evento::getPresentesEmControle', 'Evento::imprimirListaPresenca', 'Evento::imprimirEntregaMaterial', 'Evento::exportarListaParticipante'],
+                    'label' => 'Controle Presença',
+                    'descricao' => 'Permite definir presença dos participantes em um Controle de Presença de um Evento',
+                    'tipoAcesso' => 'usuario'
+                ],
                 
-            // ],
+            ],
             // // 'EventoReserva' => [
             // //     'alterar' => [
             // //         'metodos' => ['EventoReserva::alterar', 'EventoReserva::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal'],
