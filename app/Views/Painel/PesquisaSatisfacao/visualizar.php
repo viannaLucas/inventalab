@@ -20,11 +20,6 @@
         <div class="card-body pt-0">
                 <input type="hidden" name="id" value="<?= $pesquisasatisfacao->id ?>" />
                 <div class="form-row">
-                    
-                    <div class="form-group col-12 col-md-6">
-                        <label class="main-content-label tx-11 tx-medium tx-gray-600">Participante</label> 
-                        <input class="form-control maskInteiro" name="Participante_id" id="Participante_id" type="text" value="<?= $pesquisasatisfacao->Participante_id ?>">
-                    </div>                    
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Resposta 1</label> 
                         <input class="form-control maskInteiro" name="resposta1" id="resposta1" type="text" value="<?= $pesquisasatisfacao->resposta1 ?>">

@@ -31,8 +31,8 @@ class PesquisaSatisfacaoModel extends BaseModel{
             if($v == '') unset($data[$k]);
         }
         $this->builder()->resetQuery();
-        if(isset($data['Participante_idStart'])) $this->where('Participante_id >=', $data['Participante_idStart']);
-        if(isset($data['Participante_idEnd'])) $this->where('Participante_id <=', $data['Participante_idEnd']);
+        // if(isset($data['Participante_idStart'])) $this->where('Participante_id >=', $data['Participante_idStart']);
+        // if(isset($data['Participante_idEnd'])) $this->where('Participante_id <=', $data['Participante_idEnd']);
         if(isset($data['resposta1Start'])) $this->where('resposta1 >=', $data['resposta1Start']);
         if(isset($data['resposta1End'])) $this->where('resposta1 <=', $data['resposta1End']);
         if(isset($data['resposta2Start'])) $this->where('resposta2 >=', $data['resposta2Start']);
