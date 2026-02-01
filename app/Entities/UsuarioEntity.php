@@ -128,19 +128,19 @@ class UsuarioEntity extends EntityBase {
             ],
             'Produto' => [
                 'alterar' => [
-                    'metodos' => ['Produto::alterar', 'Produto::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal'],
+                    'metodos' => ['Produto::alterar', 'Produto::doAlterar'],
                     'label' => 'Alterar',
                     'descricao' => 'Permite alterar Produto',
                     'tipoAcesso' => 'usuario'
                 ],
                 'pesquisar' => [
-                    'metodos' => ['Produto::pesquisar', 'Produto::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal'],
+                    'metodos' => ['Produto::pesquisar', 'Produto::doPesquisar'],
                     'label' => 'Pesquisar',
                     'descricao' => 'Permite Pesquisar Produto',
                     'tipoAcesso' => 'usuario'
                 ],
                 'cadastrar' => [
-                    'metodos' => ['Produto::cadastrar', 'Produto::doCadastrar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal'],
+                    'metodos' => ['Produto::cadastrar', 'Produto::doCadastrar'],
                     'label' => 'Cadastrar',
                     'descricao' => 'Permite Cadastrar Produto',
                     'tipoAcesso' => 'usuario'
@@ -219,7 +219,7 @@ class UsuarioEntity extends EntityBase {
                     'tipoAcesso' => 'usuario'
                 ],
                 'pesquisar' => [
-                    'metodos' => ['PesquisaSatisfacao::pesquisar', 'PesquisaSatisfacao::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal'],
+                    'metodos' => ['PesquisaSatisfacao::pesquisar', 'PesquisaSatisfacao::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal'],
                     'label' => 'Pesquisar',
                     'descricao' => 'Permite Pesquisar PesquisaSatisfacao',
                     'tipoAcesso' => 'usuario'
@@ -281,19 +281,19 @@ class UsuarioEntity extends EntityBase {
             ],
             'Reserva' => [
                 'alterar' => [
-                    'metodos' => ['Reserva::alterar', 'Reserva::doAlterar', 'Reserva::definirEntrada', 'Reserva::definirSaida','OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'Participante::getDadosParticipante', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal'],
+                    'metodos' => ['Reserva::alterar', 'Reserva::doAlterar', 'Reserva::definirEntrada', 'Reserva::definirSaida','Participante::pesquisaModal', 'OficinaTematica::pesquisaModal'],
                     'label' => 'Alterar',
                     'descricao' => 'Permite alterar Reserva',
                     'tipoAcesso' => 'usuario'
                 ],
                 'pesquisar' => [
-                    'metodos' => ['Reserva::pesquisar', 'Reserva::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal'],
+                    'metodos' => ['Reserva::pesquisar', 'Reserva::doPesquisar', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'OficinaTematica::pesquisaModal'],
                     'label' => 'Pesquisar',
                     'descricao' => 'Permite Pesquisar Reserva',
                     'tipoAcesso' => 'usuario'
                 ],
                 'cadastrar' => [
-                    'metodos' => ['Reserva::cadastrar', 'Reserva::doCadastrar', 'Reserva::listaReservaJson', 'OficinaTematica::descricao', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'Participante::getDadosParticipante', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal'],
+                    'metodos' => ['Reserva::cadastrar', 'Reserva::doCadastrar', 'Reserva::listaReservaJson', 'OficinaTematica::descricao', 'Participante::pesquisaModal', 'OficinaTematica::pesquisaModal'],
                     'label' => 'Cadastrar',
                     'descricao' => 'Permite Cadastrar Reserva',
                     'tipoAcesso' => 'usuario'
@@ -339,7 +339,7 @@ class UsuarioEntity extends EntityBase {
             ],
             'TemplateTermo' => [
                 'alterar' => [
-                    'metodos' => ['TemplateTermo::alterar', 'TemplateTermo::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Reserva::pesquisaModal'],
+                    'metodos' => ['TemplateTermo::alterar', 'TemplateTermo::doAlterar'],
                     'label' => 'Alterar',
                     'descricao' => 'Permite alterar Template do Termo',
                     'tipoAcesso' => 'usuario'
