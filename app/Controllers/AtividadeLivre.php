@@ -9,7 +9,10 @@ use App\Models\AtividadeLivreRecursoModel;
 use App\Entities\AtividadeLivreRecursoEntity;
 
 
-class AtividadeLivre extends BaseController {    public function pesquisaModal() {
+class AtividadeLivre extends BaseController
+{
+    public function pesquisaModal()
+    {
         $m = new AtividadeLivreModel();
         $m->buildFindModal($this->request->getGet('searchTerm'));
         $data = [

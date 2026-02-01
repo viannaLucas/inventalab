@@ -9,17 +9,21 @@ use App\Models\GarantiaModel;
 use App\Entities\GarantiaEntity;
 
 
-class RecursoTrabalho extends BaseController {
+class RecursoTrabalho extends BaseController
+{
 
-    public function index() {
+    public function index()
+    {
         return $this->cadastrar();
     }
 
-    public function cadastrar() {
+    public function cadastrar()
+    {
         return view('Painel/RecursoTrabalho/cadastrar');
     }
 
-    public function doCadastrar() {
+    public function doCadastrar()
+    {
         $m = new RecursoTrabalhoModel();
         $ef = $this->validateWithRequest($m->getValidationRulesFiles());
         if ($ef !== true) {
@@ -29,14 +33,14 @@ class RecursoTrabalho extends BaseController {
         $e->foto = $this->getRandomName('foto');
         $m->db->transStart();
         try {
-            if ($m->insert($e, false)) { 
+            if ($m->insert($e, false)) {
                 $m->uploadImage($this->request->getFile('foto'), $e->foto);
                 $mGarantia = new GarantiaModel();
                 $Garantia = $this->request->getPost('Garantia') ?? [];
-                foreach ($Garantia as $pp){
+                foreach ($Garantia as $pp) {
                     $pp['RecursoTrabalho_id'] = $m->getInsertID();
                     $eGarantia = new GarantiaEntity($pp);
-                    if(!$mGarantia->insert($eGarantia, false)){
+                    if (!$mGarantia->insert($eGarantia, false)) {
                         return $this->returnWithError($mGarantia->errors());
                     }
                 }
@@ -50,19 +54,21 @@ class RecursoTrabalho extends BaseController {
         }
     }
 
-    public function alterar() {
+    public function alterar()
+    {
         $m = new RecursoTrabalhoModel();
         $e = $m->find($this->request->getUri()->getSegment(3));
         if ($e === null) {
             return $this->returnWithError('Registro não encontrado.');
-        } 
+        }
         $data = [
             'recursotrabalho' => $e,
         ];
         return view('Painel/RecursoTrabalho/alterar', $data);
     }
 
-    public function doAlterar() {
+    public function doAlterar()
+    {
         $m = new RecursoTrabalhoModel();
         $ef = $this->validateWithRequest($m->getValidationRulesFiles());
         if ($ef !== true) {
@@ -73,44 +79,46 @@ class RecursoTrabalho extends BaseController {
             return $this->returnWithError('Registro não encontrado.');
         }
         $en = new RecursoTrabalhoEntity($this->request->getPost());
-        try{ 
+        try {
             $ru['foto'] = $m->uploadImage($this->request->getFile('foto'), null, RecursoTrabalhoEntity::folder);
             $en->foto = $ru['foto'] !== false ? $ru['foto'] : $e->foto;
             $m->db->transStart();
-            if ($m->update($en->id, $en)) { 
+            if ($m->update($en->id, $en)) {
                 $mGarantia = new GarantiaModel();
-                $idsDelete = array_map(fn($v):int => $v->id, $e->getListGarantia());
-                if(count($idsDelete)>0){
+                $idsDelete = array_map(fn($v): int => $v->id, $e->getListGarantia());
+                if (count($idsDelete) > 0) {
                     $mGarantia->delete($idsDelete);
                 }
                 $Garantia = $this->request->getPost('Garantia') ?? [];
-                foreach ($Garantia as $pp){
+                foreach ($Garantia as $pp) {
                     $pp['RecursoTrabalho_id'] = $e->id;
                     $eGarantia = new GarantiaEntity($pp);
-                    if(!$mGarantia->insert($eGarantia, false)){
+                    if (!$mGarantia->insert($eGarantia, false)) {
                         return $this->returnWithError($mGarantia->errors());
                     }
                 }
-                if($ru['foto'] !== false) $m->deleteFile($e->foto);
+                if ($ru['foto'] !== false) $m->deleteFile($e->foto);
                 $m->db->transComplete();
                 return $this->returnSucess('Cadastrado com sucesso!');
-            } else { 
+            } else {
                 $m->deleteFiles($ru);
                 return $this->returnWithError($m->errors());
             }
-        }catch (\Exception $ex){ 
-            if($ru['foto'] != false){
+        } catch (\Exception $ex) {
+            if ($ru['foto'] != false) {
                 $m->deleteFile($ru['foto']);
             }
             return $this->returnWithError($ex->getMessage());
         }
     }
-    
-    public function pesquisar(){
+
+    public function pesquisar()
+    {
         return view('Painel/RecursoTrabalho/pesquisar');
     }
-    
-    public function doPesquisar(){
+
+    public function doPesquisar()
+    {
         $m = new RecursoTrabalhoModel();
         $m->buildFindList($this->request->getGet());
         $data = [
@@ -119,15 +127,18 @@ class RecursoTrabalho extends BaseController {
         ];
         return view('Painel/RecursoTrabalho/resposta',  $data);
     }
-    
-    public function listar() {
+
+    public function listar()
+    {
         $m = new RecursoTrabalhoModel();
         $data = [
             'vRecursoTrabalho' => $m->paginate(self::itensPaginacao),
             'pager' => $m->pager,
         ];
         return view('Painel/RecursoTrabalho/listar', $data);
-    }    public function pesquisaModal() {
+    }
+    public function pesquisaModal()
+    {
         $m = new RecursoTrabalhoModel();
         $m->buildFindModal($this->request->getGet('searchTerm'));
         $data = [

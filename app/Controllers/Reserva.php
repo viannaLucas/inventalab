@@ -40,13 +40,16 @@ use DateTime;
 use DateTimeImmutable;
 use stdClass;
 
-class Reserva extends BaseController {
+class Reserva extends BaseController
+{
 
-    public function index() {
+    public function index()
+    {
         return $this->cadastrar();
     }
 
-    public function cadastrar() {
+    public function cadastrar()
+    {
         $data['vOficinaTematica'] = (new OficinaTematicaModel())
             ->where('situacao', 0)->findAll();
         $data['vHorarioFuncionamento'] = (new HorarioFuncionamentoModel())
@@ -63,14 +66,14 @@ class Reserva extends BaseController {
             ->where('dataReserva >= CURRENT_DATE')->findAll();
 
         $data['itensReserva'] = $this->formatarReservaView($vReserva);
-        
+
         $lRecursoTrabaho = (new RecursoTrabalhoModel())
-                ->where('situacaoTrabalho', RecursoTrabalhoEntity::SITUACAO_TRABALHO_ATIVO)
-                ->findAll();
-        foreach($lRecursoTrabaho as $rt){
+            ->where('situacaoTrabalho', RecursoTrabalhoEntity::SITUACAO_TRABALHO_ATIVO)
+            ->findAll();
+        foreach ($lRecursoTrabaho as $rt) {
             $ac = new \stdClass();
             $ac->id = $rt->id;
-            $ac->exclusive = $rt->usoExclusivo == 1; 
+            $ac->exclusive = $rt->usoExclusivo == 1;
             $ac->name = $rt->nome;
             $ac->quantity = 1;
             $data['vRecursoTrabalho'][] = $ac;
@@ -94,27 +97,29 @@ class Reserva extends BaseController {
     private function formatarReservaView($vReserva): array
     {
         $itensReserva = [];
-        foreach($vReserva as $r){
+        foreach ($vReserva as $r) {
             $i = new stdClass();
             $i->date = DateTime::createFromFormat('d/m/Y', $r->dataReserva)->format(('Y-m-d'));
             $i->start = $r->horaInicio;
             $i->duration = $r->getDuracaoEmMinutos();
-            $i->people = $r->numeroConvidados+1;
+            $i->people = $r->numeroConvidados + 1;
             $i->exclusive = $r->tipo == ReservaEntity::TIPO_EXCLUSIVA;
-            $i->name = count($r->getListReservaParticipante())>0 ? $r->getListReservaParticipante()[0]?->getParticipante()?->nome : '';
+            $i->name = count($r->getListReservaParticipante()) > 0 ? $r->getListReservaParticipante()[0]?->getParticipante()?->nome : '';
             $vOficinaTematica = $r->getListOficinaTematicaReserva();
             $ac = new stdClass();
-            if(!empty($vOficinaTematica)){
+            if (!empty($vOficinaTematica)) {
                 $ac->type = 'oficina';
                 $ac->id = $vOficinaTematica[0]->id;
             }
             $vAtividadeLivre = $r->getListAtividadeLivre();
-            if(!empty($vAtividadeLivre)){
+            if (!empty($vAtividadeLivre)) {
                 $ac->type = 'livre';
                 $ac->descricao = 'Atividade Livre';
-                $ac->resourceIds = array_map(function($n){ $n->id; }, $vAtividadeLivre[0]->getListAtividadeLivreRecurso());
-            }            
-            $i->activity = $ac;            
+                $ac->resourceIds = array_map(function ($n) {
+                    $n->id;
+                }, $vAtividadeLivre[0]->getListAtividadeLivreRecurso());
+            }
+            $i->activity = $ac;
             $itensReserva[] = $i;
         }
         return $itensReserva;
@@ -127,7 +132,8 @@ class Reserva extends BaseController {
         return $this->response->setJSON($this->formatarReservaView($vReserva));
     }
 
-    public function doCadastrar() {
+    public function doCadastrar()
+    {
         $data = $this->request->getJSON();
         $validador = new ValidacaoCadastroReserva();
         $resultadoValidacao = $validador->validarDadosInputCadastrar($data);
@@ -142,15 +148,15 @@ class Reserva extends BaseController {
                 return $this->prepareErrorJson('Participante suspenso.');
             }
         }
-        
+
         $reservaModel = new ReservaModel();
         $reservaModel->db->transStart();
         try {
-            foreach($data->interval as $r){
-                $inicioReserva = DateTime::createFromFormat('Y-m-d H:i', $data->date.' '.$r->start);
+            foreach ($data->interval as $r) {
+                $inicioReserva = DateTime::createFromFormat('Y-m-d H:i', $data->date . ' ' . $r->start);
                 $fimReserva = clone $inicioReserva;
-                $fimReserva->add(new DateInterval('PT'.$r->duration.'M'));
-                
+                $fimReserva->add(new DateInterval('PT' . $r->duration . 'M'));
+
                 $reservaEntity = new ReservaEntity();
                 $reservaEntity->dataCadastro = (new DateTime())->format(('d/m/Y'));
                 $reservaEntity->dataReserva = DateTime::createFromFormat('Y-m-d', $data->date)->format('d/m/Y');
@@ -171,39 +177,38 @@ class Reserva extends BaseController {
                 $resPartEntity->Participante_id = $data->participantId;
                 $resPartEntity->Reserva_id = $reservaEntity->id;
                 $participanteModel = new ReservaParticipanteModel();
-                if(!$participanteModel->insert($resPartEntity, false)){
+                if (!$participanteModel->insert($resPartEntity, false)) {
                     return $this->prepareErrorJson(['Erro ao cadastrar Reserva Participante', ...$participanteModel->errors()]);
                 }
 
-                if($data->activity->type == 'oficina'){
+                if ($data->activity->type == 'oficina') {
                     $oficTematicaReserva = new OficinaTematicaReservaEntity();
                     $oficTematicaReserva->Reserva_id = $reservaEntity->id;
                     $oficTematicaReserva->OficinaTematica_id = $data->activity->id;
                     $oficTematicaReserva->observacao = $data->note;
                     $oficTemModel = new OficinaTematicaReservaModel();
-                    if(!$oficTemModel->insert($oficTematicaReserva, false)){
+                    if (!$oficTemModel->insert($oficTematicaReserva, false)) {
                         return $this->prepareErrorJson(['Erro ao Vincular Oficina Reserva', ...$oficTemModel->errors()]);
                     }
                 }
-                if($data->activity->type == 'livre'){
+                if ($data->activity->type == 'livre') {
                     $ativLivreEntity = new AtividadeLivreEntity();
                     $ativLivreEntity->Reserva_id = $reservaEntity->id;
                     $ativLivreEntity->descricao = $data->activity->description;
                     $ativLivreModel = new AtividadeLivreModel();
-                    if(!$ativLivreModel->insert($ativLivreEntity, false)){
+                    if (!$ativLivreModel->insert($ativLivreEntity, false)) {
                         return $this->prepareErrorJson(['Erro ao Vincular Atividade Livre', ...$ativLivreModel->errors()]);
                     }
                     $ativLivreRecurso = new AtividadeLivreRecursoEntity();
                     $ativLivreRecurso->AtividadeLivre_id = $ativLivreModel->getInsertID();
                     $ativLivreRecursoModel = new AtividadeLivreRecursoModel();
-                    foreach($data->activity->resourceIds as $r_id){
-                        $ativLivreRecurso->RecursoTrabalho_id = $r_id;                        
-                        if(!$ativLivreRecursoModel->insert($ativLivreRecurso, false)){
+                    foreach ($data->activity->resourceIds as $r_id) {
+                        $ativLivreRecurso->RecursoTrabalho_id = $r_id;
+                        if (!$ativLivreRecursoModel->insert($ativLivreRecurso, false)) {
                             return $this->prepareErrorJson(['Erro ao Vincular Recursos à Atividade Livre', ...$ativLivreRecursoModel->errors()]);
                         }
                     }
                 }
-
             }
             $reservaModel->db->transComplete();
             $sucesso = ['erro' => false, 'msg' => 'Cadastrado com sucesso!'];
@@ -212,24 +217,25 @@ class Reserva extends BaseController {
             return $this->prepareErrorJson($ex->getMessage());
         }
     }
-    
+
     private function prepareErrorJson(string|array $errors): ResponseInterface
-    {   
+    {
         $msg = is_array($errors) ? implode("\n", $errors) : $errors;
         $error = ['erro' => true, 'msg' => $msg];
         return $this->response->setJson($error);
     }
 
-    public function alterar() {
+    public function alterar()
+    {
         $m = new ReservaModel();
         $e = $m->find($this->request->getUri()->getSegment(3));
         if ($e === null) {
             return $this->returnWithError('Registro não encontrado.');
-        } 
+        }
         //verifica se é reserva de um evento e trasfere se for
         $lev = $e->getListEventoReserva();
-        if(count($lev)>0){
-            return redirect()->to('Evento/alterar/'.$lev[0]->Evento_id.'#listaReservas');
+        if (count($lev) > 0) {
+            return redirect()->to('Evento/alterar/' . $lev[0]->Evento_id . '#listaReservas');
         }
         $servicoModel = new ServicoModel();
         $configuracao = ConfiguracaoModel::getConfiguracao();
@@ -260,7 +266,8 @@ class Reserva extends BaseController {
         return view('Painel/Reserva/alterar', $data);
     }
 
-    public function doAlterar() {
+    public function doAlterar()
+    {
         $m = new ReservaModel();
         $post = $this->request->getPost();
         $dataReserva = trim((string) ($post['dataReserva'] ?? ''));
@@ -324,76 +331,78 @@ class Reserva extends BaseController {
             }
         }
         $en = new ReservaEntity($post);
-        try{ 
+        try {
             $m->db->transStart();
-            if ($m->update($en->id, $en)) { 
+            if ($m->update($en->id, $en)) {
                 $mAtividadeLivre = new AtividadeLivreModel();
-                $idsDelete = array_map(fn($v):int => $v->id, $e->getListAtividadeLivre());
-                if(count($idsDelete)>0){
+                $idsDelete = array_map(fn($v): int => $v->id, $e->getListAtividadeLivre());
+                if (count($idsDelete) > 0) {
                     $mAtividadeLivre->delete($idsDelete);
                 }
                 $AtividadeLivre = $this->request->getPost('AtividadeLivre') ?? [];
-                foreach ($AtividadeLivre as $pp){
+                foreach ($AtividadeLivre as $pp) {
                     $pp['Reserva_id'] = $e->id;
                     $eAtividadeLivre = new AtividadeLivreEntity($pp);
-                    if(!$mAtividadeLivre->insert($eAtividadeLivre, false)){
+                    if (!$mAtividadeLivre->insert($eAtividadeLivre, false)) {
                         return $this->returnWithError($mAtividadeLivre->errors());
                     }
                 }
                 $mEventoReserva = new EventoReservaModel();
-                $idsDelete = array_map(fn($v):int => $v->id, $e->getListEventoReserva());
-                if(count($idsDelete)>0){
+                $idsDelete = array_map(fn($v): int => $v->id, $e->getListEventoReserva());
+                if (count($idsDelete) > 0) {
                     $mEventoReserva->delete($idsDelete);
                 }
                 $EventoReserva = $this->request->getPost('EventoReserva') ?? [];
-                foreach ($EventoReserva as $pp){
+                foreach ($EventoReserva as $pp) {
                     $pp['Reserva_id'] = $e->id;
                     $eEventoReserva = new EventoReservaEntity($pp);
-                    if(!$mEventoReserva->insert($eEventoReserva, false)){
+                    if (!$mEventoReserva->insert($eEventoReserva, false)) {
                         return $this->returnWithError($mEventoReserva->errors());
                     }
                 }
                 $mOficinaTematicaReserva = new OficinaTematicaReservaModel();
-                $idsDelete = array_map(fn($v):int => $v->id, $e->getListOficinaTematicaReserva());
-                if(count($idsDelete)>0){
+                $idsDelete = array_map(fn($v): int => $v->id, $e->getListOficinaTematicaReserva());
+                if (count($idsDelete) > 0) {
                     $mOficinaTematicaReserva->delete($idsDelete);
                 }
                 $OficinaTematicaReserva = $this->request->getPost('OficinaTematicaReserva') ?? [];
-                foreach ($OficinaTematicaReserva as $pp){
+                foreach ($OficinaTematicaReserva as $pp) {
                     $pp['Reserva_id'] = $e->id;
                     $eOficinaTematicaReserva = new OficinaTematicaReservaEntity($pp);
-                    if(!$mOficinaTematicaReserva->insert($eOficinaTematicaReserva, false)){
+                    if (!$mOficinaTematicaReserva->insert($eOficinaTematicaReserva, false)) {
                         return $this->returnWithError($mOficinaTematicaReserva->errors());
                     }
                 }
                 $mReservaParticipante = new ReservaParticipanteModel();
-                $idsDelete = array_map(fn($v):int => $v->id, $e->getListReservaParticipante());
-                if(count($idsDelete)>0){
+                $idsDelete = array_map(fn($v): int => $v->id, $e->getListReservaParticipante());
+                if (count($idsDelete) > 0) {
                     $mReservaParticipante->delete($idsDelete);
                 }
                 $ReservaParticipante = $this->request->getPost('ReservaParticipante') ?? [];
-                foreach ($ReservaParticipante as $pp){
+                foreach ($ReservaParticipante as $pp) {
                     $pp['Reserva_id'] = $e->id;
                     $eReservaParticipante = new ReservaParticipanteEntity($pp);
-                    if(!$mReservaParticipante->insert($eReservaParticipante, false)){
+                    if (!$mReservaParticipante->insert($eReservaParticipante, false)) {
                         return $this->returnWithError($mReservaParticipante->errors());
                     }
                 }
                 $m->db->transComplete();
                 return $this->returnSucess('Cadastrado com sucesso!');
-            } else { 
+            } else {
                 return $this->returnWithError($m->errors());
             }
-        }catch (\Exception $ex){ 
+        } catch (\Exception $ex) {
             return $this->returnWithError($ex->getMessage());
         }
     }
 
-    public function pesquisar(){
+    public function pesquisar()
+    {
         return view('Painel/Reserva/pesquisar');
     }
-    
-    public function doPesquisar(){
+
+    public function doPesquisar()
+    {
         $m = new ReservaModel();
         $m->buildFindList($this->request->getGet());
         $data = [
@@ -402,15 +411,18 @@ class Reserva extends BaseController {
         ];
         return view('Painel/Reserva/resposta',  $data);
     }
-    
-    public function listar() {
+
+    public function listar()
+    {
         $m = new ReservaModel();
         $data = [
             'vReserva' => $m->orderBy('id', 'DESC')->paginate(self::itensPaginacao),
             'pager' => $m->pager,
         ];
         return view('Painel/Reserva/listar', $data);
-    }    public function pesquisaModal() {
+    }
+    public function pesquisaModal()
+    {
         $m = new ReservaModel();
         $m->buildFindModal($this->request->getGet('searchTerm'));
         $data = [
@@ -425,7 +437,7 @@ class Reserva extends BaseController {
         $e = $m->find($this->request->getUri()->getSegment(3));
         if ($e === null) {
             return $this->returnWithError('Registro não encontrado.');
-        } 
+        }
         $participantes = $e->getListReservaParticipante();
         $participante = isset($participantes[0]) ? $participantes[0]->getParticipante() : null;
         if ($participante && (int) $participante->suspenso === ParticipanteEntity::SUSPENSO_SIM) {
@@ -440,10 +452,10 @@ class Reserva extends BaseController {
         if ($dataHora === false) {
             return $this->returnWithError('Não foi possível processar a hora informada.');
         }
-        
+
         $e->horaEntrada = $dataHora->format('Y-m-d H:i:s');
-        if(!$m->update($e->id, $e)){
-            return $this->returnWithError('Erro ao definir "Hora Entrada". '. implode(' ', $m->errors()));
+        if (!$m->update($e->id, $e)) {
+            return $this->returnWithError('Erro ao definir "Hora Entrada". ' . implode(' ', $m->errors()));
         }
         return $this->returnSucess('Entrada definida com sucesso!');
     }
@@ -471,7 +483,7 @@ class Reserva extends BaseController {
             return $querJson
                 ? $this->response->setStatusCode(404)->setJSON(['erro' => true, 'msg' => 'Registro não encontrado.'])
                 : $this->returnWithError('Registro não encontrado.');
-        } 
+        }
         $hora = trim((string) ($payload['hora'] ?? ''));
         if ($hora === '' || !preg_match('/^(?:[01]\d|2[0-3]):[0-5]\d$/', $hora)) {
             $msg = 'Hora inválida. Utilize o formato HH:MM.';
@@ -917,7 +929,7 @@ class Reserva extends BaseController {
                 'nome'         => (string) ($item['nome'] ?? ''),
                 'unidade'      => (string) ($item['unidade'] ?? ''),
                 'quantidade'   => $quantidade,
-                'valorUnitario'=> $valorUnitario,
+                'valorUnitario' => $valorUnitario,
                 'total'        => $total,
             ];
         }, $servicosMap));

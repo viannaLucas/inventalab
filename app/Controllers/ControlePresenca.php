@@ -9,7 +9,10 @@ use App\Models\PresencaEventoModel;
 use App\Entities\PresencaEventoEntity;
 
 
-class ControlePresenca extends BaseController {    public function pesquisaModal() {
+class ControlePresenca extends BaseController
+{
+    public function pesquisaModal()
+    {
         $m = new ControlePresencaModel();
         $m->buildFindModal($this->request->getGet('searchTerm'));
         $data = [

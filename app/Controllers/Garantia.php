@@ -6,17 +6,21 @@ use App\Controllers\BaseController;
 use App\Models\GarantiaModel;
 use App\Entities\GarantiaEntity;
 
-class Garantia extends BaseController {
+class Garantia extends BaseController
+{
 
-    public function index() {
+    public function index()
+    {
         return $this->cadastrar();
     }
 
-    public function cadastrar() {
+    public function cadastrar()
+    {
         return view('Painel/Garantia/cadastrar');
     }
 
-    public function doCadastrar() {
+    public function doCadastrar()
+    {
         $m = new GarantiaModel();
         $ef = $this->validateWithRequest($m->getValidationRulesFiles());
         if ($ef !== true) {
@@ -25,7 +29,7 @@ class Garantia extends BaseController {
         $e = new GarantiaEntity($this->request->getPost());
         $m->db->transStart();
         try {
-            if ($m->insert($e, false)) { 
+            if ($m->insert($e, false)) {
                 $m->db->transComplete();
                 return $this->returnSucess('Cadastrado com sucesso!');
             } else {
@@ -36,12 +40,13 @@ class Garantia extends BaseController {
         }
     }
 
-    public function alterar() {
+    public function alterar()
+    {
         $m = new GarantiaModel();
         $e = $m->find($this->request->getUri()->getSegment(3));
         if ($e === null) {
             return $this->returnWithError('Registro não encontrado.');
-        } 
+        }
         $recursotrabalho = new \App\Models\RecursotrabalhoModel();
         $data = [
             'garantia' => $e,
@@ -50,7 +55,8 @@ class Garantia extends BaseController {
         return view('Painel/Garantia/alterar', $data);
     }
 
-    public function doAlterar() {
+    public function doAlterar()
+    {
         $m = new GarantiaModel();
         $ef = $this->validateWithRequest($m->getValidationRulesFiles());
         if ($ef !== true) {
@@ -61,32 +67,35 @@ class Garantia extends BaseController {
             return $this->returnWithError('Registro não encontrado.');
         }
         $en = new GarantiaEntity($this->request->getPost());
-        try{ 
+        try {
             $m->db->transStart();
-            if ($m->update($en->id, $en)) { 
+            if ($m->update($en->id, $en)) {
                 $m->db->transComplete();
                 return $this->returnSucess('Cadastrado com sucesso!');
-            } else { 
+            } else {
                 return $this->returnWithError($m->errors());
             }
-        }catch (\Exception $ex){ 
+        } catch (\Exception $ex) {
             return $this->returnWithError($ex->getMessage());
         }
-    }    public function excluir() {
+    }
+    public function excluir()
+    {
         $m = new GarantiaModel();
         $e = $m->find($this->request->getUri()->getSegment(3));
         if ($e === null) {
             return $this->returnWithError('Registro não encontrado.');
         }
         $m->db->transStart();
-        if ($m->delete($e->id)) { 
+        if ($m->delete($e->id)) {
             $m->db->transComplete();
             return $this->returnSucess('Excluído com sucesso!');
         }
         return $this->returnWithError('Erro ao excluir registro.');
     }
-    
-    public function pesquisaModal() {
+
+    public function pesquisaModal()
+    {
         $m = new GarantiaModel();
         $m->buildFindModal($this->request->getGet('searchTerm'));
         $data = [

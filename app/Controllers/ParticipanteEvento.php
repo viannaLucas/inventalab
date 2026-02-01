@@ -6,7 +6,10 @@ use App\Controllers\BaseController;
 use App\Models\ParticipanteEventoModel;
 use App\Entities\ParticipanteEventoEntity;
 
-class ParticipanteEvento extends BaseController {    public function pesquisaModal() {
+class ParticipanteEvento extends BaseController
+{
+    public function pesquisaModal()
+    {
         $m = new ParticipanteEventoModel();
         $m->buildFindModal($this->request->getGet('searchTerm'));
         $data = [

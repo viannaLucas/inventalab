@@ -58,7 +58,7 @@ class UsuarioEntity extends EntityBase {
             ],
             'Configuracao' => [
                 'alterar' => [
-                    'metodos' => ['Configuracao::alterar', 'Configuracao::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal'],
+                    'metodos' => ['Configuracao::alterar', 'Configuracao::doAlterar'],
                     'label' => 'Alterar',
                     'descricao' => 'Permite alterar Configuracao',
                     'tipoAcesso' => 'usuario'
@@ -104,7 +104,7 @@ class UsuarioEntity extends EntityBase {
             ],
             'HorarioFuncionamento' => [
                 'alterar' => [
-                    'metodos' => ['HorarioFuncionamento::alterar', 'HorarioFuncionamento::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal'],
+                    'metodos' => ['HorarioFuncionamento::alterar', 'HorarioFuncionamento::doAlterar'],
                     'label' => 'Alterar',
                     'descricao' => 'Permite alterar HorarioFuncionamento',
                     'tipoAcesso' => 'usuario'

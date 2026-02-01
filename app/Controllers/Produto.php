@@ -12,17 +12,21 @@ use App\Entities\ProdutoEntity;
 // use App\Entities\DadosApiEntity;
 // use App\Entities\ProdutoDadosApiEntity;
 
-class Produto extends BaseController {
+class Produto extends BaseController
+{
 
-    public function index() {
+    public function index()
+    {
         return $this->cadastrar();
     }
 
-    public function cadastrar() {
+    public function cadastrar()
+    {
         return view('Painel/Produto/cadastrar');
     }
 
-    public function doCadastrar() {
+    public function doCadastrar()
+    {
         $m = new ProdutoModel();
         // $mDadosApi = new DadosApiModel();
         // $mProdutoDadosApi = new ProdutoDadosApiModel();
@@ -37,7 +41,7 @@ class Produto extends BaseController {
         // $eDadosApi = new DadosApiEntity($dadosApiData);
         $m->db->transStart();
         try {
-            if ($m->insert($e, false)) { 
+            if ($m->insert($e, false)) {
                 $produtoId = $m->getInsertID();
                 // Comentado enquanto Dados Fiscais não forem usados.
                 // if (!$mDadosApi->insert($eDadosApi, false)) {
@@ -69,14 +73,15 @@ class Produto extends BaseController {
         }
     }
 
-    public function alterar() {
+    public function alterar()
+    {
         $m = new ProdutoModel();
         // $mProdutoDadosApi = new ProdutoDadosApiModel();
         // $mDadosApi = new DadosApiModel();
         $e = $m->find($this->request->getUri()->getSegment(3));
         if ($e === null) {
             return $this->returnWithError('Registro não encontrado.');
-        } 
+        }
         // $dadosApi = null;
         // $produtoDadosApi = $mProdutoDadosApi->where('Produto_id', $e->id)->first();
         // if ($produtoDadosApi !== null) {
@@ -93,7 +98,8 @@ class Produto extends BaseController {
         return view('Painel/Produto/alterar', $data);
     }
 
-    public function doAlterar() {
+    public function doAlterar()
+    {
         $m = new ProdutoModel();
         // $mDadosApi = new DadosApiModel();
         // $mProdutoDadosApi = new ProdutoDadosApiModel();
@@ -113,7 +119,7 @@ class Produto extends BaseController {
         $fotoRemovida = $this->request->getPost('foto_removida') === '1';
         // $dadosApiData = $this->getDadosApiData();
         // $produtoDadosApi = $mProdutoDadosApi->where('Produto_id', $e->id)->first();
-        try{ 
+        try {
             $ru['foto'] = false;
             if ($hasUploadFoto) {
                 $ru['foto'] = $m->uploadImage($fileFoto, null, ProdutoEntity::folder);
@@ -126,7 +132,7 @@ class Produto extends BaseController {
                 $en->foto = $e->foto;
             }
             $m->db->transStart();
-            if ($m->update($en->id, $en)) { 
+            if ($m->update($en->id, $en)) {
                 // Comentado enquanto Dados Fiscais não forem usados.
                 // if ($produtoDadosApi !== null) {
                 //     if (!$mDadosApi->update($produtoDadosApi->DadosApi_id, $dadosApiData)) {
@@ -158,23 +164,25 @@ class Produto extends BaseController {
                 }
                 $m->db->transComplete();
                 return $this->returnSucess('Cadastrado com sucesso!');
-            } else { 
+            } else {
                 $m->deleteFiles($ru);
                 return $this->returnWithError($m->errors());
             }
-        }catch (\Exception $ex){ 
-            if($ru['foto'] != false){
+        } catch (\Exception $ex) {
+            if ($ru['foto'] != false) {
                 $m->deleteFile($ru['foto']);
             }
             return $this->returnWithError($ex->getMessage());
         }
     }
-    
-    public function pesquisar(){
+
+    public function pesquisar()
+    {
         return view('Painel/Produto/pesquisar');
     }
-    
-    public function doPesquisar(){
+
+    public function doPesquisar()
+    {
         $m = new ProdutoModel();
         $filters = $this->request->getGet();
         $m->buildFindList($filters);
@@ -190,18 +198,21 @@ class Produto extends BaseController {
         ];
         return view('Painel/Produto/resposta',  $data);
     }
-    
-    public function listar() {
+
+    public function listar()
+    {
         $m = new ProdutoModel();
         $data = [
             'vProduto' => $m->paginate(self::itensPaginacao),
             'pager' => $m->pager,
         ];
         return view('Painel/Produto/listar', $data);
-    }    public function pesquisaModal() {
+    }
+    public function pesquisaModal()
+    {
         $m = new ProdutoModel();
         $m->buildFindModal($this->request->getGet('searchTerm'))
-                ->where('ativo', ProdutoEntity::ATIVO_SIM);
+            ->where('ativo', ProdutoEntity::ATIVO_SIM);
         $data = [
             'vProduto' => $m->findAll(100)
         ];

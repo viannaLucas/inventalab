@@ -7,19 +7,23 @@ use App\Models\HorarioFuncionamentoModel;
 use App\Entities\HorarioFuncionamentoEntity;
 use App\Models\DatasExtraordinariasModel;
 
-class HorarioFuncionamento extends BaseController {
+class HorarioFuncionamento extends BaseController
+{
 
-    public function index() {
+    public function index()
+    {
         return $this->cadastrar();
     }
 
-    public function cadastrar() {
+    public function cadastrar()
+    {
         $data['vHorarioFuncionamento'] = (new HorarioFuncionamentoModel())->orderBy('diaSemana ASC, horaInicio ASC')->findAll();
         $data['vDatasExtraordinarias'] = (new DatasExtraordinariasModel())->where('data >= DATE(NOW())')->orderBy('data ASC, horaInicio ASC')->findAll();
         return view('Painel/HorarioFuncionamento/cadastrar', $data);
     }
 
-    public function doCadastrar() {
+    public function doCadastrar()
+    {
         $m = new HorarioFuncionamentoModel();
         $ef = $this->validateWithRequest($m->getValidationRulesFiles());
         if ($ef !== true) {
@@ -28,7 +32,7 @@ class HorarioFuncionamento extends BaseController {
         $e = new HorarioFuncionamentoEntity($this->request->getPost());
         $m->db->transStart();
         try {
-            if ($m->insert($e, false)) { 
+            if ($m->insert($e, false)) {
                 $m->db->transComplete();
                 return $this->returnSucess('Cadastrado com sucesso!');
             } else {
@@ -39,19 +43,21 @@ class HorarioFuncionamento extends BaseController {
         }
     }
 
-    public function alterar() {
+    public function alterar()
+    {
         $m = new HorarioFuncionamentoModel();
         $e = $m->find($this->request->getUri()->getSegment(3));
         if ($e === null) {
             return $this->returnWithError('Registro não encontrado.');
-        } 
+        }
         $data = [
             'horariofuncionamento' => $e,
         ];
         return view('Painel/HorarioFuncionamento/alterar', $data);
     }
 
-    public function doAlterar() {
+    public function doAlterar()
+    {
         $m = new HorarioFuncionamentoModel();
         $ef = $this->validateWithRequest($m->getValidationRulesFiles());
         if ($ef !== true) {
@@ -62,34 +68,37 @@ class HorarioFuncionamento extends BaseController {
             return $this->returnWithError('Registro não encontrado.');
         }
         $en = new HorarioFuncionamentoEntity($this->request->getPost());
-        try{ 
+        try {
             $m->db->transStart();
-            if ($m->update($en->id, $en)) { 
+            if ($m->update($en->id, $en)) {
                 $m->db->transComplete();
                 return redirect()
-                        ->to('/HorarioFuncionamento/cadastrar')
-                        ->with('msg_sucesso', 'Cadastrado com sucesso!');
-            } else { 
+                    ->to('/HorarioFuncionamento/cadastrar')
+                    ->with('msg_sucesso', 'Cadastrado com sucesso!');
+            } else {
                 return $this->returnWithError($m->errors());
             }
-        }catch (\Exception $ex){ 
+        } catch (\Exception $ex) {
             return $this->returnWithError($ex->getMessage());
         }
-    }    public function excluir() {
+    }
+    public function excluir()
+    {
         $m = new HorarioFuncionamentoModel();
         $e = $m->find($this->request->getUri()->getSegment(3));
         if ($e === null) {
             return $this->returnWithError('Registro não encontrado.');
         }
         $m->db->transStart();
-        if ($m->delete($e->id)) { 
+        if ($m->delete($e->id)) {
             $m->db->transComplete();
             return $this->returnSucess('Excluído com sucesso!');
         }
         return $this->returnWithError('Erro ao excluir registro.');
     }
-    
-    public function pesquisaModal() {
+
+    public function pesquisaModal()
+    {
         $m = new HorarioFuncionamentoModel();
         $m->buildFindModal($this->request->getGet('searchTerm'));
         $data = [

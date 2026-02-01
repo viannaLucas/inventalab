@@ -13,17 +13,21 @@ use App\Entities\ServicoDadosApiEntity;
 use App\Entities\ServicoProdutoEntity;
 use App\Libraries\SescAPI;
 
-class Servico extends BaseController {
+class Servico extends BaseController
+{
 
-    public function index() {
+    public function index()
+    {
         return $this->cadastrar();
     }
 
-    public function cadastrar() {
+    public function cadastrar()
+    {
         return view('Painel/Servico/cadastrar');
     }
 
-    public function doCadastrar() {
+    public function doCadastrar()
+    {
         $m = new ServicoModel();
         $mDadosApi = new DadosApiModel();
         $mServicoDadosApi = new ServicoDadosApiModel();
@@ -45,7 +49,7 @@ class Servico extends BaseController {
         $eDadosApi = new DadosApiEntity($dadosApiData);
         $m->db->transStart();
         try {
-            if ($m->insert($e, false)) { 
+            if ($m->insert($e, false)) {
                 $servicoId = $m->getInsertID();
                 if (!$mDadosApi->insert($eDadosApi, false)) {
                     $m->db->transRollback();
@@ -59,10 +63,10 @@ class Servico extends BaseController {
                     $m->db->transRollback();
                     return $this->returnWithError($mServicoDadosApi->errors());
                 }
-                foreach ($ServicoProduto as $pp){
+                foreach ($ServicoProduto as $pp) {
                     $pp['Servico_id'] = $servicoId;
                     $eServicoProduto = new ServicoProdutoEntity($pp);
-                    if(!$mServicoProduto->insert($eServicoProduto, false)){
+                    if (!$mServicoProduto->insert($eServicoProduto, false)) {
                         $m->db->transRollback();
                         return $this->returnWithError($mServicoProduto->errors());
                     }
@@ -77,14 +81,15 @@ class Servico extends BaseController {
         }
     }
 
-    public function alterar() {
+    public function alterar()
+    {
         $m = new ServicoModel();
         $mServicoDadosApi = new ServicoDadosApiModel();
         $mDadosApi = new DadosApiModel();
         $e = $m->find($this->request->getUri()->getSegment(3));
         if ($e === null) {
             return $this->returnWithError('Registro não encontrado.');
-        } 
+        }
         $dadosApi = null;
         $servicoDadosApi = $mServicoDadosApi->where('Servico_id', $e->id)->first();
         if ($servicoDadosApi !== null) {
@@ -100,7 +105,8 @@ class Servico extends BaseController {
         return view('Painel/Servico/alterar', $data);
     }
 
-    public function doAlterar() {
+    public function doAlterar()
+    {
         $m = new ServicoModel();
         $mDadosApi = new DadosApiModel();
         $mServicoDadosApi = new ServicoDadosApiModel();
@@ -124,9 +130,9 @@ class Servico extends BaseController {
         $ServicoProduto = $this->request->getPost('ServicoProduto') ?? [];
         $dadosApiData = $this->getDadosApiData();
         $servicoDadosApi = $mServicoDadosApi->where('Servico_id', $e->id)->first();
-        try{ 
+        try {
             $m->db->transStart();
-            if ($m->update($en->id, $en)) { 
+            if ($m->update($en->id, $en)) {
                 if ($servicoDadosApi !== null) {
                     if (!$mDadosApi->update($servicoDadosApi->DadosApi_id, $dadosApiData)) {
                         $m->db->transRollback();
@@ -146,33 +152,35 @@ class Servico extends BaseController {
                         return $this->returnWithError($mServicoDadosApi->errors());
                     }
                 }
-                $idsDelete = array_map(fn($v):int => $v->id, $e->getListServicoProduto());
-                if(count($idsDelete)>0){
+                $idsDelete = array_map(fn($v): int => $v->id, $e->getListServicoProduto());
+                if (count($idsDelete) > 0) {
                     $mServicoProduto->delete($idsDelete);
                 }
-                foreach ($ServicoProduto as $pp){
+                foreach ($ServicoProduto as $pp) {
                     $pp['Servico_id'] = $e->id;
                     $eServicoProduto = new ServicoProdutoEntity($pp);
-                    if(!$mServicoProduto->insert($eServicoProduto, false)){
+                    if (!$mServicoProduto->insert($eServicoProduto, false)) {
                         $m->db->transRollback();
                         return $this->returnWithError($mServicoProduto->errors());
                     }
                 }
                 $m->db->transComplete();
                 return $this->returnSucess('Cadastrado com sucesso!');
-            } else { 
+            } else {
                 return $this->returnWithError($m->errors());
             }
-        }catch (\Exception $ex){ 
+        } catch (\Exception $ex) {
             return $this->returnWithError($ex->getMessage());
         }
     }
-    
-    public function pesquisar(){
+
+    public function pesquisar()
+    {
         return view('Painel/Servico/pesquisar');
     }
-    
-    public function doPesquisar(){
+
+    public function doPesquisar()
+    {
         $m = new ServicoModel();
         $m->buildFindList($this->request->getGet());
         $data = [
@@ -181,15 +189,18 @@ class Servico extends BaseController {
         ];
         return view('Painel/Servico/resposta',  $data);
     }
-    
-    public function listar() {
+
+    public function listar()
+    {
         $m = new ServicoModel();
         $data = [
             'vServico' => $m->paginate(self::itensPaginacao),
             'pager' => $m->pager,
         ];
         return view('Painel/Servico/listar', $data);
-    }    public function pesquisaModal() {
+    }
+    public function pesquisaModal()
+    {
         $m = new ServicoModel();
         $m->buildFindModal($this->request->getGet('searchTerm'));
         $data = [
@@ -198,7 +209,8 @@ class Servico extends BaseController {
         return view('Painel/Servico/respostaModal', $data);
     }
 
-    private function getDadosApiData(): array {
+    private function getDadosApiData(): array
+    {
         $fields = [
             'codigo',
             'UnidadedeControle',
@@ -222,11 +234,11 @@ class Servico extends BaseController {
     public function obterDadosServicoApiSesc(string $codigo)
     {
         $sescApi = new SescAPI([
-            'baseUrl'=> env('sescApi_baseUrl'),
-            'username'=> env('sescApi_username'),
-            'password'=> env('sescApi_password'),
-            'environment'=> env('sescApi_environment'),
-            'timeout_seconds'=> env('sescApi_timeoutSeconds'),
+            'baseUrl' => env('sescApi_baseUrl'),
+            'username' => env('sescApi_username'),
+            'password' => env('sescApi_password'),
+            'environment' => env('sescApi_environment'),
+            'timeout_seconds' => env('sescApi_timeoutSeconds'),
         ]);
 
         $resultado = $sescApi->consultaServico($codigo);
