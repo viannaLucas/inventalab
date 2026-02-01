@@ -63,11 +63,11 @@
                 </div>
                 <nav class="hidden items-center gap-8 lg:flex">
                     <!-- <a class="text-sm font-medium hover:text-primary" href="#inicio">Início</a> -->
-                    <a class="text-sm font-medium hover:text-primary" href="#cursos">Eventos</a>
-                    <a class="text-sm font-medium hover:text-primary" href="#sobre">Sobre</a>
-                    <a class="text-sm font-medium hover:text-primary" href="#como-funciona">Como funciona</a>
-                    <a class="text-sm font-medium hover:text-primary" href="#equipamentos">Equipamentos</a>
-                    <a class="text-sm font-medium hover:text-primary" href="#contato">Contato</a>
+                    <a class="text-sm font-medium hover:text-primary" href="<?= base_url() ;?>#cursos">Eventos</a>
+                    <a class="text-sm font-medium hover:text-primary" href="<?= base_url() ;?>#sobre">Sobre</a>
+                    <a class="text-sm font-medium hover:text-primary" href="<?= base_url() ;?>#como-funciona">Como funciona</a>
+                    <a class="text-sm font-medium hover:text-primary" href="<?= base_url() ;?>#equipamentos">Equipamentos</a>
+                    <a class="text-sm font-medium hover:text-primary" href="<?= base_url() ;?>#contato">Contato</a>
                 </nav>
                 <div class="hidden items-center gap-2 lg:flex">
                     <a href="<?= esc(base_url('PainelParticipante/cadastrar'), 'attr') ?>" class="flex h-10 cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-primary px-4 text-sm font-bold text-white"><span class="truncate">Cadastrar</span></a>

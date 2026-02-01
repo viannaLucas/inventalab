@@ -1,18 +1,6 @@
 <?= $this->extend('templateSite'); ?>
 
 <?= $this->section('content'); ?>
-<!-- Hero Section -->
-<!-- <section class="container mx-auto px-4 py-16 sm:py-24">
-                <div class="relative flex min-h-[500px] flex-col items-center justify-center gap-6 overflow-hidden rounded-xl bg-cover bg-center p-8 text-center" data-alt="A modern workshop with various tools and equipment in a dimly lit, focused environment." style='background-image: linear-gradient(rgba(16, 25, 34, 0.6) 0%, rgba(16, 25, 34, 0.8) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuAM9GmaibNZYF_OONMc4iYea2JG1fQ41j4HBrb6UfzGXzpmBH65rigKPuF3_evCVe45zX2IzAvrEGOdzHpzgNXL1RcOs5KKkbs1bJeP6Ec5L_Y40bPXatKOUaEcuqaP1wNa0hmi63WTUHdrIQK81IW2egmUhpNBSmluAlr2nxM5Bxi6OTQFXvugw5rTjOc95vGbEY_pJh4iO2zwzSVIH80bAr0JlX4NEu6Y50epSUB70HFcX1PFAUlLeSavT5f6OlerGiTxqj3I4pHA");'>
-                    <h1 class="text-4xl font-black text-white md:text-6xl">Suas Ideias, Construídas Aqui.</h1>
-                    <p class="max-w-2xl text-base text-slate-200 md:text-lg">O melhor lugar para criadores, inovadores e makers darem vida às suas ideias. Junte-se à nossa comunidade e comece a construir hoje.</p>
-                    <div class="flex flex-col gap-4 sm:flex-row">
-                        <button class="flex h-12 cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-primary px-6 text-base font-bold text-white"><span class="truncate">Quero participar</span></button>
-                        <button class="flex h-12 cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-white/20 px-6 text-base font-bold text-white backdrop-blur-sm"><span class="truncate">Agende uma visita</span></button>
-                    </div>
-                </div>
-            </section> -->
-<!-- Cursos e Eventos Section -->
 <section class="bg-card-light dark:bg-card-dark py-3 sm:py-6" id="cursos">
     <div class="container mx-auto px-4">
         <div class="max-w-3xl mx-auto text-center">
