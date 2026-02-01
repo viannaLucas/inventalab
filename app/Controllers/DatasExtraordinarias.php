@@ -22,6 +22,10 @@ class DatasExtraordinarias extends BaseController {
         if ($ef !== true) {
             return $this->returnWithError($ef);
         }
+        $erroData = $this->validarDataNaoPassada($this->request->getPost('data'));
+        if ($erroData !== null) {
+            return $this->returnWithError($erroData);
+        }
         $e = new DatasExtraordinariasEntity($this->request->getPost());
         $m->db->transStart();
         try {
@@ -53,6 +57,10 @@ class DatasExtraordinarias extends BaseController {
         $ef = $this->validateWithRequest($m->getValidationRulesFiles());
         if ($ef !== true) {
             return $this->returnWithError($ef);
+        }
+        $erroData = $this->validarDataNaoPassada($this->request->getPost('data'));
+        if ($erroData !== null) {
+            return $this->returnWithError($erroData);
         }
         $e = $m->find($this->request->getPost('id'));
         if ($e === null) {
@@ -116,5 +124,29 @@ class DatasExtraordinarias extends BaseController {
             'vDatasExtraordinarias' => $m->findAll(100)
         ];
         return view('Painel/DatasExtraordinarias/respostaModal', $data);
+    }
+
+    private function validarDataNaoPassada(?string $data): ?string {
+        if ($data === null || $data === '') {
+            return null;
+        }
+
+        $data = trim($data);
+        $dataObj = \DateTime::createFromFormat('Y-m-d', $data);
+        if ($dataObj === false) {
+            $dataObj = \DateTime::createFromFormat('d/m/Y', $data);
+        }
+
+        if ($dataObj === false) {
+            return 'Data inválida.';
+        }
+
+        $dataObj->setTime(0, 0, 0);
+        $hoje = (new \DateTime('today'))->setTime(0, 0, 0);
+        if ($dataObj < $hoje) {
+            return 'Não é permitido cadastrar data anterior à data atual.';
+        }
+
+        return null;
     }
 }
