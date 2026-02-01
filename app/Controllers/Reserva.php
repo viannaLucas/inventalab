@@ -64,7 +64,10 @@ class Reserva extends BaseController {
 
         $data['itensReserva'] = $this->formatarReservaView($vReserva);
         
-        foreach((new RecursoTrabalhoModel())->findAll() as $rt){
+        $lRecursoTrabaho = (new RecursoTrabalhoModel())
+                ->where('situacaoTrabalho', RecursoTrabalhoEntity::SITUACAO_TRABALHO_ATIVO)
+                ->findAll();
+        foreach($lRecursoTrabaho as $rt){
             $ac = new \stdClass();
             $ac->id = $rt->id;
             $ac->exclusive = $rt->usoExclusivo == 1; 
