@@ -37,6 +37,7 @@ use App\Models\ServicoModel;
 use CodeIgniter\HTTP\ResponseInterface;
 use DateInterval;
 use DateTime;
+use DateTimeImmutable;
 use stdClass;
 
 class Reserva extends BaseController {
@@ -603,7 +604,170 @@ class Reserva extends BaseController {
 
     public function relatorio()
     {
-        return view('Painel/Reserva/relatorio');
+        $filtros = $this->resolverFiltrosRelatorio(false);
+        $reservasData = $this->buscarReservasRelatorio($filtros['inicio'], $filtros['fim']);
+
+        return view('Painel/Reserva/relatorio', [
+            'reservasData' => $reservasData,
+            'relatorioFiltros' => [
+                'dataInicio' => $filtros['inicio']->format('Y-m-d'),
+                'dataFim' => $filtros['fim']->format('Y-m-d'),
+                'agrupamento' => $filtros['agrupamento'],
+            ],
+        ]);
+    }
+
+    public function relatorioDados()
+    {
+        $filtros = $this->resolverFiltrosRelatorio(true);
+        if ($filtros['erro']) {
+            return $this->response->setStatusCode(400)->setJSON([
+                'erro' => true,
+                'msg' => implode(' ', $filtros['erros']),
+            ]);
+        }
+
+        $reservasData = $this->buscarReservasRelatorio($filtros['inicio'], $filtros['fim']);
+
+        return $this->response->setJSON([
+            'erro' => false,
+            'filtros' => [
+                'dataInicio' => $filtros['inicio']->format('Y-m-d'),
+                'dataFim' => $filtros['fim']->format('Y-m-d'),
+                'agrupamento' => $filtros['agrupamento'],
+            ],
+            'reservas' => $reservasData,
+        ]);
+    }
+
+    private function resolverFiltrosRelatorio(bool $strict): array
+    {
+        $payload = $this->request->getJSON(true);
+        if ($payload === null) {
+            $payload = $this->request->getGet() ?? [];
+        }
+        if (count($payload) === 0) {
+            $payload = $this->request->getPost() ?? [];
+        }
+
+        $dataInicioRaw = trim((string) ($payload['dataInicio'] ?? ''));
+        $dataFimRaw = trim((string) ($payload['dataFim'] ?? ''));
+        $agrupamento = trim((string) ($payload['agrupamento'] ?? ''));
+
+        $erros = [];
+        $inicio = $dataInicioRaw !== '' ? DateTimeImmutable::createFromFormat('Y-m-d', $dataInicioRaw) : null;
+        if ($dataInicioRaw !== '' && !$inicio instanceof DateTimeImmutable) {
+            $erros[] = 'Data início inválida.';
+        }
+
+        $fim = $dataFimRaw !== '' ? DateTimeImmutable::createFromFormat('Y-m-d', $dataFimRaw) : null;
+        if ($dataFimRaw !== '' && !$fim instanceof DateTimeImmutable) {
+            $erros[] = 'Data fim inválida.';
+        }
+
+        $hoje = new DateTimeImmutable('today');
+        $inicioPadrao = $hoje->sub(new DateInterval('P30D'));
+        $fimPadrao = $hoje;
+
+        if (!$inicio instanceof DateTimeImmutable) {
+            $inicio = $inicioPadrao;
+        }
+        if (!$fim instanceof DateTimeImmutable) {
+            $fim = $fimPadrao;
+        }
+
+        if ($inicio > $fim) {
+            $erros[] = 'Data início maior que data fim.';
+        }
+
+        if ($strict && count($erros) > 0) {
+            return [
+                'erro' => true,
+                'erros' => $erros,
+                'inicio' => $inicio,
+                'fim' => $fim,
+                'agrupamento' => 'mes',
+            ];
+        }
+
+        if ($inicio > $fim) {
+            [$inicio, $fim] = [$fim, $inicio];
+        }
+
+        $agrupamento = in_array($agrupamento, ['mes', 'semana', 'dia'], true) ? $agrupamento : 'mes';
+
+        return [
+            'erro' => false,
+            'erros' => $erros,
+            'inicio' => $inicio,
+            'fim' => $fim,
+            'agrupamento' => $agrupamento,
+        ];
+    }
+
+    private function buscarReservasRelatorio(DateTimeImmutable $inicio, DateTimeImmutable $fim): array
+    {
+        $reservaModel = new ReservaModel();
+        $reservaModel->buildFindList([
+            'dataReservaStart' => $inicio->format('d/m/Y'),
+            'dataReservaEnd' => $fim->format('d/m/Y'),
+        ]);
+        $reservaModel->where('status', ReservaEntity::STATUS_ATIVO);
+        $reservas = $reservaModel->findAll();
+
+        return array_map(function (ReservaEntity $reserva) {
+            return $this->formatarReservaRelatorio($reserva);
+        }, $reservas);
+    }
+
+    private function formatarReservaRelatorio(ReservaEntity $reserva): array
+    {
+        $anoTurma = is_numeric($reserva->anoTurma) ? (int) $reserva->anoTurma : null;
+
+        return [
+            'dataCadastro' => $this->normalizarDataRelatorio((string) $reserva->dataCadastro),
+            'dataReserva' => $this->normalizarDataRelatorio((string) $reserva->dataReserva),
+            'horaInicio' => $this->normalizarHoraRelatorio((string) $reserva->horaInicio),
+            'horaFim' => $this->normalizarHoraRelatorio((string) $reserva->horaFim),
+            'tipo' => is_numeric($reserva->tipo) ? (int) $reserva->tipo : $reserva->tipo,
+            'numeroConvidados' => (int) $reserva->numeroConvidados,
+            'status' => is_numeric($reserva->status) ? (int) $reserva->status : $reserva->status,
+            'turmaEscola' => (int) $reserva->turmaEscola,
+            'nomeEscola' => (string) ($reserva->nomeEscola ?? ''),
+            'anoTurma' => $anoTurma,
+            'horaEntrada' => $this->normalizarHoraRelatorio((string) ($reserva->horaEntrada ?? '')),
+            'horaSaida' => $this->normalizarHoraRelatorio((string) ($reserva->horaSaida ?? '')),
+        ];
+    }
+
+    private function normalizarDataRelatorio(string $valor): string
+    {
+        $valor = trim($valor);
+        if ($valor === '') {
+            return '';
+        }
+        if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $valor) === 1) {
+            return $valor;
+        }
+        $data = DateTime::createFromFormat('d/m/Y', $valor)
+            ?: DateTime::createFromFormat('Y-m-d', $valor);
+        return $data instanceof DateTime ? $data->format('Y-m-d') : '';
+    }
+
+    private function normalizarHoraRelatorio(string $valor): string
+    {
+        $valor = trim($valor);
+        if ($valor === '') {
+            return '';
+        }
+        if (preg_match('/^\d{2}:\d{2}/', $valor) === 1) {
+            return substr($valor, 0, 5);
+        }
+        $data = DateTime::createFromFormat('Y-m-d H:i:s', $valor)
+            ?: DateTime::createFromFormat('Y-m-d H:i', $valor)
+            ?: DateTime::createFromFormat('d/m/Y H:i:s', $valor)
+            ?: DateTime::createFromFormat('d/m/Y H:i', $valor);
+        return $data instanceof DateTime ? $data->format('H:i') : '';
     }
 
     private function parseNumeroParaFloat(string $valor): float

@@ -516,12 +516,12 @@ class UsuarioEntity extends EntityBase {
             //         'descricao' => 'Permite Listar Produto',
             //         'tipoAcesso' => 'usuario'
             //     ],
-            //     'excluir' => [
-            //         'metodos' => ['Produto::excluir'],
-            //         'label' => 'Excluir',
-            //         'descricao' => 'Permite Excluir Produto',
-            //         'tipoAcesso' => 'usuario'
-            //     ],
+            //     // 'excluir' => [
+            //     //     'metodos' => ['Produto::excluir'],
+            //     //     'label' => 'Excluir',
+            //     //     'descricao' => 'Permite Excluir Produto',
+            //     //     'tipoAcesso' => 'usuario'
+            //     // ],
                 
             // ],
             // // 'MaterialOficina' => [
@@ -872,44 +872,44 @@ class UsuarioEntity extends EntityBase {
             //     // ],
                 
             // ],
-            // 'Reserva' => [
-            //     'alterar' => [
-            //         'metodos' => ['Reserva::alterar', 'Reserva::doAlterar', 'Reserva::definirEntrada', 'Reserva::definirSaida','OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'Participante::getDadosParticipante', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal'],
-            //         'label' => 'Alterar',
-            //         'descricao' => 'Permite alterar Reserva',
-            //         'tipoAcesso' => 'usuario'
-            //     ],
-            //     'pesquisar' => [
-            //         'metodos' => ['Reserva::pesquisar', 'Reserva::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal'],
-            //         'label' => 'Pesquisar',
-            //         'descricao' => 'Permite Pesquisar Reserva',
-            //         'tipoAcesso' => 'usuario'
-            //     ],
-            //     'cadastrar' => [
-            //         'metodos' => ['Reserva::cadastrar', 'Reserva::doCadastrar', 'Reserva::listaReservaJson', 'OficinaTematica::descricao', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'Participante::getDadosParticipante', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal'],
-            //         'label' => 'Cadastrar',
-            //         'descricao' => 'Permite Cadastrar Reserva',
-            //         'tipoAcesso' => 'usuario'
-            //     ],
-            //     'listar' => [
-            //         'metodos' => ['Reserva::listar'],
-            //         'label' => 'Listar',
-            //         'descricao' => 'Permite Listar Reserva',
-            //         'tipoAcesso' => 'usuario'
-            //     ],
-            //     'excluir' => [
-            //         'metodos' => ['Reserva::excluir'],
-            //         'label' => 'Excluir',
-            //         'descricao' => 'Permite Excluir Reserva',
-            //         'tipoAcesso' => 'usuario'
-            //     ],
-            //     'controleUso' => [
-            //         'metodos' => ['Reserva::litarServicosReserva', 'Reserva::definirServicosReserva'],
-            //         'label' => 'Controle de Acesso e Uso',
-            //         'descricao' => 'Permite definir entrada/saída e serviços usados',
-            //         'tipoAcesso' => 'usuario'
-            //     ],
-            // ],
+            'Reserva' => [
+                'alterar' => [
+                    'metodos' => ['Reserva::alterar', 'Reserva::doAlterar', 'Reserva::definirEntrada', 'Reserva::definirSaida','OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'Participante::getDadosParticipante', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal'],
+                    'label' => 'Alterar',
+                    'descricao' => 'Permite alterar Reserva',
+                    'tipoAcesso' => 'usuario'
+                ],
+                'pesquisar' => [
+                    'metodos' => ['Reserva::pesquisar', 'Reserva::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal'],
+                    'label' => 'Pesquisar',
+                    'descricao' => 'Permite Pesquisar Reserva',
+                    'tipoAcesso' => 'usuario'
+                ],
+                'cadastrar' => [
+                    'metodos' => ['Reserva::cadastrar', 'Reserva::doCadastrar', 'Reserva::listaReservaJson', 'OficinaTematica::descricao', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'Participante::getDadosParticipante', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal'],
+                    'label' => 'Cadastrar',
+                    'descricao' => 'Permite Cadastrar Reserva',
+                    'tipoAcesso' => 'usuario'
+                ],
+                'listar' => [
+                    'metodos' => ['Reserva::listar'],
+                    'label' => 'Listar',
+                    'descricao' => 'Permite Listar Reserva',
+                    'tipoAcesso' => 'usuario'
+                ],
+                'excluir' => [
+                    'metodos' => ['Reserva::excluir'],
+                    'label' => 'Excluir',
+                    'descricao' => 'Permite Excluir Reserva',
+                    'tipoAcesso' => 'usuario'
+                ],
+                'controleUso' => [
+                    'metodos' => ['Reserva::litarServicosReserva', 'Reserva::definirServicosReserva'],
+                    'label' => 'Controle de Acesso e Uso',
+                    'descricao' => 'Permite definir entrada/saída e serviços usados',
+                    'tipoAcesso' => 'usuario'
+                ],
+            ],
             // // 'ReservaParticipante' => [
             // //     'alterar' => [
             // //         'metodos' => ['ReservaParticipante::alterar', 'ReservaParticipante::doAlterar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'AtividadeLivre::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Evento::pesquisaModal', 'Reserva::pesquisaModal', 'Evento::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'Participante::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'MovimentacaoEstoque::pesquisaModal', 'Produto::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal', 'ParticipanteEvento::pesquisaModal', 'ControlePresenca::pesquisaModal', 'RecursoTrabalho::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Reserva::pesquisaModal'],
@@ -1093,13 +1093,13 @@ class UsuarioEntity extends EntityBase {
             ],
             // 'Relatorio' => [
             //     'pesquisaSatisfacao' => [
-            //         'metodos' => ['PesquisaSatisfacao::relatorio'],
+            //         'metodos' => ['PesquisaSatisfacao::relatorio', 'PesquisaSatisfacao::relatorioDados'],
             //         'label' => 'Emitir relatório Pesquisa Satisfação',
             //         'descricao' => 'Emite relatório das Pesquisas de Satisfação',
             //         'tipoAcesso' => 'usuario'
             //     ],
             //     'reservas' => [
-            //         'metodos' => ['Reserva::relatorio'],
+            //         'metodos' => ['Reserva::relatorio', 'Reserva::relatorioDados'],
             //         'label' => 'Emitir relatório Reservas',
             //         'descricao' => 'Emite relatório das Reservas',
             //         'tipoAcesso' => 'usuario'

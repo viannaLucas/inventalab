@@ -254,127 +254,14 @@
 
 <?= $this->section('scripts'); ?>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  window.reservasData = <?= json_encode($reservasData ?? [], JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
+  window.relatorioFiltros = <?= json_encode($relatorioFiltros ?? [], JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
+  window.relatorioEndpoint = "<?= base_url('Reserva/relatorioDados') ?>";
+</script>
 
   <script>
-    // =========================================================
-    // DADOS EXEMPLO (substitua por window.reservasData)
-    // =========================================================
-    const sampleReservations = [
-      {
-        dataCadastro: "2024-11-05",
-        dataReserva: "2024-11-20",
-        horaInicio: "09:00",
-        horaFim: "10:00",
-        tipo: "exclusiva",
-        numeroConvidados: 3,
-        status: "confirmada",
-        turmaEscola: 1,
-        nomeEscola: "Escola Aurora",
-        anoTurma: 4,
-        horaEntrada: "09:02",
-        horaSaida: "10:01"
-      },
-      {
-        dataCadastro: "2025-01-10",
-        dataReserva: "2025-01-15",
-        horaInicio: "14:00",
-        horaFim: "15:30",
-        tipo: "compartilhada",
-        numeroConvidados: 0,
-        status: "confirmada",
-        turmaEscola: 0,
-        nomeEscola: "",
-        anoTurma: 0,
-        horaEntrada: "",
-        horaSaida: ""
-      },
-      {
-        dataCadastro: "2025-03-02",
-        dataReserva: "2025-03-12",
-        horaInicio: "08:30",
-        horaFim: "10:00",
-        tipo: "exclusiva",
-        numeroConvidados: 25,
-        status: "confirmada",
-        turmaEscola: 1,
-        nomeEscola: "Colégio Central",
-        anoTurma: 7,
-        horaEntrada: "08:25",
-        horaSaida: "10:05"
-      },
-      {
-        dataCadastro: "2025-03-10",
-        dataReserva: "2025-03-20",
-        horaInicio: "10:30",
-        horaFim: "11:30",
-        tipo: "compartilhada",
-        numeroConvidados: 1,
-        status: "confirmada",
-        turmaEscola: 0,
-        nomeEscola: "",
-        anoTurma: 0,
-        horaEntrada: "10:35",
-        horaSaida: "11:20"
-      },
-      {
-        dataCadastro: "2025-05-15",
-        dataReserva: "2025-05-30",
-        horaInicio: "15:00",
-        horaFim: "17:00",
-        tipo: "exclusiva",
-        numeroConvidados: 10,
-        status: "confirmada",
-        turmaEscola: 0,
-        nomeEscola: "",
-        anoTurma: 0,
-        horaEntrada: "",
-        horaSaida: ""
-      },
-      {
-        dataCadastro: "2025-07-01",
-        dataReserva: "2025-07-10",
-        horaInicio: "09:00",
-        horaFim: "12:00",
-        tipo: "exclusiva",
-        numeroConvidados: 32,
-        status: "confirmada",
-        turmaEscola: 1,
-        nomeEscola: "Escola Horizonte",
-        anoTurma: 2,
-        horaEntrada: "08:59",
-        horaSaida: "12:05"
-      },
-      {
-        dataCadastro: "2025-09-10",
-        dataReserva: "2025-09-30",
-        horaInicio: "16:00",
-        horaFim: "17:00",
-        tipo: "compartilhada",
-        numeroConvidados: 2,
-        status: "confirmada",
-        turmaEscola: 0,
-        nomeEscola: "",
-        anoTurma: 0,
-        horaEntrada: "",
-        horaSaida: ""
-      },
-      {
-        dataCadastro: "2025-10-01",
-        dataReserva: "2025-10-05",
-        horaInicio: "11:00",
-        horaFim: "12:00",
-        tipo: "compartilhada",
-        numeroConvidados: 2,
-        status: "confirmada",
-        turmaEscola: 0,
-        nomeEscola: "",
-        anoTurma: 0,
-        horaEntrada: "11:02",
-        horaSaida: "12:02"
-      }
-    ];
-
-    const RAW_RESERVAS = (window.reservasData && window.reservasData.length) ? window.reservasData : sampleReservations;
+    let RAW_RESERVAS = Array.isArray(window.reservasData) ? window.reservasData : [];
 
     // =========================================================
     // UTILITÁRIOS
@@ -408,11 +295,9 @@
     }
 
     function getDefaultPeriod(){
-      const now = new Date();
-      const fim = new Date(now.getFullYear(), now.getMonth()+1, 0);
-      const iniYear = now.getFullYear() - 1;
-      const iniMonth = now.getMonth() + 1;
-      const inicio = new Date(iniYear, iniMonth, 1);
+      const fim = new Date();
+      const inicio = new Date();
+      inicio.setDate(fim.getDate() - 30);
       return {inicio, fim};
     }
 
@@ -450,6 +335,7 @@
 
     function filterByPeriod(data, dataInicio, dataFim){
       return data.filter(r => {
+        if(!r.dataReserva) return false;
         const d = toDateOnly(r.dataReserva);
         return d >= dataInicio && d <= dataFim;
       });
@@ -459,6 +345,7 @@
       const map = {};
       data.forEach(r => {
         if(filterFn && !filterFn(r)) return;
+        if(!r.dataReserva) return;
         const d = toDateOnly(r.dataReserva);
         let key;
         if(mode === "semana") key = getWeekKey(d);
@@ -660,7 +547,7 @@
       });
 
       // ========= GRÁFICO: Escolas vs não escolas (pizza com %) =========
-      const escolas = reservas.filter(r => r.turmaEscola == 1).length;
+      const escolas = reservas.filter(r => r.turmaEscola == 0).length;
       const naoEscolas = reservas.length - escolas;
 
       createOrUpdateChart("chart-escolas", {
@@ -706,7 +593,7 @@
       });
 
       // ========= GRÁFICO: Quantidade de turmas por ano =========
-      const turmas = reservas.filter(r => r.turmaEscola == 1);
+      const turmas = reservas.filter(r => r.turmaEscola == 0);
       const anos = Array.from({length: 9}, (_,i) => i);
       const turmasData = anos.map(a => turmas.filter(t => t.anoTurma == a).length);
       createOrUpdateChart("chart-turmas", {
@@ -798,7 +685,7 @@
       const tblEscolasBody = document.querySelector("#tbl-escolas tbody");
       tblEscolasBody.innerHTML = "";
       const escolasAgg = {};
-      reservas.filter(r => r.turmaEscola == 1).forEach(r => {
+      reservas.filter(r => r.turmaEscola == 0).forEach(r => {
         const nome = r.nomeEscola || "Escola (sem nome)";
         if(!escolasAgg[nome]) escolasAgg[nome] = {reservas:0, pessoas:0};
         escolasAgg[nome].reservas += 1;
@@ -821,14 +708,78 @@
     // =========================================================
     // INIT
     // =========================================================
+    function aplicarFiltrosIniciais(){
+      const filtros = window.relatorioFiltros || {};
+      const dataInicioEl = document.getElementById("dataInicio");
+      const dataFimEl = document.getElementById("dataFim");
+      const agrupamentoEl = document.getElementById("agrupamento");
+
+      if (filtros.dataInicio) {
+        dataInicioEl.value = filtros.dataInicio;
+      }
+      if (filtros.dataFim) {
+        dataFimEl.value = filtros.dataFim;
+      }
+      if (filtros.agrupamento) {
+        agrupamentoEl.value = filtros.agrupamento;
+      }
+
+      if (!dataInicioEl.value || !dataFimEl.value) {
+        const {inicio, fim} = getDefaultPeriod();
+        dataInicioEl.value = dateToInputValue(inicio);
+        dataFimEl.value = dateToInputValue(fim);
+      }
+    }
+
+    async function carregarDadosRelatorio(){
+      const dataInicioEl = document.getElementById("dataInicio");
+      const dataFimEl = document.getElementById("dataFim");
+      const agrupamentoEl = document.getElementById("agrupamento");
+      const infoPeriodo = document.getElementById("info-periodo");
+      if (!window.relatorioEndpoint) {
+        renderDashboard();
+        return;
+      }
+
+      const params = new URLSearchParams({
+        dataInicio: dataInicioEl.value,
+        dataFim: dataFimEl.value,
+        agrupamento: agrupamentoEl.value
+      });
+
+      infoPeriodo.textContent = "Carregando...";
+      try {
+        const response = await fetch(window.relatorioEndpoint + "?" + params.toString(), {
+          headers: {
+            "Accept": "application/json",
+            "X-Requested-With": "XMLHttpRequest"
+          }
+        });
+        const payload = await response.json();
+        if (!response.ok || payload.erro) {
+          infoPeriodo.textContent = payload.msg || "Erro ao carregar dados.";
+          return;
+        }
+
+        RAW_RESERVAS = Array.isArray(payload.reservas) ? payload.reservas : [];
+        window.reservasData = RAW_RESERVAS;
+        if (payload.filtros) {
+          if (payload.filtros.dataInicio) dataInicioEl.value = payload.filtros.dataInicio;
+          if (payload.filtros.dataFim) dataFimEl.value = payload.filtros.dataFim;
+          if (payload.filtros.agrupamento) agrupamentoEl.value = payload.filtros.agrupamento;
+        }
+        renderDashboard();
+      } catch (err) {
+        infoPeriodo.textContent = "Erro ao carregar dados.";
+      }
+    }
+
     (function init(){
-      const {inicio, fim} = getDefaultPeriod();
-      document.getElementById("dataInicio").value = dateToInputValue(inicio);
-      document.getElementById("dataFim").value = dateToInputValue(fim);
+      aplicarFiltrosIniciais();
 
       document.getElementById("form-filtros").addEventListener("submit", function(e){
         e.preventDefault();
-        renderDashboard();
+        carregarDadosRelatorio();
       });
 
       renderDashboard();

@@ -7,6 +7,7 @@
         <div class="d-flex">
             <h4 class="content-title mb-0 my-auto">Pesquisa de Satisfação</h4><span class="text-muted mt-1 tx-13 ml-2 mb-0">/ Relatório</span>
         </div>
+        <p class="small text-muted mb-0" id="info-periodo-relatorio"></p>
     </div>
 </div>
 <!-- breadcrumb -->
@@ -175,7 +176,7 @@
               </div>
             </div>
             <button onclick="aplicarComparacao()" class="btn btn-dark btn-sm mt-2">Aplicar comparação</button>
-            <p class="small text-muted mt-2 mb-0">(No exemplo os dados são mock. Aqui você faria a consulta ao backend usando essas datas.)</p>
+            <p class="small text-muted mt-2 mb-0" id="info-comparacao"></p>
           </div>
         </div>
       </div>
@@ -281,20 +282,6 @@
       </div>
     </div>
 
-    <!-- Ranking de temas -->
-    <div class="row">
-      <div class="col-12 mb-4">
-        <div class="card shadow-sm">
-          <div class="card-body">
-            <h6 class="card-title">Ranking de temas (respostas abertas) - A x B</h6>
-            <p class="small-muted mb-3">Compara os assuntos mais citados em cada período para orientar ações.</p>
-            <div class="row" id="ranking-temas">
-              <!-- preenchido via JS -->
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 </div>
 <!-- row closed -->
 <?= $this->endSection('content'); ?>
@@ -317,195 +304,179 @@
 <?= $this->section('scripts'); ?>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    // ==========================================================
-    // DADOS GERAIS (mock)
-    // ==========================================================
-    const totalRespostas = 42;
-    const totalEnviadas = 60;
-    const taxaResposta = totalRespostas / totalEnviadas * 100;
-    const mediaUsoGeral = 8.1;
-    const mediaAtendimento = 9.0;
-    const mediaEquipamentos = 7.4;
-    const mediaGeral = ((mediaUsoGeral + mediaAtendimento + mediaEquipamentos) / 3).toFixed(1);
-    const ultimaResposta = '2025-11-05';
-
-    const labelsNotas = ['0','1','2','3','4','5','6','7','8','9','10'];
-    const distUsoGeral = [0,0,1,0,2,3,4,6,10,9,7];
-    const distAtendimento = [0,0,0,1,1,2,3,4,9,10,12];
-    const distEquip = [0,1,1,2,3,4,5,5,7,6,3];
-
-    const labelsMeses = ['Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov'];
-    const evolucaoUso = [7.5, 7.8, 8.0, 8.1, 8.2, 8.0, 8.1];
-    const evolucaoAtendimento = [8.6, 8.8, 8.9, 9.0, 9.1, 9.0, 9.0];
-    const evolucaoEquip = [6.8, 7.0, 7.2, 7.5, 7.3, 7.4, 7.4];
-
-    const qtdRespondido = totalRespostas;
-    const qtdNaoRespondido = totalEnviadas - totalRespostas;
-
-    const enviosPorMes = [8, 10, 9, 11, 10, 6, 6];
-    const respostasPorMes = [6, 8, 7, 9, 7, 3, 2];
-
-    // popula cards
-    document.getElementById('card-total-respostas').textContent = totalRespostas;
-    document.getElementById('card-taxa-resposta').textContent = taxaResposta.toFixed(1) + '%';
-    document.getElementById('card-media-geral').textContent = mediaGeral;
-    document.getElementById('card-ultima-resposta').textContent = ultimaResposta;
-    document.getElementById('texto-media-pontuacao').textContent = mediaGeral;
-
-    // ==========================================================
-    // GRÁFICOS GERAIS
-    // ==========================================================
-    new Chart(document.getElementById('barAreas'), {
-      type: 'bar',
-      data: {
-        labels: ['Uso geral', 'Atendimento', 'Equipamentos'],
-        datasets: [{
-          label: 'Nota média',
-          data: [mediaUsoGeral, mediaAtendimento, mediaEquipamentos],
-          backgroundColor: ['#0f766e', '#2563eb', '#f97316']
-        }]
-      },
-      options: {
-        scales: { y: { beginAtZero: true, max: 10 } }
-      }
-    });
-
-    new Chart(document.getElementById('barDistribuicao'), {
-      type: 'bar',
-      data: {
-        labels: labelsNotas,
-        datasets: [
-          { label: 'Uso geral', data: distUsoGeral, backgroundColor: '#0f766e' },
-          { label: 'Atendimento', data: distAtendimento, backgroundColor: '#2563eb' },
-          { label: 'Equipamentos', data: distEquip, backgroundColor: '#f97316' }
-        ]
-      },
-      options: {
-        responsive: true,
-        scales: { y: { beginAtZero: true } }
-      }
-    });
-
-    new Chart(document.getElementById('lineEvolucao'), {
-      type: 'line',
-      data: {
-        labels: labelsMeses,
-        datasets: [
-          { label: 'Uso geral', data: evolucaoUso, borderColor: '#0f766e', backgroundColor: '#0f766e', tension: 0.3 },
-          { label: 'Atendimento', data: evolucaoAtendimento, borderColor: '#2563eb', backgroundColor: '#2563eb', tension: 0.3 },
-          { label: 'Equipamentos', data: evolucaoEquip, borderColor: '#f97316', backgroundColor: '#f97316', tension: 0.3 }
-        ]
-      },
-      options: {
-        scales: { y: { beginAtZero: true, max: 10 } }
-      }
-    });
-
-        // RESPONDIDO x NAO RESPONDIDO 
-    const ctxPie = document.getElementById('pieRespondido');
-    new Chart(ctxPie, {
-      type: 'doughnut',
-      data: {
-        labels: ['Respondido', 'Não respondido'],
-        datasets: [{
-          data: [totalRespostas, totalEnviadas - totalRespostas],
-          backgroundColor: ['#22c55e', '#e11d48']
-        }]
-      },
-      options: {
-        legend: {
-          display: true,
-          position: 'top'
-        },
-        cutoutPercentage: 55
-      }
-    });
-    document.getElementById('info-respondido').textContent =
-        totalEnviadas + ' enviadas, sendo '+
-            totalRespostas + ' respondidas (' + taxaResposta.toFixed(1) + '%).';
-
-    new Chart(document.getElementById('lineEnvios'), {
-      type: 'line',
-      data: {
-        labels: labelsMeses,
-        datasets: [
-          { label: 'Envios', data: enviosPorMes, borderColor: '#94a3b8', backgroundColor: '#94a3b8', tension: 0.3, fill: false },
-          { label: 'Respostas', data: respostasPorMes, borderColor: '#0f766e', backgroundColor: '#0f766e', tension: 0.3, fill: false }
-        ]
-      },
-      options: {
-        scales: { y: { beginAtZero: true } }
-      }
-    });
-
-    new Chart(document.getElementById('doughnutMedia'), {
-      type: 'doughnut',
-      data: {
-        labels: ['Média', 'Restante até 10'],
-        datasets: [{ data: [mediaGeral, 10 - mediaGeral], backgroundColor: ['#2563eb', '#e2e8f0'] }]
-      },
-      options: {
-        cutoutPercentage: 60,
-        legend: { display: false }
-      }
-    });
-
-    // ==========================================================
-    // MOCK COMPARATIVO
-    // ==========================================================
-    const periodoA = {
-      nome: 'Período A',
-      mediaUso: 8.0,
-      mediaAtendimento: 9.2,
-      mediaEquip: 7.0,
-      totalRespostas: 30,
-      totalEnviadas: 40,
-      distribuicao: {
-        uso: [0,0,1,0,2,3,3,5,7,6,3],
-        atendimento: [0,0,0,1,0,2,2,4,6,9,6],
-        equip: [0,1,1,2,3,4,4,4,5,4,2]
-      },
-      envios: [6, 7, 5, 8, 6, 4, 4],
-      respostas: [5, 6, 4, 7, 5, 2, 1],
-      temas: [
-        { tema: 'Mais oficinas', qtd: 6 },
-        { tema: 'Equipamentos', qtd: 4 },
-        { tema: 'Horário', qtd: 3 }
-      ]
-    };
-
-    const periodoB = {
-      nome: 'Período B',
-      mediaUso: 7.6,
-      mediaAtendimento: 9.4,
-      mediaEquip: 7.5,
-      totalRespostas: 26,
-      totalEnviadas: 35,
-      distribuicao: {
-        uso: [0,0,0,0,1,3,4,5,6,5,2],
-        atendimento: [0,0,0,0,1,1,2,3,5,8,6],
-        equip: [0,0,1,1,2,3,4,5,6,6,3]
-      },
-      envios: [5, 8, 6, 7, 7, 3, 3],
-      respostas: [4, 7, 5, 6, 6, 3, 2],
-      temas: [
-        { tema: 'Equipamentos', qtd: 7 },
-        { tema: 'Espaço físico', qtd: 4 },
-        { tema: 'Mais oficinas', qtd: 2 }
-      ]
-    };
-
+  window.pesquisaRelatorioData = <?= json_encode($relatorioData ?? [], JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
+  window.pesquisaRelatorioEndpoint = "<?= base_url('PesquisaSatisfacao/relatorioDados') ?>";
+</script>
+<script>
+    const labelsNotasPadrao = ['0','1','2','3','4','5','6','7','8','9','10'];
+    let chartBarAreas, chartBarDistribuicao, chartLineEvolucao, chartPieRespondido, chartLineEnvios, chartDoughnutMedia;
     let chartBarAreasComp, chartBarDistComp, chartLineEnviosComp;
+
+    function getLabelsNotas(labels){
+      return Array.isArray(labels) && labels.length ? labels : labelsNotasPadrao;
+    }
+
+    function setChart(instance, canvasId, config){
+      const ctx = document.getElementById(canvasId);
+      if (!ctx) return instance;
+      if (instance) instance.destroy();
+      return new Chart(ctx, config);
+    }
+
+    function formatDateBR(dateStr){
+      if (!dateStr) return '--';
+      if (/^\d{2}\/\d{2}\/\d{4}$/.test(dateStr)) return dateStr;
+      if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+        const [y,m,d] = dateStr.split('-');
+        return `${d}/${m}/${y}`;
+      }
+      const date = new Date(dateStr);
+      if (Number.isNaN(date.getTime())) return '--';
+      const d = String(date.getDate()).padStart(2, '0');
+      const m = String(date.getMonth() + 1).padStart(2, '0');
+      const y = date.getFullYear();
+      return `${d}/${m}/${y}`;
+    }
+
+    function renderGeral(data){
+      const totalRespostas = Number(data.totalRespostas || 0);
+      const totalEnviadas = Number(data.totalEnviadas || 0);
+      const taxaResposta = totalEnviadas > 0 ? (totalRespostas / totalEnviadas) * 100 : 0;
+      const mediaUsoGeral = Number(data.mediaUso || 0);
+      const mediaAtendimento = Number(data.mediaAtendimento || 0);
+      const mediaEquipamentos = Number(data.mediaEquip || 0);
+      const mediaGeral = Number(data.mediaGeral || 0);
+      const ultimaResposta = formatDateBR(data.ultimaResposta);
+
+      const labelsNotas = getLabelsNotas(data.labelsNotas);
+      const distUsoGeral = Array.isArray(data.distUso) ? data.distUso : new Array(11).fill(0);
+      const distAtendimento = Array.isArray(data.distAtendimento) ? data.distAtendimento : new Array(11).fill(0);
+      const distEquip = Array.isArray(data.distEquip) ? data.distEquip : new Array(11).fill(0);
+
+      const labelsMeses = Array.isArray(data.labelsMeses) ? data.labelsMeses : [];
+      const evolucaoUso = Array.isArray(data.evolucaoUso) ? data.evolucaoUso : [];
+      const evolucaoAtendimento = Array.isArray(data.evolucaoAtendimento) ? data.evolucaoAtendimento : [];
+      const evolucaoEquip = Array.isArray(data.evolucaoEquip) ? data.evolucaoEquip : [];
+
+      const enviosPorMes = Array.isArray(data.enviosPorMes) ? data.enviosPorMes : [];
+      const respostasPorMes = Array.isArray(data.respostasPorMes) ? data.respostasPorMes : [];
+
+      document.getElementById('card-total-respostas').textContent = totalRespostas;
+      document.getElementById('card-taxa-resposta').textContent = taxaResposta.toFixed(1) + '%';
+      document.getElementById('card-media-geral').textContent = mediaGeral.toFixed(1);
+      document.getElementById('card-ultima-resposta').textContent = ultimaResposta;
+      document.getElementById('texto-media-pontuacao').textContent = mediaGeral.toFixed(1);
+
+      chartBarAreas = setChart(chartBarAreas, 'barAreas', {
+        type: 'bar',
+        data: {
+          labels: ['Uso geral', 'Atendimento', 'Equipamentos'],
+          datasets: [{
+            label: 'Nota média',
+            data: [mediaUsoGeral, mediaAtendimento, mediaEquipamentos],
+            backgroundColor: ['#0f766e', '#2563eb', '#f97316']
+          }]
+        },
+        options: {
+          scales: { y: { beginAtZero: true, max: 10 } }
+        }
+      });
+
+      chartBarDistribuicao = setChart(chartBarDistribuicao, 'barDistribuicao', {
+        type: 'bar',
+        data: {
+          labels: labelsNotas,
+          datasets: [
+            { label: 'Uso geral', data: distUsoGeral, backgroundColor: '#0f766e' },
+            { label: 'Atendimento', data: distAtendimento, backgroundColor: '#2563eb' },
+            { label: 'Equipamentos', data: distEquip, backgroundColor: '#f97316' }
+          ]
+        },
+        options: {
+          responsive: true,
+          scales: { y: { beginAtZero: true } }
+        }
+      });
+
+      chartLineEvolucao = setChart(chartLineEvolucao, 'lineEvolucao', {
+        type: 'line',
+        data: {
+          labels: labelsMeses,
+          datasets: [
+            { label: 'Uso geral', data: evolucaoUso, borderColor: '#0f766e', backgroundColor: '#0f766e', tension: 0.3 },
+            { label: 'Atendimento', data: evolucaoAtendimento, borderColor: '#2563eb', backgroundColor: '#2563eb', tension: 0.3 },
+            { label: 'Equipamentos', data: evolucaoEquip, borderColor: '#f97316', backgroundColor: '#f97316', tension: 0.3 }
+          ]
+        },
+        options: {
+          scales: { y: { beginAtZero: true, max: 10 } }
+        }
+      });
+
+      chartPieRespondido = setChart(chartPieRespondido, 'pieRespondido', {
+        type: 'doughnut',
+        data: {
+          labels: ['Respondido', 'Não respondido'],
+          datasets: [{
+            data: [totalRespostas, Math.max(totalEnviadas - totalRespostas, 0)],
+            backgroundColor: ['#22c55e', '#e11d48']
+          }]
+        },
+        options: {
+          legend: {
+            display: true,
+            position: 'top'
+          },
+          cutoutPercentage: 55
+        }
+      });
+
+      document.getElementById('info-respondido').textContent =
+        totalEnviadas + ' enviadas, sendo ' + totalRespostas + ' respondidas (' + taxaResposta.toFixed(1) + '%).';
+
+      chartLineEnvios = setChart(chartLineEnvios, 'lineEnvios', {
+        type: 'line',
+        data: {
+          labels: labelsMeses,
+          datasets: [
+            { label: 'Envios', data: enviosPorMes, borderColor: '#94a3b8', backgroundColor: '#94a3b8', tension: 0.3, fill: false },
+            { label: 'Respostas', data: respostasPorMes, borderColor: '#0f766e', backgroundColor: '#0f766e', tension: 0.3, fill: false }
+          ]
+        },
+        options: {
+          scales: { y: { beginAtZero: true } }
+        }
+      });
+
+      chartDoughnutMedia = setChart(chartDoughnutMedia, 'doughnutMedia', {
+        type: 'doughnut',
+        data: {
+          labels: ['Média', 'Restante até 10'],
+          datasets: [{ data: [mediaGeral, Math.max(10 - mediaGeral, 0)], backgroundColor: ['#2563eb', '#e2e8f0'] }]
+        },
+        options: {
+          cutoutPercentage: 60,
+          legend: { display: false }
+        }
+      });
+    }
 
     function renderTabelaVariacao(pA, pB) {
       const tbody = document.getElementById('tabela-variacao');
       tbody.innerHTML = '';
 
+      const totalRespostasA = Number(pA.totalRespostas || 0);
+      const totalEnviadasA = Number(pA.totalEnviadas || 0);
+      const totalRespostasB = Number(pB.totalRespostas || 0);
+      const totalEnviadasB = Number(pB.totalEnviadas || 0);
+      const taxaA = totalEnviadasA > 0 ? (totalRespostasA / totalEnviadasA) * 100 : 0;
+      const taxaB = totalEnviadasB > 0 ? (totalRespostasB / totalEnviadasB) * 100 : 0;
+
       const linhas = [
-        { nome: 'Média - Uso geral', a: pA.mediaUso, b: pB.mediaUso },
-        { nome: 'Média - Atendimento', a: pA.mediaAtendimento, b: pB.mediaAtendimento },
-        { nome: 'Média - Equipamentos', a: pA.mediaEquip, b: pB.mediaEquip },
-        { nome: 'Taxa de resposta (%)', a: (pA.totalRespostas / pA.totalEnviadas) * 100, b: (pB.totalRespostas / pB.totalEnviadas) * 100 }
+        { nome: 'Média - Uso geral', a: Number(pA.mediaUso || 0), b: Number(pB.mediaUso || 0) },
+        { nome: 'Média - Atendimento', a: Number(pA.mediaAtendimento || 0), b: Number(pB.mediaAtendimento || 0) },
+        { nome: 'Média - Equipamentos', a: Number(pA.mediaEquip || 0), b: Number(pB.mediaEquip || 0) },
+        { nome: 'Taxa de resposta (%)', a: taxaA, b: taxaB }
       ];
 
       linhas.forEach(l => {
@@ -523,28 +494,34 @@
 
     function renderRankingTemas(pA, pB) {
       const container = document.getElementById('ranking-temas');
+      const temasA = Array.isArray(pA.temas) && pA.temas.length ? pA.temas : [];
+      const temasB = Array.isArray(pB.temas) && pB.temas.length ? pB.temas : [];
       container.innerHTML = `
         <div class="col-md-6 mb-3">
           <p class="small text-muted mb-2">${pA.nome}</p>
           <ul class="list-group list-group-flush">
-            ${pA.temas.map(t => `<li class="list-group-item d-flex justify-content-between align-items-center px-0">${t.tema}<span class="badge badge-primary badge-pill">${t.qtd}</span></li>`).join('')}
+            ${temasA.length ? temasA.map(t => `<li class="list-group-item d-flex justify-content-between align-items-center px-0">${t.tema}<span class="badge badge-primary badge-pill">${t.qtd}</span></li>`).join('') : '<li class="list-group-item px-0 text-muted">Sem dados.</li>'}
           </ul>
         </div>
         <div class="col-md-6 mb-3">
           <p class="small text-muted mb-2">${pB.nome}</p>
           <ul class="list-group list-group-flush">
-            ${pB.temas.map(t => `<li class="list-group-item d-flex justify-content-between align-items-center px-0">${t.tema}<span class="badge badge-primary badge-pill">${t.qtd}</span></li>`).join('')}
+            ${temasB.length ? temasB.map(t => `<li class="list-group-item d-flex justify-content-between align-items-center px-0">${t.tema}<span class="badge badge-primary badge-pill">${t.qtd}</span></li>`).join('') : '<li class="list-group-item px-0 text-muted">Sem dados.</li>'}
           </ul>
         </div>
       `;
     }
 
-    function aplicarComparacao() {
-      const pA = periodoA;
-      const pB = periodoB;
+    function renderComparativo(data) {
+      const labelsNotas = getLabelsNotas(data.labelsNotas);
+      const labelsMeses = Array.isArray(data.labelsMeses) ? data.labelsMeses : [];
+      const pA = data.periodoA || {};
+      const pB = data.periodoB || {};
+      pA.nome = pA.nome || 'Período A';
+      pB.nome = pB.nome || 'Período B';
 
-      const mediaA = (pA.mediaUso + pA.mediaAtendimento + pA.mediaEquip) / 3;
-      const mediaB = (pB.mediaUso + pB.mediaAtendimento + pB.mediaEquip) / 3;
+      const mediaA = (Number(pA.mediaUso || 0) + Number(pA.mediaAtendimento || 0) + Number(pA.mediaEquip || 0)) / 3;
+      const mediaB = (Number(pB.mediaUso || 0) + Number(pB.mediaAtendimento || 0) + Number(pB.mediaEquip || 0)) / 3;
       const variacaoAbs = mediaB - mediaA;
       const variacaoPct = mediaA > 0 ? (variacaoAbs / mediaA) * 100 : 0;
 
@@ -568,34 +545,30 @@
       }
 
       // barras comparativas
-      const ctx1 = document.getElementById('barAreasComparativo');
-      if (chartBarAreasComp) chartBarAreasComp.destroy();
-      chartBarAreasComp = new Chart(ctx1, {
+      chartBarAreasComp = setChart(chartBarAreasComp, 'barAreasComparativo', {
         type: 'bar',
         data: {
           labels: ['Uso geral', 'Atendimento', 'Equipamentos'],
           datasets: [
-            { label: 'Per. A', data: [pA.mediaUso, pA.mediaAtendimento, pA.mediaEquip], backgroundColor: '#0f766e' },
-            { label: 'Per. B', data: [pB.mediaUso, pB.mediaAtendimento, pB.mediaEquip], backgroundColor: '#2563eb' }
+            { label: 'Per. A', data: [Number(pA.mediaUso || 0), Number(pA.mediaAtendimento || 0), Number(pA.mediaEquip || 0)], backgroundColor: '#0f766e' },
+            { label: 'Per. B', data: [Number(pB.mediaUso || 0), Number(pB.mediaAtendimento || 0), Number(pB.mediaEquip || 0)], backgroundColor: '#2563eb' }
           ]
         },
         options: { scales: { y: { beginAtZero: true, max: 10 } } }
       });
 
       // distribuição comparativa
-      const ctx2 = document.getElementById('barDistribuicaoComparativo');
-      if (chartBarDistComp) chartBarDistComp.destroy();
-      chartBarDistComp = new Chart(ctx2, {
+      chartBarDistComp = setChart(chartBarDistComp, 'barDistribuicaoComparativo', {
         type: 'bar',
         data: {
           labels: labelsNotas,
           datasets: [
-            { label: 'Per. A - Uso', data: pA.distribuicao.uso, backgroundColor: 'rgba(15,118,110,0.7)' },
-            { label: 'Per. B - Uso', data: pB.distribuicao.uso, backgroundColor: 'rgba(37,99,235,0.7)' },
-            { label: 'Per. A - Atendimento', data: pA.distribuicao.atendimento, backgroundColor: 'rgba(15,118,110,0.3)' },
-            { label: 'Per. B - Atendimento', data: pB.distribuicao.atendimento, backgroundColor: 'rgba(37,99,235,0.3)' },
-            { label: 'Per. A - Equipamentos', data: pA.distribuicao.equip, backgroundColor: 'rgba(249,115,22,0.5)' },
-            { label: 'Per. B - Equipamentos', data: pB.distribuicao.equip, backgroundColor: 'rgba(148,163,184,0.8)' }
+            { label: 'Per. A - Uso', data: (pA.distribuicao && pA.distribuicao.uso) ? pA.distribuicao.uso : new Array(11).fill(0), backgroundColor: 'rgba(15,118,110,0.7)' },
+            { label: 'Per. B - Uso', data: (pB.distribuicao && pB.distribuicao.uso) ? pB.distribuicao.uso : new Array(11).fill(0), backgroundColor: 'rgba(37,99,235,0.7)' },
+            { label: 'Per. A - Atendimento', data: (pA.distribuicao && pA.distribuicao.atendimento) ? pA.distribuicao.atendimento : new Array(11).fill(0), backgroundColor: 'rgba(15,118,110,0.3)' },
+            { label: 'Per. B - Atendimento', data: (pB.distribuicao && pB.distribuicao.atendimento) ? pB.distribuicao.atendimento : new Array(11).fill(0), backgroundColor: 'rgba(37,99,235,0.3)' },
+            { label: 'Per. A - Equipamentos', data: (pA.distribuicao && pA.distribuicao.equip) ? pA.distribuicao.equip : new Array(11).fill(0), backgroundColor: 'rgba(249,115,22,0.5)' },
+            { label: 'Per. B - Equipamentos', data: (pB.distribuicao && pB.distribuicao.equip) ? pB.distribuicao.equip : new Array(11).fill(0), backgroundColor: 'rgba(148,163,184,0.8)' }
           ]
         },
         options: {
@@ -606,17 +579,15 @@
       });
 
       // envios comparativo
-      const ctx3 = document.getElementById('lineEnviosComparativo');
-      if (chartLineEnviosComp) chartLineEnviosComp.destroy();
-      chartLineEnviosComp = new Chart(ctx3, {
+      chartLineEnviosComp = setChart(chartLineEnviosComp, 'lineEnviosComparativo', {
         type: 'line',
         data: {
           labels: labelsMeses,
           datasets: [
-            { label: 'Per. A - Envios', data: pA.envios, borderColor: '#94a3b8', fill: false, tension: 0.3 },
-            { label: 'Per. A - Respostas', data: pA.respostas, borderColor: '#0f766e', fill: false, tension: 0.3 },
-            { label: 'Per. B - Envios', data: pB.envios, borderColor: '#f97316', fill: false, tension: 0.3 },
-            { label: 'Per. B - Respostas', data: pB.respostas, borderColor: '#2563eb', fill: false, tension: 0.3 }
+            { label: 'Per. A - Envios', data: Array.isArray(pA.envios) ? pA.envios : [], borderColor: '#94a3b8', fill: false, tension: 0.3 },
+            { label: 'Per. A - Respostas', data: Array.isArray(pA.respostas) ? pA.respostas : [], borderColor: '#0f766e', fill: false, tension: 0.3 },
+            { label: 'Per. B - Envios', data: Array.isArray(pB.envios) ? pB.envios : [], borderColor: '#f97316', fill: false, tension: 0.3 },
+            { label: 'Per. B - Respostas', data: Array.isArray(pB.respostas) ? pB.respostas : [], borderColor: '#2563eb', fill: false, tension: 0.3 }
           ]
         },
         options: {
@@ -630,7 +601,102 @@
       renderRankingTemas(pA, pB);
     }
 
-    // chama inicialmente
-    aplicarComparacao();
+    function aplicarFiltrosIniciais(filtros){
+      const dataADe = document.getElementById('dataADe');
+      const dataAAte = document.getElementById('dataAAte');
+      const dataBDe = document.getElementById('dataBDe');
+      const dataBAte = document.getElementById('dataBAte');
+
+      if (filtros.dataADe) dataADe.value = filtros.dataADe;
+      if (filtros.dataAAte) dataAAte.value = filtros.dataAAte;
+      if (filtros.dataBDe) dataBDe.value = filtros.dataBDe;
+      if (filtros.dataBAte) dataBAte.value = filtros.dataBAte;
+
+      if (!dataADe.value || !dataAAte.value || !dataBDe.value || !dataBAte.value) {
+        const hoje = new Date();
+        const fimA = new Date(hoje);
+        const inicioA = new Date(hoje);
+        inicioA.setDate(fimA.getDate() - 30);
+        const fimB = new Date(inicioA);
+        fimB.setDate(fimB.getDate() - 1);
+        const inicioB = new Date(fimB);
+        inicioB.setDate(fimB.getDate() - 29);
+
+        if (!dataADe.value) dataADe.value = inicioA.toISOString().split('T')[0];
+        if (!dataAAte.value) dataAAte.value = fimA.toISOString().split('T')[0];
+        if (!dataBDe.value) dataBDe.value = inicioB.toISOString().split('T')[0];
+        if (!dataBAte.value) dataBAte.value = fimB.toISOString().split('T')[0];
+      }
+    }
+
+    function atualizarInfoPeriodo(filtros){
+      const infoPeriodo = document.getElementById('info-periodo-relatorio');
+      if (!infoPeriodo) return;
+      const dataADe = filtros.dataADe || document.getElementById('dataADe').value;
+      const dataAAte = filtros.dataAAte || document.getElementById('dataAAte').value;
+      if (!dataADe || !dataAAte) {
+        infoPeriodo.textContent = '';
+        return;
+      }
+      infoPeriodo.textContent = `Período considerado: ${formatDateBR(dataADe)} a ${formatDateBR(dataAAte)}`;
+    }
+
+    function aplicarDados(payload){
+      const filtros = payload.filtros || {};
+      aplicarFiltrosIniciais(filtros);
+      atualizarInfoPeriodo(filtros);
+
+      if (payload.geral) {
+        renderGeral(payload.geral);
+      }
+      if (payload.comparativo) {
+        renderComparativo(payload.comparativo);
+      }
+    }
+
+    async function aplicarComparacao(){
+      const info = document.getElementById('info-comparacao');
+      const dataADe = document.getElementById('dataADe').value;
+      const dataAAte = document.getElementById('dataAAte').value;
+      const dataBDe = document.getElementById('dataBDe').value;
+      const dataBAte = document.getElementById('dataBAte').value;
+
+      if (!window.pesquisaRelatorioEndpoint) {
+        return;
+      }
+
+      const params = new URLSearchParams({
+        dataADe,
+        dataAAte,
+        dataBDe,
+        dataBAte
+      });
+
+      if (info) info.textContent = 'Carregando...';
+
+      try {
+        const response = await fetch(window.pesquisaRelatorioEndpoint + '?' + params.toString(), {
+          headers: {
+            'Accept': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+          }
+        });
+        const payload = await response.json();
+        if (!response.ok || payload.erro) {
+          if (info) info.textContent = payload.msg || 'Erro ao carregar dados.';
+          return;
+        }
+        if (info) info.textContent = '';
+        aplicarDados(payload);
+      } catch (err) {
+        if (info) info.textContent = 'Erro ao carregar dados.';
+      }
+    }
+
+    window.aplicarComparacao = aplicarComparacao;
+
+    (function init(){
+      aplicarDados(window.pesquisaRelatorioData || {});
+    })();
   </script>
 <?= $this->endSection(); ?>

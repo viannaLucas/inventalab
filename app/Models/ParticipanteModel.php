@@ -97,12 +97,14 @@ class ParticipanteModel extends BaseModel{
      */
     public function buildFindModal(string $searchTerm){
         $this->builder()->getCompiledSelect(); //clear builder
+        $this->groupStart();
         $this->orLike('nome', $searchTerm);
         $this->orLike('email', $searchTerm);
         $this->orLike('cpf', $searchTerm);
         $this->orLike('cidade', $searchTerm);
         $this->orLike('cep', $searchTerm);
-        
+        $this->groupEnd();
+        $this->where('suspenso', ParticipanteEntity::SUSPENSO_NAO);
         return $this;
     }
     
