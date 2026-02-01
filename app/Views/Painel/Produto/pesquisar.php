@@ -55,6 +55,14 @@
                         </div>
                     </div>                                        
                     <div class="form-group col-12 col-md-6">
+                        <label class="main-content-label tx-11 tx-medium tx-gray-600" for="ativo">Ativo</label> 
+                        <select class="form-control select2" name="ativo[]" id="ativo" multiple="multiple">
+                            <?PHP foreach (App\Entities\ProdutoEntity::_op('ativo') as $k => $op){ ?>
+                            <option value="<?= $k; ?>"><?= $op; ?></option>
+                            <?PHP } ?>
+                        </select>
+                    </div>                               
+                    <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Abaixo do Estoque Mínimo</label>
                         <select class="form-control" name="abaixoEstoqueMinimo" id="abaixoEstoqueMinimo">
                             <option value="" selected></option>

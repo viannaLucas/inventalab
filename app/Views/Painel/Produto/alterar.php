@@ -32,6 +32,7 @@
                             <a class="btn btn-sm btn-primary ml-3" href="<?PHP echo base_url($produto->foto); ?>" target="_blank">Fazer Download</a>
                             <?PHP } ?>
                         </label>
+                        <input type="hidden" id="foto_removida" name="foto_removida" value="0">
                         <input type="file" class="dropify" id="foto" name="foto" accept=".jpg,.jpeg,.webp,.png" 
                                data-default-file="<?PHP echo $produto->foto != '' ? base_url($produto->foto) : ''; ?>"
                                data-allowed-file-extensions="webp png jpeg jpg" data-max-file-size="10M" >
@@ -50,6 +51,14 @@
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Estoque Atual</label> 
                         <input class="form-control maskInteiro" name="estoqueAtual" id="estoqueAtual" type="text" value="<?= $produto->estoqueAtual ?>">
+                    </div>                                        
+                    <div class="form-group col-12 col-md-6">
+                        <label class="main-content-label tx-11 tx-medium tx-gray-600" for="ativo">Ativo</label> 
+                        <select class="form-control" name="ativo" id="ativo" required="" >
+                            <?PHP foreach (App\Entities\ProdutoEntity::_op('ativo') as $k => $op){ ?>
+                            <option value="<?= $k; ?>" <?= ((int)$produto->ativo) === $k ? 'selected' : ''; ?>><?= $op; ?></option>
+                            <?PHP } ?>
+                        </select>
                     </div>                                        
                     <!-- Dados Fiscais desabilitados temporariamente -->
                     <!--
@@ -192,6 +201,9 @@
                 required: true,
                 inteiro: true,
             },
+            ativo: {
+                required: true,
+            },
             // UnidadedeControle: {
             //     required: true,
             // },
@@ -225,5 +237,15 @@
         }
     });
 
+    $('#foto')
+        .on('dropify.beforeClear', function () {
+            $('#foto_removida').val('1');
+        })
+        .on('dropify.afterClear', function () {
+            $('#foto_removida').val('1');
+        })
+        .on('dropify.fileReady', function () {
+            $('#foto_removida').val('0');
+        });
 </script>    
 <?= $this->endSection('scripts'); ?>

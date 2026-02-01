@@ -28,6 +28,7 @@
                             <!-- <th scope="col">Valor</th> -->
                             <th scope="col">Estoque Mínimo</th>
                             <th scope="col">Estoque Atual</th>
+                            <th scope="col">Ativo</th>
                             <th scope="col">Ações</th>
                         </tr>
                     </thead>
@@ -39,6 +40,7 @@
                             <!-- <td><?= $i->valor ?></td> -->
                             <td><?= $i->estoqueMinimo ?></td>
                             <td><?= $i->estoqueAtual ?></td>
+                            <td><span style="color: <?= $i->_cl('ativo', $i->ativo) ?>;"><?= $i->_op('ativo', $i->ativo) ?></span></td>
                             <td>
                                 <a href="<?php echo base_url('Produto/alterar/' . $i->id); ?>" class="btn btn-primary  btn-sm">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">

@@ -97,20 +97,34 @@ class Produto extends BaseController {
         $m = new ProdutoModel();
         // $mDadosApi = new DadosApiModel();
         // $mProdutoDadosApi = new ProdutoDadosApiModel();
-        $ef = $this->validateWithRequest($m->getValidationRulesFiles());
-        if ($ef !== true) {
-            return $this->returnWithError($ef);
+        $fileFoto = $this->request->getFile('foto');
+        $hasUploadFoto = $fileFoto !== null && $fileFoto->isValid() && !$fileFoto->hasMoved();
+        if ($hasUploadFoto) {
+            $ef = $this->validateWithRequest($m->getValidationRulesFiles());
+            if ($ef !== true) {
+                return $this->returnWithError($ef);
+            }
         }
         $e = $m->find($this->request->getPost('id'));
         if ($e === null) {
             return $this->returnWithError('Registro não encontrado.');
         }
         $en = new ProdutoEntity($this->request->getPost());
+        $fotoRemovida = $this->request->getPost('foto_removida') === '1';
         // $dadosApiData = $this->getDadosApiData();
         // $produtoDadosApi = $mProdutoDadosApi->where('Produto_id', $e->id)->first();
         try{ 
-            $ru['foto'] = $m->uploadImage($this->request->getFile('foto'), null, ProdutoEntity::folder);
-            $en->foto = $ru['foto'] !== false ? $ru['foto'] : $e->foto;
+            $ru['foto'] = false;
+            if ($hasUploadFoto) {
+                $ru['foto'] = $m->uploadImage($fileFoto, null, ProdutoEntity::folder);
+            }
+            if ($ru['foto'] !== false) {
+                $en->foto = $ru['foto'];
+            } elseif ($fotoRemovida) {
+                $en->foto = null;
+            } else {
+                $en->foto = $e->foto;
+            }
             $m->db->transStart();
             if ($m->update($en->id, $en)) { 
                 // Comentado enquanto Dados Fiscais não forem usados.
@@ -137,7 +151,11 @@ class Produto extends BaseController {
                 //         return $this->returnWithError($mProdutoDadosApi->errors());
                 //     }
                 // }
-                if($ru['foto'] !== false) $m->deleteFile($e->foto);
+                if ($ru['foto'] !== false) {
+                    $m->deleteFile($e->foto);
+                } elseif ($fotoRemovida) {
+                    $m->deleteFile($e->foto);
+                }
                 $m->db->transComplete();
                 return $this->returnSucess('Cadastrado com sucesso!');
             } else { 
@@ -199,7 +217,8 @@ class Produto extends BaseController {
     
     public function pesquisaModal() {
         $m = new ProdutoModel();
-        $m->buildFindModal($this->request->getGet('searchTerm'));
+        $m->buildFindModal($this->request->getGet('searchTerm'))
+                ->where('ativo', ProdutoEntity::ATIVO_SIM);
         $data = [
             'vProduto' => $m->findAll(100)
         ];

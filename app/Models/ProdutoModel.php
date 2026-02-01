@@ -8,7 +8,7 @@ use App\Entities\Cast\CastDateBR;
 class ProdutoModel extends BaseModel{
     
     protected $table = 'Produto';
-    protected $allowedFields = ['nome', 'foto', 'valor', 'estoqueMinimo', 'estoqueAtual'];
+    protected $allowedFields = ['nome', 'foto', 'valor', 'estoqueMinimo', 'estoqueAtual', 'ativo'];
     protected $validationRules = [
     	'id'    => 'permit_empty|max_length[19]|is_natural_no_zero',
     
@@ -17,6 +17,7 @@ class ProdutoModel extends BaseModel{
         // 'valor' => ['label'=> 'Valor', 'rules'=>'required|greater_than[0]|decimal'],
         'estoqueMinimo' => ['label'=> 'Estoque Mínimo', 'rules'=>'required|greater_than[0]|integer'],
         'estoqueAtual' => ['label'=> 'Estoque Atual', 'rules'=>'required|greater_than[0]|integer'],
+        'ativo' => ['label'=> 'Ativo', 'rules'=>'required|in_list[0,1]'],
     ];
     protected $validationRulesFiles = [
         'foto' => ['label'=> 'Foto', 'rules'=>'is_image[foto]|max_size[foto,10240]|ext_in[foto,jpg,jpeg,webp,png]'],
@@ -33,6 +34,10 @@ class ProdutoModel extends BaseModel{
         if(isset($data['estoqueMinimoEnd'])) $this->where('estoqueMinimo <=', $data['estoqueMinimoEnd']);
         if(isset($data['estoqueAtualStart'])) $this->where('estoqueAtual >=', $data['estoqueAtualStart']);
         if(isset($data['estoqueAtualEnd'])) $this->where('estoqueAtual <=', $data['estoqueAtualEnd']); 
+        if(isset($data['ativo'])){
+            $func = is_array($data['ativo']) ? 'whereIn' : 'where';
+            $this->$func('ativo', $data['ativo']);
+        }
         if(isset($data['valorStart'])) $this->where('valor >=', CastCurrencyBR::set($data['valorStart']));
         if(isset($data['valorEnd'])) $this->where('valor <=', CastCurrencyBR::set($data['valorEnd']));
         
@@ -40,7 +45,8 @@ class ProdutoModel extends BaseModel{
     }
     
     public function buildFindModal(string $searchTerm){ 
-        $this->orLike('nome', $searchTerm);        
+        $this->orLike('nome', $searchTerm);
+        $this->where('ativo', \App\Entities\ProdutoEntity::ATIVO_SIM);
         return $this;
     }
 

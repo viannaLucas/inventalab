@@ -44,6 +44,15 @@
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Estoque Atual</label> 
                         <input class="form-control maskInteiro" name="estoqueAtual" id="estoqueAtual" type="text" value="<?= old('estoqueAtual') ?>">
                     </div>                                        
+                    <div class="form-group col-12 col-md-6">
+                        <label class="main-content-label tx-11 tx-medium tx-gray-600" for="ativo">Ativo</label> 
+                        <select class="form-control" name="ativo" id="ativo" required="" >
+                            <option value="" <?= old('ativo')=='' ? 'selected' : ''; ?>></option>
+                            <?PHP foreach (App\Entities\ProdutoEntity::_op('ativo') as $k => $op){ ?>
+                            <option value="<?= $k; ?>" <?= old('ativo') === $k ? 'selected' : ''; ?>><?= $op; ?></option>
+                            <?PHP } ?>
+                        </select>
+                    </div>                                        
                     <!-- Dados Fiscais desabilitados temporariamente -->
                     <!--
                     <div class="form-group col-12">
@@ -180,6 +189,9 @@
             estoqueAtual: {
                 required: true,
                 inteiro: true,
+            },
+            ativo: {
+                required: true,
             },
             // UnidadedeControle: {
             //     required: true,

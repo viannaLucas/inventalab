@@ -10,6 +10,7 @@
                   <!-- <th scope="col">Valor</th> -->
                   <th scope="col">Estoque Mínimo</th>
                   <th scope="col">Estoque Atual</th>
+                  <!-- <th scope="col">Ativo</th> -->
                 </tr>
             </thead>
             <tbody>
@@ -20,6 +21,7 @@
                     <!-- <td><?= $i->valor ?></td> -->
                     <td><?= $i->estoqueMinimo ?></td>
                     <td><?= $i->estoqueAtual ?></td>
+                    <!-- <td><span style="color: <?= $i->_cl('ativo', $i->ativo) ?>;"><?= $i->_op('ativo', $i->ativo) ?></span></td> -->
                 </tr>
             <?PHP } ?>
             </tbody>
