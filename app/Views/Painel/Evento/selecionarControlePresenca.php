@@ -58,6 +58,6 @@
 </div>
 
 <!-- row closed -->
-<?= esc($this->endSection('content'); ) ?><?= $this->section('scripts'); ?>
+<?= $this->endSection('content'); ?><?= $this->section('scripts'); ?>
 
 <?= $this->endSection(); ?>

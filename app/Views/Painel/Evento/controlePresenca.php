@@ -104,7 +104,7 @@ if($controlePresenca instanceof ControlePresencaEntity){
 </div>
 <?PHP } ?>
 <!-- row closed -->
-<?= esc($this->endSection('content'); ) ?><?= $this->section('scripts'); ?>
+<?= $this->endSection('content') ?><?= $this->section('scripts'); ?>
 <script>
 // Presença: click handler + fetch + toast + limpar filtro
 document.addEventListener('click', async function (e) {

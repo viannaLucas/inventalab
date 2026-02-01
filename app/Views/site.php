@@ -102,14 +102,14 @@
                 <span class="material-symbols-outlined mt-1 text-2xl text-primary">location_on</span>
                 <div>
                     <h3 class="font-bold">Endereço</h3>
-                    <p class="text-text-muted-light dark:text-text-muted-dark">Rua da Inovação, 123, Bairro da Tecnologia, São Paulo - SP</p>
+                    <p class="text-text-muted-light dark:text-text-muted-dark">R. Itaiópolis, 470 - América, Joinville - SC, 89204-100</p>
                 </div>
             </div>
             <div class="flex items-start gap-4">
                 <span class="material-symbols-outlined mt-1 text-2xl text-primary">call</span>
                 <div>
                     <h3 class="font-bold">Telefone</h3>
-                    <p class="text-text-muted-light dark:text-text-muted-dark">(11) 98765-4321</p>
+                    <p class="text-text-muted-light dark:text-text-muted-dark">(47) 3441-3300</p>
                 </div>
             </div>
             <div class="flex items-start gap-4">
@@ -120,24 +120,83 @@
                 </div>
             </div>
             <div class="mt-4 h-64 w-full overflow-hidden rounded-lg">
-                <iframe allowfullscreen="" class="h-full w-full" data-location="São Paulo, Brazil" loading="lazy" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.145942463991!2d-46.656571584406!3d-23.563099367543885!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c8da0aa315%3A0xd59f9431f2c9776a!2sAv.%20Paulista%2C%20S%C3%A3o%20Paulo%20-%20SP!5e0!3m2!1spt-BR!2sbr!4v1633390318531!5m2!1spt-BR!2sbr" style="border:0;"></iframe>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3577.201276722168!2d-48.84724852431485!3d-26.287574267375067!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94deb02c2a692f8f%3A0x30564e2fea673820!2sR.%20Itai%C3%B3polis%2C%20470%20-%20Am%C3%A9rica%2C%20Joinville%20-%20SC%2C%2089204-100!5e0!3m2!1spt-BR!2sbr!4v1769981019830!5m2!1spt-BR!2sbr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>    
             </div>
         </div>
-        <form class="flex flex-col gap-4">
+        <form id="contato-form" class="flex flex-col gap-4" action="<?= esc(base_url('PainelParticipante/enviarContatoSite'), 'attr'); ?>" method="post" novalidate>
+            <?= csrf_field(); ?>
+            <?php $honeypotName = config('Honeypot')->name ?? 'honeypot'; ?>
+            <div style="display:none">
+                <label for="hp"><?= esc(config('Honeypot')->label ?? 'Fill This Field'); ?></label>
+                <input type="text" id="hp" name="<?= esc($honeypotName, 'attr'); ?>" value="" autocomplete="off" tabindex="-1" />
+            </div>
+            <?php
+            $msg_sucesso = session()->getFlashdata('msg_sucesso');
+            if ($msg_sucesso) {
+                echo '<div class="rounded-md border border-green-200 bg-green-50 p-4 text-sm text-green-800">' . esc($msg_sucesso) . '</div>';
+            }
+            $msg_erro = session()->getFlashdata('msg_erro');
+            if ($msg_erro) {
+                if (is_array($msg_erro)) {
+                    $msg_erro = implode('<br>', array_map('esc', $msg_erro));
+                } else {
+                    $msg_erro = esc($msg_erro);
+                }
+                echo '<div class="rounded-md border border-red-200 bg-red-50 p-4 text-sm text-red-800">' . $msg_erro . '</div>';
+            }
+            ?>
+            <div id="contato-erro-cliente" class="hidden rounded-md border border-red-200 bg-red-50 p-4 text-sm text-red-800"></div>
             <div>
                 <label class="block text-sm font-medium" for="name">Nome</label>
-                <input class="mt-1 block w-full rounded-md border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark shadow-sm focus:border-primary focus:ring-primary" id="name" name="name" type="text" />
+                <input class="mt-1 block w-full rounded-md border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark shadow-sm focus:border-primary focus:ring-primary" id="name" name="name" type="text" value="<?= esc(old('name')); ?>" required />
             </div>
             <div>
                 <label class="block text-sm font-medium" for="email">Email</label>
-                <input class="mt-1 block w-full rounded-md border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark shadow-sm focus:border-primary focus:ring-primary" id="email" name="email" type="email" />
+                <input class="mt-1 block w-full rounded-md border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark shadow-sm focus:border-primary focus:ring-primary" id="email" name="email" type="email" value="<?= esc(old('email')); ?>" required />
             </div>
             <div>
                 <label class="block text-sm font-medium" for="message">Mensagem</label>
-                <textarea class="mt-1 block w-full rounded-md border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark shadow-sm focus:border-primary focus:ring-primary" id="message" name="message" rows="5"></textarea>
+                <textarea class="mt-1 block w-full rounded-md border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark shadow-sm focus:border-primary focus:ring-primary" id="message" name="message" rows="5" required><?= esc(old('message')); ?></textarea>
             </div>
             <button class="flex h-12 w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-primary px-6 text-base font-bold text-white" type="submit"><span class="truncate">Enviar Mensagem</span></button>
         </form>
+        <script>
+            (function() {
+                var form = document.getElementById('contato-form');
+                if (!form) return;
+                var errorBox = document.getElementById('contato-erro-cliente');
+                form.addEventListener('submit', function(e) {
+                    var nome = (document.getElementById('name') || {}).value || '';
+                    var email = (document.getElementById('email') || {}).value || '';
+                    var mensagem = (document.getElementById('message') || {}).value || '';
+                    var erros = [];
+
+                    if (nome.trim().length < 3) {
+                        erros.push('Informe um nome com pelo menos 3 caracteres.');
+                    }
+                    if (email.trim() === '' || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.trim())) {
+                        erros.push('Informe um e-mail válido.');
+                    }
+                    if (mensagem.trim().length < 10) {
+                        erros.push('A mensagem deve conter pelo menos 10 caracteres.');
+                    }
+
+                    if (erros.length > 0) {
+                        e.preventDefault();
+                        if (errorBox) {
+                            errorBox.innerHTML = erros.join('<br>');
+                            errorBox.classList.remove('hidden');
+                        }
+                        return false;
+                    }
+
+                    if (errorBox) {
+                        errorBox.classList.add('hidden');
+                        errorBox.innerHTML = '';
+                    }
+                });
+            })();
+        </script>
     </div>
 </section>
 <?= $this->endSection(); ?>

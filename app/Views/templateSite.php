@@ -53,6 +53,42 @@
 
 <body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
     <div class="relative flex min-h-screen w-full flex-col" id="root">
+        <?php
+        $msg_sucesso = session()->getFlashdata('msg_sucesso');
+        $msg_erro = session()->getFlashdata('msg_erro');
+        $alertMsg = $msg_sucesso ?: $msg_erro;
+        $alertTipo = $msg_sucesso ? 'sucesso' : ($msg_erro ? 'erro' : '');
+        if (is_array($alertMsg)) {
+            $alertMsg = implode('<br>', array_map('esc', $alertMsg));
+        } else {
+            $alertMsg = $alertMsg ? esc($alertMsg) : '';
+        }
+        ?>
+        <?php if ($alertMsg) { ?>
+            <div id="site-alert-modal" class="fixed inset-0 z-50 flex items-start justify-center bg-black/40 px-4 pt-24">
+                <div class="<?= $alertTipo === 'sucesso' ? 'border-green-200 bg-green-50 text-green-800' : 'border-red-200 bg-red-50 text-red-800' ?> w-full max-w-xl rounded-md border px-5 py-4 text-sm shadow-xl" role="alertdialog" aria-live="assertive">
+                    <div class="flex items-start justify-between gap-4">
+                        <div class="font-semibold"><?= $alertTipo === 'sucesso' ? 'Sucesso' : 'Erro'; ?></div>
+                        <button type="button" aria-label="Fechar" class="text-xl leading-none text-current" onclick="(function(){var el=document.getElementById('site-alert-modal'); if(el){el.remove();}})()">×</button>
+                    </div>
+                    <div class="mt-2 leading-relaxed"><?= $alertMsg; ?></div>
+                </div>
+            </div>
+            <script>
+                setTimeout(function() {
+                    var el = document.getElementById('site-alert-modal');
+                    if (el) {
+                        el.style.opacity = '0';
+                        el.style.transition = 'opacity 0.4s ease';
+                        setTimeout(function() {
+                            if (el && el.parentNode) {
+                                el.parentNode.removeChild(el);
+                            }
+                        }, 500);
+                    }
+                }, 5000);
+            </script>
+        <?php } ?>
         <!-- Header -->
         <header class="sticky top-0 z-50 w-full border-b border-border-light dark:border-border-dark bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm" id="inicio">
             <div class="container mx-auto flex items-center justify-between px-4 py-3">
@@ -81,7 +117,7 @@
         <footer class="bg-card-light dark:bg-card-dark border-t border-border-light dark:border-border-dark">
             <div class="container mx-auto px-4 py-8">
                 <div class="flex flex-col items-center justify-between gap-6 md:flex-row">
-                    <p class="text-sm text-text-muted-light dark:text-text-muted-dark">© 2024 MakerSpace. Todos os direitos reservados.</p>
+                    <p class="text-sm text-text-muted-light dark:text-text-muted-dark">© <?= date('Y').' '.esc(env('nomeEmpresa')) ;?>. Todos os direitos reservados.</p>
                     <div class="flex gap-6">
                         <a class="text-text-muted-light hover:text-primary dark:text-text-muted-dark" href="#">
                             <svg aria-hidden="true" class="h-6 w-6" fill="currentColor" viewbox="0 0 24 24">

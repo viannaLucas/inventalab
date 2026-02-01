@@ -303,7 +303,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
   window.pesquisaRelatorioData = <?= json_encode($relatorioData ?? [], JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
-  window.pesquisaRelatorioEndpoint = "<?= base_url('PesquisaSatisfacao/relatorioDados' ?>";
+  window.pesquisaRelatorioEndpoint = "<?= base_url('PesquisaSatisfacao/relatorioDados') ?>";
 </script>
 <script>
     const labelsNotasPadrao = ['0','1','2','3','4','5','6','7','8','9','10'];

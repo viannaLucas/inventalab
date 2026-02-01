@@ -26,7 +26,7 @@ class ParticipanteEntity extends EntityBase {
     private const PERMISSOES = [
         'PainelParticipante' => [
             'login' => [
-                'metodos' => ['PainelParticipante::login', 'PainelParticipante::doLogin', 'PainelParticipante::site', 'PainelParticipante::detalheEvento'],
+                'metodos' => ['PainelParticipante::login', 'PainelParticipante::doLogin', 'PainelParticipante::site', 'PainelParticipante::detalheEvento', 'PainelParticipante::enviarContatoSite'],
                 'label' => 'Login',
                 'descricao' => 'Realizar Login',
                 'tipoAcesso' => 'publico'

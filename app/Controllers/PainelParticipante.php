@@ -35,9 +35,87 @@ class PainelParticipante extends BaseControllerParticipante
 
     public function site()
     {
+        helper('form');
         $data['eventos'] = (new EventoModel())->where('dataInicio >', date('Y-m-d'))
             ->where('divulgar', 1)->orderBy('dataInicio ASC')->findAll();
         return view('site', $data);
+    }
+
+    public function enviarContatoSite()
+    {
+        if (strtolower($this->request->getMethod()) !== 'post') {
+            return redirect()->to(base_url('/#contato'));
+        }
+
+        $throttler = \Config\Services::throttler();
+        if ($throttler->check(md5($this->request->getIPAddress() . '|contato_site'), 5, MINUTE) === false) {
+            return redirect()
+                ->to(base_url('/#contato'))
+                ->withInput()
+                ->with('msg_erro', 'Você fez muitas tentativas de contato. Aguarde alguns instantes e tente novamente.');
+        }
+
+        $validacao = \Config\Services::validation();
+        $validacao->setRules([
+            'name' => ['label' => 'Nome', 'rules' => 'required|min_length[3]|max_length[100]'],
+            'email' => ['label' => 'E-mail', 'rules' => 'required|valid_email|max_length[150]'],
+            'message' => ['label' => 'Mensagem', 'rules' => 'required|min_length[10]|max_length[2000]'],
+        ]);
+
+        if (!$validacao->withRequest($this->request)->run()) {
+            return redirect()
+                ->to(base_url('/#contato'))
+                ->withInput()
+                ->with('msg_erro', implode(PHP_EOL, $validacao->getErrors()));
+        }
+
+        $nome = trim((string) $this->request->getPost('name'));
+        $email = trim((string) $this->request->getPost('email'));
+        $mensagem = trim((string) $this->request->getPost('message'));
+
+        $emailService = \Config\Services::email();
+        $emailService->clear(true);
+        $emailConfig = config('Email');
+
+        $destinatario = trim((string) ($emailConfig->fromEmail ?? ''));
+        if ($destinatario === '') {
+            log_message('error', 'E-mail de destino não configurado para contato do site.');
+            return redirect()
+                ->to(base_url('/#contato'))
+                ->withInput()
+                ->with('msg_erro', 'Não foi possível enviar sua mensagem no momento. Tente novamente mais tarde.');
+        }
+        if (!empty($emailConfig->fromEmail)) {
+            $emailService->setFrom($emailConfig->fromEmail, $emailConfig->fromName ?: null);
+        }
+        
+        $emailService->setTo($destinatario);
+        $emailService->setReplyTo($email, $nome);
+        $emailService->setSubject('Contato via site - InventaLab');
+        $emailService->setMailType('html');
+        $emailService->setMessage(
+            '<p>Mensagem enviada pelo formulário de contato do site.</p>'
+            . '<p><strong>Nome:</strong> ' . esc($nome) . '</p>'
+            . '<p><strong>E-mail:</strong> ' . esc($email) . '</p>'
+            . '<p><strong>Mensagem:</strong><br>' . nl2br(esc($mensagem)) . '</p>'
+            . '<p><strong>IP:</strong> ' . esc($this->request->getIPAddress()) . '</p>'
+        );
+
+        $enviado = $emailService->send();
+        $debug = print_r($emailService->printDebugger(['headers', 'subject']), true);
+
+        if (!$enviado) {
+            log_message('error', 'Falha ao enviar contato do site: ' . $debug);
+            return redirect()
+                ->to(base_url('/#contato'))
+                ->withInput()
+                ->with('msg_erro', 'Não foi possível enviar sua mensagem no momento. Tente novamente mais tarde.');
+        }
+
+        log_message('info', 'Contato do site enviado com sucesso. Debug: ' . $debug);
+        return redirect()
+            ->to(base_url('/#contato'))
+            ->with('msg_sucesso', 'Mensagem enviada com sucesso! Entraremos em contato em breve.');
     }
 
     public function home()

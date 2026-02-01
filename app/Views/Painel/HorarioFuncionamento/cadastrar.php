@@ -188,7 +188,7 @@
 
 
 <!-- content closed -->
-<?= esc($this->endSection('content'); ) ?><?= $this->section('styles'); ?>
+<?= $this->endSection('content'); ?><?= $this->section('styles'); ?>
 <style>
     .schedule-timeline {
         border: 1px solid rgba(0,0,0,.125);
