@@ -76,7 +76,7 @@ $mostrarBotaoCobranca = $horaEntradaDefinida && $horaSaidaDefinida && $semCobran
                     
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Data Cadastro</label> 
-                        <input class="form-control maskData" name="dataCadastro" id="dataCadastro" type="text" value="<?= $reserva->dataCadastro ?>">
+                        <input class="form-control maskData" name="dataCadastro" id="dataCadastro" type="text" value="<?= $reserva->dataCadastro ?>" readonly="readonly" aria-readonly="true">
                     </div>                    
                     <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Data Reserva</label> 

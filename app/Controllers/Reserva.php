@@ -310,6 +310,7 @@ class Reserva extends BaseController {
         if ($e === null) {
             return $this->returnWithError('Registro não encontrado.');
         }
+        $post['dataCadastro'] = $e->dataCadastro;
 
         $horaEntradaNova = trim((string) ($post['horaEntrada'] ?? ''));
         $horaEntradaAntiga = trim((string) $e->horaEntrada);
