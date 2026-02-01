@@ -493,6 +493,7 @@ class Evento extends BaseController {
     
     public function listar() {
         $m = new EventoModel();
+        $m->orderBy('id', 'DESC');
         $data = [
             'vEvento' => $m->paginate(self::itensPaginacao),
             'pager' => $m->pager,
