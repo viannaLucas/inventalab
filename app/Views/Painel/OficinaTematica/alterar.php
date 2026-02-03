@@ -425,7 +425,7 @@
 <?PHP foreach ($oficinatematica->getListRecursoOficina() as $i => $o) {
     $o->RecursoTrabalho_id_Text = $o->getRecursoTrabalho()->nome;
 ?>
-    insertRowRecursoOficina(<?= json_encode($o ?>);
+    insertRowRecursoOficina(<?= json_encode($o) ?>);
 <?PHP } ?>
 
 

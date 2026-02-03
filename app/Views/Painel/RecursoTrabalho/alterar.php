@@ -330,7 +330,7 @@
 
 <?PHP foreach ($recursotrabalho->getListGarantia() as $i => $o) {
 ?>
-    insertRowGarantia(<?= json_encode($o ?>);
+    insertRowGarantia(<?= json_encode($o) ?>);
 <?PHP } ?>
 </script>    
 <?= $this->endSection('scripts'); ?>
