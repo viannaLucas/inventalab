@@ -27,7 +27,7 @@
                         <?php foreach($eventos as $evento){ ;?>
                         <div class="col-xl-4 col-lg-4 col-md-12">
                             <div class="card">
-                                <img class="card-img-top w-100" src="<?= esc(base_url($evento->imagem), 'attr') ?>" alt="">
+                                <img class="card-img-top w-100" src="<?= esc(base_url($evento->imagem), 'attr') ?>" alt="<?= esc($evento->nome) ; ?>">
                                 <div class="card-body">
                                     <h4 class="card-title mb-3"><?= esc($evento->nome) ; ?></h4>
                                     <div class="card-text">Data Início: <?= $evento->dataInicio ?></div>

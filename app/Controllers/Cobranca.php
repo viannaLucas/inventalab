@@ -51,6 +51,7 @@ class Cobranca extends BaseController {
         $m->db->transStart();
         try {
             if ($m->insert($e, false)) { 
+                $e->id = $m->getInsertID();
                 $produtoModel = new ProdutoModel();
                 $deltaProdutos = $produtoModel->calcularDeltaEstoquePorServicos($servicosQuantidade);
                 $produtoModel->ajustarEstoquePorDelta($deltaProdutos);

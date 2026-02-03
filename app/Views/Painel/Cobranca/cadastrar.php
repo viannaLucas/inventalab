@@ -221,6 +221,28 @@
         disableValidationFieldsFK();
     });
     var validator = $("#formCadastrar").validate({
+        submitHandler: function(form) {
+            disableValidationFieldsFK();
+
+            var situacaoAtual = parseInt($('#situacao').val() || '0', 10);
+            if (situacaoAtual === 1) {
+                swal({
+                    title: 'Confirma pagamento?',
+                    text: 'Ao cadastrar como paga não será permitido realizar alterações. Deseja prosseguir?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sim, continuar',
+                    cancelButtonText: 'Não'
+                }, function(isConfirm) {
+                    if (isConfirm) {
+                        form.submit();
+                    }
+                });
+                return;
+            }
+
+            form.submit();
+        },
         errorPlacement: function (error, element) {
             error.addClass('invalid-feedback');
             error.appendTo(element.parent());

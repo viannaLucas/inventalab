@@ -4,6 +4,8 @@ namespace App\Models;
 use App\Models\BaseModel;
 use App\Entities\Cast\CastCurrencyBR;
 use App\Entities\Cast\CastDateBR;
+use App\Entities\CobrancaEntity;
+use App\Entities\CobrancaParticipanteEventoEntity;
 
 class CobrancaParticipanteEventoModel extends BaseModel{
     
@@ -34,4 +36,22 @@ class CobrancaParticipanteEventoModel extends BaseModel{
         return $this;
     }
     
+
+    public function verificaSeIncricaoPaga($ParticipanteEvento_id) : bool
+    {
+        $listaCobrancaParticipante = (new CobrancaParticipanteEventoModel())
+            ->where('ParticipanteEvento_id', $ParticipanteEvento_id)->findAll();
+        $ParticipanteEvento = (new ParticipanteEventoModel())->find($ParticipanteEvento_id);
+        if(CastCurrencyBR::set($ParticipanteEvento->getEvento()->valor) <= 0 ){
+            return true;
+        }
+        /** @var CobrancaParticipanteEventoEntity $cobrancaParticipante */
+        foreach($listaCobrancaParticipante as $cobrancaParticipante){
+            if($cobrancaParticipante->getCobranca()->situacao == CobrancaEntity::SITUACAO_PAGA){
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

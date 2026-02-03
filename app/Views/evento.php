@@ -7,7 +7,7 @@ use App\Entities\Cast\CastCurrencyBR;
 <section class="bg-card-light dark:bg-card-dark py-2 sm:py-6" id="cursos">
     <div class="container mx-auto px-4">
         <h1 class="text-center" style="font-size:2rem;font-weight:700;"><?= esc($evento->nome); ?></h1>
-        <img class="mx-auto block max-w-[650px] w-full" alt="<?= esc($evento->nome); ?>" src="<?= esc(base_url() . $evento->imagem, 'attr') ?>" />
+        <img class="mx-auto block max-w-[650px] max-h-[450px] w-full h-auto object-contain" alt="<?= esc($evento->nome); ?>" src="<?= esc(base_url() . $evento->imagem, 'attr') ?>" />
 
         <div class="my-6 flex flex-wrap items-center justify-center gap-6 text-center text-base font-semibold">
             <div>Data de Inicio: <?= esc($evento->dataInicio); ?></div>

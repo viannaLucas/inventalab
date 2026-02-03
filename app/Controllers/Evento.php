@@ -136,7 +136,6 @@ class Evento extends BaseController {
     }
 
     public function doCadastrar() {
-        d($this->request->getPost());
         $m = new EventoModel();
         $ef = $this->validateWithRequest($m->getValidationRulesFiles());
         if ($ef !== true) {
@@ -148,23 +147,18 @@ class Evento extends BaseController {
         $m->db->transStart();
         try {
             if ($m->insert($e, false)) { 
-                d('inseriu evento');
                 $mControlePresenca = new ControlePresencaModel();
                 $ControlePresenca = $this->request->getPost('ControlePresenca') ?? [];
                 foreach ($ControlePresenca as $pp){
                     $pp['Evento_id'] = $m->getInsertID();
                     $eControlePresenca = new ControlePresencaEntity($pp);
-                    d('inserindo');
-                    d($eControlePresenca);
                     if(!$mControlePresenca->insert($eControlePresenca, false)){
                         if($ru['imagem'] !== false) $m->deleteFile($ru['imagem']);
                         return $this->returnWithError($mControlePresenca->errors());
                     }
-                    d('inserido controlepresenca');
                 }
                 $mEventoReserva = new EventoReservaModel();
                 $EventoReserva = $this->request->getPost('ReservaEspaco') ?? [];
-                d($EventoReserva);
                 $reservaModel = new ReservaModel();
                 foreach ($EventoReserva as $pp){
                     $reservaEntity = new ReservaEntity();
@@ -177,8 +171,6 @@ class Evento extends BaseController {
                     $reservaEntity->status = ReservaEntity::STATUS_ATIVO;
                     $reservaEntity->turmaEscola = ReservaEntity::TURMA_ESCOLA_NAO;
                     if(!$reservaModel->insert($reservaEntity,false)){
-                        d('Erro ao criar reserva');
-                        dd($reservaModel->errors());
                         return $this->returnWithError($reservaModel->errors());
                     }
                     $pp['Evento_id'] = $m->getInsertID();
@@ -235,18 +227,63 @@ class Evento extends BaseController {
             return $this->returnWithError('Registro não encontrado.');
         }
         $en = new EventoEntity($this->request->getPost());
+        
         try{ 
             $ru['imagem'] = $m->uploadImage($this->request->getFile('imagem'), null, EventoEntity::folder);
             $en->imagem = $ru['imagem'] !== false ? $ru['imagem'] : $e->imagem;
             $m->db->transStart();
             if ($m->update($en->id, $en)) { 
                 $mControlePresenca = new ControlePresencaModel();
-                $idsDelete = array_map(fn($v):int => $v->id, $e->getListControlePresenca());
-                if(count($idsDelete)>0){
-                    $mControlePresenca->delete($idsDelete);
+                $mPresencaEvento = new PresencaEventoModel();
+                $existingControlePresenca = $e->getListControlePresenca();
+                $existingControlePresencaById = [];
+                foreach ($existingControlePresenca as $cp) {
+                    $existingControlePresencaById[(int)$cp->id] = $cp;
                 }
                 $ControlePresenca = $this->request->getPost('ControlePresenca') ?? [];
+                $postedControlePresencaIds = [];
+                foreach ($ControlePresenca as $pp) {
+                    $id = (int)($pp['id'] ?? 0);
+                    if ($id > 0) {
+                        $postedControlePresencaIds[$id] = true;
+                    }
+                }
+
+                foreach ($existingControlePresencaById as $id => $cp) {
+                    if (isset($postedControlePresencaIds[$id])) {
+                        continue;
+                    }
+                    $presencas = $mPresencaEvento->where('ControlePresenta_id', $id)->findAll();
+                    if (!empty($presencas)) {
+                        $presencasIds = array_map(static fn($p): int => (int)$p->id, $presencas);
+                        if (!$mPresencaEvento->delete($presencasIds)) {
+                            if ($ru['imagem'] !== false) $m->deleteFile($ru['imagem']);
+                            return $this->returnWithError('Erro ao excluir registros de presença vinculados.');
+                        }
+                    }
+                    if (!$mControlePresenca->delete($id)) {
+                        if ($ru['imagem'] !== false) $m->deleteFile($ru['imagem']);
+                        return $this->returnWithError('Erro ao excluir registro de controle de presença.');
+                    }
+                }
+
                 foreach ($ControlePresenca as $pp){
+                    $id = (int)($pp['id'] ?? 0);
+                    $descricao = $pp['descricao'] ?? '';
+                    if ($id > 0) {
+                        if (!isset($existingControlePresencaById[$id])) {
+                            continue;
+                        }
+                        $dadosUpdate = [
+                            'Evento_id' => $e->id,
+                            'descricao' => $descricao,
+                        ];
+                        if (!$mControlePresenca->update($id, $dadosUpdate)) {
+                            if($ru['imagem'] !== false) $m->deleteFile($ru['imagem']);
+                            return $this->returnWithError($mControlePresenca->errors());
+                        }
+                        continue;
+                    }
                     $pp['Evento_id'] = $e->id;
                     $eControlePresenca = new ControlePresencaEntity($pp);
                     if(!$mControlePresenca->insert($eControlePresenca, false)){
@@ -254,7 +291,6 @@ class Evento extends BaseController {
                         return $this->returnWithError($mControlePresenca->errors());
                     }
                 }
-
 
                 $mEventoReserva = new EventoReservaModel();
                 $reservaModel = new ReservaModel();

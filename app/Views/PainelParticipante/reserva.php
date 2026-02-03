@@ -201,15 +201,14 @@
         </div>
         <div class="w-100 modalTematicoNavegacao d-none">
           <div class="row modalTematicoNavegacao">
-            <div class="col-6">
-              <div class="btn btn-primary btn-sm" id='voltarLista'>Voltar Lista</div>
-              <div class="btn btn-primary btn-sm" onclick="selecionarOficina()">Selecionar Oficina</div>
+            <div class="col-12">
+              <div class="btn btn-primary btn-sm m-1" id='voltarLista'>Voltar Lista</div>
+              <div class="btn btn-primary btn-sm m-1" onclick="selecionarOficina()">Selecionar Oficina</div>
             </div>
-            <div class="col-6  float-right text-right">
-              <div class="btn btn-secondary btn-sm">
-                < Anterior</div>
-                  <div class="btn btn-secondary btn-sm ">Próxima ></div>
-              </div>
+            <!-- <div class="col-6  float-right text-right"> -->
+              <!-- <div class="btn btn-secondary btn-sm">< Anterior</div>
+              <div class="btn btn-secondary btn-sm ">Próxima ></div> -->
+            <!-- </div> -->
             </div>
             <iframe id="editorPreview"></iframe>
           </div>

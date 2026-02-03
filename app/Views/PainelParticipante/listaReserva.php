@@ -33,7 +33,6 @@
                 <table class="table table-striped">
                     <thead class="text-center">
                         <tr>
-                            <th scope="col">ID</th>
                             <th scope="col">Data Reserva - Início/Fim</th>
                             <th scope="col">Tipo</th>
                             <th scope="col">Convidados</th>
@@ -46,7 +45,6 @@
                             <?php /** @var \App\Entities\ReservaEntity $i */ ?>
                             <?php foreach ($vReservas as $i) : ?>
                                 <tr>
-                                    <td><?= esc($i->id) ?></td>
                                     <td><?= $i->dataReserva ?> - <?= $i->horaInicio . ' / ' . $i->horaFim ?></td>
                                     <td><span style="color: <?= $i->_cl('tipo', $i->tipo) ?>;"><?= esc($i->_op('tipo', $i->tipo)) ?></span></td>
                                     <td><?= esc($i->numeroConvidados) ?></td>

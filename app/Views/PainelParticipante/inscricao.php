@@ -62,7 +62,7 @@ use App\Entities\Cast\CastCurrencyBR;
                                 </div>
                             </div>
                         </div>
-
+                        <?php if (!$inscrito) { ?>
                         <div class="col-12 col-lg-4 mt-4 mt-lg-0 d-flex">
                             <div class="card bg-light border-0 w-100 h-100">
                                 <div class="card-body d-flex flex-column h-100">
@@ -70,10 +70,32 @@ use App\Entities\Cast\CastCurrencyBR;
                                     <p class="text-muted flex-grow-1 mb-3">
                                         Ao confirmar, sua inscrição será registrada e você receberá as próximas instruções.
                                     </p>
-                                    <a href="" class="btn btn-success btn-block">Confirmar Inscrição</a>
+                                    <a href="<?= base_url('PainelParticipante/confirmarInscricao/'.$evento->id) ;?>" class="btn btn-success btn-block">Realizar Inscrição</a>
                                 </div>
                             </div>
                         </div>
+                        <?php }else { ?>
+                            <div class="col-12 col-lg-4 mt-4 mt-lg-0 d-flex">
+                            <div class="card bg-light border-0 w-100 h-100">
+                                <div class="card-body d-flex flex-column h-100">
+                                    <?php if($pago) { ?>
+                                    <h5 class="mb-2">Parabéns! Sua vaga está garantida.</h5>
+                                    <p class="text-muted flex-grow-1 mb-3">
+                                        Agora é só aguardar e comparecer no dia do evento!
+                                    </p>
+                                    <?php }else{ ?>
+                                    <h5 class="mb-2">Quase lá! Último passo...</h5>
+                                    <p class="text-muted flex-grow-1 mb-3">
+                                        Entre em contato para realizar o pagamento, concluir sua inscrição e garantir sua vaga.
+                                        <a class="btn btn-primary d-block mt-4" href="<?= base_url('#contato') ;?>" target="_blank">Entrar em contato</a>
+                                    </p>
+                                    <?php } ?>
+                                </div>
+                            </div>
+                        </div>
+                        <?php } ?>
+                       
+                        
                     </div>
                 </div>
             </div>

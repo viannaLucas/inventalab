@@ -1716,7 +1716,7 @@
             });
         });
 
-        var requererTermo = <?= (int) ($requererTermo ?? 0 ?>;
+        var requererTermo = <?= (int) ($requererTermo ?? 0) ?>;
 
         $(document).on('click', '.btn-entrada', function() {
             var $btn = $(this);

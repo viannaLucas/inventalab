@@ -1,3 +1,8 @@
+<?php
+$eventoValorRaw = is_scalar($evento->valor ?? null) ? (string)$evento->valor : '0';
+$eventoValorNormalizado = str_replace(['.', ','], ['', '.'], $eventoValorRaw);
+$eventoValor = is_numeric($eventoValorNormalizado) ? (float)$eventoValorNormalizado : 0.0;
+?>
 <?= $this->extend('template'); ?>
 
 <?= $this->section('content'); ?>
@@ -212,17 +217,19 @@
                         <div class="border-bottom mx-n1 mb-3">
                             <h4 class="px-2">Lista de Participante Evento</h4>
                             <p class="px-3 text-muted">Em eventos com vagas limitadas, adicione Participantes para controlar vagas e presença. Pode ser feito após cadastrar o evento com o decorrer das inscrições.</p>
-                            <p class="px-3 text-muted">
-                                Legenda Botão Pagamento: 
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-coin" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8m5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0"/>
-                                        <path d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.563h-.668zm1.36-1.354c-.369-.085-.569-.26-.569-.522 0-.294.216-.514.572-.578v1.1zm.432.746c.449.104.655.272.655.569 0 .339-.257.571-.709.614v-1.195z"/>
-                                        <path d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083q.088-.517.258-1H3a2 2 0 0 0-2-2V3a2 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1z"/>
-                                        <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 6 6 0 0 1 3.13-1.567"/>
-                                    </svg>
-                                <span class="badge badge-warning">Em aberto</span>
-                                <span class="badge badge-success">Pago</span>
-                            </p>
+                            <?php if ($eventoValor > 0) { ?>
+                                <p class="px-3 text-muted">
+                                    Legenda Botão Pagamento:
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-coin" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8m5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0"/>
+                                            <path d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.563h-.668zm1.36-1.354c-.369-.085-.569-.26-.569-.522 0-.294.216-.514.572-.578v1.1zm.432.746c.449.104.655.272.655.569 0 .339-.257.571-.709.614v-1.195z"/>
+                                            <path d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083q.088-.517.258-1H3a2 2 0 0 0-2-2V3a2 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1z"/>
+                                            <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 6 6 0 0 1 3.13-1.567"/>
+                                        </svg>
+                                    <span class="badge badge-warning">Em aberto</span>
+                                    <span class="badge badge-success">Pago</span>
+                                </p>
+                            <?php } ?>
                         </div>
                         <div class="form-row px-2">
                             <div class="form-group col-auto">
@@ -276,9 +283,12 @@
 
 <template id="templateRowControlePresenca">
     <tr id='ControlePresenca_{_index_}'>
-        <td><input type="text" class="form-control ignoreValidate" name="ControlePresenca[{_index_}][descricao]" readonly="true" value="{_descricao_}" /></td>
         <td>
-            <div class="btn btn-danger btnExcluirControlePresenca" onclick="$('#ControlePresenca_{_index_}').remove();">
+            <input type="hidden" class="ignoreValidate" name="ControlePresenca[{_index_}][id]" value="{_id_}" />
+            <input type="text" class="form-control ignoreValidate" name="ControlePresenca[{_index_}][descricao]" value="{_descricao_}" />
+        </td>
+        <td>
+            <div class="btn btn-danger btnExcluirControlePresenca" onclick="removeControlePresenca('{_index_}');">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
                     <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
@@ -319,15 +329,17 @@
             <input type="text" class="form-control ignoreValidate" readonly="true" value="{_Participante_id_Text_}" />
         </td>
         <td>
-            <a class="btn btnAddCobrancaParticipanteEvento {_class_btn_cobranca_} {_class_btn_cobranca_color_}" href="<?= base_url('Evento/cobranca/') ?>{_id_}">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-coin" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8m5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0"/>
-                    <path d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.563h-.668zm1.36-1.354c-.369-.085-.569-.26-.569-.522 0-.294.216-.514.572-.578v1.1zm.432.746c.449.104.655.272.655.569 0 .339-.257.571-.709.614v-1.195z"/>
-                    <path d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083q.088-.517.258-1H3a2 2 0 0 0-2-2V3a2 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1z"/>
-                    <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 6 6 0 0 1 3.13-1.567"/>
-                </svg>
-            </a>
-            <div class="btn btn-danger btnExcluirParticipanteEvento" onclick="$('#ParticipanteEvento_{_index_}').remove();">
+            <?php if ($eventoValor > 0) { ?>
+                <a class="btn btnAddCobrancaParticipanteEvento {_class_btn_cobranca_} {_class_btn_cobranca_color_}" href="<?= base_url('Evento/cobranca/') ?>{_id_}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-coin" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8m5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0"/>
+                        <path d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.563h-.668zm1.36-1.354c-.369-.085-.569-.26-.569-.522 0-.294.216-.514.572-.578v1.1zm.432.746c.449.104.655.272.655.569 0 .339-.257.571-.709.614v-1.195z"/>
+                        <path d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083q.088-.517.258-1H3a2 2 0 0 0-2-2V3a2 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1z"/>
+                        <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 6 6 0 0 1 3.13-1.567"/>
+                    </svg>
+                </a>
+            <?php } ?>
+            <div class="btn btn-danger btnExcluirParticipanteEvento {_class_btn_excluir_}" onclick="$('#ParticipanteEvento_{_index_}').remove();">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
                     <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
@@ -689,6 +701,7 @@
             return;
         }
         let dados = {};
+        dados.id = '';
         dados.descricao = $('#controlepresenca_descricao').val();
 
         insertRowControlePresenca(dados);
@@ -742,11 +755,30 @@
     function insertRowControlePresenca(dados) {
         let html = $('#templateRowControlePresenca').html();
         html = html.replaceAll('{_index_}', indexRowControlePresenca);
-        html = html.replaceAll('{_descricao_}', dados.descricao);
+        html = html.replaceAll('{_id_}', dados.id || '');
+        html = html.replaceAll('{_descricao_}', dados.descricao || '');
         $('#listTableControlePresenca tbody').append(html);
 
         indexRowControlePresenca++;
         $(".msgEmptyListControlePresenca").hide();
+    }
+
+    function removeControlePresenca(index) {
+        const mensagem = 'Ao excluir este item, todos os registros de presença vinculados serão excluídos. Deseja continuar?';
+        swal({
+                title: 'Você tem Certeza?',
+                text: mensagem,
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sim, excluir!',
+                cancelButtonText: 'Não'
+            },
+            function(isConfirm) {
+                if (isConfirm) {
+                    $('#ControlePresenca_' + index).remove();
+                }
+            }
+        );
     }
 
     function insertRowParticipanteEvento(dados) {
@@ -762,6 +794,8 @@
             : 0;
         const classeBtnCobrancaCor = situacaoCobranca === 1 ? 'btn-success' : 'btn-warning';
         html = html.replaceAll('{_class_btn_cobranca_color_}', classeBtnCobrancaCor);
+        const classeBtnExcluir = !dados.id || situacaoCobranca === 0 ? '' : 'd-none';
+        html = html.replaceAll('{_class_btn_excluir_}', classeBtnExcluir);
         $('#listTableParticipanteEvento tbody').append(html);
 
         indexRowParticipanteEvento++;

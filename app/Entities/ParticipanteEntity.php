@@ -62,7 +62,7 @@ class ParticipanteEntity extends EntityBase {
                 'tipoAcesso' => 'global'
             ],
             'evento' => [
-                'metodos' => ['PainelParticipante::eventos','PainelParticipante::evento', 'PainelParticipante::inscricao', 'PainelParticipante::inscricoes'],
+                'metodos' => ['PainelParticipante::eventos','PainelParticipante::evento', 'PainelParticipante::inscricao', 'PainelParticipante::confirmarInscricao', 'PainelParticipante::inscricoes'],
                 'label' => 'Ver detalhe sobre evento e fazer inscrição',
                 'descricao' => 'Fazer inscrição no evento',
                 'tipoAcesso' => 'global'

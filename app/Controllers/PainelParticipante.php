@@ -4,23 +4,30 @@ namespace App\Controllers;
 
 use App\Entities\AtividadeLivreEntity;
 use App\Entities\AtividadeLivreRecursoEntity;
+use App\Entities\Cast\CastCurrencyBR;
 use App\Entities\Cast\CastDateBR;
+use App\Entities\CobrancaEntity;
 use App\Entities\DatasExtraordinariasEntity;
 use App\Entities\EventoEntity;
 use App\Entities\OficinaTematicaReservaEntity;
 use App\Models\ParticipanteModel;
 use App\Entities\ParticipanteEntity;
+use App\Entities\ParticipanteEventoEntity;
 use App\Entities\ReservaEntity;
 use App\Entities\ReservaParticipanteEntity;
 use App\Libraries\ValidacaoCadastroReserva;
 use App\Models\AtividadeLivreModel;
 use App\Models\AtividadeLivreRecursoModel;
+use App\Models\CobrancaModel;
+use App\Models\CobrancaParticipanteEventoModel;
+use App\Models\CobrancaServicoModel;
 use App\Models\ConfiguracaoModel;
 use App\Models\DatasExtraordinariasModel;
 use App\Models\EventoModel;
 use App\Models\HorarioFuncionamentoModel;
 use App\Models\OficinaTematicaModel;
 use App\Models\OficinaTematicaReservaModel;
+use App\Models\ParticipanteEventoModel;
 use App\Models\RecursoTrabalhoModel;
 use App\Models\ReservaModel;
 use App\Models\ReservaParticipanteModel;
@@ -133,6 +140,17 @@ class PainelParticipante extends BaseControllerParticipante
         }
         $data['eventos'] = (new EventoModel())->where('dataInicio >', date('Y-m-d'))
             ->where('divulgar', 1)->orderBy('dataInicio ASC')->findAll();
+
+        $vParticipanteEvento = (new ParticipanteEventoModel())
+                ->where('Participante_id', $participante->id)
+                ->orderBy('id', 'DESC')->findAll(5);
+        
+        /** @var ParticipanteEventoModel $pe */
+        foreach($vParticipanteEvento as $pe){
+            $i['evento'] = $pe->getEvento();
+            $i['pago'] = (new CobrancaParticipanteEventoModel())->verificaSeIncricaoPaga($pe->id);
+            $data['vEventosIncritos'][] = $i;
+        }
         return view('PainelParticipante/home', $data);
     }
 
@@ -462,7 +480,7 @@ class PainelParticipante extends BaseControllerParticipante
             return $this->returnWithError($ef);
         }
 
-        $foto = $e->foto;
+        // $foto = $e->foto;
         $post = $this->request->getPost();
         unset($post['codigoApiSesc']);
         $faturarResponsavel = (string) $this->request->getPost('faturarResponsavel') === '1';
@@ -486,21 +504,21 @@ class PainelParticipante extends BaseControllerParticipante
         }
         $e->fill($post);
         try {
-            $ru['foto'] = $m->uploadImage($this->request->getFile('foto'), null, ParticipanteEntity::folder);
-            $e->foto = $ru['foto'] !== false ? $ru['foto'] : $foto;
+            // $ru['foto'] = $m->uploadImage($this->request->getFile('foto'), null, ParticipanteEntity::folder);
+            // $e->foto = $ru['foto'] !== false ? $ru['foto'] : $foto;
             $m->db->transStart();
             if ($m->update($e->id, $e)) {
-                if ($ru['foto'] !== false) $m->deleteFile($foto);
+                // if ($ru['foto'] !== false) $m->deleteFile($foto);
                 $m->db->transComplete();
                 return redirect()->to('PainelParticipante/home', null, 'refresh')->with('msg_sucesso', 'Alterado com sucesso!');
             } else {
-                $m->deleteFiles($ru);
+                // $m->deleteFiles($ru);
                 return $this->returnWithError($m->errors());
             }
         } catch (\Exception $ex) {
-            if (isset($ru['foto']) && $ru['foto'] != false) {
-                $m->deleteFile($ru['foto']);
-            }
+            // if (isset($ru['foto']) && $ru['foto'] != false) {
+            //     $m->deleteFile($ru['foto']);
+            // }
             return $this->returnWithError($ex->getMessage());
         }
     }
@@ -671,20 +689,146 @@ class PainelParticipante extends BaseControllerParticipante
             return $this->returnWithError('Evento não encontrado');
         }
 
-        $data['participante'] = ParticipanteModel::getSessao();
+        $participante = ParticipanteModel::getSessao();
+        $data['participante'] = $participante;
         $data['evento'] = $evento;
 
+        $participanteEventoE = (new ParticipanteEventoModel())
+                ->where('Participante_id', $participante->id)
+                ->where('Evento_id', $evento->id)->first();
+        $data['inscrito'] = false;
+        $data['pago'] = CastCurrencyBR::set($evento->valor) <= 0;
+        if($participanteEventoE instanceof ParticipanteEventoEntity){
+            $data['inscrito'] = true;
+            $data['pago'] = (new CobrancaParticipanteEventoModel())->verificaSeIncricaoPaga($participanteEventoE->id);
+        }
         return view('PainelParticipante/inscricao', $data);
+    }
+
+    public function confirmarInscricao()
+    {
+        $Evento_id = $this->request->getUri()->getSegment(3);
+        if(!is_numeric($Evento_id) && $Evento_id <= 0){
+            return $this->returnWithError('Evento não encontrado');
+        }
+        $eventoModel = new EventoModel();
+        $evento = $eventoModel->find($Evento_id);
+        if($evento == null){
+            return $this->returnWithError('Evento não encontrado');
+        }
+        
+        $participante = ParticipanteModel::getSessao();
+        if($participante == null){
+            return $this->returnWithError('Participante não encontrado');
+        }
+
+        $participanteEventoModel = new ParticipanteEventoModel();
+        $jaInscrito = $participanteEventoModel->where('Evento_id', $evento->id)
+            ->where('Participante_id', $participante->id)
+            ->first();
+        if($jaInscrito != null){
+            return $this->returnWithError('Você já está inscrito neste evento.');
+        }
+
+        if((string)$evento->vagasLimitadas === '1'){
+            $limiteVagas = (int)$evento->numeroVagas;
+            if($limiteVagas <= 0){
+                return $this->returnWithError('Vagas esgotadas.');
+            }
+            $totalInscritos = (new ParticipanteEventoModel())
+                ->where('Evento_id', $evento->id)
+                ->countAllResults();
+            if($totalInscritos >= $limiteVagas){
+                return $this->returnWithError('Vagas esgotadas.');
+            }
+        }
+
+        $eParticipanteEvento = new ParticipanteEventoEntity([
+            'Participante_id' => $participante->id,
+            'Evento_id' => $evento->id,
+        ]);
+        if(!$participanteEventoModel->insert($eParticipanteEvento, false)){
+            return $this->returnWithError($participanteEventoModel->errors());
+        }
+        return $this->returnSucess('Inscrição realizada com sucesso!');
     }
 
     public function cancelarInscricao()
     {
-        
+        $Evento_id = $this->request->getUri()->getSegment(3);
+        if(!is_numeric($Evento_id) && $Evento_id <= 0){
+            return $this->returnWithError('Evento não encontrado');
+        }
+        $evento = (new EventoModel())->find($Evento_id);
+        if($evento == null){
+            return $this->returnWithError('Evento não encontrado');
+        }
+
+        $participante = ParticipanteModel::getSessao();
+        if($participante == null){
+            return $this->returnWithError('Participante não encontrado');
+        }
+
+        $participanteEventoModel = new ParticipanteEventoModel();
+        $participanteEvento = $participanteEventoModel->where('Evento_id', $evento->id)
+            ->where('Participante_id', $participante->id)
+            ->first();
+        if($participanteEvento == null){
+            return $this->returnWithError('Inscrição não encontrada.');
+        }
+
+        $cobrancaParticipanteEventoModel = new CobrancaParticipanteEventoModel();
+        $linksCobranca = $cobrancaParticipanteEventoModel
+            ->where('ParticipanteEvento_id', $participanteEvento->id)
+            ->findAll();
+
+        foreach($linksCobranca as $link){
+            $cobranca = $link->getCobranca();
+            if($cobranca != null && (int)$cobranca->situacao === CobrancaEntity::SITUACAO_PAGA){
+                return $this->returnWithError('Já existe um pagamento vinculado para esta inscrição.');
+            }
+        }
+
+        $cobrancaModel = new CobrancaModel();
+        $cobrancaServicoModel = new CobrancaServicoModel();
+        foreach($linksCobranca as $link){
+            $cobranca = $link->getCobranca();
+            if($cobranca != null){
+                foreach($cobranca->getListCobrancaServico() as $cs){
+                    if(!$cobrancaServicoModel->delete($cs->id)){
+                        return $this->returnWithError('Erro ao excluir registro de "Cobrança Serviço".');
+                    }
+                }
+            }
+            if(!$cobrancaParticipanteEventoModel->delete($link->id)){
+                return $this->returnWithError('Erro ao excluir registro de "Cobrança Participante Evento".');
+            }
+            if($cobranca != null && !$cobrancaModel->delete($cobranca->id)){
+                return $this->returnWithError('Erro ao excluir registro de "Cobrança".');
+            }
+        }
+
+        if(!$participanteEventoModel->delete($participanteEvento->id)){
+            return $this->returnWithError($participanteEventoModel->errors());
+        }
+
+        return $this->returnSucess('Inscrição cancelada com sucesso!');
     }
 
     public function inscricoes()
     {
-
+        $participante = ParticipanteModel::getSessao();
+        $vParticipanteEvento = (new ParticipanteEventoModel())
+                ->where('Participante_id', $participante->id)
+                ->orderBy('id', 'DESC')->findAll(30);
+        
+        /** @var ParticipanteEventoModel $pe */
+        foreach($vParticipanteEvento as $pe){
+            $i['evento'] = $pe->getEvento();
+            $i['pago'] = (new CobrancaParticipanteEventoModel())->verificaSeIncricaoPaga($pe->id);
+            $data['vEventosIncritos'][] = $i;
+        }
+        return view('PainelParticipante/listaInscricoes', $data);
     }
 
     public function reserva()

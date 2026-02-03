@@ -301,13 +301,13 @@ final class SescAPI
     {
         $url = $this->montarUrl($path);
         $payload = $this->montarPayload($data);
-
+        
         if ($url === null) {
             return [
                 'request' => [
                     'url' => null,
                     'http_code' => 0,
-                    'payload' => $payload,
+                    'payload' => $$this->liparPayloadDebug($payload),
                 ],
                 'curl_error' => 'Base URL nao configurada.',
                 'raw_response' => null,
@@ -321,12 +321,20 @@ final class SescAPI
             'request' => [
                 'url' => $url,
                 'http_code' => $result['http_code'],
-                'payload' => $payload,
+                'payload' => $this->liparPayloadDebug($payload),
             ],
             'curl_error' => $result['curl_error'],
             'raw_response' => $result['raw_response'],
             'decoded_response' => $result['decoded_response'],
         ];
+    }
+
+    private function liparPayloadDebug($payload)
+    {
+        if(isset($payload['AutheticationToken']['Password'])){
+            $payload['AutheticationToken']['Password'] = '***';
+        }
+        return $payload;
     }
 
     private function montarPayload(array $data): array
