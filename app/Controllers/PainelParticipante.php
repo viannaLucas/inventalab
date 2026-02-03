@@ -616,13 +616,11 @@ class PainelParticipante extends BaseControllerParticipante
             'produto_arquivos',
             'materialoficina_arquivos',
             'recursotrabalho_arquivos',
-            'participante_arquivos',
         ];
         $uri = $this->request->getUri();
-        $filepath = WRITEPATH . $uri->getSegment(1) . '/' . $uri->getSegment(2);
-
+        $filepath = WRITEPATH . $uri->getSegment(3) . '/' . $uri->getSegment(4);
         if (
-            !in_array($uri->getSegment(1), $pastarPermitidas)
+            !in_array($uri->getSegment(3), $pastarPermitidas)
             || !is_file($filepath)
         ) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
@@ -632,7 +630,7 @@ class PainelParticipante extends BaseControllerParticipante
         $mime = mime_content_type($filepath);
         header('Content-Length: ' . filesize($filepath));
         header("Content-Type: $mime");
-        header('Content-Disposition: inline; filename="' . $uri->getSegment(2) . '";');
+        header('Content-Disposition: inline; filename="' . $uri->getSegment(4) . '";');
         readfile($filepath);
         exit();
     }
@@ -1044,5 +1042,43 @@ class PainelParticipante extends BaseControllerParticipante
         }
 
         return view('PainelParticipante/listaReserva', $data);
+    }
+
+    public function listarOficinaTematica()
+    {
+        $m = new OficinaTematicaModel();
+        $m->where('situacao', 0);
+        $data = [
+            'vOficinaTematica' => $m->paginate(self::itensPaginacao),
+            'pager' => $m->pager,
+        ];
+        return view('PainelParticipante/listarOficinaTematica', $data);
+    }
+
+    public function pesquisaOficinaTematica()
+    {
+        if(count($this->request->getGet()) > 0){
+            $m = new OficinaTematicaModel();
+            $m->buildFindList($this->request->getGet());
+            $data = [
+                'vOficinaTematica' => $m->paginate(self::itensPaginacao),
+                'pager' => $m->pager,
+            ];
+            return view('PainelParticipante/respostaOficinaTematica',  $data);
+        }
+        return view('PainelParticipante/pesquisaOficinaTematica');
+    }
+
+    public function visualizarOficinaTematica()
+    {
+        $m = new OficinaTematicaModel();
+        $e = $m->where('situacao', 0)->find($this->request->getUri()->getSegment(3));
+        if ($e === null) {
+            return $this->returnWithError('Registro não encontrado.');
+        } 
+        $data = [
+            'oficinatematica' => $e,
+        ];
+        return view('PainelParticipante/visualizarOficinaTematica.php', $data);
     }
 }

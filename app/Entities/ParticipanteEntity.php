@@ -37,6 +37,12 @@ class ParticipanteEntity extends EntityBase {
                 'descricao' => 'Realizar cadastro de participante',
                 'tipoAcesso' => 'publico'
             ],
+            'oficinaTematica' => [
+                'metodos' => ['PainelParticipante::pesquisaOficinaTematica', 'PainelParticipante::listarOficinaTematica', 'PainelParticipante::visualizarOficinaTematica'],
+                'label' => 'Oficina Temática',
+                'descricao' => 'Pesquisar e visualiar Oficinas Temáticas',
+                'tipoAcesso' => 'global'
+            ],
             'consultacep' => [
                 'metodos' => ['PainelParticipante::consultaCep'],
                 'label' => 'Consulta CEP',

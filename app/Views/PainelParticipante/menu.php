@@ -37,25 +37,17 @@
                 </ul>
             </li>
 
-
             <li class="slide d-none">
                 <a class="side-menu__item" data-toggle="slide" href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" width="30" height="30" fill="currentColor" class="bi bi-grid" viewBox="0 0 20 20">
-                        <path d="M0 1.5A1.5 1.5 0 0 1 1.5 0h2A1.5 1.5 0 0 1 5 1.5v2A1.5 1.5 0 0 1 3.5 5h-2A1.5 1.5 0 0 1 0 3.5v-2zM1.5 1a.5.5 0 0 0-.5.5v2a.5.5 0 0 0 .5.5h2a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 0-.5-.5h-2zM0 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V8zm1 3v2a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2H1zm14-1V8a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v2h14zM2 8.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0 4a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z" />
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="side-menu__icon bi bi-lightbulb-fill" viewBox="0 0 20 20">
+                        <path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13h-5a.5.5 0 0 1-.46-.302l-.761-1.77a2 2 0 0 0-.453-.618A5.98 5.98 0 0 1 2 6m3 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1-.5-.5" />
                     </svg>
-                    <span class="side-menu__label">Template Termo</span>
+                    <span class="side-menu__label">Oficina Temática</span>
                     <i class="angle fe fe-chevron-down"></i>
                 </a>
                 <ul class="slide-menu">
-                    <?PHP if (\App\Models\ParticipanteModel::getSessao()->verificarPermissao('TemplateTermo', 'cadastrar')) { ?>
-                        <li><a class="slide-item" href="<?PHP echo base_url('TemplateTermo/cadastrar'); ?>">Cadastrar</a></li>
-                    <?PHP } ?>
-                    <?PHP if (\App\Models\ParticipanteModel::getSessao()->verificarPermissao('TemplateTermo', 'pesquisar')) { ?>
-                        <li><a class="slide-item" href="<?PHP echo base_url('TemplateTermo/pesquisar'); ?>">Pesquisar</a></li>
-                    <?PHP } ?>
-                    <?PHP if (\App\Models\ParticipanteModel::getSessao()->verificarPermissao('TemplateTermo', 'listar')) { ?>
-                        <li><a class="slide-item" href="<?PHP echo base_url('TemplateTermo/listar'); ?>">Listar</a></li>
-                    <?PHP } ?>
+                        <li><a class="slide-item" href="<?PHP echo base_url('PainelParticipante/pesquisaOficinaTematica'); ?>">Pesquisar</a></li>
+                        <li><a class="slide-item" href="<?PHP echo base_url('PainelParticipante/listarOficinaTematica'); ?>">Listar</a></li>
                 </ul>
             </li>
         </ul>
