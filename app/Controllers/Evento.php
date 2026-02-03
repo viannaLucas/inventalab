@@ -142,6 +142,23 @@ class Evento extends BaseController {
             return $this->returnWithError($ef);
         }
         $e = new EventoEntity($this->request->getPost());
+        $vagasLimitadas = (string)($this->request->getPost('vagasLimitadas') ?? '');
+        $numeroVagas = (int)($this->request->getPost('numeroVagas') ?? 0);
+        $participantes = $this->request->getPost('ParticipanteEvento') ?? [];
+        $totalParticipantes = 0;
+        foreach ($participantes as $pp) {
+            if (!empty($pp['Participante_id'])) {
+                $totalParticipantes++;
+            }
+        }
+        if ($vagasLimitadas === '1') {
+            if ($numeroVagas <= 0) {
+                return $this->returnWithError('Número de vagas inválido para evento com vagas limitadas.');
+            }
+            if ($totalParticipantes > $numeroVagas) {
+                return $this->returnWithError('Não é possível cadastrar mais participantes do que o número de vagas.');
+            }
+        }
         $e->imagem = $this->getRandomName('imagem');
         $ru = ['imagem' => false];
         $m->db->transStart();
@@ -227,6 +244,23 @@ class Evento extends BaseController {
             return $this->returnWithError('Registro não encontrado.');
         }
         $en = new EventoEntity($this->request->getPost());
+        $vagasLimitadas = (string)($this->request->getPost('vagasLimitadas') ?? '');
+        $numeroVagas = (int)($this->request->getPost('numeroVagas') ?? 0);
+        $participantes = $this->request->getPost('ParticipanteEvento') ?? [];
+        $totalParticipantes = 0;
+        foreach ($participantes as $pp) {
+            if (!empty($pp['Participante_id'])) {
+                $totalParticipantes++;
+            }
+        }
+        if ($vagasLimitadas === '1') {
+            if ($numeroVagas <= 0) {
+                return $this->returnWithError('Número de vagas inválido para evento com vagas limitadas.');
+            }
+            if ($totalParticipantes > $numeroVagas) {
+                return $this->returnWithError('Não é possível cadastrar mais participantes do que o número de vagas.');
+            }
+        }
         
         try{ 
             $ru['imagem'] = $m->uploadImage($this->request->getFile('imagem'), null, EventoEntity::folder);

@@ -459,6 +459,11 @@
             disableValidationFieldsFK();
             var $submitButtons = $('.submitButton');
             $submitButtons.attr('disabled', true);
+            if (!validarLimiteParticipantes()) {
+                enableValidationFieldsFK();
+                $submitButtons.attr('disabled', false);
+                return false;
+            }
             verificarDataHoraReservas()
                 .then(function(result) {
                     if (result && result.ok) {
@@ -494,6 +499,55 @@
 
     $vagasLimitadas.on('change', toggleNumeroVagas);
     toggleNumeroVagas();
+
+    function isVagasLimitadas() {
+        return $vagasLimitadas.val() === '1';
+    }
+
+    function getNumeroVagasValue() {
+        var raw = String($numeroVagas.val() || '');
+        var onlyDigits = raw.replace(/\D/g, '');
+        var numero = parseInt(onlyDigits, 10);
+        return Number.isFinite(numero) ? numero : 0;
+    }
+
+    function countParticipantesSelecionados() {
+        return $('#listTableParticipanteEvento tbody tr').length;
+    }
+
+    function validarLimiteParticipantes() {
+        if (!isVagasLimitadas()) {
+            return true;
+        }
+        var numeroVagas = getNumeroVagasValue();
+        if (numeroVagas <= 0) {
+            alertaError('Informe o número de vagas para eventos com vagas limitadas.');
+            return false;
+        }
+        var total = countParticipantesSelecionados();
+        if (total > numeroVagas) {
+            alertaError('Não é possível cadastrar mais participantes (' + total + ') do que o número de vagas (' + numeroVagas + ').');
+            return false;
+        }
+        return true;
+    }
+
+    function podeAdicionarParticipante() {
+        if (!isVagasLimitadas()) {
+            return true;
+        }
+        var numeroVagas = getNumeroVagasValue();
+        if (numeroVagas <= 0) {
+            alertaError('Informe o número de vagas antes de adicionar participantes.');
+            return false;
+        }
+        var total = countParticipantesSelecionados();
+        if (total >= numeroVagas) {
+            alertaError('Número máximo de participantes atingido para este evento.');
+            return false;
+        }
+        return true;
+    }
 
     var inputsReservaEspaco = [
         'reservaespaco_data',
@@ -667,6 +721,9 @@
             }
         }
         if (error) {
+            return;
+        }
+        if (!podeAdicionarParticipante()) {
             return;
         }
         let html = $('#templateRowParticipanteEvento').html();
