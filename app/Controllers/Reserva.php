@@ -75,6 +75,7 @@ class Reserva extends BaseController
             $ac->id = $rt->id;
             $ac->exclusive = $rt->usoExclusivo == 1;
             $ac->name = $rt->nome;
+            $ac->photo = $rt->foto ? base_url($rt->foto) : '';
             $ac->quantity = 1;
             $data['vRecursoTrabalho'][] = $ac;
         }

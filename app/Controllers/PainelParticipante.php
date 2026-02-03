@@ -139,7 +139,7 @@ class PainelParticipante extends BaseControllerParticipante
             }
         }
         $data['eventos'] = (new EventoModel())->where('dataInicio >', date('Y-m-d'))
-            ->where('divulgar', 1)->orderBy('dataInicio ASC')->findAll();
+            ->where('divulgar', 1)->orderBy('dataInicio ASC')->orderBy('dataInicio', 'ASC')->findAll();
 
         $vParticipanteEvento = (new ParticipanteEventoModel())
                 ->where('Participante_id', $participante->id)
@@ -856,6 +856,7 @@ class PainelParticipante extends BaseControllerParticipante
             $ac->id = $rt->id;
             $ac->exclusive = $rt->usoExclusivo == 1;
             $ac->name = $rt->nome;
+            $ac->photo = $rt->foto ? base_url($rt->foto) : '';
             $ac->quantity = 1;
             $data['vRecursoTrabalho'][] = $ac;
         }

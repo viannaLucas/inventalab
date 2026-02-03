@@ -119,11 +119,23 @@
               <div id="livreBlock" class="mt-3 d-none">
                 <div class="form-group">
                   <label for="actDesc">Descrição / Passos</label>
+                  <small class="form-text text-muted">Para melhor lhe atender, descreva a atividade que pretende realizar, com os passos principais.</small>
                   <textarea id="actDesc" class="form-control" rows="3" placeholder="Passo 1: ..."></textarea>
                 </div>
                 <div class="form-group">
                   <label>Recursos a utilizar</label>
-                  <div id="resChecks" class="row"></div>
+                  <div class="alert alert-danger mb-2" role="alert">
+                    <button aria-label="Close" class="close" data-dismiss="alert" type="button">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <strong>Importante:</strong> selecione os itens que deseja usar para o melhor funcionamento do espaço. Se pretende utilizar itens <strong>exclusivos</strong>, marque-os aqui para que fiquem reservados para você no horário escolhido.
+                  </div>
+                  <div class="mb-2">
+                    <input type="text" id="resFilter" class="form-control" placeholder="Filtrar recursos pelo nome..." />
+                  </div>
+                  <div class="resource-list">
+                    <div id="resChecks" class="row m-0"></div>
+                  </div>
                   <small class="form-text text-muted">Marque os equipamentos/ferramentas que serão utilizados.</small>
                 </div>
               </div>
@@ -288,6 +300,113 @@
 
     .mr-3-imp {
       margin-right: 1rem !important;
+    }
+
+    /* Recursos (Atividade Livre) */
+    .resource-list {
+      /* Exibe 3 linhas de itens (ajuste fino via --resource-row-height) */
+      --resource-row-height: 84px;
+      max-height: calc(var(--resource-row-height) * 3 + 1rem);
+      min-height: calc(var(--resource-row-height) * 3 + 1rem);
+      overflow-y: auto;
+      border: 1px solid rgba(0, 0, 0, .08);
+      border-radius: .75rem;
+      padding: .5rem;
+      background: rgba(0, 0, 0, .02);
+    }
+
+    .dark-theme .resource-list {
+      border-color: rgba(255, 255, 255, .12);
+      background: rgba(255, 255, 255, .03);
+    }
+
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-auto-rows: var(--resource-row-height);
+      gap: .5rem;
+    }
+
+    .resource-col {
+      display: block;
+    }
+
+    @media (max-width: 991.98px) {
+      .resource-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 575.98px) {
+      .resource-grid {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+      }
+    }
+
+    .resource-card {
+      border: 1px solid rgba(0, 0, 0, .08);
+      border-radius: .75rem;
+      padding: .6rem .75rem;
+      background: #fff;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      gap: .65rem;
+      transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+
+    .dark-theme .resource-card {
+      background: rgba(255, 255, 255, .02);
+      border-color: rgba(255, 255, 255, .1);
+    }
+
+    .resource-card.is-selected {
+      border-color: #28a745;
+      background: rgba(40, 167, 69, .08);
+      box-shadow: inset 0 0 0 1px rgba(40, 167, 69, .2);
+    }
+
+    .resource-name {
+      font-weight: 600;
+    }
+
+    .resource-check {
+      flex: 0 0 auto;
+    }
+
+    .resource-photo {
+      flex: 0 0 48px;
+      height: 48px;
+      border-radius: .5rem;
+      background: #e9ecef;
+      border: 1px solid rgba(0, 0, 0, .08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #6c757d;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .resource-photo.has-photo {
+      color: transparent;
+    }
+
+    .resource-info {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .resource-info .resource-name {
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .resource-empty {
+      padding: .75rem;
     }
 
     /* 1) o dialog ocupa a janela (descontando as margens padrão do BS4) */
@@ -542,22 +661,10 @@
     const livreBlock = document.getElementById('livreBlock');
     const oficinaHint = document.getElementById('oficinaHint');
     const resChecks = document.getElementById('resChecks');
+    const resFilterInput = document.getElementById('resFilter');
 
     function renderActivitiesUI() {
-      // Renderizar checkboxes de recursos (indica exclusivo e quantidade)
-      resChecks.innerHTML = '';
-      RESOURCES.forEach((r) => {
-        const col = document.createElement('div');
-        col.className = 'col-md-4';
-        const id = `res-${r.id}`;
-        const extra = r.exclusive ? ` <span class="badge badge-danger">exclusivo${r.quantity>1?` ×${r.quantity}`:''}</span>` : '';
-        col.innerHTML = `
-        <div class="custom-control custom-checkbox mb-1">
-          <input type="checkbox" class="custom-control-input" id="${id}" value="${r.id}">
-          <label class="custom-control-label" for="${id}">${r.name}${extra}</label>
-        </div>`;
-        resChecks.appendChild(col);
-      });
+      renderResources(resFilterInput ? resFilterInput.value : '');
 
       if (oficinaIdInput) {
         setOficinaSelection(oficinaIdInput.value);
@@ -565,6 +672,69 @@
         updateOficinaHint();
         updateSelectionSummary(currentGroups);
       }
+    }
+
+    function renderResources(filterText) {
+      if (!resChecks) return;
+      const selectedIds = new Set(
+        Array.from(resChecks.querySelectorAll('input[type=checkbox]:checked')).map(i => String(i.value))
+      );
+      resChecks.innerHTML = '';
+      resChecks.classList.add('resource-grid');
+      const term = (filterText || '').trim().toLowerCase();
+      const filtered = RESOURCES.filter(r => !term || String(r.name || '').toLowerCase().includes(term));
+
+      if (!filtered.length) {
+        const empty = document.createElement('div');
+        empty.className = 'col-12 text-muted resource-empty';
+        empty.textContent = 'Nenhum recurso encontrado para o filtro.';
+        resChecks.appendChild(empty);
+        return;
+      }
+
+      filtered.forEach((r) => {
+        const col = document.createElement('div');
+        col.className = 'resource-col';
+        const id = `res-${r.id}`;
+        const extra = r.exclusive ? ` <span class="badge badge-danger ml-1">exclusivo${r.quantity>1?` ×${r.quantity}`:''}</span>` : '';
+        const isChecked = selectedIds.has(String(r.id));
+        const photoUrl = r.photo ? String(r.photo) : '';
+        const initials = String(r.name || '').trim().split(/\s+/).slice(0, 2).map(w => w[0] || '').join('').toUpperCase();
+        col.innerHTML = `
+          <div class="resource-card ${isChecked ? 'is-selected' : ''}" data-res-id="${r.id}">
+            <div class="resource-check custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="${id}" value="${r.id}" ${isChecked ? 'checked' : ''}>
+              <label class="custom-control-label" for="${id}"></label>
+            </div>
+            <div class="resource-photo ${photoUrl ? 'has-photo' : ''}" style="${photoUrl ? `background-image:url('${photoUrl}')` : ''}">
+              ${photoUrl ? '' : initials}
+            </div>
+            <div class="resource-info">
+              <span class="resource-name">${r.name}${extra}</span>
+            </div>
+          </div>`;
+        resChecks.appendChild(col);
+        const checkbox = col.querySelector('input[type=checkbox]');
+        const card = col.querySelector('.resource-card');
+        if (checkbox && card) {
+          checkbox.addEventListener('change', () => {
+            card.classList.toggle('is-selected', checkbox.checked);
+          });
+          card.addEventListener('click', (e) => {
+            if (e.target.closest('input') || e.target.closest('label')) {
+              return;
+            }
+            checkbox.checked = !checkbox.checked;
+            checkbox.dispatchEvent(new Event('change', { bubbles: true }));
+          });
+        }
+      });
+    }
+
+    if (resFilterInput) {
+      resFilterInput.addEventListener('input', () => {
+        renderResources(resFilterInput.value);
+      });
     }
 
     function getSelectedOficina() {
@@ -595,7 +765,7 @@
       if (!oficinaHint) return;
       const activity = getSelectedOficina();
       if (!activity) {
-        oficinaHint.innerHTML = '<strong>Descrição:</strong> -- <br><strong>Recursos:</strong> --';
+        oficinaHint.innerHTML = '<strong>Recursos:</strong> --';
         return;
       }
       const resNames = (activity.resourceIds || []).map(rid => {
@@ -605,7 +775,7 @@
         if (r.exclusive) label += ` (exclusivo${r.quantity>1?` ×${r.quantity}`:''})`;
         return label;
       }).join(', ') || '--';
-      oficinaHint.innerHTML = `<strong>Descrição:</strong> ${activity.description} <br><strong>Recursos:</strong> ${resNames}`;
+      oficinaHint.innerHTML = `<strong>Recursos:</strong> ${resNames}`;
     }
 
     function getActivityPayload() {
@@ -833,6 +1003,12 @@
       slotGroupsEl.innerHTML = '';
       if (!keepSelections) selectedRanges = {};
 
+      if (iso < todayStr()) {
+        slotsHelper.textContent = 'Data anterior: sem horários.';
+        currentGroups = [];
+        updateSelectionSummary([]);
+        return;
+      }
       if (CLOSED_DATES.has(iso)) {
         slotsHelper.textContent = 'Fechado o dia todo (feriado/agenda).';
         currentGroups = [];
@@ -846,6 +1022,7 @@
         return;
       }
 
+      applyTodayPastIntervals();
       currentGroups = generateGroupedSlots(iso);
       if (!currentGroups.length) {
         slotsHelper.textContent = 'Sem horários disponíveis (fechamentos parciais ou sem janelas úteis).';
@@ -1150,7 +1327,14 @@
           eMin = toMinutes(sel.end);
         const conflict = findExclusiveCapacityConflict(selectedDate, sMin, eMin, requestedExclusiveIds, reservations.concat(pending));
         if (conflict) {
-          return toastMsg(`Recurso exclusivo "${conflict.resourceName}" sem unidades disponíveis entre ${conflict.inUseStart} e ${conflict.inUseEnd} (${conflict.used}/${conflict.capacity} em uso).`);
+          const currentUsed = countOverlappingUsage(selectedDate, sMin, eMin, conflict.resourceId, reservations);
+          swal({
+            title: 'Erro',
+            text: `Recurso exclusivo "${conflict.resourceName}" indisponível entre ${conflict.inUseStart} e ${conflict.inUseEnd} (${currentUsed}/${conflict.capacity} em uso).`,
+            type: 'error',
+            confirmButtonText: 'OK'
+          });
+          return;
         }
         pending.push({
           date: selectedDate,
@@ -1196,37 +1380,43 @@
           console.log("Resposta do servidor:", data);
           // exemplo: tratar a resposta
           if (data.erro) {
-            alert("Erro: " + data.msg);
+            swal({
+              title: 'Erro',
+              text: "Erro: " + data.msg,
+              type: 'error',
+              confirmButtonText: 'OK'
+            });
+            updateSelectionSummary(currentGroups);
           } else {
             alert("Reservas salvas com sucesso!");
+            // Criar múltiplas reservas (uma por janela selecionada)
+            for (const sel of selections) {
+              reservations.push({
+                date: selectedDate,
+                start: sel.start,
+                duration: sel.duration,
+                people: p,
+                name: participantName || '',
+                participantId: participantId || '',
+                note: note || '',
+                activity: act.value // { type:'oficina', id } ou { type:'livre', description, resourceIds }
+              });
+            }
+
+            toastMsg(`Reserva${selections.length>1?'s':''} confirmada${selections.length>1?'s':''}: ${selections.map(s=>s.start+'–'+s.end).join(' • ')}`);
+
+            // Após reserva, limpar seleções mas manter valores do formulário
+            selectedRanges = {};
+            renderGroups({
+              keepSelections: false
+            });
           }
         })
         .catch(error => {
           console.error("Erro na requisição:", error);
+          updateSelectionSummary(currentGroups);
         });
 
-
-      // Criar múltiplas reservas (uma por janela selecionada)
-      for (const sel of selections) {
-        reservations.push({
-          date: selectedDate,
-          start: sel.start,
-          duration: sel.duration,
-          people: p,
-          name: participantName || '',
-          participantId: participantId || '',
-          note: note || '',
-          activity: act.value // { type:'oficina', id } ou { type:'livre', description, resourceIds }
-        });
-      }
-
-      toastMsg(`Reserva${selections.length>1?'s':''} confirmada${selections.length>1?'s':''}: ${selections.map(s=>s.start+'–'+s.end).join(' • ')}`);
-
-      // Após reserva, limpar seleções mas manter valores do formulário
-      selectedRanges = {};
-      renderGroups({
-        keepSelections: false
-      });
     });
 
 
@@ -1382,6 +1572,19 @@
     ?>
 
     const BASE_SPECIAL_CLOSED_INTERVALS_BY_DATE = JSON.parse(JSON.stringify(SPECIAL_CLOSED_INTERVALS_BY_DATE));
+
+    function applyTodayPastIntervals() {
+      const iso = selectedDate;
+      if (iso !== todayStr()) return;
+      const now = new Date();
+      const endMin = (now.getHours() * 60 + now.getMinutes()) - SLOT_MINUTES;
+      if (endMin <= 0) return;
+      if (!SPECIAL_CLOSED_INTERVALS_BY_DATE[iso]) SPECIAL_CLOSED_INTERVALS_BY_DATE[iso] = [];
+      SPECIAL_CLOSED_INTERVALS_BY_DATE[iso].push({
+        start: '00:00',
+        end: minutesToHHMM(endMin)
+      });
+    }
 
     function applyExclusiveReservationsToClosedIntervals() {
       const base = JSON.parse(JSON.stringify(BASE_SPECIAL_CLOSED_INTERVALS_BY_DATE));

@@ -51,15 +51,15 @@ class ReservaEntity extends EntityBase {
         self::TURMA_ESCOLA_NAO => 'Não',];   
 
     public $op_anoTurma = [
-        0 => '1° ano',
-        1 => '2° ano',
-        2 => '3° ano',
-        3 => '4° ano',
-        4 => '5° ano',
-        5 => '6° ano',
-        6 => '7° ano',
-        7 => '8° ano',
-        8 => '9° ano',];   
+        0 => '1° ano - 6 anos',
+        1 => '2° ano - 7 anos',
+        2 => '3° ano - 8 anos',
+        3 => '4° ano - 9 anos',
+        4 => '5° ano - 10 anos',
+        5 => '6° ano - 11 anos',
+        6 => '7° ano - 12 anos',
+        7 => '8° ano - 13 anos',
+        8 => '9° ano - 14 anos',];   
     
     public $color_tipo = [
         self::TIPO_EXCLUSIVA => 'unset',

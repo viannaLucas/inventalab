@@ -324,12 +324,13 @@ class ValidacaoCadastroReserva
                     $totalUtilizacao = $utilizacao + 1;
                     // Regra: uso simultâneo de recursos exclusivos respeita o estoque
                     if ($totalUtilizacao > $dadosRecurso['capacidade']) {
+                        $utilizacaoExibida = $utilizacao;
                         return $this->erro(sprintf(
                             'Recurso exclusivo "%s" indisponível entre %s e %s (%d/%d em uso).',
                             $dadosRecurso['nome'],
                             (string) $intervalo->start,
                             $this->formatMinutes($fimMin),
-                            $totalUtilizacao,
+                            $utilizacaoExibida,
                             $dadosRecurso['capacidade']
                         ));
                     }
