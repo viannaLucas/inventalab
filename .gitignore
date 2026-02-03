@@ -81,6 +81,9 @@ writable/materialoficina_arquivos/*
 writable/recursotrabalho_arquivos/*
 !writable/recursotrabalho_arquivos/index.html
 
+writable/arquivooficina_arquivos/*
+!writable/arquivooficina_arquivos/index.html
+
 php_errors.log
 
 #-------------------------
