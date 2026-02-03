@@ -15,6 +15,7 @@ use App\Entities\ParticipanteEntity;
 use App\Entities\ParticipanteEventoEntity;
 use App\Entities\ReservaEntity;
 use App\Entities\ReservaParticipanteEntity;
+use App\Entities\TemplateTermoEntity;
 use App\Libraries\ValidacaoCadastroReserva;
 use App\Models\AtividadeLivreModel;
 use App\Models\AtividadeLivreRecursoModel;
@@ -31,6 +32,7 @@ use App\Models\ParticipanteEventoModel;
 use App\Models\RecursoTrabalhoModel;
 use App\Models\ReservaModel;
 use App\Models\ReservaParticipanteModel;
+use App\Models\TemplateTermoModel;
 use CodeIgniter\HTTP\ResponseInterface;
 use DateInterval;
 use DateTime;
@@ -151,6 +153,15 @@ class PainelParticipante extends BaseControllerParticipante
             $i['pago'] = (new CobrancaParticipanteEventoModel())->verificaSeIncricaoPaga($pe->id);
             $data['vEventosIncritos'][] = $i;
         }
+
+        $data['imprimirTermo'] = false;
+        $termo  = (new TemplateTermoModel())->find(1);
+
+        if($termo->requererTermo == TemplateTermoEntity::REQUERER_TERMO_SIM
+                && $participante->getIdade() < 18 
+                && $participante->termoResponsabilidade == ''){
+            $data['imprimirTermo'] = true;
+        }
         return view('PainelParticipante/home', $data);
     }
 
@@ -174,6 +185,10 @@ class PainelParticipante extends BaseControllerParticipante
         ]);
     }
 
+    public function imprimirTermo()
+    {
+        return view('PainelParticipante/imprimirTermo');
+    }
 
     public function cadastrar()
     {

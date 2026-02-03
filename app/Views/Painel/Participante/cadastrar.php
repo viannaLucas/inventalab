@@ -39,7 +39,7 @@
                     <div class="form-group col-12 col-md-6 ">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Termo Responsabilidade</label>
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="termoResponsabilidade" name="termoResponsabilidade">
+                            <input type="file" class="custom-file-input" id="termoResponsabilidade" name="termoResponsabilidade" accept=".pdf,.doc,.docx,.xls,.xlsx,.csv,.png,.jpg,.jpeg,.gif,.webp">
                             <label class="custom-file-label" for="termoResponsabilidade" data-browse="Arquivo"></label>
                         </div>
                     </div>                    
@@ -305,7 +305,7 @@
                 required: true,
             },
             termoResponsabilidade: {
-                arquivo: 'pdf|doc|docx|xls|xlsx|csv',
+                arquivo: 'pdf|doc|docx|xls|xlsx|csv|png|jpg|jpeg|gif|webp',
             },
             suspenso: {
                 required: true,

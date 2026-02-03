@@ -36,7 +36,7 @@ class ParticipanteModel extends BaseModel{
         'codigoApiSesc' => ['label'=> 'Código API Sesc', 'rules'=>'permit_empty|max_length[30]|alpha_numeric'],
     ];
     protected $validationRulesFiles = [
-        'termoResponsabilidade' => ['label'=> 'Termo Responsabilidade', 'rules'=>'permit_empty|ext_in[termoResponsabilidade,doc,pdf,xls]|max_size[termoResponsabilidade,20480]'],
+        'termoResponsabilidade' => ['label'=> 'Termo Responsabilidade', 'rules'=>'permit_empty|ext_in[termoResponsabilidade,doc,docx,pdf,xls,xlsx,csv,png,jpg,jpeg,gif,webp]|max_size[termoResponsabilidade,20480]'],
         'senha' => ['label'=> 'Senha', 'rules'=>'permit_empty|senhaForte'],
         'confirmaSenha' => ['label'=> 'Confirmação Senha', 'rules'=>'permit_empty|matches[senha]'],
     ];

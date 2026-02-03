@@ -33,6 +33,7 @@
                 </a>
                 <ul class="slide-menu">
                     <li><a class="slide-item" href="<?PHP echo base_url('PainelParticipante/inscricoes'); ?>">Minhas Inscrições</a></li>
+                    <li><a class="slide-item" href="<?PHP echo base_url('PainelParticipante/home#proximosEventos'); ?>">Próximos Eventos</a></li>
                 </ul>
             </li>
 

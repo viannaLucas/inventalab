@@ -56,7 +56,7 @@ class ParticipanteEntity extends EntityBase {
                 'tipoAcesso' => 'publico'
             ],
             'home' => [
-                'metodos' => ['PainelParticipante::home'],
+                'metodos' => ['PainelParticipante::home', 'PainelParticipante::imprimirTermo'],
                 'label' => 'Inicial',
                 'descricao' => 'Página inicial do painel',
                 'tipoAcesso' => 'global'

@@ -117,7 +117,16 @@ class Participante extends BaseController {
         $en->fill($post);
         try{ 
             $ru['termoResponsabilidade'] = $m->uploadFile($this->request->getFile('termoResponsabilidade'), null, ParticipanteEntity::folder);
-            $en->termoResponsabilidade = $ru['termoResponsabilidade'] !== false ? $ru['termoResponsabilidade'] : $e->termoResponsabilidade;
+            $novoUpload = $ru['termoResponsabilidade'] !== false;
+            $excluirTermo = (string) $this->request->getPost('excluirTermoResponsabilidade') === '1';
+
+            if ($novoUpload) {
+                $en->termoResponsabilidade = $ru['termoResponsabilidade'];
+            } elseif ($excluirTermo) {
+                $en->termoResponsabilidade = '';
+            } else {
+                $en->termoResponsabilidade = $e->termoResponsabilidade;
+            }
             $m->db->transStart();
             if ($m->update($en->id, $en)) { 
                 $mHabilidades = new HabilidadesModel();
@@ -133,7 +142,9 @@ class Participante extends BaseController {
                         return $this->returnWithError($mHabilidades->errors());
                     }
                 }
-                if($ru['termoResponsabilidade'] !== false) $m->deleteFile($e->termoResponsabilidade);
+                if ($novoUpload || $excluirTermo) {
+                    $m->deleteFile($e->termoResponsabilidade);
+                }
                 $m->db->transComplete();
                 return $this->returnSucess('Cadastrado com sucesso!');
             } else { 
