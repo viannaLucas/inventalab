@@ -490,26 +490,6 @@
       });
     }
 
-    function renderRankingTemas(pA, pB) {
-      const container = document.getElementById('ranking-temas');
-      const temasA = Array.isArray(pA.temas) && pA.temas.length ? pA.temas : [];
-      const temasB = Array.isArray(pB.temas) && pB.temas.length ? pB.temas : [];
-      container.innerHTML = `
-        <div class="col-md-6 mb-3">
-          <p class="small text-muted mb-2">${pA.nome}</p>
-          <ul class="list-group list-group-flush">
-            ${temasA.length ? temasA.map(t => `<li class="list-group-item d-flex justify-content-between align-items-center px-0">${t.tema}<span class="badge badge-primary badge-pill">${t.qtd}</span></li>`).join('') : '<li class="list-group-item px-0 text-muted">Sem dados.</li>'}
-          </ul>
-        </div>
-        <div class="col-md-6 mb-3">
-          <p class="small text-muted mb-2">${pB.nome}</p>
-          <ul class="list-group list-group-flush">
-            ${temasB.length ? temasB.map(t => `<li class="list-group-item d-flex justify-content-between align-items-center px-0">${t.tema}<span class="badge badge-primary badge-pill">${t.qtd}</span></li>`).join('') : '<li class="list-group-item px-0 text-muted">Sem dados.</li>'}
-          </ul>
-        </div>
-      `;
-    }
-
     function renderComparativo(data) {
       const labelsNotas = getLabelsNotas(data.labelsNotas);
       const labelsMeses = Array.isArray(data.labelsMeses) ? data.labelsMeses : [];
@@ -596,7 +576,6 @@
       });
 
       renderTabelaVariacao(pA, pB);
-      renderRankingTemas(pA, pB);
     }
 
     function aplicarFiltrosIniciais(filtros){
@@ -680,13 +659,21 @@
           }
         });
         const payload = await response.json();
-        if (!response.ok || payload.erro) {
+        const erroFlag = payload && (payload.erro === true || payload.erro === 1 || payload.erro === '1' || payload.erro === 'true');
+        if (!response.ok && !payload) {
+          console.log('[comparacao] erro: response.ok=false e payload vazio', { status: response.status, statusText: response.statusText });
+          if (info) info.textContent = 'Erro ao carregar dados.';
+          return;
+        }
+        if (erroFlag) {
+          console.log('[comparacao] erro: payload.erro=true', { erro: payload.erro, msg: payload.msg });
           if (info) info.textContent = payload.msg || 'Erro ao carregar dados.';
           return;
         }
         if (info) info.textContent = '';
         aplicarDados(payload);
       } catch (err) {
+        console.log('[comparacao] erro: exception no fetch/json', err);
         if (info) info.textContent = 'Erro ao carregar dados.';
       }
     }
