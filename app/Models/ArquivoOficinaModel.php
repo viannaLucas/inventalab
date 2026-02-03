@@ -17,7 +17,7 @@ class ArquivoOficinaModel extends BaseModel{
         'arquivo' => ['label'=> 'Arquivo', 'rules'=>'required'],
     ];
     protected $validationRulesFiles = [
-        'arquivo' => ['label'=> 'Arquivo', 'rules'=>'ext_in[arquivo,doc,pdf,xls]|max_size[arquivo,20480]'],
+        'arquivo' => ['label'=> 'Arquivo', 'rules'=>'ext_in[arquivo,doc,docx,pdf,xls,xlsx,csv,zip,jpg,jpeg,png]|max_size[arquivo,20480]'],
     ];
     protected $returnType = \App\Entities\ArquivoOficinaEntity::class;
     

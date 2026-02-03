@@ -41,7 +41,7 @@
                         <div class="form-group col-auto ">
                             <label>Arquivo</label>
                             <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="arquivooficina_arquivo" name="arquivooficina_arquivo">
+                                <input type="file" class="custom-file-input" id="arquivooficina_arquivo" name="arquivooficina_arquivo" accept=".pdf,.doc,.docx,.xls,.xlsx,.csv,.zip,.jpg,.jpeg,.png">
                                 <label class="custom-file-label" for="arquivooficina_arquivo" data-browse="Arquivo"></label>
                             </div>
                         </div>                        
@@ -154,6 +154,8 @@
                         <span class="h5">Sem itens selecionados</span>
                     </div>
                 </fieldset>
+                <div id="filesArquivoOficina" class="d-none"></div>
+                <div id="filesMaterialOficina" class="d-none"></div>
                 <div class="form-group mb-0 mt-3 text-center col-12">
                     <button type="submit" class="btn btn-primary submitButton">Alterar</button>
                 </div>
@@ -167,7 +169,8 @@
         <td><input type="text" class="form-control ignoreValidate" name="ArquivoOficina[{_index_}][nome]" readonly="true" value="{_nome_}" /></td>
         <td><input type="text" class="form-control ignoreValidate" name="ArquivoOficina[{_index_}][arquivo]" readonly="true" value="{_arquivo_}" /></td>
         <td>
-            <div class="btn btn-danger btnExcluirArquivoOficina" onclick="$('#ArquivoOficina_{_index_}').remove();">
+            {_view_btn_}
+            <div class="btn btn-danger btnExcluirArquivoOficina" onclick="$('#ArquivoOficina_{_index_}').remove(); $('#arquivooficina_file_{_index_}').remove();">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                     <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
@@ -181,10 +184,11 @@
         <td><input type="text" class="form-control ignoreValidate" name="MaterialOficina[{_index_}][descricao]" readonly="true" value="{_descricao_}" /></td>
         <td><input type="text" class="form-control ignoreValidate" name="MaterialOficina[{_index_}][foto]" readonly="true" value="{_foto_}" /></td>
         <td>
-            <div class="btn btn-danger btnExcluirMaterialOficina" onclick="$('#MaterialOficina_{_index_}').remove();">
+            {_view_btn_}
+            <div class="btn btn-danger btnExcluirMaterialOficina" onclick="$('#MaterialOficina_{_index_}').remove(); $('#materialoficina_file_{_index_}').remove();">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"></path>
+                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"></path>
                 </svg>
             </div>
         </td>
@@ -248,7 +252,7 @@
             },
             arquivooficina_arquivo: {
                 required: true,
-                arquivo: 'pdf|doc|docx|xls|xlsx|csv',
+                arquivo: 'pdf|doc|docx|xls|xlsx|csv|zip|jpg|jpeg|png',
             },
             materialoficina_descricao: {
                 required: true,
@@ -325,14 +329,27 @@
         if (error) {
             return;
         }
+        const index = indexRowArquivoOficina;
         let dados = {};
         dados.nome = $('#arquivooficina_nome').val();
-        dados.arquivo = $('#arquivooficina_arquivo').val();
+        dados.arquivo = $('#arquivooficina_arquivo').val().split(/[/\\\\]/).pop();
             
         insertRowArquivoOficina(dados);
+
+        const $fileInput = $('#arquivooficina_arquivo');
+        const $fileWrapper = $fileInput.closest('.custom-file');
+        $fileInput
+            .attr('id', 'arquivooficina_file_' + index)
+            .attr('name', 'arquivooficina_arquivo_' + index)
+            .addClass('d-none');
+        $('#filesArquivoOficina').append($fileInput);
+
+        $fileWrapper.html(
+            '<input type="file" class="custom-file-input" id="arquivooficina_arquivo" name="arquivooficina_arquivo" accept=".pdf,.doc,.docx,.xls,.xlsx,.csv,.zip">' +
+            '<label class="custom-file-label" for="arquivooficina_arquivo" data-browse="Arquivo"></label>'
+        );
         
         $('#arquivooficina_nome').val('');
-        $('#arquivooficina_arquivo').val('');
     }
 
     var indexRowMaterialOficina = 0;
@@ -348,14 +365,33 @@
         if (error) {
             return;
         }
+        const index = indexRowMaterialOficina;
         let dados = {};
         dados.descricao = $('#materialoficina_descricao').val();
-        dados.foto = $('#materialoficina_foto').val();
+        dados.foto = $('#materialoficina_foto').val().split(/[/\\\\]/).pop();
             
         insertRowMaterialOficina(dados);
         
+        const $fotoInput = $('#materialoficina_foto');
+        const $fotoContainer = $fotoInput.closest('.form-group');
+        const dropifyFoto = $fotoInput.data('dropify');
+        if (dropifyFoto) {
+            dropifyFoto.destroy();
+        }
+        $fotoInput
+            .attr('id', 'materialoficina_file_' + index)
+            .attr('name', 'materialoficina_foto_' + index)
+            .removeClass('dropify')
+            .addClass('d-none');
+        $('#filesMaterialOficina').append($fotoInput);
+
+        $fotoContainer.append(
+            '<input type="file" class="dropify" id="materialoficina_foto" name="materialoficina_foto" accept=".jpg,.jpeg,.webp,.png" ' +
+            'data-allowed-file-extensions="webp png jpeg jpg" data-max-file-size="10M">'
+        );
+        $fotoContainer.find('#materialoficina_foto').dropify();
+        
         $('#materialoficina_descricao').val('');
-        $('#materialoficina_foto').val('');
     }
 
     var indexRowRecursoOficina = 0;
@@ -386,6 +422,11 @@
         html = html.replaceAll('{_index_}', indexRowArquivoOficina);
         html = html.replaceAll('{_nome_}', dados.nome);
         html = html.replaceAll('{_arquivo_}', dados.arquivo);
+        let viewBtnArquivo = '';
+        if (dados.id && dados.arquivo) {
+            viewBtnArquivo = buildViewButton(dados.arquivo);
+        }
+        html = html.replaceAll('{_view_btn_}', viewBtnArquivo);
         $('#listTableArquivoOficina tbody').append(html);
         
         indexRowArquivoOficina++;
@@ -397,6 +438,11 @@
         html = html.replaceAll('{_index_}', indexRowMaterialOficina);
         html = html.replaceAll('{_descricao_}', dados.descricao);
         html = html.replaceAll('{_foto_}', dados.foto);
+        let viewBtnFoto = '';
+        if (dados.id && dados.foto) {
+            viewBtnFoto = buildViewButton(dados.foto);
+        }
+        html = html.replaceAll('{_view_btn_}', viewBtnFoto);
         $('#listTableMaterialOficina tbody').append(html);
         
         indexRowMaterialOficina++;
@@ -412,6 +458,26 @@
         
         indexRowRecursoOficina++;
         $(".msgEmptyListRecursoOficina").hide();
+    }
+
+    const baseUrl = "<?= base_url() ?>";
+
+    function buildFileUrl(path) {
+        if (!path) return '';
+        if (/^https?:\/\//i.test(path)) return path;
+        const base = baseUrl.replace(/\/$/, '');
+        const cleanPath = path.replace(/^\//, '');
+        return base + '/' + cleanPath;
+    }
+
+    function buildViewButton(path) {
+        const url = buildFileUrl(path);
+        return '<a class="btn btn-info mr-1" target="_blank" rel="noopener" href="' + url + '">' +
+            '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">' +
+            '<path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/>' +
+            '<path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/>' +
+            '</svg>' +
+            '</a>';
     }
 
 <?PHP foreach ($oficinatematica->getListArquivoOficina() as $i => $o) {

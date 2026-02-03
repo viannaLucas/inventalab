@@ -32,24 +32,53 @@ class OficinaTematica extends BaseController {
             return $this->returnWithError($ef);
         }
         $e = new OficinaTematicaEntity($this->request->getPost());
+        $ru = [
+            'arquivoOficina' => [],
+            'materialFoto' => [],
+        ];
+        $mArquivoOficina = new ArquivoOficinaModel();
+        $mMaterialOficina = new MaterialOficinaModel();
         $m->db->transStart();
         try {
             if ($m->insert($e, false)) { 
-                $mArquivoOficina = new ArquivoOficinaModel();
                 $ArquivoOficina = $this->request->getPost('ArquivoOficina') ?? [];
-                foreach ($ArquivoOficina as $pp){
+                foreach ($ArquivoOficina as $i => $pp){
+                    $fileArquivo = $this->request->getFile('arquivooficina_arquivo_' . $i);
+                    if ($fileArquivo === null || !$fileArquivo->isValid() || $fileArquivo->hasMoved()) {
+                        return $this->returnWithError('Arquivo da oficina não encontrado.');
+                    }
+                    $pathArquivo = $mArquivoOficina->uploadFile($fileArquivo, null, ArquivoOficinaEntity::folder);
+                    if ($pathArquivo === false) {
+                        return $this->returnWithError('Erro ao fazer upload do arquivo da oficina.');
+                    }
+                    $ru['arquivoOficina'][] = $pathArquivo;
+                    $pp['arquivo'] = $pathArquivo;
                     $pp['OficinaTematica_id'] = $m->getInsertID();
                     $eArquivoOficina = new ArquivoOficinaEntity($pp);
                     if(!$mArquivoOficina->insert($eArquivoOficina, false)){
+                        if (!empty($ru['arquivoOficina'])) $mArquivoOficina->deleteFiles($ru['arquivoOficina']);
                         return $this->returnWithError($mArquivoOficina->errors());
                     }
                 }
-                $mMaterialOficina = new MaterialOficinaModel();
                 $MaterialOficina = $this->request->getPost('MaterialOficina') ?? [];
-                foreach ($MaterialOficina as $pp){
+                foreach ($MaterialOficina as $i => $pp){
+                    $fileFoto = $this->request->getFile('materialoficina_foto_' . $i);
+                    if ($fileFoto === null || !$fileFoto->isValid() || $fileFoto->hasMoved()) {
+                        if (!empty($ru['arquivoOficina'])) $mArquivoOficina->deleteFiles($ru['arquivoOficina']);
+                        return $this->returnWithError('Foto do material não encontrada.');
+                    }
+                    $pathFoto = $mMaterialOficina->uploadImage($fileFoto, null, MaterialOficinaEntity::folder);
+                    if ($pathFoto === false) {
+                        if (!empty($ru['arquivoOficina'])) $mArquivoOficina->deleteFiles($ru['arquivoOficina']);
+                        return $this->returnWithError('Erro ao fazer upload da foto do material.');
+                    }
+                    $ru['materialFoto'][] = $pathFoto;
+                    $pp['foto'] = $pathFoto;
                     $pp['OficinaTematica_id'] = $m->getInsertID();
                     $eMaterialOficina = new MaterialOficinaEntity($pp);
                     if(!$mMaterialOficina->insert($eMaterialOficina, false)){
+                        if (!empty($ru['arquivoOficina'])) $mArquivoOficina->deleteFiles($ru['arquivoOficina']);
+                        if (!empty($ru['materialFoto'])) $mMaterialOficina->deleteFiles($ru['materialFoto']);
                         return $this->returnWithError($mMaterialOficina->errors());
                     }
                 }
@@ -59,15 +88,21 @@ class OficinaTematica extends BaseController {
                     $pp['OficinaTematica_id'] = $m->getInsertID();
                     $eRecursoOficina = new RecursoOficinaEntity($pp);
                     if(!$mRecursoOficina->insert($eRecursoOficina, false)){
+                        if (!empty($ru['arquivoOficina'])) $mArquivoOficina->deleteFiles($ru['arquivoOficina']);
+                        if (!empty($ru['materialFoto'])) $mMaterialOficina->deleteFiles($ru['materialFoto']);
                         return $this->returnWithError($mRecursoOficina->errors());
                     }
                 }
                 $m->db->transComplete();
                 return $this->returnSucess('Cadastrado com sucesso!');
             } else {
+                if (!empty($ru['arquivoOficina'])) $mArquivoOficina->deleteFiles($ru['arquivoOficina']);
+                if (!empty($ru['materialFoto'])) $mMaterialOficina->deleteFiles($ru['materialFoto']);
                 return $this->returnWithError($m->errors());
             }
         } catch (\Exception $ex) {
+            if (!empty($ru['arquivoOficina'])) $mArquivoOficina->deleteFiles($ru['arquivoOficina']);
+            if (!empty($ru['materialFoto'])) $mMaterialOficina->deleteFiles($ru['materialFoto']);
             return $this->returnWithError($ex->getMessage());
         }
     }
@@ -95,32 +130,76 @@ class OficinaTematica extends BaseController {
             return $this->returnWithError('Registro não encontrado.');
         }
         $en = new OficinaTematicaEntity($this->request->getPost());
+        $ru = [
+            'arquivoOficina' => [],
+            'materialFoto' => [],
+        ];
+        $mArquivoOficina = new ArquivoOficinaModel();
+        $mMaterialOficina = new MaterialOficinaModel();
         try{ 
             $m->db->transStart();
             if ($m->update($en->id, $en)) { 
-                $mArquivoOficina = new ArquivoOficinaModel();
+                $ArquivoOficina = $this->request->getPost('ArquivoOficina') ?? [];
+                $arquivosMantidos = array_filter(array_map(
+                    fn($v) => $v['arquivo'] ?? '',
+                    $ArquivoOficina
+                ));
+                foreach ($e->getListArquivoOficina() as $itemExistente) {
+                    if ($itemExistente->arquivo !== '' && !in_array($itemExistente->arquivo, $arquivosMantidos, true)) {
+                        $mArquivoOficina->deleteFile($itemExistente->arquivo);
+                    }
+                }
                 $idsDelete = array_map(fn($v):int => $v->id, $e->getListArquivoOficina());
                 if(count($idsDelete)>0){
                     $mArquivoOficina->delete($idsDelete);
                 }
-                $ArquivoOficina = $this->request->getPost('ArquivoOficina') ?? [];
-                foreach ($ArquivoOficina as $pp){
+                foreach ($ArquivoOficina as $i => $pp){
+                    $fileArquivo = $this->request->getFile('arquivooficina_arquivo_' . $i);
+                    if ($fileArquivo !== null && $fileArquivo->isValid() && !$fileArquivo->hasMoved()) {
+                        $pathArquivo = $mArquivoOficina->uploadFile($fileArquivo, null, ArquivoOficinaEntity::folder);
+                        if ($pathArquivo === false) {
+                            return $this->returnWithError('Erro ao fazer upload do arquivo da oficina.');
+                        }
+                        $ru['arquivoOficina'][] = $pathArquivo;
+                        $pp['arquivo'] = $pathArquivo;
+                    }
                     $pp['OficinaTematica_id'] = $e->id;
                     $eArquivoOficina = new ArquivoOficinaEntity($pp);
                     if(!$mArquivoOficina->insert($eArquivoOficina, false)){
+                        if (!empty($ru['arquivoOficina'])) $mArquivoOficina->deleteFiles($ru['arquivoOficina']);
                         return $this->returnWithError($mArquivoOficina->errors());
                     }
                 }
-                $mMaterialOficina = new MaterialOficinaModel();
+                $MaterialOficina = $this->request->getPost('MaterialOficina') ?? [];
+                $fotosMantidas = array_filter(array_map(
+                    fn($v) => $v['foto'] ?? '',
+                    $MaterialOficina
+                ));
+                foreach ($e->getListMaterialOficina() as $itemExistente) {
+                    if ($itemExistente->foto !== '' && !in_array($itemExistente->foto, $fotosMantidas, true)) {
+                        $mMaterialOficina->deleteFile($itemExistente->foto);
+                    }
+                }
                 $idsDelete = array_map(fn($v):int => $v->id, $e->getListMaterialOficina());
                 if(count($idsDelete)>0){
                     $mMaterialOficina->delete($idsDelete);
                 }
-                $MaterialOficina = $this->request->getPost('MaterialOficina') ?? [];
-                foreach ($MaterialOficina as $pp){
+                foreach ($MaterialOficina as $i => $pp){
+                    $fileFoto = $this->request->getFile('materialoficina_foto_' . $i);
+                    if ($fileFoto !== null && $fileFoto->isValid() && !$fileFoto->hasMoved()) {
+                        $pathFoto = $mMaterialOficina->uploadImage($fileFoto, null, MaterialOficinaEntity::folder);
+                        if ($pathFoto === false) {
+                            if (!empty($ru['arquivoOficina'])) $mArquivoOficina->deleteFiles($ru['arquivoOficina']);
+                            return $this->returnWithError('Erro ao fazer upload da foto do material.');
+                        }
+                        $ru['materialFoto'][] = $pathFoto;
+                        $pp['foto'] = $pathFoto;
+                    }
                     $pp['OficinaTematica_id'] = $e->id;
                     $eMaterialOficina = new MaterialOficinaEntity($pp);
                     if(!$mMaterialOficina->insert($eMaterialOficina, false)){
+                        if (!empty($ru['arquivoOficina'])) $mArquivoOficina->deleteFiles($ru['arquivoOficina']);
+                        if (!empty($ru['materialFoto'])) $mMaterialOficina->deleteFiles($ru['materialFoto']);
                         return $this->returnWithError($mMaterialOficina->errors());
                     }
                 }
@@ -134,15 +213,21 @@ class OficinaTematica extends BaseController {
                     $pp['OficinaTematica_id'] = $e->id;
                     $eRecursoOficina = new RecursoOficinaEntity($pp);
                     if(!$mRecursoOficina->insert($eRecursoOficina, false)){
+                        if (!empty($ru['arquivoOficina'])) $mArquivoOficina->deleteFiles($ru['arquivoOficina']);
+                        if (!empty($ru['materialFoto'])) $mMaterialOficina->deleteFiles($ru['materialFoto']);
                         return $this->returnWithError($mRecursoOficina->errors());
                     }
                 }
                 $m->db->transComplete();
                 return $this->returnSucess('Cadastrado com sucesso!');
             } else { 
+                if (!empty($ru['arquivoOficina'])) $mArquivoOficina->deleteFiles($ru['arquivoOficina']);
+                if (!empty($ru['materialFoto'])) $mMaterialOficina->deleteFiles($ru['materialFoto']);
                 return $this->returnWithError($m->errors());
             }
         }catch (\Exception $ex){ 
+            if (!empty($ru['arquivoOficina'])) $mArquivoOficina->deleteFiles($ru['arquivoOficina']);
+            if (!empty($ru['materialFoto'])) $mMaterialOficina->deleteFiles($ru['materialFoto']);
             return $this->returnWithError($ex->getMessage());
         }
     }
