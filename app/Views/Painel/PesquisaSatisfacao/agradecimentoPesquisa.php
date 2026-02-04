@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Pesquisa de Satisfação - Obrigado</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.6.0/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvtum28RQi6NRq6c+3e1dO5yYv7v3y5n7NHPm9PeEG" crossorigin="anonymous">
+    <link rel="stylesheet" href="<?= base_url('assets/vendor/cdn/bootstrap-4.6.0.min.css') ?>">
     <style>
         body {
             background: linear-gradient(135deg, #0d6efd, #6610f2);
