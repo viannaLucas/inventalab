@@ -62,7 +62,7 @@ if (!empty($vHorarioFuncionamento)) {
                         <h3 class="text-xl font-bold"><?= esc($evento->nome);; ?></h3>
                         <p class="mt-2 text-sm text-text-muted-light dark:text-text-muted-dark"><?= esc($evento->nome); ?></p>
                         <span class="my-4 text-sm font-semibold text-primary"><?= esc($evento->dataInicio); ?></span>
-                        <a href="<?= esc(base_url('detalheEvento/'.$evento->id.'/'.$evento->gerarSlug()) , 'attr' ) ?>" class="mt-auto flex h-10 w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-primary/20 dark:bg-primary/30 text-primary text-sm font-bold"><span class="truncate">Saiba mais</span></a>
+                        <a href="<?= esc(base_url('detalheEvento/' . $evento->id . '/' . $evento->gerarSlug()), 'attr') ?>" class="mt-auto flex h-10 w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-primary/20 dark:bg-primary/30 text-primary text-sm font-bold"><span class="truncate">Saiba mais</span></a>
                     </div>
                 </div>
             <?php }; ?>
@@ -77,8 +77,8 @@ if (!empty($vHorarioFuncionamento)) {
             <p class="mt-4 text-base text-text-muted-light dark:text-text-muted-dark md:text-lg">Somos uma oficina comunitária que oferece acesso a ferramentas, tecnologia e educação. Nossa missão é capacitar indivíduos a aprender, criar e inovar em um ambiente colaborativo e de apoio.</p>
         </div>
         <div class="grid w-full grid-cols-1 gap-4 md:grid-cols-2">
-            <div class="h-80 w-full rounded-xl bg-cover bg-center" data-alt="A person working on a laptop in a creative workspace." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDg7xeVzkpOL3a3D9lx6EJ22nzAcSy8jFhyMWiDoTw5FCRT3uLy0wBUcp1fgeOPoTp24_UItcBcIrdZFKiWD9w2ikOSAyzL8m-ZAAsDnvcwpPEhpzgrHv4zH8Yv21F8TMu2rkEM4Nk2Ld1Bxf7ZbJPsBW5wxgfBYD21xV8NiiIomQucEt-htcJ5oUy416AF967tWqjyexVb_YXafy-HQvQNXPHDru7SCpgewUV42qVp3Y4RiZOkwstUjDxCgIwO7oi_X_1MCyW9lVl4");'></div>
-            <div class="h-80 w-full rounded-xl bg-cover bg-center" data-alt="A group of people collaborating around a table in a workshop." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCAAziPHN9ToEgCNeXNcBy2nF1iWBHmuyxFcJt2b80Q0YWTAskxS0Mgc--N5c5ggWPnyldIyOSapdUBemTbsv_EpjzVyky1HHltdpddYr46EBIuZk6evNCGBmcvDOgYCw8iCp4V33XDSND7wfm8yPta6di_xtyx5a-hes82ZY6srBk7C7O2nDHdRgoxwHwqiHeGCs4EBoMyMu9MAzyXnmmhmHPfqO32dI4eY_42LQ3LPdVxWNXMhU3-4orJNSqmv5BbOUFBWcC9gu0B");'></div>
+            <div class="h-80 w-full rounded-xl bg-cover bg-center" data-alt="A person working on a laptop in a creative workspace." style='background-image: url("<?= esc(base_url('assets/img/site/sobre-1.jpg'), 'attr'); ?>");'></div>
+            <div class="h-80 w-full rounded-xl bg-cover bg-center" data-alt="A group of people collaborating around a table in a workshop." style='background-image: url("<?= esc(base_url('assets/img/site/sobre-2.jpg'), 'attr'); ?>");'></div>
         </div>
     </div>
 </section>
@@ -91,17 +91,31 @@ if (!empty($vHorarioFuncionamento)) {
         </div>
         <div class="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
             <div class="flex flex-col items-center text-center">
-                <div class="flex h-16 w-16 items-center justify-center rounded-full bg-primary/20 text-primary"><span class="material-symbols-outlined !text-4xl">person_add</span></div>
+                <div class="flex h-16 w-16 items-center justify-center rounded-full bg-primary/20 text-primary"><span class="material-symbols-outlined !text-4xl">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-person-check-fill" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0" />
+                            <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+                        </svg>
+                    </span></div>
                 <h3 class="mt-4 text-lg font-bold">1. Cadastre-se</h3>
                 <p class="mt-2 text-sm text-text-muted-light dark:text-text-muted-dark">Crie sua conta em nossa plataforma de forma rápida e segura.</p>
             </div>
             <div class="flex flex-col items-center text-center">
-                <div class="flex h-16 w-16 items-center justify-center rounded-full bg-primary/20 text-primary"><span class="material-symbols-outlined !text-4xl">calendar_month</span></div>
+                <div class="flex h-16 w-16 items-center justify-center rounded-full bg-primary/20 text-primary"><span class="material-symbols-outlined !text-4xl">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-calendar-range" viewBox="0 0 16 16">
+                            <path d="M9 7a1 1 0 0 1 1-1h5v2h-5a1 1 0 0 1-1-1M1 9h4a1 1 0 0 1 0 2H1z" />
+                            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
+                        </svg>
+                    </span></div>
                 <h3 class="mt-4 text-lg font-bold">2. Agende seu tempo</h3>
                 <p class="mt-2 text-sm text-text-muted-light dark:text-text-muted-dark">Reserve horários para usar os equipamentos e bancadas disponíveis.</p>
             </div>
             <div class="flex flex-col items-center text-center">
-                <div class="flex h-16 w-16 items-center justify-center rounded-full bg-primary/20 text-primary"><span class="material-symbols-outlined !text-4xl">construction</span></div>
+                <div class="flex h-16 w-16 items-center justify-center rounded-full bg-primary/20 text-primary"><span class="material-symbols-outlined !text-4xl">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-tools" viewBox="0 0 16 16">
+                            <path d="M1 0 0 1l2.2 3.081a1 1 0 0 0 .815.419h.07a1 1 0 0 1 .708.293l2.675 2.675-2.617 2.654A3.003 3.003 0 0 0 0 13a3 3 0 1 0 5.878-.851l2.654-2.617.968.968-.305.914a1 1 0 0 0 .242 1.023l3.27 3.27a.997.997 0 0 0 1.414 0l1.586-1.586a.997.997 0 0 0 0-1.414l-3.27-3.27a1 1 0 0 0-1.023-.242L10.5 9.5l-.96-.96 2.68-2.643A3.005 3.005 0 0 0 16 3q0-.405-.102-.777l-2.14 2.141L12 4l-.364-1.757L13.777.102a3 3 0 0 0-3.675 3.68L7.462 6.46 4.793 3.793a1 1 0 0 1-.293-.707v-.071a1 1 0 0 0-.419-.814zm9.646 10.646a.5.5 0 0 1 .708 0l2.914 2.915a.5.5 0 0 1-.707.707l-2.915-2.914a.5.5 0 0 1 0-.708M3 11l.471.242.529.026.287.445.445.287.026.529L5 13l-.242.471-.026.529-.445.287-.287.445-.529.026L3 15l-.471-.242L2 14.732l-.287-.445L1.268 14l-.026-.529L1 13l.242-.471.026-.529.445-.287.287-.445.529-.026z" />
+                        </svg>
+                    </span></div>
                 <h3 class="mt-4 text-lg font-bold">3. Crie!</h3>
                 <p class="mt-2 text-sm text-text-muted-light dark:text-text-muted-dark">Use nosso espaço e ferramentas para dar vida aos seus projetos.</p>
             </div>
@@ -116,22 +130,22 @@ if (!empty($vHorarioFuncionamento)) {
     </div>
     <div class="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
         <div class="group relative flex h-60 flex-col justify-end overflow-hidden rounded-lg p-4">
-            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-105" data-alt="A modern 3D printer in action." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDsrxQqu-d-olZfzX2PeKuXdxZz4aBt9Dd8IbH6pzriTK355EmD6ZQe7YcFY8eKkQiBvqXrBATVYjSZ9ilE2EXnXC5rTizclYILB-d9jZDYB4MGtrLO9P6HQ3Z4IznjAL1AyALKADMnkGZ2RELg29SFK-eBQky0DBOc36Aaf6FiU0XnTWmrIpvB45rCQkM9W9D6nvRE-azJN-SgqpOxwLG13v5L5y6xk95RiQA5rhlEqXnTq8xgBxXXlGGk9FMhWHAHG3SAPE1Ml3j5")'></div>
+            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-105" data-alt="A modern 3D printer in action." style='background-image: url("<?= esc(base_url('assets/img/site/equipamentos-3d.jpg'), 'attr'); ?>")'></div>
             <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
             <h3 class="relative text-lg font-bold text-white">Impressoras 3D</h3>
         </div>
         <div class="group relative flex h-60 flex-col justify-end overflow-hidden rounded-lg p-4">
-            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-105" data-alt="A laser cutter engraving a piece of wood." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBZdUS_Xb4VSKgvVlLUamWsE-LiL0iSxihw7iawHpr30kY9qChdqlnqw2QylGZlvndaW5MvqTK-cSyOaczri62PIojB4g-70gvX4NeXbkrTaLcwCSBeweqhzX65hZeY4jz-erreiN96oucni7c8ebVSrAELFdFxO6YcM1U3Bc17p4XMCP8FzqLyuvPThS2Y91ATefFKCFm2KqZ0HfQBB5DRTceUk5ZvoYi58dlOps8E6CJzkqSO7x05n7FkPYVdpJFKWFfqYPyjiTg0")'></div>
+            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-105" data-alt="A laser cutter engraving a piece of wood." style='background-image: url("<?= esc(base_url('assets/img/site/equipamentos-laser.jpg'), 'attr'); ?>")'></div>
             <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
             <h3 class="relative text-lg font-bold text-white">Corte a Laser</h3>
         </div>
         <div class="group relative flex h-60 flex-col justify-end overflow-hidden rounded-lg p-4">
-            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-105" data-alt="A CNC machine carving a complex design into metal." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA8YbwggX0SSXTAmlByOB3qh08dGGzIBotq_gx2huwCkm1_qV1ZCURueOGxfcSdcwpXrhoO9p83ogtSSX52suyQv8zG5E1F3fggG00qiP8PjqKnLQzbe6dVDJlCMC_NS1S5yBkzPjz54oUwAjZevvqvQV3_I0zysX8uBx4WpT34SQ4ekvGeqGyfD4-RbOjPb9C9GkBQgXrBLF6c6BM0_KzAXgoPI00SdD-TD8GYjTRd8l2ncG6xvB4dBaS34DURrk6d9ZORUAly1yBj")'></div>
+            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-105" data-alt="A CNC machine carving a complex design into metal." style='background-image: url("<?= esc(base_url('assets/img/site/equipamentos-cnc.jpg'), 'attr'); ?>")'></div>
             <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
             <h3 class="relative text-lg font-bold text-white">Máquinas CNC</h3>
         </div>
         <div class="group relative flex h-60 flex-col justify-end overflow-hidden rounded-lg p-4">
-            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-105" data-alt="A soldering station with various electronic components." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBVXrtj8IyyHS2khip7GVlCe-DRPh8H5VqpUFns4_pt-NJSg7yxQ2NFZHdwZt9ArMxQY0voi1owlkOttDXxQR3V1_POzUF__EM3BXGGPm1OM-jtc2WC9Bjh-B20_Uw12cpEKUZlzrOl7xJAeDEqLH0R_ci0v8L6yV3_vJIE326fULzakeIWPz7uHSUC-kbXAuOqOf2VMCsbDwlQzL29zHwpuS9O8MCj5hQSB444GgbH2Ih_aSAF4_S2R35JK3StlEyn-xpQ-o6DlRzN")'></div>
+            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-105" data-alt="A soldering station with various electronic components." style='background-image: url("<?= esc(base_url('assets/img/site/equipamentos-eletronica.jpg'), 'attr'); ?>")'></div>
             <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
             <h3 class="relative text-lg font-bold text-white">Bancada de Eletrônica</h3>
         </div>
@@ -146,21 +160,36 @@ if (!empty($vHorarioFuncionamento)) {
     <div class="mt-12 grid grid-cols-1 gap-12 lg:grid-cols-2">
         <div class="flex flex-col gap-6">
             <div class="flex items-start gap-4">
-                <span class="material-symbols-outlined mt-1 text-2xl text-primary">location_on</span>
+                <span class="material-symbols-outlined mt-1 text-2xl text-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                        <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10" />
+                        <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+                    </svg>
+                </span>
                 <div>
                     <h3 class="font-bold">Endereço</h3>
                     <p class="text-text-muted-light dark:text-text-muted-dark">R. Itaiópolis, 470 - América, Joinville - SC, 89204-100</p>
                 </div>
             </div>
             <div class="flex items-start gap-4">
-                <span class="material-symbols-outlined mt-1 text-2xl text-primary">call</span>
+                <span class="material-symbols-outlined mt-1 text-2xl text-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-phone" viewBox="0 0 16 16">
+                        <path d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                        <path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
+                    </svg>
+                </span>
                 <div>
                     <h3 class="font-bold">Telefone</h3>
                     <p class="text-text-muted-light dark:text-text-muted-dark">(47) 3441-3300</p>
                 </div>
             </div>
             <div class="flex items-start gap-4">
-                <span class="material-symbols-outlined mt-1 text-2xl text-primary">schedule</span>
+                <span class="material-symbols-outlined mt-1 text-2xl text-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
+                        <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z" />
+                        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0" />
+                    </svg>
+                </span>
                 <div>
                     <h3 class="font-bold">Horário de Funcionamento</h3>
                     <?php if (!empty($horarioFuncionamentoTexto)) { ?>
@@ -175,7 +204,7 @@ if (!empty($vHorarioFuncionamento)) {
                 </div>
             </div>
             <div class="mt-4 h-64 w-full overflow-hidden rounded-lg">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3577.201276722168!2d-48.84724852431485!3d-26.287574267375067!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94deb02c2a692f8f%3A0x30564e2fea673820!2sR.%20Itai%C3%B3polis%2C%20470%20-%20Am%C3%A9rica%2C%20Joinville%20-%20SC%2C%2089204-100!5e0!3m2!1spt-BR!2sbr!4v1769981019830!5m2!1spt-BR!2sbr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>    
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3577.201276722168!2d-48.84724852431485!3d-26.287574267375067!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94deb02c2a692f8f%3A0x30564e2fea673820!2sR.%20Itai%C3%B3polis%2C%20470%20-%20Am%C3%A9rica%2C%20Joinville%20-%20SC%2C%2089204-100!5e0!3m2!1spt-BR!2sbr!4v1769981019830!5m2!1spt-BR!2sbr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </div>
         <form id="contato-form" class="flex flex-col gap-4" action="<?= esc(base_url('PainelParticipante/enviarContatoSite'), 'attr'); ?>" method="post" novalidate>

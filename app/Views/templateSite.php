@@ -6,12 +6,8 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>MakerSpace - Suas Ideias, Construídas Aqui</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com" rel="preconnect" />
-    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <script src="<?= base_url('assets/vendor/cdn/tailwindcss.forms-container-queries.js') ?>"></script>
     <link rel="icon" href="<?= base_url() ?>assets/img/brand/favicon.png" type="image/x-icon" />
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&amp;display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     <script>
         tailwind.config = {
             darkMode: "class",
@@ -48,6 +44,52 @@
         html {
             scroll-behavior: smooth;
         }
+
+        /* space-grotesk-300 - latin_latin-ext */
+        @font-face {
+            font-display: swap;
+            font-family: 'Space Grotesk';
+            font-style: normal;
+            font-weight: 300;
+            src: url('<?= base_url(); ?>/assets/fonts/space-grotesk-v22-latin_latin-ext-300.woff2') format('woff2');
+        }
+
+        /* space-grotesk-regular - latin_latin-ext */
+        @font-face {
+            font-display: swap;
+            font-family: 'Space Grotesk';
+            font-style: normal;
+            font-weight: 400;
+            src: url('<?= base_url(); ?>/assets/fonts/space-grotesk-v22-latin_latin-ext-regular.woff2') format('woff2');
+        }
+
+        /* space-grotesk-500 - latin_latin-ext */
+        @font-face {
+            font-display: swap;
+            font-family: 'Space Grotesk';
+            font-style: normal;
+            font-weight: 500;
+            src: url('<?= base_url(); ?>/assets/fonts/space-grotesk-v22-latin_latin-ext-500.woff2') format('woff2');
+        }
+
+        /* space-grotesk-600 - latin_latin-ext */
+        @font-face {
+            font-display: swap;
+            font-family: 'Space Grotesk';
+            font-style: normal;
+            font-weight: 600;
+            src: url('<?= base_url(); ?>/assets/fonts/space-grotesk-v22-latin_latin-ext-600.woff2') format('woff2');
+        }
+
+        /* space-grotesk-700 - latin_latin-ext */
+        @font-face {
+            font-display: swap;
+            font-family: 'Space Grotesk';
+            font-style: normal;
+            font-weight: 700;
+            src: url('<?= base_url(); ?>/assets/fonts/space-grotesk-v22-latin_latin-ext-700.woff2') format('woff2');
+        }
+
     </style>
 </head>
 
@@ -99,11 +141,11 @@
                 </div>
                 <nav class="hidden items-center gap-8 lg:flex">
                     <!-- <a class="text-sm font-medium hover:text-primary" href="#inicio">Início</a> -->
-                    <a class="text-sm font-medium hover:text-primary" href="<?= base_url() ;?>#cursos">Eventos</a>
-                    <a class="text-sm font-medium hover:text-primary" href="<?= base_url() ;?>#sobre">Sobre</a>
-                    <a class="text-sm font-medium hover:text-primary" href="<?= base_url() ;?>#como-funciona">Como funciona</a>
-                    <a class="text-sm font-medium hover:text-primary" href="<?= base_url() ;?>#equipamentos">Equipamentos</a>
-                    <a class="text-sm font-medium hover:text-primary" href="<?= base_url() ;?>#contato">Contato</a>
+                    <a class="text-sm font-medium hover:text-primary" href="<?= base_url(); ?>#cursos">Eventos</a>
+                    <a class="text-sm font-medium hover:text-primary" href="<?= base_url(); ?>#sobre">Sobre</a>
+                    <a class="text-sm font-medium hover:text-primary" href="<?= base_url(); ?>#como-funciona">Como funciona</a>
+                    <a class="text-sm font-medium hover:text-primary" href="<?= base_url(); ?>#equipamentos">Equipamentos</a>
+                    <a class="text-sm font-medium hover:text-primary" href="<?= base_url(); ?>#contato">Contato</a>
                 </nav>
                 <div class="hidden items-center gap-2 lg:flex">
                     <a href="<?= esc(base_url('PainelParticipante/cadastrar'), 'attr') ?>" class="flex h-10 cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-primary px-4 text-sm font-bold text-white"><span class="truncate">Cadastrar</span></a>
@@ -117,7 +159,7 @@
         <footer class="bg-card-light dark:bg-card-dark border-t border-border-light dark:border-border-dark">
             <div class="container mx-auto px-4 py-8">
                 <div class="flex flex-col items-center justify-between gap-6 md:flex-row">
-                    <p class="text-sm text-text-muted-light dark:text-text-muted-dark">© <?= date('Y').' '.esc(env('nomeEmpresa')) ;?>. Todos os direitos reservados.</p>
+                    <p class="text-sm text-text-muted-light dark:text-text-muted-dark">© <?= date('Y') . ' ' . esc(env('nomeEmpresa')); ?>. Todos os direitos reservados.</p>
                     <div class="flex gap-6">
                         <a class="text-text-muted-light hover:text-primary dark:text-text-muted-dark" href="#">
                             <svg aria-hidden="true" class="h-6 w-6" fill="currentColor" viewbox="0 0 24 24">

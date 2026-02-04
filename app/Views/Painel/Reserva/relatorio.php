@@ -251,7 +251,7 @@
 <?= $this->endSection(); ?>
 
 <?= $this->section('scripts'); ?>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="<?= base_url('assets/vendor/cdn/chart.js') ?>"></script>
 <script>
   window.reservasData = <?= json_encode($reservasData ?? [], JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
   window.relatorioFiltros = <?= json_encode($relatorioFiltros ?? [], JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;

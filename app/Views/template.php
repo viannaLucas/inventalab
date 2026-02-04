@@ -49,7 +49,170 @@
         
         <!--- Internal Sweet-Alert css-->
         <link href="<?php echo base_url('assets/plugins/sweet-alert/sweetalert.css'); ?>" rel="stylesheet">
+        <style>
+            /* roboto-100 - latin */
+            @font-face {
+            font-display: swap; 
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 100;
+            src: url('<?= base_url(); ?>/assets/fonts/roboto-v50-latin-100.woff2') format('woff2'); 
+            }
 
+            /* roboto-100italic - latin */
+            @font-face {
+            font-display: swap; 
+            font-family: 'Roboto';
+            font-style: italic;
+            font-weight: 100;
+            src: url('<?= base_url(); ?>/assets/fonts/roboto-v50-latin-100italic.woff2') format('woff2'); 
+            }
+
+            /* roboto-200 - latin */
+            @font-face {
+            font-display: swap; 
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 200;
+            src: url('<?= base_url(); ?>/assets/fonts/roboto-v50-latin-200.woff2') format('woff2'); 
+            }
+
+            /* roboto-200italic - latin */
+            @font-face {
+            font-display: swap; 
+            font-family: 'Roboto';
+            font-style: italic;
+            font-weight: 200;
+            src: url('<?= base_url(); ?>/assets/fonts/roboto-v50-latin-200italic.woff2') format('woff2'); 
+            }
+
+            /* roboto-300 - latin */
+            @font-face {
+            font-display: swap; 
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 300;
+            src: url('<?= base_url(); ?>/assets/fonts/roboto-v50-latin-300.woff2') format('woff2'); 
+            }
+
+            /* roboto-300italic - latin */
+            @font-face {
+            font-display: swap; 
+            font-family: 'Roboto';
+            font-style: italic;
+            font-weight: 300;
+            src: url('<?= base_url(); ?>/assets/fonts/roboto-v50-latin-300italic.woff2') format('woff2'); 
+            }
+
+            /* roboto-regular - latin */
+            @font-face {
+            font-display: swap; 
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 400;
+            src: url('<?= base_url(); ?>/assets/fonts/roboto-v50-latin-regular.woff2') format('woff2'); 
+            }
+
+            /* roboto-italic - latin */
+            @font-face {
+            font-display: swap; 
+            font-family: 'Roboto';
+            font-style: italic;
+            font-weight: 400;
+            src: url('<?= base_url(); ?>/assets/fonts/roboto-v50-latin-italic.woff2') format('woff2'); 
+            }
+
+            /* roboto-500 - latin */
+            @font-face {
+            font-display: swap; 
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 500;
+            src: url('<?= base_url(); ?>/assets/fonts/roboto-v50-latin-500.woff2') format('woff2'); 
+            }
+
+            /* roboto-500italic - latin */
+            @font-face {
+            font-display: swap; 
+            font-family: 'Roboto';
+            font-style: italic;
+            font-weight: 500;
+            src: url('<?= base_url(); ?>/assets/fonts/roboto-v50-latin-500italic.woff2') format('woff2'); 
+            }
+
+            /* roboto-600 - latin */
+            @font-face {
+            font-display: swap; 
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 600;
+            src: url('<?= base_url(); ?>/assets/fonts/roboto-v50-latin-600.woff2') format('woff2'); 
+            }
+
+            /* roboto-600italic - latin */
+            @font-face {
+            font-display: swap; 
+            font-family: 'Roboto';
+            font-style: italic;
+            font-weight: 600;
+            src: url('<?= base_url(); ?>/assets/fonts/roboto-v50-latin-600italic.woff2') format('woff2'); 
+            }
+
+            /* roboto-700 - latin */
+            @font-face {
+            font-display: swap; 
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 700;
+            src: url('<?= base_url(); ?>/assets/fonts/roboto-v50-latin-700.woff2') format('woff2'); 
+            }
+
+            /* roboto-700italic - latin */
+            @font-face {
+            font-display: swap; 
+            font-family: 'Roboto';
+            font-style: italic;
+            font-weight: 700;
+            src: url('<?= base_url(); ?>/assets/fonts/roboto-v50-latin-700italic.woff2') format('woff2'); 
+            }
+
+            /* roboto-800 - latin */
+            @font-face {
+            font-display: swap; 
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 800;
+            src: url('<?= base_url(); ?>/assets/fonts/roboto-v50-latin-800.woff2') format('woff2'); 
+            }
+
+            /* roboto-800italic - latin */
+            @font-face {
+            font-display: swap; 
+            font-family: 'Roboto';
+            font-style: italic;
+            font-weight: 800;
+            src: url('<?= base_url(); ?>/assets/fonts/roboto-v50-latin-800italic.woff2') format('woff2'); 
+            }
+
+            /* roboto-900 - latin */
+            @font-face {
+            font-display: swap; 
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 900;
+            src: url('<?= base_url(); ?>/assets/fonts/roboto-v50-latin-900.woff2') format('woff2'); 
+            }
+
+            /* roboto-900italic - latin */
+            @font-face {
+            font-display: swap; 
+            font-family: 'Roboto';
+            font-style: italic;
+            font-weight: 900;
+            src: url('<?= base_url(); ?>/assets/fonts/roboto-v50-latin-900italic.woff2') format('woff2'); 
+            }
+
+        </style>
         <?= $this->renderSection('styles'); ?></head>
 
     <body class="main-body app sidebar-mini light-theme">
