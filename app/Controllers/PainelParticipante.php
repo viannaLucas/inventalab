@@ -47,6 +47,8 @@ class PainelParticipante extends BaseControllerParticipante
         helper('form');
         $data['eventos'] = (new EventoModel())->where('dataInicio >', date('Y-m-d'))
             ->where('divulgar', 1)->orderBy('dataInicio ASC')->findAll();
+        $data['vHorarioFuncionamento'] = (new HorarioFuncionamentoModel())
+            ->orderBy('diaSemana ASC, horaInicio ASC')->findAll();
         return view('site', $data);
     }
 

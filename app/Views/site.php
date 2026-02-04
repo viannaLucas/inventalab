@@ -1,5 +1,52 @@
 <?= $this->extend('templateSite'); ?>
 
+<?php
+$horarioFuncionamentoTexto = [];
+if (!empty($vHorarioFuncionamento)) {
+    $scheduleByDay = [];
+    foreach ($vHorarioFuncionamento as $horario) {
+        $dayKey = (int) $horario->diaSemana;
+        $scheduleByDay[$dayKey][] = [
+            'start' => substr((string) $horario->horaInicio, 0, 5),
+            'end'   => substr((string) $horario->horaFinal, 0, 5),
+        ];
+    }
+
+    $dayOrder = [1, 2, 3, 4, 5, 6, 7];
+    $dayLabels = [
+        1 => 'Segunda:',
+        2 => 'Terça:',
+        3 => 'Quarta:',
+        4 => 'Quinta:',
+        5 => 'Sexta:',
+        6 => 'Sábado:',
+        7 => 'Domingo:',
+    ];
+
+    $formatTime = static function ($timeStr) {
+        $t = substr((string) $timeStr, 0, 5);
+        return str_replace(':', 'h', $t);
+    };
+
+    foreach ($dayOrder as $dayKey) {
+        $intervals = $scheduleByDay[$dayKey] ?? [];
+        if (count($intervals) > 1) {
+            usort($intervals, static function ($a, $b) {
+                return strcmp($a['start'], $b['start']);
+            });
+        }
+        if (count($intervals) === 0) {
+            continue;
+        }
+        $parts = [];
+        foreach ($intervals as $interval) {
+            $parts[] = $formatTime($interval['start']) . ' as ' . $formatTime($interval['end']);
+        }
+        $horarioFuncionamentoTexto[] = $dayLabels[$dayKey] . ' ' . implode(' , ', $parts);
+    }
+}
+?>
+
 <?= $this->section('content'); ?>
 <section class="bg-card-light dark:bg-card-dark py-3 sm:py-6" id="cursos">
     <div class="container mx-auto px-4">
@@ -116,7 +163,15 @@
                 <span class="material-symbols-outlined mt-1 text-2xl text-primary">schedule</span>
                 <div>
                     <h3 class="font-bold">Horário de Funcionamento</h3>
-                    <p class="text-text-muted-light dark:text-text-muted-dark">Segunda a Sábado, das 09:00 às 21:00</p>
+                    <?php if (!empty($horarioFuncionamentoTexto)) { ?>
+                        <p class="text-text-muted-light dark:text-text-muted-dark">
+                            <?php foreach ($horarioFuncionamentoTexto as $idx => $linha) { ?>
+                                <?= $idx ? '<br>' : ''; ?><?= esc($linha); ?>
+                            <?php } ?>
+                        </p>
+                    <?php } else { ?>
+                        <p class="text-text-muted-light dark:text-text-muted-dark">Horário não informado.</p>
+                    <?php } ?>
                 </div>
             </div>
             <div class="mt-4 h-64 w-full overflow-hidden rounded-lg">
