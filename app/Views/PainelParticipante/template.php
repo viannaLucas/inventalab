@@ -184,9 +184,6 @@
         <!-- Ionicons js -->
         <script src="<?php echo base_url('assets/plugins/ionicons/ionicons.js'); ?>"></script>
 
-        <!-- Moment js -->
-        <script src="<?php echo base_url('assets/plugins/moment/moment.js'); ?>"></script>
-
         <!-- P-scroll js -->
         <script src="<?php echo base_url('assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js'); ?>"></script>
 <!--        <script src="<?php echo base_url('assets/plugins/perfect-scrollbar/p-scroll.js'); ?>"></script>-->
