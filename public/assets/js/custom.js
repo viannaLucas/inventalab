@@ -4,9 +4,15 @@ $(function () {
     // ______________LOADER
     $("#global-loader").fadeOut("slow");
     
-    if(window.localStorage.getItem('themeDark') != 'false'){
+    var themeDarkStored = window.localStorage.getItem('themeDark');
+    if (themeDarkStored === null) {
+        // Default to light theme on first load
+        window.localStorage.setItem('themeDark', 'false');
+        themeDarkStored = 'false';
+    }
+    if (themeDarkStored != 'false') {
         $('body').addClass('dark-theme');
-    }else{
+    } else {
         $('body').removeClass('dark-theme');
     }
     
