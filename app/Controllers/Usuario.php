@@ -192,7 +192,7 @@ class Usuario extends BaseController {
         if (!$emailService->send()) {
             $detalhes = $emailService->printDebugger(['headers', 'subject', 'body']);
             log_message('error', 'Falha ao enviar e-mail de boas-vindas para o usuário ' . ($usuario->login ?? 'desconhecido') . ': ' . $detalhes);
-            throw new \RuntimeException('Não foi possível enviar o e-mail de boas-vindas.');
+            // throw new \RuntimeException('Não foi possível enviar o e-mail de boas-vindas.');
         }
     }
 }
