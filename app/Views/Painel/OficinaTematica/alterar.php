@@ -32,7 +32,7 @@
                 <br>    
                 <fieldset class="border rounded-10 m-0 mb-3 p-2 w-100">
                     <div class="border-bottom mx-n1 mb-3">
-                        <h4 class="px-2">Lista de Arquivo Oficina</h4>
+                        <h4 class="px-2">Lista de Arquivo de Oficina</h4>
                     </div>
                     <div class="form-row px-2"><div class="form-group col-auto">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">Nome</label> 
@@ -72,7 +72,7 @@
                 </fieldset>
                 <fieldset class="border rounded-10 m-0 mb-3 p-2 w-100">
                     <div class="border-bottom mx-n1 mb-3">
-                        <h4 class="px-2">Lista de Material Oficina</h4>
+                        <h4 class="px-2">Lista de Material da Oficina</h4>
                     </div>
                     <div class="form-row px-2"><div class="form-group col-auto">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">Descrição</label> 
@@ -111,7 +111,7 @@
                 </fieldset>
                 <fieldset class="border rounded-10 m-0 mb-3 p-2 w-100">
                     <div class="border-bottom mx-n1 mb-3">
-                        <h4 class="px-2">Lista de Recurso Oficina</h4>
+                        <h4 class="px-2">Lista de Recurso da Oficina</h4>
                     </div>
                     <div class="form-row px-2">
                         <div class="form-group col-auto">

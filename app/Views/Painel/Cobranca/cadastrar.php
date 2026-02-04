@@ -56,7 +56,7 @@
                     </div>                                        
                 <fieldset class="border rounded-10 m-0 mb-3 p-2 w-100">
                     <div class="border-bottom mx-n1 mb-3">
-                        <h4 class="px-2">Lista de Cobrança Serviço</h4>
+                        <h4 class="px-2">Lista de Serviço da Cobrança</h4>
                     </div>
                     <div class="form-row px-2">
                         <div class="form-group col-auto">

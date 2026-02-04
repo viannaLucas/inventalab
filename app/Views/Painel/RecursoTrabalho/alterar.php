@@ -83,7 +83,7 @@
                 </div>                                        
                 <fieldset class="border rounded-10 m-0 mb-3 p-2 w-100">
                     <div class="border-bottom mx-n1 mb-3">
-                        <h4 class="px-2">Lista de Garantia</h4>
+                        <h4 class="px-2">Lista de Garantias</h4>
                     </div>
                     <div class="form-row px-2"><div class="form-group col-auto">
                             <label class="main-content-label tx-11 tx-medium tx-gray-600">Descrição</label> 

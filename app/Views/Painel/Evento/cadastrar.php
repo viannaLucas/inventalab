@@ -157,7 +157,7 @@
                     </fieldset>
                     <fieldset class="border rounded-10 m-0 mb-3 p-2 w-100">
                         <div class="border-bottom mx-n1 mb-3">
-                            <h4 class="px-2">Lista de Controle Presença</h4>
+                            <h4 class="px-2">Lista de Controle de Presença</h4>
                             <p class="px-3 text-muted">Em eventos com vagas limitadas, há a possibilidade de criar listas de presença.Cada lista conterá os nomes dos participantes. Há a possibilidade de ser mais de uma lista em casos como o evento necessite ter um controle de presença em diferentes turnos, como por exemplo "Manhã e Tarde" ou ainda "Primeiro Dia e Segundo Dia" </p>
                         </div>
                         <div class="form-row px-2">
@@ -192,7 +192,7 @@
                     </fieldset>
                     <fieldset class="border rounded-10 m-0 mb-3 p-2 w-100">
                         <div class="border-bottom mx-n1 mb-3">
-                            <h4 class="px-2">Lista de Participante Evento</h4>
+                            <h4 class="px-2">Lista de Participantes do Evento</h4>
                             <p class="px-3 text-muted">Em eventos com vagas limitadas, adicione Participantes para controlar vagas e presença. Pode ser feito após cadastrar o evento com o decorrer das inscrições.</p>
                         </div>
                         <div class="form-row px-2">
