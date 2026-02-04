@@ -145,3 +145,4 @@ _modules/*
 
 /results/
 /phpunit*.xml
+verificacaoSeguranca.md
