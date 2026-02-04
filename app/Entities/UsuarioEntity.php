@@ -21,7 +21,7 @@ class UsuarioEntity extends EntityBase {
      * @var array Lista de todas permissões do sistema
      */
     private const PERMISSOES = [
-            'Cobranca' => [
+            'Cobrança' => [
                 'alterar' => [
                     'metodos' => ['Cobranca::alterar', 'Cobranca::doAlterar',  'Servico::pesquisaModal', 'Participante::pesquisaModal'],
                     'label' => 'Alterar',
@@ -56,11 +56,11 @@ class UsuarioEntity extends EntityBase {
                 ],
                 
             ],
-            'Configuracao' => [
+            'Configuração' => [
                 'alterar' => [
                     'metodos' => ['Configuracao::alterar', 'Configuracao::doAlterar'],
                     'label' => 'Alterar',
-                    'descricao' => 'Permite alterar Configuracao',
+                    'descricao' => 'Permite alterar Configuração',
                     'tipoAcesso' => 'usuario'
                 ],
             ],
@@ -102,19 +102,19 @@ class UsuarioEntity extends EntityBase {
                     'tipoAcesso' => 'usuario'
                 ],
             ],
-            'HorarioFuncionamento' => [
-                'alterar' => [
-                    'metodos' => ['HorarioFuncionamento::alterar', 'HorarioFuncionamento::doAlterar'],
-                    'label' => 'Alterar',
-                    'descricao' => 'Permite alterar HorarioFuncionamento',
-                    'tipoAcesso' => 'usuario'
-                ],
-                'cadastrar' => [
-                    'metodos' => ['HorarioFuncionamento::cadastrar', 'HorarioFuncionamento::doCadastrar',  'RecursoTrabalho::pesquisaModal'],
-                    'label' => 'Cadastrar',
-                    'descricao' => 'Permite Cadastrar HorarioFuncionamento',
-                    'tipoAcesso' => 'usuario'
-                ],
+            'Horário de Funcionamento' => [
+                // 'alterar' => [
+                //     'metodos' => ['HorarioFuncionamento::alterar', 'HorarioFuncionamento::doAlterar'],
+                //     'label' => 'Alterar',
+                //     'descricao' => 'Permite alterar HorarioFuncionamento',
+                //     'tipoAcesso' => 'usuario'
+                // ],
+                // 'cadastrar' => [
+                //     'metodos' => ['HorarioFuncionamento::cadastrar', 'HorarioFuncionamento::doCadastrar',  'RecursoTrabalho::pesquisaModal'],
+                //     'label' => 'Cadastrar',
+                //     'descricao' => 'Permite Cadastrar HorarioFuncionamento',
+                //     'tipoAcesso' => 'usuario'
+                // ],
                 'definirHoraFuncionamento' => [
                     'metodos' => [
                         'HorarioFuncionamento::cadastrar', 'HorarioFuncionamento::doCadastrar',  'HorarioFuncionamento::alterar', 'HorarioFuncionamento::doAlterar','HorarioFuncionamento::excluir',
@@ -152,35 +152,35 @@ class UsuarioEntity extends EntityBase {
                     'tipoAcesso' => 'usuario'
                 ],
             ],
-            'OficinaTematica' => [
+            'Oficina Temática' => [
                 'alterar' => [
                     'metodos' => ['OficinaTematica::alterar', 'OficinaTematica::doAlterar', 'RecursoTrabalho::pesquisaModal'],
                     'label' => 'Alterar',
-                    'descricao' => 'Permite alterar OficinaTematica',
+                    'descricao' => 'Permite alterar Oficina Temática',
                     'tipoAcesso' => 'usuario'
                 ],
                 'pesquisar' => [
                     'metodos' => ['OficinaTematica::pesquisar', 'OficinaTematica::doPesquisar'],
                     'label' => 'Pesquisar',
-                    'descricao' => 'Permite Pesquisar OficinaTematica',
+                    'descricao' => 'Permite Pesquisar Oficina Temática',
                     'tipoAcesso' => 'usuario'
                 ],
                 'cadastrar' => [
                     'metodos' => ['OficinaTematica::cadastrar', 'OficinaTematica::doCadastrar', 'RecursoTrabalho::pesquisaModal'],
                     'label' => 'Cadastrar',
-                    'descricao' => 'Permite Cadastrar OficinaTematica',
+                    'descricao' => 'Permite Cadastrar Oficina Temática',
                     'tipoAcesso' => 'usuario'
                 ],
                 'listar' => [
                     'metodos' => ['OficinaTematica::listar'],
                     'label' => 'Listar',
-                    'descricao' => 'Permite Listar OficinaTematica',
+                    'descricao' => 'Permite Listar Oficina Temática',
                     'tipoAcesso' => 'usuario'
                 ],
                 'excluir' => [
                     'metodos' => ['OficinaTematica::excluir'],
                     'label' => 'Excluir',
-                    'descricao' => 'Permite Excluir OficinaTematica',
+                    'descricao' => 'Permite Excluir Oficina Temática',
                     'tipoAcesso' => 'usuario'
                 ],
                 
@@ -211,7 +211,7 @@ class UsuarioEntity extends EntityBase {
                     'tipoAcesso' => 'usuario'
                 ],
             ],
-            'PesquisaSatisfacao' => [
+            'Pesquisa Satisfação' => [
                 'visualizar' => [
                     'metodos' => ['PesquisaSatisfacao::visualizar'],
                     'label' => 'Visualizar Resposta',
@@ -219,15 +219,15 @@ class UsuarioEntity extends EntityBase {
                     'tipoAcesso' => 'usuario'
                 ],
                 'pesquisar' => [
-                    'metodos' => ['PesquisaSatisfacao::pesquisar', 'PesquisaSatisfacao::doPesquisar', 'OficinaTematica::pesquisaModal', 'Reserva::pesquisaModal', 'OficinaTematica::pesquisaModal', 'Participante::pesquisaModal', 'Evento::pesquisaModal'],
+                    'metodos' => ['PesquisaSatisfacao::pesquisar', 'PesquisaSatisfacao::doPesquisar'],
                     'label' => 'Pesquisar',
-                    'descricao' => 'Permite Pesquisar PesquisaSatisfacao',
+                    'descricao' => 'Permite Pesquisar Pesquisa Satisfação',
                     'tipoAcesso' => 'usuario'
                 ],
                 'listar' => [
                     'metodos' => ['PesquisaSatisfacao::listar'],
                     'label' => 'Listar',
-                    'descricao' => 'Permite Listar PesquisaSatisfacao',
+                    'descricao' => 'Permite Listar Pesquisa Satisfação',
                     'tipoAcesso' => 'usuario'
                 ],
                 'cronEnvio' => [
@@ -244,32 +244,32 @@ class UsuarioEntity extends EntityBase {
                 ],
                 
             ],
-            'RecursoTrabalho' => [
+            'Recurso de Trabalho' => [
                 'alterar' => [
                     'metodos' => [
                         'RecursoTrabalho::alterar', 'RecursoTrabalho::doAlterar',
                         'Garantia::alterar', 'Garantia::doAlterar','Garantia::cadastrar', 'Garantia::doCadastrar', 'Garantia::excluir',
                     ],
                     'label' => 'Alterar',
-                    'descricao' => 'Permite alterar RecursoTrabalho',
+                    'descricao' => 'Permite alterar Recurso de Trabalho',
                     'tipoAcesso' => 'usuario'
                 ],
                 'pesquisar' => [
                     'metodos' => ['RecursoTrabalho::pesquisar', 'RecursoTrabalho::doPesquisar'],
                     'label' => 'Pesquisar',
-                    'descricao' => 'Permite Pesquisar RecursoTrabalho',
+                    'descricao' => 'Permite Pesquisar Recurso de Trabalho',
                     'tipoAcesso' => 'usuario'
                 ],
                 'cadastrar' => [
                     'metodos' => ['RecursoTrabalho::cadastrar', 'RecursoTrabalho::doCadastrar'],
                     'label' => 'Cadastrar',
-                    'descricao' => 'Permite Cadastrar RecursoTrabalho',
+                    'descricao' => 'Permite Cadastrar Recurso de Trabalho',
                     'tipoAcesso' => 'usuario'
                 ],
                 'listar' => [
                     'metodos' => ['RecursoTrabalho::listar'],
                     'label' => 'Listar',
-                    'descricao' => 'Permite Listar RecursoTrabalho',
+                    'descricao' => 'Permite Listar Recurso de Trabalho',
                     'tipoAcesso' => 'usuario'
                 ],
                 'garantia' => [
@@ -311,37 +311,37 @@ class UsuarioEntity extends EntityBase {
                     'tipoAcesso' => 'usuario'
                 ],
             ],
-            'Servico' => [
+            'Serviço' => [
                 'alterar' => [
                     'metodos' => ['Servico::alterar', 'Servico::doAlterar', 'Servico::obterDadosServicoApiSesc', 'Servico::validarCodigoUnico', 'Produto::pesquisaModal'],
                     'label' => 'Alterar',
-                    'descricao' => 'Permite alterar Servico',
+                    'descricao' => 'Permite alterar Serviço',
                     'tipoAcesso' => 'usuario'
                 ],
                 'pesquisar' => [
                     'metodos' => ['Servico::pesquisar', 'Servico::doPesquisar'],
                     'label' => 'Pesquisar',
-                    'descricao' => 'Permite Pesquisar Servico',
+                    'descricao' => 'Permite Pesquisar Serviço',
                     'tipoAcesso' => 'usuario'
                 ],
                 'cadastrar' => [
                     'metodos' => ['Servico::cadastrar', 'Servico::doCadastrar', 'Servico::obterDadosServicoApiSesc', 'Servico::validarCodigoUnico', 'Produto::pesquisaModal'],
                     'label' => 'Cadastrar',
-                    'descricao' => 'Permite Cadastrar Servico',
+                    'descricao' => 'Permite Cadastrar Serviço',
                     'tipoAcesso' => 'usuario'
                 ],
                 'listar' => [
                     'metodos' => ['Servico::listar'],
                     'label' => 'Listar',
-                    'descricao' => 'Permite Listar Servico',
+                    'descricao' => 'Permite Listar Serviço',
                     'tipoAcesso' => 'usuario'
                 ],
             ],
-            'TemplateTermo' => [
+            'Termo de Autorização' => [
                 'alterar' => [
                     'metodos' => ['TemplateTermo::alterar', 'TemplateTermo::doAlterar'],
                     'label' => 'Alterar',
-                    'descricao' => 'Permite alterar Template do Termo',
+                    'descricao' => 'Permite alterar o Termo Autorização',
                     'tipoAcesso' => 'usuario'
                 ],
             ],
@@ -389,7 +389,7 @@ class UsuarioEntity extends EntityBase {
                     'tipoAcesso' => 'publico'
                 ],
             ],
-            'Usuario' => [
+            'Usuário' => [
                 'cadastrar' => [
                     'metodos' => ['Usuario::cadastrar', 'Usuario::doCadastrar'],
                     'label' => 'Logout',
@@ -421,7 +421,7 @@ class UsuarioEntity extends EntityBase {
                     'tipoAcesso' => 'admin'
                 ],
             ],
-            'Relatorio' => [
+            'Relatório' => [
                 'pesquisaSatisfacao' => [
                     'metodos' => ['PesquisaSatisfacao::relatorio', 'PesquisaSatisfacao::relatorioDados'],
                     'label' => 'Emitir relatório Pesquisa Satisfação',
@@ -432,6 +432,12 @@ class UsuarioEntity extends EntityBase {
                     'metodos' => ['Reserva::relatorio', 'Reserva::relatorioDados'],
                     'label' => 'Emitir relatório Reservas',
                     'descricao' => 'Emite relatório das Reservas',
+                    'tipoAcesso' => 'usuario'
+                ],
+                'cobranca' => [
+                    'metodos' => ['Cobranca::relatorio', 'Cobranca::relatorioDados'],
+                    'label' => 'Emitir relatório Cobranças',
+                    'descricao' => 'Emite relatório das Cobranças',
                     'tipoAcesso' => 'usuario'
                 ],
             ]

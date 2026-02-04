@@ -171,6 +171,9 @@
                     <?PHP if (\App\Models\UsuarioModel::getSessao()->verificarPermissao('Reserva', 'relatorio')) { ?>
                         <li><a class="slide-item" href="<?PHP echo base_url('Reserva/relatorio'); ?>">Reservas</a></li>
                     <?PHP } ?>
+                    <?PHP if (\App\Models\UsuarioModel::getSessao()->verificarPermissao('Cobranca', 'relatorio')) { ?>
+                        <li><a class="slide-item" href="<?PHP echo base_url('Cobranca/relatorio'); ?>">Cobranças</a></li>
+                    <?PHP } ?>
                 </ul>
             </li>
 

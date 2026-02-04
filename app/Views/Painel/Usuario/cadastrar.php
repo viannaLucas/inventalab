@@ -50,6 +50,24 @@
                     </div>
                     <div class="mb-0 mt-3 text-center col-12">
                         <label class="h4">Permissões</label>
+                        <div class="mt-2 mb-3 d-flex justify-content-center flex-wrap">
+                            <label class="rdiobox mr-3">
+                                <input type="radio" name="tipoPermissao" id="permPersonalizado" value="personalizado" checked>
+                                <span>Personalizado</span>
+                            </label>
+                            <label class="rdiobox mr-3">
+                                <input type="radio" name="tipoPermissao" id="permMonitor" value="monitor">
+                                <span>Monitor</span>
+                            </label>
+                            <label class="rdiobox">
+                                <input type="radio" name="tipoPermissao" id="permAdmin" value="admin">
+                                <span>Administrador</span>
+                            </label>
+                        </div>
+                        <div id="adminInfo" class="mb-2 text-center text-muted" style="display: none;">
+                            Todas as funcionalidades
+                        </div>
+                        <input type="checkbox" class="d-none" id="permissaoAdmin" name="permissoes[]" value="useradmin">
                         <table class="table table-striped table-bordered">
                             <thead>
                                 <tr>
@@ -58,10 +76,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="text-left"><label class="ckbox"><input type="checkbox" id="permissaoAdmin" name="permissoes[]" value="useradmin"><span>Usuario Administrador</span></label></td>
-                                    <td>Acesso a todas funcionalidades incluindo gerenciar Usuários</td>
-                                </tr>
                                 <?PHP 
                                 foreach ($permissoes as $c => $lm){
                                     foreach ($lm as $nm => $m){ 
@@ -139,11 +153,79 @@
         }
     });
     
-    $('#permissaoAdmin').on('change', function(e){ 
-        if($('#permissaoAdmin').prop('checked')){
+    function limparPermissoesUsuario() {
+        $('.permissoesUsuario input[type="checkbox"]').prop('checked', false);
+    }
+
+    $('input[name="tipoPermissao"]').on('change', function () {
+        var tipo = $(this).val();
+
+        if (tipo === 'admin') {
+            $('#permissaoAdmin').prop('checked', true);
+            $('#adminInfo').show();
             $('.permissoesUsuario').hide();
-        }else{
-            $('.permissoesUsuario').show();
+            return;
+        }
+
+        $('#permissaoAdmin').prop('checked', false);
+        $('#adminInfo').hide();
+        $('.permissoesUsuario').show();
+        limparPermissoesUsuario();
+
+        if (tipo === 'monitor') {
+            var permissoesMonitor = [
+                'Cobrança.alterar',
+                'Cobrança.pesquisar',
+                'Cobrança.cadastrar',
+                'Cobrança.listar',
+                'Cobrança.excluir',
+                // 'Configuração.alterar',
+                'Evento.alterar',
+                'Evento.pesquisar',
+                'Evento.cadastrar',
+                'Evento.listar',
+                'Evento.excluir',
+                'Evento.controlePresenca',
+                // 'Horário de Funcionamento.definirHoraFuncionamento',
+                'Produto.alterar',
+                'Produto.pesquisar',
+                'Produto.cadastrar',
+                'Produto.listar',
+                // 'Oficina Temática.alterar',
+                'Oficina Temática.pesquisar',
+                // 'Oficina Temática.cadastrar',
+                'Oficina Temática.listar',
+                // 'Oficina Temática.excluir',
+                'Participante.alterar',
+                'Participante.pesquisar',
+                'Participante.cadastrar',
+                'Participante.listar',
+                // 'Pesquisa Satisfação.visualizar',
+                // 'Pesquisa Satisfação.pesquisar',
+                // 'Pesquisa Satisfação.listar',
+                'Recurso de Trabalho.alterar',
+                'Recurso de Trabalho.pesquisar',
+                'Recurso de Trabalho.cadastrar',
+                'Recurso de Trabalho.listar',
+                'Recurso de Trabalho.garantia',
+                'Reserva.alterar',
+                'Reserva.pesquisar',
+                'Reserva.cadastrar',
+                'Reserva.listar',
+                'Reserva.controleUso',
+                // 'Serviço.alterar',
+                'Serviço.pesquisar',
+                // 'Serviço.cadastrar',
+                'Serviço.listar',
+                // 'Termo de Autorização.alterar',
+                // 'Relatório.pesquisaSatisfacao',
+                // 'Relatório.reservas',
+                // 'Relatório.cobranca'
+            ];
+
+            permissoesMonitor.forEach(function (valor) {
+                $('.permissoesUsuario input[type="checkbox"][value="' + valor + '"]').prop('checked', true);
+            });
         }
     });
 </script>    
