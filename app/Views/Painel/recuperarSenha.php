@@ -42,6 +42,12 @@
                     }
                     ?>
                     <form action="<?PHP echo base_url('Painel/doRecuperarSenha'); ?>" method="post">
+                        <?= csrf_field(); ?>
+                        <?php $honeypotName = config('Honeypot')->name ?? 'honeypot'; ?>
+                        <div style="display:none">
+                            <label for="hp"><?= esc(config('Honeypot')->label ?? 'Fill This Field'); ?></label>
+                            <input type="text" id="hp" name="<?= esc($honeypotName, 'attr'); ?>" value="" autocomplete="off" tabindex="-1" />
+                        </div>
                         <div class="form-label-group">
                             <input type="email" name="email" id="email" class="form-control" placeholder=" " value="<?= esc(old('email') ?? '', 'attr'); ?>" required autofocus autocomplete="email">
                             <label for="email">E-mail</label>

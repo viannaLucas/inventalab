@@ -113,11 +113,25 @@ class Filters extends BaseFilters
         'csrf' => [
             'before' => [
                 'PainelParticipante/enviarContatoSite',
+                'Painel/doLogin',
+                'Painel/doRecuperarSenha',
+                'Painel/doAlterarSenha',
+                'PainelParticipante/doLogin',
+                'PainelParticipante/doRecuperarSenha',
+                'PainelParticipante/doAlterarSenha',
+                'PainelParticipante/doCadastrar',
             ],
         ],
         'honeypot' => [
             'before' => [
                 'PainelParticipante/enviarContatoSite',
+                'Painel/doLogin',
+                'Painel/doRecuperarSenha',
+                'Painel/doAlterarSenha',
+                'PainelParticipante/doLogin',
+                'PainelParticipante/doRecuperarSenha',
+                'PainelParticipante/doAlterarSenha',
+                'PainelParticipante/doCadastrar',
             ],
         ],
     ];

@@ -42,6 +42,12 @@
                     }
                     ?>
                     <form action="<?PHP echo base_url('Painel/doLogin'); ?>" method="post">
+                        <?= csrf_field(); ?>
+                        <?php $honeypotName = config('Honeypot')->name ?? 'honeypot'; ?>
+                        <div style="display:none">
+                            <label for="hp"><?= esc(config('Honeypot')->label ?? 'Fill This Field'); ?></label>
+                            <input type="text" id="hp" name="<?= esc($honeypotName, 'attr'); ?>" value="" autocomplete="off" tabindex="-1" />
+                        </div>
                         <div class="form-label-group">
                             <input type="text" name="login" id="login" class="form-control" placeholder=" " value="<?= esc(old('login') ?? '', 'attr'); ?>" required autofocus autocomplete="username">
                             <label for="login">Login</label>
