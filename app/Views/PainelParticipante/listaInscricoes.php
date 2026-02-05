@@ -35,6 +35,10 @@
                                     <td><?= esc($i['evento']->nome) ?></td>
                                     <td><?= esc($i['evento']->dataInicio); ?></td>
                                     <td><?= $i['pago'] ? '<span class="text-success">Inscrito<span>' : '<span class="text-danger">Pagamento Pendente<span>'; ?></td>
+                                    <td>
+                                        <a class="btn btn-outline-secondary" href="<?= esc(base_url('PainelParticipante/inscricao/' . $i['evento']->id . '/' . $i['evento']->gerarSlug()), 'attr') ?>">Incrição</a>
+                                        <a class="btn btn-outline-primary" target="_blank" href="<?= esc(base_url('detalheEvento/' . $i['evento']->id . '/' . $i['evento']->gerarSlug()), 'attr') ?>">Detahes</a>
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         <?php else : ?>
