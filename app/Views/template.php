@@ -8,7 +8,7 @@
         <meta name="Description" content="Sistema Floripa 360">
 
         <!-- Title -->
-        <title>Sistema Floripa 360</title>
+        <title>Sistema <?= esc(env('nomeEmpresa')) ;?></title>
 
         <!-- Favicon -->
         <link rel="icon" href="<?php echo base_url('assets/img/brand/favicon.png'); ?>" type="image/x-icon"/>

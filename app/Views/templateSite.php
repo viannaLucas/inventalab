@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>MakerSpace - Suas Ideias, Construídas Aqui</title>
+    <title><?= esc(env('nomeEmpresa')) ;?></title>
     <script src="<?= base_url('assets/vendor/cdn/tailwindcss.forms-container-queries.js') ?>"></script>
     <link rel="icon" href="<?= base_url() ?>assets/img/brand/favicon.png" type="image/x-icon" />
     <script>
