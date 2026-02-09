@@ -281,7 +281,7 @@ class UsuarioEntity extends EntityBase {
             ],
             'Reserva' => [
                 'alterar' => [
-                    'metodos' => ['Reserva::alterar', 'Reserva::doAlterar', 'Reserva::definirEntrada', 'Reserva::definirSaida','Participante::pesquisaModal', 'OficinaTematica::pesquisaModal'],
+                    'metodos' => ['Reserva::alterar', 'Reserva::doAlterar', 'Reserva::definirEntrada', 'Reserva::definirSaida','AtividadeLivre::alterar','AtividadeLivre::doAlterar','Participante::pesquisaModal', 'OficinaTematica::pesquisaModal'],
                     'label' => 'Alterar',
                     'descricao' => 'Permite alterar Reserva',
                     'tipoAcesso' => 'usuario'
@@ -439,6 +439,14 @@ class UsuarioEntity extends EntityBase {
                     'label' => 'Emitir relatório Cobranças',
                     'descricao' => 'Emite relatório das Cobranças',
                     'tipoAcesso' => 'usuario'
+                ],
+            ],
+            'Ajuda' => [
+                'ajuda' => [
+                    'metodos' => ['Ajuda::index', 'Ajuda::arquivo', 'Ajuda::img'],
+                    'label' => 'Ajuda',
+                    'descricao' => 'Visualizar ajuda do sistema',
+                    'tipoAcesso' => 'global'
                 ],
             ]
         ];
