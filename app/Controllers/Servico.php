@@ -213,6 +213,7 @@ class Servico extends BaseController
     {
         $fields = [
             'codigo',
+            'CodigodoTipodeOperacao',
             'UnidadedeControle',
             'ProdutoInspecionado',
             'ProdutoFabricado',
@@ -226,6 +227,10 @@ class Servico extends BaseController
         ];
         $data = [];
         foreach ($fields as $field) {
+            if ($field === 'CodigodoTipodeOperacao') {
+                $data[$field] = $this->request->getPost('codigoTipoOperacao');
+                continue;
+            }
             $data[$field] = $this->request->getPost($field);
         }
         return $data;

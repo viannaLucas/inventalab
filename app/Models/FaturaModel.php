@@ -85,7 +85,7 @@ class FaturaModel extends BaseModel{
                     "ClassificacaoFiscal" => $cs->getServico()->getDadosApi()->ClassificacaoFiscal,
                     "PrecoInformado" => ''.number_format($cs->valorUnitario, 2, ',',''),
                     "ValordoItem" => ''.number_format($cs->valorUnitario, 2, ',',''),
-                    "CodigodoTipodeOperacao" => env('sescApi_TipodeOperacao')
+                    "CodigodoTipodeOperacao" => $cs->getServico()->getDadosApi()->CodigodoTipodeOperacao
                 ];
         }
 

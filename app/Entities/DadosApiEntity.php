@@ -11,6 +11,7 @@ class DadosApiEntity extends EntityBase {
     protected $attributes = [
         'id' => '',
         'codigo' => '',
+        'CodigodoTipodeOperacao' => '',
         'UnidadedeControle' => '',
         'ProdutoInspecionado' => '',
         'ProdutoFabricado' => '',

@@ -104,6 +104,10 @@
                         <small id="codigo-descricao" class="form-text text-muted d-none"></small>
                     </div>
                     <div class="form-group col-12 col-md-6">
+                        <label class="main-content-label tx-11 tx-medium tx-gray-600">Código do Tipo de Operação</label> 
+                        <input class="form-control" name="codigoTipoOperacao" id="codigoTipoOperacao" type="text" maxlength="3" value="<?= esc($dadosApi->CodigodoTipodeOperacao, 'attr') ?>" required>
+                    </div>
+                    <div class="form-group col-12 col-md-6">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600">Unidade de Controle</label> 
                         <input class="form-control" name="UnidadedeControle" id="UnidadedeControle" type="text" maxlength="10" value="<?= esc($dadosApi->UnidadedeControle, 'attr') ?>" readonly>
                     </div>
@@ -252,6 +256,10 @@
         $('#IndicacaodeLoteSerie').val('N').trigger('change');
         $('#ClassificacaoFiscal').val(dados.ClassificacaoFiscal ?? '');
         $('#GrupodeProduto').val(dados.GrupoProduto ?? '');
+        const codigoTipoOperacao = dados.CodigodoTipodeOperacao ?? dados.TipodeOperacao ?? null;
+        if (codigoTipoOperacao !== null && codigoTipoOperacao !== undefined && codigoTipoOperacao !== '') {
+            $('#codigoTipoOperacao').val(codigoTipoOperacao);
+        }
     }
 
     function validarCodigoServicoApi(forceFetch = false) {
@@ -426,6 +434,9 @@
                 required: true,
             },
             codigo: {
+                required: true,
+            },
+            codigoTipoOperacao: {
                 required: true,
             },
             servicoproduto_Produto_id: {
