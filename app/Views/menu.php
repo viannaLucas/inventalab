@@ -220,6 +220,9 @@
                 </ul>
             </li>
 
+            <li>
+                <hr>
+            </li>
             <li class="slide d-none">
                 <a class="side-menu__item" data-toggle="slide" href="#">
                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="side-menu__icon bi bi-toggles" viewBox="0 0 20 20">
