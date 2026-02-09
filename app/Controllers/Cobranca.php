@@ -136,7 +136,10 @@ class Cobranca extends BaseController {
             $totalCobranca += $quantidade * $valorUnitario;
         }
         */
-        $en = new CobrancaEntity($this->request->getPost());
+        $payload = $this->request->getPost();
+        $payload['Participante_id'] = $e->Participante_id;
+        $payload['data'] = $e->data;
+        $en = new CobrancaEntity($payload);
         $en->valor = number_format($totalCobranca, 2, '.', '');
         try{ 
             $m->db->transStart();
