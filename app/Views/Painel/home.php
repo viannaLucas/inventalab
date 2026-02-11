@@ -50,7 +50,7 @@
                                             <tr>
                                                 <td>
                                                     <div><?= esc($nomeParticipante) ?></div>
-                                                    <div>Reserva <?= $i->op_tipo[$i->tipo] ?> das <?= $i->horaInicio . " às " . $i->horaFim ?> <?= esc($i->numeroConvidados + 1) ?><?= $i->numeroConvidados == 0 ? 'Participante' : 'Participantes';  ?></div>
+                                                    <div>Reserva <?= $i->op_tipo[$i->tipo] ?> das <?= $i->horaInicio . " às " . $i->horaFim ?> <?= esc($i->numeroConvidados + 1) ?><?= $i->numeroConvidados == 0 ? ' Participante' : ' Participantes';  ?></div>
                                                     <div><?= esc($textoEntradaSaida) ?></div>
                                                     <div class="text-muted"><?= esc($i->nomeEscola . $textoAno) ?></div>
                                                 </td>
