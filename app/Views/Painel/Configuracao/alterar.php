@@ -62,7 +62,7 @@
                         </select>
                         <small class="form-text text-muted">Define se o cálculo do serviço deve ser aplicado automaticamente.</small>
                     </div>
-                    <div class="col-12">
+                    <div class="col-12 d-none">
                         <label class="main-content-label tx-11 tx-medium tx-gray-600" for="intervaloEntrePesquisa">Texto do Email de Confirmação</label>
                         <textarea name="textoEmailConfirmacao" id="textoEmailConfirmacao" class="form-control summernote"><?= esc($configuracao->textoEmailConfirmacao) ?></textarea>
                     </div>
