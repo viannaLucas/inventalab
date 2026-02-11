@@ -109,6 +109,37 @@
                             <span class="h5">Sem itens selecionados</span>
                         </div>
                     </fieldset>
+                    <?php $vFatura = $vFatura ?? []; ?>
+                    <?php if (!empty($vFatura)) : ?>
+                    <fieldset class="border rounded-10 m-0 mb-3 p-2 w-100">
+                        <div class="border-bottom mx-n1 mb-3">
+                            <h4 class="px-2">Lista de Faturas</h4>
+                        </div>
+                        <table class="table table-striped" id="listTableFatura">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Código Processo Fatura</th>
+                                    <th scope="col">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($vFatura as $fatura) : ?>
+                                <tr>
+                                    <td><?= esc($fatura->processoApiSesc ?: '-', 'html') ?></td>
+                                    <td>
+                                        <button type="button"
+                                            class="btn btn-sm btn-info js-visualizar-fatura"
+                                            data-fatura-id="<?= esc($fatura->id, 'attr') ?>"
+                                            data-processo="<?= esc($fatura->processoApiSesc ?: '', 'attr') ?>">
+                                            Visualizar
+                                        </button>
+                                    </td>
+                                </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </fieldset>
+                    <?php endif; ?>
                     <?php if (false) : // PRODUTOS_DESATIVADOS ?>
                     <fieldset class="border rounded-10 m-0 mb-3 p-2 w-100">
                         <div class="border-bottom mx-n1 mb-3">
@@ -221,7 +252,26 @@
 </template>
 <?php endif; ?>
 <!-- content closed -->
-<?= $this->endSection('content'); ?><?= $this->section('styles'); ?>
+<?= $this->endSection('content'); ?><?= $this->section('modal'); ?>
+<div class="modal fade" id="modalFaturaDados" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content modal-content-demo">
+            <div class="modal-header">
+                <h6 class="modal-title" id="modalFaturaDadosTitle">Dados da Fatura</h6>
+                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="modalFaturaDadosBody" class="tx-size-sm"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn ripple btn-primary" data-dismiss="modal" type="button">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+<?= $this->endSection('modal'); ?><?= $this->section('styles'); ?>
 <?= $this->endSection('styles'); ?><?= $this->section('scripts'); ?>
 <script>
     $('.submitButton').on('click', function(e) {
@@ -229,6 +279,7 @@
         disableValidationFieldsFK();
     });
     var situacaoOriginal = <?= (int) $cobranca->situacao ?>;
+    var baseUrl = <?= json_encode(base_url()) ?>;
     var validator = $("#formAlterar").validate({
         submitHandler: function(form) {
             disableValidationFieldsFK();
@@ -479,5 +530,42 @@
         insertRowCobrancaProduto(<?= json_encode($o) ?>);
     <?PHP } ?>
     */
+
+    function formatarDadosFatura(dados) {
+        if (dados === null || dados === undefined) {
+            return '<div class="text-muted">Nenhum dado encontrado.</div>';
+        }
+        try {
+            return '<pre class="mb-0">' + JSON.stringify(dados, null, 2) + '</pre>';
+        } catch (e) {
+            return '<div class="text-muted">Não foi possível formatar os dados.</div>';
+        }
+    }
+
+    $(document).on('click', '.js-visualizar-fatura', function() {
+        var faturaId = $(this).data('fatura-id');
+        var processo = $(this).data('processo') || '-';
+        $('#modalFaturaDadosTitle').text('Dados da Fatura Processo ' + processo);
+        $('#modalFaturaDadosBody').html('<div class="text-muted">Carregando...</div>');
+
+        var url = baseUrl.replace(/\/$/, '') + '/Cobranca/consultarDadosFatura/' + encodeURIComponent(faturaId);
+        fetch(url, { headers: { 'Accept': 'application/json' } })
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(payload) {
+                if (!payload || payload.erro) {
+                    var msg = (payload && payload.msg) ? payload.msg : 'Erro ao consultar dados da fatura.';
+                    $('#modalFaturaDadosBody').html('<div class="text-danger">' + msg + '</div>');
+                    return;
+                }
+                $('#modalFaturaDadosBody').html(formatarDadosFatura(payload.dados));
+            })
+            .catch(function() {
+                $('#modalFaturaDadosBody').html('<div class="text-danger">Erro ao consultar dados da fatura.</div>');
+            });
+
+        $('#modalFaturaDados').modal('show');
+    });
 </script>
 <?= $this->endSection('scripts'); ?>

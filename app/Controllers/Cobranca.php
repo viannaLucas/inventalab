@@ -100,6 +100,7 @@ class Cobranca extends BaseController {
         $participante = new \App\Models\ParticipanteModel();
         $data = [
             'cobranca' => $e,
+            'vFatura' => $e->getListFatura(),
             'participante' => $participante->find($e->Participante_id),
         ];
         return view('Painel/Cobranca/alterar', $data);
@@ -656,5 +657,37 @@ class Cobranca extends BaseController {
         }
 
         return $resultado;
+    }
+
+    public function consultarDadosFatura(int $Fatura_id)
+    {
+        if ($Fatura_id <= 0) {
+            return $this->response->setStatusCode(400)->setJSON([
+                'erro' => true,
+                'msg' => 'Fatura inválida.',
+            ]);
+        }
+
+        $faturaM = new FaturaModel();
+        $fatura = $faturaM->find($Fatura_id);
+        if ($fatura === null) {
+            return $this->response->setStatusCode(404)->setJSON([
+                'erro' => true,
+                'msg' => 'Fatura não encontrada.',
+            ]);
+        }
+
+        $dados = $faturaM->buscarDadosFatura($fatura);
+        if (empty($dados)) {
+            return $this->response->setStatusCode(502)->setJSON([
+                'erro' => true,
+                'msg' => 'Não foi possível consultar os dados da fatura.',
+            ]);
+        }
+
+        return $this->response->setJSON([
+            'erro' => false,
+            'dados' => $dados,
+        ]);
     }
 }

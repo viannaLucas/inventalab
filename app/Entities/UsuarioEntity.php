@@ -23,7 +23,7 @@ class UsuarioEntity extends EntityBase {
     private const PERMISSOES = [
             'Cobrança' => [
                 'alterar' => [
-                    'metodos' => ['Cobranca::alterar', 'Cobranca::doAlterar',  'Servico::pesquisaModal', 'Participante::pesquisaModal'],
+                    'metodos' => ['Cobranca::alterar', 'Cobranca::doAlterar', 'Cobranca::consultarDadosFatura', 'Servico::pesquisaModal', 'Participante::pesquisaModal'],
                     'label' => 'Alterar',
                     'descricao' => 'Permite alterar Cobrança',
                     'tipoAcesso' => 'usuario'
@@ -36,7 +36,7 @@ class UsuarioEntity extends EntityBase {
                 ],
                 'cadastrar' => [
                     'metodos' => [
-                        'Cobranca::cadastrar', 'Cobranca::doCadastrar', 
+                        'Cobranca::cadastrar', 'Cobranca::doCadastrar', 'Cobranca::consultarDadosFatura', 
                         'Evento::cobranca', 'Servico::pesquisaModal', 'Participante::pesquisaModal'],
                     'label' => 'Cadastrar',
                     'descricao' => 'Permite Cadastrar Cobrança',

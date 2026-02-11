@@ -135,4 +135,36 @@ class FaturaModel extends BaseModel{
 
         
     }
+
+    public function buscarDadosFatura(FaturaEntity $fatura)
+    {
+        $sequenciadoProcesso = (int) $fatura->processoApiSesc;
+        if ($sequenciadoProcesso <= 0) {
+            return [];
+        }
+
+        $sescApi = new SescAPI([
+            'baseUrl'=> env('sescApi_baseUrl'),
+            'username'=> env('sescApi_username'),
+            'password'=> env('sescApi_password'),
+            'environment'=> env('sescApi_environment'),
+            'timeout_seconds'=> env('sescApi_timeoutSeconds'),
+        ]);
+
+        $resp = $sescApi->consultaFatura($sequenciadoProcesso);
+        log_message('debug', print_r($resp, true));
+
+        if (!isset($resp['decoded_response']['Success'])
+                || ($resp['decoded_response']['Success'] !== true
+                    && $resp['decoded_response']['Success'] !== 1)) {
+            log_message(
+                'error',
+                'Erro ao consultar fatura. '."\nResposta: \n".print_r($resp, true)
+            );
+            return [];
+        }
+
+        return $resp['decoded_response']['Data'] ?? [];
+    }
+
 }
