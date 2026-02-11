@@ -198,8 +198,16 @@ function renderAjudaMenu(array $items): void
                         html += ' height="' + hVal + '"';
                     }
                 }
-                if (maxWidth) styles.push('max-width:' + maxWidth);
-                if (maxHeight) styles.push('max-height:' + maxHeight);
+                if (maxWidth) {
+                    const mwUnit = /%$/.test(maxWidth) ? '%' : 'px';
+                    const mwVal = maxWidth.replace(/(px|%)$/i, '');
+                    styles.push('max-width:' + mwVal + mwUnit);
+                }
+                if (maxHeight) {
+                    const mhUnit = /%$/.test(maxHeight) ? '%' : 'px';
+                    const mhVal = maxHeight.replace(/(px|%)$/i, '');
+                    styles.push('max-height:' + mhVal + mhUnit);
+                }
                 if (center) styles.push('display:block', 'margin:0 auto');
                 if (styles.length) html += ' style="' + styles.join(';') + '"';
                 html += '>';
