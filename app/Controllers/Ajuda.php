@@ -8,6 +8,91 @@ use App\Controllers\BaseController;
 class Ajuda extends BaseController
 {
 
+    const arquivosPermitidos = [
+        'writable/ajuda_arquivos/02 Cobrança/2.1 Cadastrar Cobrança.md',
+        'writable/ajuda_arquivos/02 Cobrança/2.2 Pesquisar Cobrança.md',
+        'writable/ajuda_arquivos/02 Cobrança/2.3 Alterar Cobrança.md',
+        'writable/ajuda_arquivos/03 Evento/3.1 Cadastrar Evento.md',
+        'writable/ajuda_arquivos/03 Evento/3.2 Pesquisar Evento.md',
+        'writable/ajuda_arquivos/03 Evento/3.3 Alterar Evento.md',
+        'writable/ajuda_arquivos/04 Oficina Temática/4.1 Cadastrar Oficina Temática.md',
+        'writable/ajuda_arquivos/04 Oficina Temática/4.2 Pesquisar Oficina Temática.md',
+        'writable/ajuda_arquivos/04 Oficina Temática/4.3 Alterar Oficina Temática.md',
+        'writable/ajuda_arquivos/05 Participante/5.1 Cadastrar Participante.md',
+        'writable/ajuda_arquivos/05 Participante/5.2 Pesquisar Participante.md',
+        'writable/ajuda_arquivos/05 Participante/5.3 Alterar Participante.md',
+        'writable/ajuda_arquivos/06 Recurso de Trabalho/6.1 Cadastrar Recurso de Trabalho.md',
+        'writable/ajuda_arquivos/06 Recurso de Trabalho/6.2 Pesquisar Recurso de Trabalho.md',
+        'writable/ajuda_arquivos/06 Recurso de Trabalho/6.3 Alterar Recurso de Trabalho.md',
+        'writable/ajuda_arquivos/07 Pesquisa Satisfação/7.1 Pesquisar Pesquisa Satisfação.md',
+        'writable/ajuda_arquivos/08 Produto/8.1 Cadastrar Produto.md',
+        'writable/ajuda_arquivos/08 Produto/8.2 Pesquisar Produto.md',
+        'writable/ajuda_arquivos/08 Produto/8.3 Alterar Produto.md',
+        'writable/ajuda_arquivos/09 Relatórios/9.1 Relatório Pesquisa Satisfação.md',
+        'writable/ajuda_arquivos/09 Relatórios/9.2 Relatório Reservas.md',
+        'writable/ajuda_arquivos/09 Relatórios/9.3 Relatório Cobranças.md',
+        'writable/ajuda_arquivos/10 Reserva/10.1 Cadastrar Reserva.md',
+        'writable/ajuda_arquivos/10 Reserva/10.2 Pesquisar Reserva.md',
+        'writable/ajuda_arquivos/10 Reserva/10.3 Alterar Reserva.md',
+        'writable/ajuda_arquivos/1.1 Introdução.md',
+        'writable/ajuda_arquivos/11 Serviço/11.1 Cadastrar Serviço.md',
+        'writable/ajuda_arquivos/11 Serviço/11.2 Pesquisar Serviço.md',
+        'writable/ajuda_arquivos/11 Serviço/11.3 Alterar Serviço.md',
+        'writable/ajuda_arquivos/12 Configuração/12.1 Configurações Gerais.md',
+        'writable/ajuda_arquivos/12 Configuração/12.2 Horário de Funcionamento.md',
+        'writable/ajuda_arquivos/12 Configuração/12.3 Termo de Autorização.md',
+        'writable/ajuda_arquivos/1.2 Usuários do Sistema.md',
+        'writable/ajuda_arquivos/1.3 Página Principal.md',
+        'writable/ajuda_arquivos/13 Usuário/13.1 Cadastrar Usuário.md',
+        'writable/ajuda_arquivos/13 Usuário/13.2 Pesquisar Usuário.md',
+        'writable/ajuda_arquivos/13 Usuário/13.3 Alterar Usuário.md',
+        'writable/ajuda_arquivos/img/evento_botoes_presenca.png',
+        'writable/ajuda_arquivos/img/evento_cadastro_controle_presenca.png',
+        'writable/ajuda_arquivos/img/evento_lista_entrega_material_botao.png',
+        'writable/ajuda_arquivos/img/evento_lista_entrega_material_impressao.png',
+        'writable/ajuda_arquivos/img/evento_lista_exportar_participantes_botao.png',
+        'writable/ajuda_arquivos/img/evento_lista_participante_com_pagamento.png',
+        'writable/ajuda_arquivos/img/evento_lista_participante_formulario.png',
+        'writable/ajuda_arquivos/img/evento_lista_participante_sem_pagamento.png',
+        'writable/ajuda_arquivos/img/evento_lista_participantes.png',
+        'writable/ajuda_arquivos/img/evento_lista_presenca_botao_imprimir.png',
+        'writable/ajuda_arquivos/img/evento_lista_presenca_botao.png',
+        'writable/ajuda_arquivos/img/evento_lista_presenca_impressao.png',
+        'writable/ajuda_arquivos/img/evento_selecionar_lista_presenca.png',
+        'writable/ajuda_arquivos/img/reserva_atividade_livre_lista_recursos.png',
+        'writable/ajuda_arquivos/img/reserva_atividade_livre.png',
+        'writable/ajuda_arquivos/img/reserva_atividade_livre_recurso_selecionado.png',
+        'writable/ajuda_arquivos/img/reserva_atividade_tematica_janela_selecao.png',
+        'writable/ajuda_arquivos/img/reserva_atividade_tematica.png',
+        'writable/ajuda_arquivos/img/reserva_atividade_tematica_selecionada.png',
+        'writable/ajuda_arquivos/img/reserva_atividade_tematica_visualizar_atividade.png',
+        'writable/ajuda_arquivos/img/reserva_campo_escola.png',
+        'writable/ajuda_arquivos/img/reserva_campo_escoola_campos_obrigatorios.png',
+        'writable/ajuda_arquivos/img/reserva_detalhes_slots_conflito_selecao_indisponivel.png',
+        'writable/ajuda_arquivos/img/reserva_detalhes_slots_conflito_selecao_slot_lotado.png',
+        'writable/ajuda_arquivos/img/reserva_detalhes_slots_disponibilidade_baixa.png',
+        'writable/ajuda_arquivos/img/reserva_detalhes_slots_disponivel.png',
+        'writable/ajuda_arquivos/img/reserva_erro_recurso_indisponivel.png',
+        'writable/ajuda_arquivos/img/servico_dados_fiscais.png',
+        'writable/ajuda_arquivos/img/servico_dados_fiscias_campo_codigo.png',
+        'writable/ajuda_arquivos/img/servico_produto_formulario_excluir.png',
+        'writable/ajuda_arquivos/img/servico_produto_formulario.png',
+        'writable/ajuda_arquivos/img/tela_principal_reservas_adicionando_consumo_definindo_qauntidade.png',
+        'writable/ajuda_arquivos/img/tela_principal_reservas_adicionando_consumo.png',
+        'writable/ajuda_arquivos/img/tela_principal_reservas_adicionando_consumo_selecionando_servico.png',
+        'writable/ajuda_arquivos/img/tela_principal_reservas_aguardando_entrada.png',
+        'writable/ajuda_arquivos/img/tela_principal_reservas_aguardando_saida.png',
+        'writable/ajuda_arquivos/img/tela_principal_reservas_botao_reserva.png',
+        'writable/ajuda_arquivos/img/tela_principal_reservas_confirmar_hora_entrada.png',
+        'writable/ajuda_arquivos/img/tela_principal_reservas_menu.png',
+        'writable/ajuda_arquivos/img/tela_principal_reservas.png',
+        'writable/ajuda_arquivos/img/tela_principal_reservas_realizando_saida_adicionando_servicos.png.png',
+        'writable/ajuda_arquivos/img/tela_principal_reservas_realizando_saida_calcular_tempo_uso.png',
+        'writable/ajuda_arquivos/img/tela_principal_reservas_realizando_saida_campo_cobranca_paga.png',
+        'writable/ajuda_arquivos/img/tela_principal_reservas_saida_realizada.png',
+        'writable/ajuda_arquivos/img/tela_principal_reservas_termo_nao_apresentado.png',
+    ];
+
     public function index()
     {
         $baseDir = rtrim(WRITEPATH, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'ajuda_arquivos';
@@ -24,8 +109,23 @@ class Ajuda extends BaseController
         $defaultPage = $flat[0] ?? null;
 
         $current = $this->request->getGet('page');
+        $allowed = array_map(
+            static function (string $path): string {
+                $path = str_replace('\\', '/', $path);
+                $path = preg_replace('#^writable/ajuda_arquivos/#', '', $path);
+                return ltrim($path, '/');
+            },
+            self::arquivosPermitidos
+        );
         if (!is_string($current) || $current === '') {
             $current = $defaultPage;
+        } else {
+            $current = ltrim(str_replace('\\', '/', $current), '/');
+            if (!in_array($current, $allowed, true)) {
+                return view('Ajuda/templateAjuda', [
+                    'erro' => 'Arquivo nao permitido.',
+                ]);
+            }
         }
 
         if (!is_string($current) || substr($current, -3) !== '.md') {
@@ -79,6 +179,17 @@ class Ajuda extends BaseController
         }
 
         $file = ltrim(str_replace('\\', '/', $file), '/');
+        $allowed = array_map(
+            static function (string $path): string {
+                $path = str_replace('\\', '/', $path);
+                $path = preg_replace('#^writable/ajuda_arquivos/#', '', $path);
+                return ltrim($path, '/');
+            },
+            self::arquivosPermitidos
+        );
+        if (!in_array($file, $allowed, true)) {
+            return $this->response->setStatusCode(404);
+        }
         $path = realpath($baseDirReal . DIRECTORY_SEPARATOR . $file);
 
         if ($path === false || strpos($path, $baseDirReal) !== 0 || !is_file($path)) {
