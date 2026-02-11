@@ -119,7 +119,7 @@ function renderAjudaMenu(array $items): void
 <body>
     <button id="toggle-btn">☰</button>
     <nav id="sidebar">
-        <h3>Documentacao</h3>
+        <h3>Documentação</h3>
         <?php renderAjudaMenu($docs); ?>
     </nav>
 
