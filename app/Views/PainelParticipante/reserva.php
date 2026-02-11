@@ -31,7 +31,7 @@
               <div class="col-12 col-md-6 mb-3">
                 <label for="people">Total de pessoas</label>
                 <input type="number" id="people" class="form-control" min="1" value="1" />
-                <small class="form-text text-muted">Inclui participante e convidados. Checaremos a lotação simultânea por <em>slot</em>.</small>
+                <small class="form-text text-muted">Inclui participante e convidados. Checaremos a lotação simultânea por <em>horário</em>.</small>
               </div>
             </div>
             <div class="mt-2">
@@ -45,7 +45,7 @@
                 <span class="d-inline-block" style="width:10px;height:10px;border-radius:50%;background:#cfe9cf;border:1px solid #198754;margin-right:.4rem;"></span>Boa disponibilidade
                 <span class="d-inline-block ml-3" style="width:10px;height:10px;border-radius:50%;background:#ffe8a1;border:1px solid #ffc107;margin-right:.4rem;"></span>Disponibilidade baixa
                 <span class="d-inline-block ml-3" style="width:10px;height:10px;border-radius:50%;background:#f8c6c9;border:1px solid #dc3545;margin-right:.4rem;"></span>Lotado / indisponível
-                <span class="d-inline-block ml-3" style="width:10px;height:10px;border-radius:50%;background:rgba(220,53,69,.7);margin-right:.4rem;"></span>Conflito (sua seleção excede a lotação do slot)
+                <span class="d-inline-block ml-3" style="width:10px;height:10px;border-radius:50%;background:rgba(220,53,69,.7);margin-right:.4rem;"></span>Conflito (sua seleção excede a lotação do horário)
               </div>
             </div>
 
@@ -266,6 +266,7 @@
       position: relative;
       min-width: 110px;
     }
+    .slot-btn.disabled.btn-outline-danger { color: rgb(121, 135, 161); }
 
     .slot-badge {
       position: absolute;
