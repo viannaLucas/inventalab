@@ -308,9 +308,21 @@ class Painel extends BaseController
         }
 
         $mime = mime_content_type($filepath);
+        $maxAge = 60 * 60 * 24 * 60; // 60 dias
+
+        // Remove headers automáticos de cache da sessão
+        header_remove('Pragma');
+        header_remove('Cache-Control');
+        header_remove('Expires');
+
+        // Headers corretos
         header('Content-Length: ' . filesize($filepath));
         header("Content-Type: $mime");
         header('Content-Disposition: inline; filename="' . $uri->getSegment(2) . '";');
+
+        // Cache
+        header('Cache-Control: public, max-age=' . $maxAge);
+        header('Expires: ' . gmdate('D, d M Y H:i:s', time() + $maxAge) . ' GMT');
         readfile($filepath);
         exit();
     }
@@ -318,6 +330,7 @@ class Painel extends BaseController
     public function publicResource() {
         $pastarPermitidas = [
             'evento_arquivos',
+            'recursotrabalho_arquivos',
         ];
         $uri = $this->request->getUri();
         $filepath = WRITEPATH . $uri->getSegment(1) . '/' . $uri->getSegment(2);
@@ -329,9 +342,21 @@ class Painel extends BaseController
         }
 
         $mime = mime_content_type($filepath);
+        $maxAge = 60 * 60 * 24 * 60; // 60 dias
+
+        // Remove headers automáticos de cache da sessão
+        header_remove('Pragma');
+        header_remove('Cache-Control');
+        header_remove('Expires');
+
+        // Headers corretos
         header('Content-Length: ' . filesize($filepath));
         header("Content-Type: $mime");
         header('Content-Disposition: inline; filename="' . $uri->getSegment(2) . '";');
+
+        // Cache
+        header('Cache-Control: public, max-age=' . $maxAge);
+        header('Expires: ' . gmdate('D, d M Y H:i:s', time() + $maxAge) . ' GMT');
         readfile($filepath);
         exit();
     }

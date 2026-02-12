@@ -20,7 +20,7 @@ $routes->set404Override();
 $routes->get("/arquivooficina_arquivos/(.*)", "Painel::resource");
 $routes->get("/produto_arquivos/(.*)", "Painel::resource");
 $routes->get("/materialoficina_arquivos/(.*)", "Painel::resource");
-$routes->get("/recursotrabalho_arquivos/(.*)", "Painel::resource");
+$routes->get("/recursotrabalho_arquivos/(.*)", "Painel::publicResource");
 $routes->get("/participante_arquivos/(.*)", "Painel::resource");
 $routes->get("/evento_arquivos/(.*)", "Painel::publicResource");
 
