@@ -1389,28 +1389,8 @@
             });
             updateSelectionSummary(currentGroups);
           } else {
-            alert("Reservas salvas com sucesso!");
-            // Criar múltiplas reservas (uma por janela selecionada)
-            for (const sel of selections) {
-              reservations.push({
-                date: selectedDate,
-                start: sel.start,
-                duration: sel.duration,
-                people: p,
-                name: participantName || '',
-                participantId: participantId || '',
-                note: note || '',
-                activity: act.value // { type:'oficina', id } ou { type:'livre', description, resourceIds }
-              });
-            }
-
-            toastMsg(`Reserva${selections.length>1?'s':''} confirmada${selections.length>1?'s':''}: ${selections.map(s=>s.start+'–'+s.end).join(' • ')}`);
-
-            // Após reserva, limpar seleções mas manter valores do formulário
-            selectedRanges = {};
-            renderGroups({
-              keepSelections: false
-            });
+            alert('Reservas salvas com sucesso!')
+            window.location.href = "<?= base_url('PainelParticipante/home'); ?>";
           }
         })
         .catch(error => {
